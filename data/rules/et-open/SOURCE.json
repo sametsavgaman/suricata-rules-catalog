@@ -1,0 +1,8 @@
+{
+  "dataset": "Emerging Threats Open",
+  "distribution": "Suricata 8.0.4",
+  "download_url": "https://rules.emergingthreats.net/open/suricata-8.0.4/emerging.rules.tar.gz",
+  "downloaded_at": "2026-09-01",
+  "status": "REAL_DATA_AVAILABLE",
+  "note": "Downloaded from the ET Open distribution endpoint; synthetic samples are stored separately."
+}

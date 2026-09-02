@@ -1,0 +1,11 @@
+{
+  "status": "AI_PROPOSED",
+  "total_proposals": 100,
+  "high_confidence_proposals": 4,
+  "medium_confidence_proposals": 72,
+  "low_confidence_proposals": 24,
+  "proposals_with_mitre_mapping": 39,
+  "proposals_with_null_mitre": 61,
+  "proposals_with_entity": 24,
+  "proposals_with_null_entity": 76
+}

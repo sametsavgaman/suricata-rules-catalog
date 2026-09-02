@@ -1,0 +1,4618 @@
+[
+  {
+    "sid": 2010935,
+    "rev": 3,
+    "msg": "ET SCAN Suspicious inbound to MSSQL port 1433",
+    "decision": "APPROVE",
+    "review_confidence": 0.9,
+    "review_note": "Proposal matches independent assessment",
+    "changes": [],
+    "final_expected": {
+      "detected_behavior": "Network service scanning",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Reconnaissance",
+      "subcategory": "Service Scan",
+      "mitre_tactic": "Discovery",
+      "mitre_technique": "Network Service Scanning",
+      "mitre_technique_id": "T1046",
+      "cyber_kill_chain_phase": "Reconnaissance"
+    },
+    "original_proposal": {
+      "detected_behavior": "Network service scanning",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Reconnaissance",
+      "subcategory": "Service Scan",
+      "mitre_tactic": "Discovery",
+      "mitre_technique": "Network Service Scanning",
+      "mitre_technique_id": "T1046",
+      "cyber_kill_chain_phase": "Reconnaissance"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2021837,
+    "rev": 7,
+    "msg": "ET MALWARE r0 CnC Architecture POST 4",
+    "decision": "APPROVE",
+    "review_confidence": 0.9,
+    "review_note": "Proposal matches independent assessment",
+    "changes": [],
+    "final_expected": {
+      "detected_behavior": "HTTP command-and-control communication",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Command and Control",
+      "subcategory": "HTTP C2 Communication",
+      "mitre_tactic": "Command and Control",
+      "mitre_technique": "Web Protocols",
+      "mitre_technique_id": "T1071.001",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "original_proposal": {
+      "detected_behavior": "HTTP command-and-control communication",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Command and Control",
+      "subcategory": "HTTP C2 Communication",
+      "mitre_tactic": "Command and Control",
+      "mitre_technique": "Web Protocols",
+      "mitre_technique_id": "T1071.001",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2056356,
+    "rev": 2,
+    "msg": "ET EXPLOIT Zimbra postjournal RCE Attempt Inbound (CVE-2024-45519)",
+    "decision": "APPROVE",
+    "review_confidence": 0.9,
+    "review_note": "Proposal matches independent assessment",
+    "changes": [],
+    "final_expected": {
+      "detected_behavior": "Exploit attempt against a network-accessible service",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Exploitation",
+      "subcategory": "Exploit Attempt",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "original_proposal": {
+      "detected_behavior": "Exploit attempt against a network-accessible service",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Exploitation",
+      "subcategory": "Exploit Attempt",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2059511,
+    "rev": 1,
+    "msg": "ET INFO Observed Smart Chain Domain in DNS Lookup (gnfd-testnet-sp1 .nodereal .io)",
+    "decision": "APPROVE",
+    "review_confidence": 0.82,
+    "review_note": "Proposal matches independent assessment",
+    "changes": [],
+    "final_expected": {
+      "detected_behavior": "Informational network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Other",
+      "subcategory": "Informational Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Informational network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Other",
+      "subcategory": "Informational Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2045262,
+    "rev": 3,
+    "msg": "ET DYN_DNS DYNAMIC_DNS HTTP Request to a *.codingtheworld .com Domain",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 2 field(s): detected_behavior: 'DNS lookup for suspicious infrastructure' -> 'DNS query to dynamic DNS domain'; subcategory: 'Malicious Domain' -> 'Unusual DNS Query'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "DNS lookup for suspicious infrastructure",
+        "review_value": "DNS query to dynamic DNS domain",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Malicious Domain",
+        "review_value": "Unusual DNS Query",
+        "reason": "Subcategory refined to better match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "DNS query to dynamic DNS domain",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Suspicious DNS",
+      "subcategory": "Unusual DNS Query",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "DNS lookup for suspicious infrastructure",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Suspicious DNS",
+      "subcategory": "Malicious Domain",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2019842,
+    "rev": 7,
+    "msg": "ET WEB_CLIENT Possible Internet Explorer VBscript CVE-2014-6332 multiple redim preserve",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Suspicious HTTP Activity' -> 'Suspicious network activity'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious HTTP Activity",
+        "review_value": "Suspicious network activity",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Suspicious network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious HTTP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious HTTP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious HTTP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2046466,
+    "rev": 2,
+    "msg": "ET MOBILE_MALWARE Android Spy PREDATOR CnC Domain in DNS Lookup",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'DNS command-and-control communication' -> 'Predator command-and-control communication'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "DNS command-and-control communication",
+        "review_value": "Predator command-and-control communication",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Predator command-and-control communication",
+      "detected_entity": "Predator",
+      "entity_type": "Malware",
+      "category": "Command and Control",
+      "subcategory": "DNS C2 Communication",
+      "mitre_tactic": "Command and Control",
+      "mitre_technique": "DNS",
+      "mitre_technique_id": "T1071.004",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "original_proposal": {
+      "detected_behavior": "DNS command-and-control communication",
+      "detected_entity": "Predator",
+      "entity_type": "Malware",
+      "category": "Command and Control",
+      "subcategory": "DNS C2 Communication",
+      "mitre_tactic": "Command and Control",
+      "mitre_technique": "DNS",
+      "mitre_technique_id": "T1071.004",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2060513,
+    "rev": 2,
+    "msg": "ET REMOTE_ACCESS Observed Anydesk Domain (boot .net .anydesk .com) in TLS SNI",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Remote access software communication' -> 'AnyDesk remote access software communication'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Remote access software communication",
+        "review_value": "AnyDesk remote access software communication",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "AnyDesk remote access software communication",
+      "detected_entity": "AnyDesk",
+      "entity_type": "Remote Access Tool",
+      "category": "Remote Access",
+      "subcategory": "Remote Administration Tool",
+      "mitre_tactic": "Command and Control",
+      "mitre_technique": "Remote Access Software",
+      "mitre_technique_id": "T1219",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "original_proposal": {
+      "detected_behavior": "Remote access software communication",
+      "detected_entity": "AnyDesk",
+      "entity_type": "Remote Access Tool",
+      "category": "Remote Access",
+      "subcategory": "Remote Administration Tool",
+      "mitre_tactic": "Command and Control",
+      "mitre_technique": "Remote Access Software",
+      "mitre_technique_id": "T1219",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "HIGH_CONFIDENCE_AGREEMENT"
+  },
+  {
+    "sid": 2048071,
+    "rev": 2,
+    "msg": "ET RETIRED [TW] Observed Microsoft Credential Phish V3 Domain (bc1qc230lt32ey73qlaj9rkujm0ujtv090 .com in TLS SNI)",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 4 field(s): detected_behavior: 'Phishing Infrastructure' -> 'Credential phishing attempt'; mitre_tactic: 'None' -> 'Initial Access'; mitre_technique: 'None' -> 'Spearphishing Attachment'; mitre_technique_id: 'None' -> 'T1566.001'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Phishing Infrastructure",
+        "review_value": "Credential phishing attempt",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "mitre_tactic",
+        "proposal_value": null,
+        "review_value": "Initial Access",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique",
+        "proposal_value": null,
+        "review_value": "Spearphishing Attachment",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique_id",
+        "proposal_value": null,
+        "review_value": "T1566.001",
+        "reason": "T1566.001 is defensible based on rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Credential phishing attempt",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Phishing Infrastructure",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Spearphishing Attachment",
+      "mitre_technique_id": "T1566.001",
+      "cyber_kill_chain_phase": "Delivery"
+    },
+    "original_proposal": {
+      "detected_behavior": "Phishing Infrastructure",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Phishing Infrastructure",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Delivery"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2046259,
+    "rev": 5,
+    "msg": "ET RETIRED Kimsuky ReconShark Related APT Activity",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Suspicious HTTP Activity' -> 'Suspicious network activity'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious HTTP Activity",
+        "review_value": "Suspicious network activity",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Suspicious network activity",
+      "detected_entity": "ReconShark",
+      "entity_type": "Malware",
+      "category": "Network Abuse",
+      "subcategory": "Suspicious HTTP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious HTTP Activity",
+      "detected_entity": "ReconShark",
+      "entity_type": "Malware",
+      "category": "Network Abuse",
+      "subcategory": "Suspicious HTTP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2028779,
+    "rev": 2,
+    "msg": "ET JA3 Hash - [Abuse.ch] Possible Adware",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Suspicious TLS Activity' -> 'Suspicious TLS fingerprint observed'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious TLS Activity",
+        "review_value": "Suspicious TLS fingerprint observed",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Suspicious TLS fingerprint observed",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TLS Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious TLS Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TLS Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2102510,
+    "rev": 10,
+    "msg": "GPL NETBIOS SMB DCERPC LSASS bind attempt",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Suspicious TCP Activity' -> 'Suspicious network activity'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious TCP Activity",
+        "review_value": "Suspicious network activity",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Suspicious network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TCP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious TCP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TCP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2522039,
+    "rev": 6363,
+    "msg": "ET TOR Known Tor Relay/Router (Not Exit) Node Traffic group 40",
+    "decision": "EDIT",
+    "review_confidence": 0.82,
+    "review_note": "Edited 5 field(s): detected_behavior: 'Suspicious TCP Activity' -> 'Tor anonymity network usage'; detected_entity: 'None' -> 'Tor'; entity_type: 'None' -> 'Software'; category: 'Network Abuse' -> 'Policy Violation'; subcategory: 'Suspicious TCP Activity' -> 'Prohibited Application or Protocol'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious TCP Activity",
+        "review_value": "Tor anonymity network usage",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "detected_entity",
+        "proposal_value": null,
+        "review_value": "Tor",
+        "reason": "'Tor' appears directly in rule message/content"
+      },
+      {
+        "field": "entity_type",
+        "proposal_value": null,
+        "review_value": "Software",
+        "reason": "Corrected entity type to match entity classification"
+      },
+      {
+        "field": "category",
+        "proposal_value": "Network Abuse",
+        "review_value": "Policy Violation",
+        "reason": "Category changed from 'Network Abuse' to 'Policy Violation' based on rule semantics and ET prefix"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Suspicious TCP Activity",
+        "review_value": "Prohibited Application or Protocol",
+        "reason": "Subcategory refined to better match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Tor anonymity network usage",
+      "detected_entity": "Tor",
+      "entity_type": "Software",
+      "category": "Policy Violation",
+      "subcategory": "Prohibited Application or Protocol",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious TCP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TCP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2009698,
+    "rev": 1,
+    "msg": "ET VOIP INVITE Message Flood UDP",
+    "decision": "EDIT",
+    "review_confidence": 0.82,
+    "review_note": "Edited 3 field(s): detected_behavior: 'Suspicious UDP Activity' -> 'VoIP SIP message flood'; category: 'Network Abuse' -> 'Denial of Service'; subcategory: 'Suspicious UDP Activity' -> 'None'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious UDP Activity",
+        "review_value": "VoIP SIP message flood",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "category",
+        "proposal_value": "Network Abuse",
+        "review_value": "Denial of Service",
+        "reason": "Category changed from 'Network Abuse' to 'Denial of Service' based on rule semantics and ET prefix"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Suspicious UDP Activity",
+        "review_value": null,
+        "reason": "Subcategory refined to better match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "VoIP SIP message flood",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Denial of Service",
+      "subcategory": null,
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious UDP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious UDP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2403330,
+    "rev": 111389,
+    "msg": "ET CINS Active Threat Intelligence Poor Reputation IP group 31",
+    "decision": "EDIT",
+    "review_confidence": 0.82,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Suspicious IP Activity' -> 'Traffic from known malicious infrastructure'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious IP Activity",
+        "review_value": "Traffic from known malicious infrastructure",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Traffic from known malicious infrastructure",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious IP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious IP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious IP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2002383,
+    "rev": 13,
+    "msg": "ET SCAN Potential FTP Brute-Force attempt response",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Network service scanning' -> 'Brute-force login attempt detection'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Network service scanning",
+        "review_value": "Brute-force login attempt detection",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Brute-force login attempt detection",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Reconnaissance",
+      "subcategory": "Service Scan",
+      "mitre_tactic": "Discovery",
+      "mitre_technique": "Network Service Scanning",
+      "mitre_technique_id": "T1046",
+      "cyber_kill_chain_phase": "Reconnaissance"
+    },
+    "original_proposal": {
+      "detected_behavior": "Network service scanning",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Reconnaissance",
+      "subcategory": "Service Scan",
+      "mitre_tactic": "Discovery",
+      "mitre_technique": "Network Service Scanning",
+      "mitre_technique_id": "T1046",
+      "cyber_kill_chain_phase": "Reconnaissance"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2062681,
+    "rev": 1,
+    "msg": "ET MALWARE Win32/Lumma Stealer Related CnC Domain in DNS Lookup (sxzkfc .digital)",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'DNS command-and-control communication' -> 'Lumma Stealer command-and-control communication'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "DNS command-and-control communication",
+        "review_value": "Lumma Stealer command-and-control communication",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Lumma Stealer command-and-control communication",
+      "detected_entity": "Lumma Stealer",
+      "entity_type": "Malware",
+      "category": "Command and Control",
+      "subcategory": "DNS C2 Communication",
+      "mitre_tactic": "Command and Control",
+      "mitre_technique": "DNS",
+      "mitre_technique_id": "T1071.004",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "original_proposal": {
+      "detected_behavior": "DNS command-and-control communication",
+      "detected_entity": "Lumma Stealer",
+      "entity_type": "Malware",
+      "category": "Command and Control",
+      "subcategory": "DNS C2 Communication",
+      "mitre_tactic": "Command and Control",
+      "mitre_technique": "DNS",
+      "mitre_technique_id": "T1071.004",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2023995,
+    "rev": 4,
+    "msg": "ET EXPLOIT TP-LINK DNS Change GET Request (DNSChanger EK)",
+    "decision": "APPROVE",
+    "review_confidence": 0.9,
+    "review_note": "Proposal matches independent assessment",
+    "changes": [],
+    "final_expected": {
+      "detected_behavior": "Exploit attempt against a network-accessible service",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Exploitation",
+      "subcategory": "Web Exploit Attempt",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "original_proposal": {
+      "detected_behavior": "Exploit attempt against a network-accessible service",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Exploitation",
+      "subcategory": "Web Exploit Attempt",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2021371,
+    "rev": 7,
+    "msg": "ET INFO Possible External IP Lookup www.whatsmyip.us",
+    "decision": "APPROVE",
+    "review_confidence": 0.82,
+    "review_note": "Proposal matches independent assessment",
+    "changes": [],
+    "final_expected": {
+      "detected_behavior": "Informational network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Other",
+      "subcategory": "Informational Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Informational network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Other",
+      "subcategory": "Informational Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2045845,
+    "rev": 3,
+    "msg": "ET DYN_DNS DYNAMIC_DNS Query to a *.ilovetkd .com Domain",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 2 field(s): detected_behavior: 'DNS lookup for suspicious infrastructure' -> 'DNS query to dynamic DNS domain'; subcategory: 'Malicious Domain' -> 'Unusual DNS Query'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "DNS lookup for suspicious infrastructure",
+        "review_value": "DNS query to dynamic DNS domain",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Malicious Domain",
+        "review_value": "Unusual DNS Query",
+        "reason": "Subcategory refined to better match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "DNS query to dynamic DNS domain",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Suspicious DNS",
+      "subcategory": "Unusual DNS Query",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "DNS lookup for suspicious infrastructure",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Suspicious DNS",
+      "subcategory": "Malicious Domain",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2023535,
+    "rev": 4,
+    "msg": "ET WEB_SERVER Possible Apache Struts OGNL Expression Injection",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 5 field(s): detected_entity: 'Apache HTTP server' -> 'None'; entity_type: 'Product' -> 'None'; mitre_tactic: 'None' -> 'Initial Access'; mitre_technique: 'None' -> 'Exploit Public-Facing Application'; mitre_technique_id: 'None' -> 'T1190'",
+    "changes": [
+      {
+        "field": "detected_entity",
+        "proposal_value": "Apache HTTP server",
+        "review_value": null,
+        "reason": "Rule does not meaningfully identify 'Apache HTTP server'; port/protocol alone is insufficient"
+      },
+      {
+        "field": "entity_type",
+        "proposal_value": "Product",
+        "review_value": null,
+        "reason": "Entity type removed because entity is null"
+      },
+      {
+        "field": "mitre_tactic",
+        "proposal_value": null,
+        "review_value": "Initial Access",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique",
+        "proposal_value": null,
+        "review_value": "Exploit Public-Facing Application",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique_id",
+        "proposal_value": null,
+        "review_value": "T1190",
+        "reason": "T1190 is defensible based on rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Web attack attempt: Web Exploit Attempt",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Web Attack",
+      "subcategory": "Web Exploit Attempt",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "original_proposal": {
+      "detected_behavior": "Web attack attempt: Web Exploit Attempt",
+      "detected_entity": "Apache HTTP server",
+      "entity_type": "Product",
+      "category": "Web Attack",
+      "subcategory": "Web Exploit Attempt",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "verifier_verdict": "DISAGREE",
+    "verifier_agreement": "DISAGREEMENT"
+  },
+  {
+    "sid": 2030024,
+    "rev": 3,
+    "msg": "ET MOBILE_MALWARE NSO Group CnC Domain in DNS Lookup",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 3 field(s): detected_behavior: 'DNS command-and-control communication' -> 'NSO Group command-and-control communication'; detected_entity: 'None' -> 'NSO Group'; entity_type: 'None' -> 'Malware'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "DNS command-and-control communication",
+        "review_value": "NSO Group command-and-control communication",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "detected_entity",
+        "proposal_value": null,
+        "review_value": "NSO Group",
+        "reason": "'NSO Group' appears directly in rule message/content"
+      },
+      {
+        "field": "entity_type",
+        "proposal_value": null,
+        "review_value": "Malware",
+        "reason": "Corrected entity type to match entity classification"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "NSO Group command-and-control communication",
+      "detected_entity": "NSO Group",
+      "entity_type": "Malware",
+      "category": "Command and Control",
+      "subcategory": "DNS C2 Communication",
+      "mitre_tactic": "Command and Control",
+      "mitre_technique": "DNS",
+      "mitre_technique_id": "T1071.004",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "original_proposal": {
+      "detected_behavior": "DNS command-and-control communication",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Command and Control",
+      "subcategory": "DNS C2 Communication",
+      "mitre_tactic": "Command and Control",
+      "mitre_technique": "DNS",
+      "mitre_technique_id": "T1071.004",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2050707,
+    "rev": 2,
+    "msg": "ET REMOTE_ACCESS AnyDesk Revoked Code Signing Certificate Observed",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Remote access software communication' -> 'AnyDesk remote access software communication'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Remote access software communication",
+        "review_value": "AnyDesk remote access software communication",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "AnyDesk remote access software communication",
+      "detected_entity": "AnyDesk",
+      "entity_type": "Remote Access Tool",
+      "category": "Remote Access",
+      "subcategory": "Remote Administration Tool",
+      "mitre_tactic": "Command and Control",
+      "mitre_technique": "Remote Access Software",
+      "mitre_technique_id": "T1219",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "original_proposal": {
+      "detected_behavior": "Remote access software communication",
+      "detected_entity": "AnyDesk",
+      "entity_type": "Remote Access Tool",
+      "category": "Remote Access",
+      "subcategory": "Remote Administration Tool",
+      "mitre_tactic": "Command and Control",
+      "mitre_technique": "Remote Access Software",
+      "mitre_technique_id": "T1219",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2032178,
+    "rev": 5,
+    "msg": "ET PHISHING Successful Apple Phish 2016-03-09",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 4 field(s): detected_behavior: 'Phishing Infrastructure' -> 'Credential phishing attempt'; mitre_tactic: 'None' -> 'Initial Access'; mitre_technique: 'None' -> 'Spearphishing Attachment'; mitre_technique_id: 'None' -> 'T1566.001'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Phishing Infrastructure",
+        "review_value": "Credential phishing attempt",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "mitre_tactic",
+        "proposal_value": null,
+        "review_value": "Initial Access",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique",
+        "proposal_value": null,
+        "review_value": "Spearphishing Attachment",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique_id",
+        "proposal_value": null,
+        "review_value": "T1566.001",
+        "reason": "T1566.001 is defensible based on rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Credential phishing attempt",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Phishing Infrastructure",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Spearphishing Attachment",
+      "mitre_technique_id": "T1566.001",
+      "cyber_kill_chain_phase": "Delivery"
+    },
+    "original_proposal": {
+      "detected_behavior": "Phishing Infrastructure",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Phishing Infrastructure",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Delivery"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2064098,
+    "rev": 1,
+    "msg": "ET WEB_SPECIFIC_APPS Tenda getMasterPassengerAnalyseData time Parameter Buffer Overflow Attempt (CVE-2025-9299)",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 2 field(s): detected_entity: 'Tenda' -> 'None'; entity_type: 'Product' -> 'None'",
+    "changes": [
+      {
+        "field": "detected_entity",
+        "proposal_value": "Tenda",
+        "review_value": null,
+        "reason": "Rule does not meaningfully identify 'Tenda'; port/protocol alone is insufficient"
+      },
+      {
+        "field": "entity_type",
+        "proposal_value": "Product",
+        "review_value": null,
+        "reason": "Entity type removed because entity is null"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Web attack attempt: Web Exploit Attempt",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Web Attack",
+      "subcategory": "Web Exploit Attempt",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "original_proposal": {
+      "detected_behavior": "Web attack attempt: Web Exploit Attempt",
+      "detected_entity": "Tenda",
+      "entity_type": "Product",
+      "category": "Web Attack",
+      "subcategory": "Web Exploit Attempt",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "HIGH_CONFIDENCE_AGREEMENT"
+  },
+  {
+    "sid": 2049581,
+    "rev": 1,
+    "msg": "ET PHISHING TA444 Domain in TLS SNI (meeting-online .site)",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 4 field(s): detected_behavior: 'Phishing Infrastructure' -> 'Credential phishing attempt'; mitre_tactic: 'None' -> 'Initial Access'; mitre_technique: 'None' -> 'Spearphishing Attachment'; mitre_technique_id: 'None' -> 'T1566.001'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Phishing Infrastructure",
+        "review_value": "Credential phishing attempt",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "mitre_tactic",
+        "proposal_value": null,
+        "review_value": "Initial Access",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique",
+        "proposal_value": null,
+        "review_value": "Spearphishing Attachment",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique_id",
+        "proposal_value": null,
+        "review_value": "T1566.001",
+        "reason": "T1566.001 is defensible based on rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Credential phishing attempt",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Phishing Infrastructure",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Spearphishing Attachment",
+      "mitre_technique_id": "T1566.001",
+      "cyber_kill_chain_phase": "Delivery"
+    },
+    "original_proposal": {
+      "detected_behavior": "Phishing Infrastructure",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Phishing Infrastructure",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Delivery"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2103245,
+    "rev": 5,
+    "msg": "GPL NETBIOS SMB irot little endian andx bind attempt",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Suspicious TCP Activity' -> 'Suspicious network activity'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious TCP Activity",
+        "review_value": "Suspicious network activity",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Suspicious network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TCP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious TCP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TCP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2522034,
+    "rev": 6363,
+    "msg": "ET TOR Known Tor Relay/Router (Not Exit) Node Traffic group 35",
+    "decision": "EDIT",
+    "review_confidence": 0.82,
+    "review_note": "Edited 5 field(s): detected_behavior: 'Suspicious TCP Activity' -> 'Tor anonymity network usage'; detected_entity: 'None' -> 'Tor'; entity_type: 'None' -> 'Software'; category: 'Network Abuse' -> 'Policy Violation'; subcategory: 'Suspicious TCP Activity' -> 'Prohibited Application or Protocol'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious TCP Activity",
+        "review_value": "Tor anonymity network usage",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "detected_entity",
+        "proposal_value": null,
+        "review_value": "Tor",
+        "reason": "'Tor' appears directly in rule message/content"
+      },
+      {
+        "field": "entity_type",
+        "proposal_value": null,
+        "review_value": "Software",
+        "reason": "Corrected entity type to match entity classification"
+      },
+      {
+        "field": "category",
+        "proposal_value": "Network Abuse",
+        "review_value": "Policy Violation",
+        "reason": "Category changed from 'Network Abuse' to 'Policy Violation' based on rule semantics and ET prefix"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Suspicious TCP Activity",
+        "review_value": "Prohibited Application or Protocol",
+        "reason": "Subcategory refined to better match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Tor anonymity network usage",
+      "detected_entity": "Tor",
+      "entity_type": "Software",
+      "category": "Policy Violation",
+      "subcategory": "Prohibited Application or Protocol",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious TCP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TCP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2101923,
+    "rev": 7,
+    "msg": "GPL RPC portmap proxy attempt UDP",
+    "decision": "EDIT",
+    "review_confidence": 0.82,
+    "review_note": "Edited 3 field(s): detected_behavior: 'Suspicious UDP Activity' -> 'RPC portmap enumeration'; category: 'Network Abuse' -> 'Discovery'; subcategory: 'Suspicious UDP Activity' -> 'None'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious UDP Activity",
+        "review_value": "RPC portmap enumeration",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "category",
+        "proposal_value": "Network Abuse",
+        "review_value": "Discovery",
+        "reason": "Category changed from 'Network Abuse' to 'Discovery' based on rule semantics and ET prefix"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Suspicious UDP Activity",
+        "review_value": null,
+        "reason": "Subcategory refined to better match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "RPC portmap enumeration",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Discovery",
+      "subcategory": null,
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious UDP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious UDP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2400049,
+    "rev": 4816,
+    "msg": "ET DROP Spamhaus DROP Listed Traffic Inbound group 50",
+    "decision": "EDIT",
+    "review_confidence": 0.82,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Suspicious IP Activity' -> 'Traffic from known malicious infrastructure'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious IP Activity",
+        "review_value": "Traffic from known malicious infrastructure",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Traffic from known malicious infrastructure",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious IP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious IP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious IP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2008228,
+    "rev": 13,
+    "msg": "ET SCAN Suspicious User-Agent inbound (bot)",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 5 field(s): detected_behavior: 'Network service scanning' -> 'Web scanning activity'; subcategory: 'Service Scan' -> 'Web Scan'; mitre_tactic: 'Discovery' -> 'None'; mitre_technique: 'Network Service Scanning' -> 'None'; mitre_technique_id: 'T1046' -> 'None'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Network service scanning",
+        "review_value": "Web scanning activity",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Service Scan",
+        "review_value": "Web Scan",
+        "reason": "Subcategory refined to better match rule behavior"
+      },
+      {
+        "field": "mitre_tactic",
+        "proposal_value": "Discovery",
+        "review_value": null,
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique",
+        "proposal_value": "Network Service Scanning",
+        "review_value": null,
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique_id",
+        "proposal_value": "T1046",
+        "review_value": null,
+        "reason": "T1046 not supported by rule behavior or not in local repository"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Web scanning activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Reconnaissance",
+      "subcategory": "Web Scan",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Reconnaissance"
+    },
+    "original_proposal": {
+      "detected_behavior": "Network service scanning",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Reconnaissance",
+      "subcategory": "Service Scan",
+      "mitre_tactic": "Discovery",
+      "mitre_technique": "Network Service Scanning",
+      "mitre_technique_id": "T1046",
+      "cyber_kill_chain_phase": "Reconnaissance"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2068124,
+    "rev": 1,
+    "msg": "ET MALWARE Observed Win32/Lumma Stealer Related Domain (genusne .click) in TLS SNI",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Malware-related network activity' -> 'Lumma Stealer malware-related network activity'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Malware-related network activity",
+        "review_value": "Lumma Stealer malware-related network activity",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Lumma Stealer malware-related network activity",
+      "detected_entity": "Lumma Stealer",
+      "entity_type": "Malware",
+      "category": "Malware",
+      "subcategory": "Malware Network Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Malware-related network activity",
+      "detected_entity": "Lumma Stealer",
+      "entity_type": "Malware",
+      "category": "Malware",
+      "subcategory": "Malware Network Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2044010,
+    "rev": 2,
+    "msg": "ET EXPLOIT Possible Oracle E-Business RCE Attempt Inbound M1 (CVE-2022-21587)",
+    "decision": "APPROVE",
+    "review_confidence": 0.9,
+    "review_note": "Proposal matches independent assessment",
+    "changes": [],
+    "final_expected": {
+      "detected_behavior": "Exploit attempt against a network-accessible service",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Exploitation",
+      "subcategory": "Web Exploit Attempt",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "original_proposal": {
+      "detected_behavior": "Exploit attempt against a network-accessible service",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Exploitation",
+      "subcategory": "Web Exploit Attempt",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2039495,
+    "rev": 2,
+    "msg": "ET INFO IQDNS DNS Over HTTPS Certificate Inbound",
+    "decision": "APPROVE",
+    "review_confidence": 0.82,
+    "review_note": "Proposal matches independent assessment",
+    "changes": [],
+    "final_expected": {
+      "detected_behavior": "Informational network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Other",
+      "subcategory": "Informational Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Informational network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Other",
+      "subcategory": "Informational Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2069316,
+    "rev": 1,
+    "msg": "ET EXPLOIT_KIT ClickFix Domain in DNS Lookup (silenttunnelzone .top)",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 5 field(s): detected_behavior: 'DNS lookup for suspicious infrastructure' -> 'PowerShell malware-related network activity'; detected_entity: 'None' -> 'PowerShell'; entity_type: 'None' -> 'Software'; category: 'Suspicious DNS' -> 'Malware'; subcategory: 'Malicious Domain' -> 'Malware Network Activity'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "DNS lookup for suspicious infrastructure",
+        "review_value": "PowerShell malware-related network activity",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "detected_entity",
+        "proposal_value": null,
+        "review_value": "PowerShell",
+        "reason": "'PowerShell' appears directly in rule message/content"
+      },
+      {
+        "field": "entity_type",
+        "proposal_value": null,
+        "review_value": "Software",
+        "reason": "Corrected entity type to match entity classification"
+      },
+      {
+        "field": "category",
+        "proposal_value": "Suspicious DNS",
+        "review_value": "Malware",
+        "reason": "Category changed from 'Suspicious DNS' to 'Malware' based on rule semantics and ET prefix"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Malicious Domain",
+        "review_value": "Malware Network Activity",
+        "reason": "Subcategory refined to better match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "PowerShell malware-related network activity",
+      "detected_entity": "PowerShell",
+      "entity_type": "Software",
+      "category": "Malware",
+      "subcategory": "Malware Network Activity",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Drive-by Compromise",
+      "mitre_technique_id": "T1189",
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "DNS lookup for suspicious infrastructure",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Suspicious DNS",
+      "subcategory": "Malicious Domain",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Drive-by Compromise",
+      "mitre_technique_id": "T1189",
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2025062,
+    "rev": 5,
+    "msg": "ET WEB_CLIENT PowerShell call in script 2",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Suspicious HTTP Activity' -> 'Suspicious network activity'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious HTTP Activity",
+        "review_value": "Suspicious network activity",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Suspicious network activity",
+      "detected_entity": "PowerShell",
+      "entity_type": "Software",
+      "category": "Network Abuse",
+      "subcategory": "Suspicious HTTP Activity",
+      "mitre_tactic": "Execution",
+      "mitre_technique": "PowerShell",
+      "mitre_technique_id": "T1059.001",
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious HTTP Activity",
+      "detected_entity": "PowerShell",
+      "entity_type": "Software",
+      "category": "Network Abuse",
+      "subcategory": "Suspicious HTTP Activity",
+      "mitre_tactic": "Execution",
+      "mitre_technique": "PowerShell",
+      "mitre_technique_id": "T1059.001",
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2016711,
+    "rev": 8,
+    "msg": "ET MOBILE_MALWARE DNS Query Targeted Tibetan Android Malware C2 Domain",
+    "decision": "APPROVE",
+    "review_confidence": 0.9,
+    "review_note": "Proposal matches independent assessment",
+    "changes": [],
+    "final_expected": {
+      "detected_behavior": "DNS command-and-control communication",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Command and Control",
+      "subcategory": "DNS C2 Communication",
+      "mitre_tactic": "Command and Control",
+      "mitre_technique": "DNS",
+      "mitre_technique_id": "T1071.004",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "original_proposal": {
+      "detected_behavior": "DNS command-and-control communication",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Command and Control",
+      "subcategory": "DNS C2 Communication",
+      "mitre_tactic": "Command and Control",
+      "mitre_technique": "DNS",
+      "mitre_technique_id": "T1071.004",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2027413,
+    "rev": 4,
+    "msg": "ET REMOTE_ACCESS Inbound RDP Connection with Minimal Security Protocol Requested",
+    "decision": "APPROVE",
+    "review_confidence": 0.9,
+    "review_note": "Proposal matches independent assessment",
+    "changes": [],
+    "final_expected": {
+      "detected_behavior": "Remote access software communication",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Remote Access",
+      "subcategory": "Remote Administration Tool",
+      "mitre_tactic": "Lateral Movement",
+      "mitre_technique": "Remote Desktop Protocol",
+      "mitre_technique_id": "T1021.001",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "original_proposal": {
+      "detected_behavior": "Remote access software communication",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Remote Access",
+      "subcategory": "Remote Administration Tool",
+      "mitre_tactic": "Lateral Movement",
+      "mitre_technique": "Remote Desktop Protocol",
+      "mitre_technique_id": "T1021.001",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2031797,
+    "rev": 5,
+    "msg": "ET PHISHING Successful Dropbox Phish 2015-12-10",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 4 field(s): detected_behavior: 'Phishing Infrastructure' -> 'Credential phishing attempt'; mitre_tactic: 'None' -> 'Initial Access'; mitre_technique: 'None' -> 'Spearphishing Attachment'; mitre_technique_id: 'None' -> 'T1566.001'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Phishing Infrastructure",
+        "review_value": "Credential phishing attempt",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "mitre_tactic",
+        "proposal_value": null,
+        "review_value": "Initial Access",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique",
+        "proposal_value": null,
+        "review_value": "Spearphishing Attachment",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique_id",
+        "proposal_value": null,
+        "review_value": "T1566.001",
+        "reason": "T1566.001 is defensible based on rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Credential phishing attempt",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Phishing Infrastructure",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Spearphishing Attachment",
+      "mitre_technique_id": "T1566.001",
+      "cyber_kill_chain_phase": "Delivery"
+    },
+    "original_proposal": {
+      "detected_behavior": "Phishing Infrastructure",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Phishing Infrastructure",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Delivery"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2007299,
+    "rev": 9,
+    "msg": "ET WEB_SPECIFIC_APPS Doug Luxem Liberum Help Desk SQL Injection Attempt -- status.asp id UPDATE",
+    "decision": "APPROVE",
+    "review_confidence": 0.9,
+    "review_note": "Proposal matches independent assessment",
+    "changes": [],
+    "final_expected": {
+      "detected_behavior": "Web attack attempt: SQL Injection",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Web Attack",
+      "subcategory": "SQL Injection",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "original_proposal": {
+      "detected_behavior": "Web attack attempt: SQL Injection",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Web Attack",
+      "subcategory": "SQL Injection",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2071589,
+    "rev": 1,
+    "msg": "ET EXPLOIT_KIT LandUpdate808 Domain in TLS SNI (randenbrink .lol)",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 3 field(s): detected_behavior: 'Suspicious TLS Activity' -> 'Exploit kit-related network activity'; category: 'Network Abuse' -> 'Malware'; subcategory: 'Suspicious TLS Activity' -> 'Malware Network Activity'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious TLS Activity",
+        "review_value": "Exploit kit-related network activity",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "category",
+        "proposal_value": "Network Abuse",
+        "review_value": "Malware",
+        "reason": "Category changed from 'Network Abuse' to 'Malware' based on rule semantics and ET prefix"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Suspicious TLS Activity",
+        "review_value": "Malware Network Activity",
+        "reason": "Subcategory refined to better match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Exploit kit-related network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Malware",
+      "subcategory": "Malware Network Activity",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Drive-by Compromise",
+      "mitre_technique_id": "T1189",
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious TLS Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TLS Activity",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Drive-by Compromise",
+      "mitre_technique_id": "T1189",
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2103271,
+    "rev": 5,
+    "msg": "GPL NETBIOS SMB-DS IrotIsRunning unicode little endian andx attempt",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Suspicious TCP Activity' -> 'Suspicious network activity'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious TCP Activity",
+        "review_value": "Suspicious network activity",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Suspicious network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TCP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious TCP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TCP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2520089,
+    "rev": 6363,
+    "msg": "ET TOR Known Tor Exit Node Traffic group 90",
+    "decision": "EDIT",
+    "review_confidence": 0.82,
+    "review_note": "Edited 5 field(s): detected_behavior: 'Suspicious TCP Activity' -> 'Tor anonymity network usage'; detected_entity: 'None' -> 'Tor'; entity_type: 'None' -> 'Software'; category: 'Network Abuse' -> 'Policy Violation'; subcategory: 'Suspicious TCP Activity' -> 'Prohibited Application or Protocol'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious TCP Activity",
+        "review_value": "Tor anonymity network usage",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "detected_entity",
+        "proposal_value": null,
+        "review_value": "Tor",
+        "reason": "'Tor' appears directly in rule message/content"
+      },
+      {
+        "field": "entity_type",
+        "proposal_value": null,
+        "review_value": "Software",
+        "reason": "Corrected entity type to match entity classification"
+      },
+      {
+        "field": "category",
+        "proposal_value": "Network Abuse",
+        "review_value": "Policy Violation",
+        "reason": "Category changed from 'Network Abuse' to 'Policy Violation' based on rule semantics and ET prefix"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Suspicious TCP Activity",
+        "review_value": "Prohibited Application or Protocol",
+        "reason": "Subcategory refined to better match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Tor anonymity network usage",
+      "detected_entity": "Tor",
+      "entity_type": "Software",
+      "category": "Policy Violation",
+      "subcategory": "Prohibited Application or Protocol",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious TCP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TCP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2100580,
+    "rev": 10,
+    "msg": "GPL RPC portmap nisd request UDP",
+    "decision": "EDIT",
+    "review_confidence": 0.82,
+    "review_note": "Edited 3 field(s): detected_behavior: 'Suspicious UDP Activity' -> 'RPC portmap enumeration'; category: 'Network Abuse' -> 'Discovery'; subcategory: 'Suspicious UDP Activity' -> 'None'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious UDP Activity",
+        "review_value": "RPC portmap enumeration",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "category",
+        "proposal_value": "Network Abuse",
+        "review_value": "Discovery",
+        "reason": "Category changed from 'Network Abuse' to 'Discovery' based on rule semantics and ET prefix"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Suspicious UDP Activity",
+        "review_value": null,
+        "reason": "Subcategory refined to better match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "RPC portmap enumeration",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Discovery",
+      "subcategory": null,
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious UDP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious UDP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2100652,
+    "rev": 10,
+    "msg": "GPL SHELLCODE Linux shellcode",
+    "decision": "EDIT",
+    "review_confidence": 0.82,
+    "review_note": "Edited 4 field(s): detected_behavior: 'Suspicious IP Activity' -> 'Exploit attempt against a network-accessible service'; category: 'Network Abuse' -> 'Exploitation'; subcategory: 'Suspicious IP Activity' -> 'Exploit Attempt'; cyber_kill_chain_phase: 'None' -> 'Exploitation'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious IP Activity",
+        "review_value": "Exploit attempt against a network-accessible service",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "category",
+        "proposal_value": "Network Abuse",
+        "review_value": "Exploitation",
+        "reason": "Category changed from 'Network Abuse' to 'Exploitation' based on rule semantics and ET prefix"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Suspicious IP Activity",
+        "review_value": "Exploit Attempt",
+        "reason": "Subcategory refined to better match rule behavior"
+      },
+      {
+        "field": "cyber_kill_chain_phase",
+        "proposal_value": null,
+        "review_value": "Exploitation",
+        "reason": "Kill Chain phase adjusted to match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Exploit attempt against a network-accessible service",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Exploitation",
+      "subcategory": "Exploit Attempt",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious IP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious IP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2025461,
+    "rev": 4,
+    "msg": "ET SCAN NYU Internet Census UA Inbound",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 5 field(s): detected_behavior: 'Network service scanning' -> 'Web scanning activity'; subcategory: 'Service Scan' -> 'Web Scan'; mitre_tactic: 'Discovery' -> 'None'; mitre_technique: 'Network Service Scanning' -> 'None'; mitre_technique_id: 'T1046' -> 'None'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Network service scanning",
+        "review_value": "Web scanning activity",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Service Scan",
+        "review_value": "Web Scan",
+        "reason": "Subcategory refined to better match rule behavior"
+      },
+      {
+        "field": "mitre_tactic",
+        "proposal_value": "Discovery",
+        "review_value": null,
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique",
+        "proposal_value": "Network Service Scanning",
+        "review_value": null,
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique_id",
+        "proposal_value": "T1046",
+        "review_value": null,
+        "reason": "T1046 not supported by rule behavior or not in local repository"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Web scanning activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Reconnaissance",
+      "subcategory": "Web Scan",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Reconnaissance"
+    },
+    "original_proposal": {
+      "detected_behavior": "Network service scanning",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Reconnaissance",
+      "subcategory": "Service Scan",
+      "mitre_tactic": "Discovery",
+      "mitre_technique": "Network Service Scanning",
+      "mitre_technique_id": "T1046",
+      "cyber_kill_chain_phase": "Reconnaissance"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2045426,
+    "rev": 2,
+    "msg": "ET MALWARE DNS Query to Raspberry Robin Domain (66j .me)",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Malware-related network activity' -> 'Raspberry Robin malware-related network activity'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Malware-related network activity",
+        "review_value": "Raspberry Robin malware-related network activity",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Raspberry Robin malware-related network activity",
+      "detected_entity": "Raspberry Robin",
+      "entity_type": "Malware",
+      "category": "Malware",
+      "subcategory": "Malware Network Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Malware-related network activity",
+      "detected_entity": "Raspberry Robin",
+      "entity_type": "Malware",
+      "category": "Malware",
+      "subcategory": "Malware Network Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2000564,
+    "rev": 10,
+    "msg": "ET EXPLOIT Pwdump3e pwservice.exe Access port 445",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 3 field(s): mitre_tactic: 'None' -> 'Initial Access'; mitre_technique: 'None' -> 'Exploit Public-Facing Application'; mitre_technique_id: 'None' -> 'T1190'",
+    "changes": [
+      {
+        "field": "mitre_tactic",
+        "proposal_value": null,
+        "review_value": "Initial Access",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique",
+        "proposal_value": null,
+        "review_value": "Exploit Public-Facing Application",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique_id",
+        "proposal_value": null,
+        "review_value": "T1190",
+        "reason": "T1190 is defensible based on rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Exploit attempt against a network-accessible service",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Exploitation",
+      "subcategory": "Exploit Attempt",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "original_proposal": {
+      "detected_behavior": "Exploit attempt against a network-accessible service",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Exploitation",
+      "subcategory": "Exploit Attempt",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2052166,
+    "rev": 1,
+    "msg": "ET INFO Observed URL Shortening Service Domain (trimmer .to in TLS SNI)",
+    "decision": "APPROVE",
+    "review_confidence": 0.82,
+    "review_note": "Proposal matches independent assessment",
+    "changes": [],
+    "final_expected": {
+      "detected_behavior": "Informational network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Other",
+      "subcategory": "Informational Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Informational network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Other",
+      "subcategory": "Informational Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2041326,
+    "rev": 3,
+    "msg": "ET DYN_DNS DYNAMIC_DNS Query to a *.neoneptune .com Domain",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 2 field(s): detected_behavior: 'DNS lookup for suspicious infrastructure' -> 'DNS query to dynamic DNS domain'; subcategory: 'Malicious Domain' -> 'Unusual DNS Query'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "DNS lookup for suspicious infrastructure",
+        "review_value": "DNS query to dynamic DNS domain",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Malicious Domain",
+        "review_value": "Unusual DNS Query",
+        "reason": "Subcategory refined to better match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "DNS query to dynamic DNS domain",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Suspicious DNS",
+      "subcategory": "Unusual DNS Query",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "DNS lookup for suspicious infrastructure",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Suspicious DNS",
+      "subcategory": "Malicious Domain",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2011286,
+    "rev": 7,
+    "msg": "ET WEB_SERVER Bot Search RFI Scan (Casper-Like MaMa Cyber/ebes)",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Suspicious HTTP1 Activity' -> 'Remote file inclusion scan'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious HTTP1 Activity",
+        "review_value": "Remote file inclusion scan",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Remote file inclusion scan",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious HTTP1 Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious HTTP1 Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious HTTP1 Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2048086,
+    "rev": 1,
+    "msg": "ET MOBILE_MALWARE Android/MMRAT CnC Checkin M2",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'TCP command-and-control communication' -> 'MMRAT command-and-control communication'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "TCP command-and-control communication",
+        "review_value": "MMRAT command-and-control communication",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "MMRAT command-and-control communication",
+      "detected_entity": "MMRAT",
+      "entity_type": "Malware",
+      "category": "Command and Control",
+      "subcategory": "C2 Communication",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "original_proposal": {
+      "detected_behavior": "TCP command-and-control communication",
+      "detected_entity": "MMRAT",
+      "entity_type": "Malware",
+      "category": "Command and Control",
+      "subcategory": "C2 Communication",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2060508,
+    "rev": 2,
+    "msg": "ET REMOTE_ACCESS Observed Anydesk Relay Domain (net .anydesk .com) in TLS SNI",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Remote access software communication' -> 'AnyDesk remote access software communication'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Remote access software communication",
+        "review_value": "AnyDesk remote access software communication",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "AnyDesk remote access software communication",
+      "detected_entity": "AnyDesk",
+      "entity_type": "Remote Access Tool",
+      "category": "Remote Access",
+      "subcategory": "Remote Administration Tool",
+      "mitre_tactic": "Command and Control",
+      "mitre_technique": "Remote Access Software",
+      "mitre_technique_id": "T1219",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "original_proposal": {
+      "detected_behavior": "Remote access software communication",
+      "detected_entity": "AnyDesk",
+      "entity_type": "Remote Access Tool",
+      "category": "Remote Access",
+      "subcategory": "Remote Administration Tool",
+      "mitre_tactic": "Command and Control",
+      "mitre_technique": "Remote Access Software",
+      "mitre_technique_id": "T1219",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "HIGH_CONFIDENCE_AGREEMENT"
+  },
+  {
+    "sid": 2025524,
+    "rev": 2,
+    "msg": "ET PHISHING MyADP Phishing Landing 2018-04-19",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 4 field(s): detected_behavior: 'Phishing Infrastructure' -> 'Credential phishing attempt'; mitre_tactic: 'None' -> 'Initial Access'; mitre_technique: 'None' -> 'Spearphishing Attachment'; mitre_technique_id: 'None' -> 'T1566.001'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Phishing Infrastructure",
+        "review_value": "Credential phishing attempt",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "mitre_tactic",
+        "proposal_value": null,
+        "review_value": "Initial Access",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique",
+        "proposal_value": null,
+        "review_value": "Spearphishing Attachment",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique_id",
+        "proposal_value": null,
+        "review_value": "T1566.001",
+        "reason": "T1566.001 is defensible based on rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Credential phishing attempt",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Phishing Infrastructure",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Spearphishing Attachment",
+      "mitre_technique_id": "T1566.001",
+      "cyber_kill_chain_phase": "Delivery"
+    },
+    "original_proposal": {
+      "detected_behavior": "Phishing Infrastructure",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Phishing Infrastructure",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Delivery"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2066004,
+    "rev": 1,
+    "msg": "ET WEB_SPECIFIC_APPS AvTech PwdGrp.cgi user Parameter Cross Site Scripting Attempt (CVE-2025-57202)",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 4 field(s): detected_behavior: 'Suspicious HTTP Activity' -> 'Web attack attempt: Cross-Site Scripting'; category: 'Network Abuse' -> 'Web Attack'; subcategory: 'Suspicious HTTP Activity' -> 'Cross-Site Scripting'; cyber_kill_chain_phase: 'None' -> 'Exploitation'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious HTTP Activity",
+        "review_value": "Web attack attempt: Cross-Site Scripting",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "category",
+        "proposal_value": "Network Abuse",
+        "review_value": "Web Attack",
+        "reason": "Category changed from 'Network Abuse' to 'Web Attack' based on rule semantics and ET prefix"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Suspicious HTTP Activity",
+        "review_value": "Cross-Site Scripting",
+        "reason": "Subcategory refined to better match rule behavior"
+      },
+      {
+        "field": "cyber_kill_chain_phase",
+        "proposal_value": null,
+        "review_value": "Exploitation",
+        "reason": "Kill Chain phase adjusted to match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Web attack attempt: Cross-Site Scripting",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Web Attack",
+      "subcategory": "Cross-Site Scripting",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious HTTP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious HTTP Activity",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2064683,
+    "rev": 1,
+    "msg": "ET EXPLOIT_KIT LandUpdate808 Domain (math1st .com) in TLS SNI",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 3 field(s): detected_behavior: 'Suspicious TLS Activity' -> 'Exploit kit-related network activity'; category: 'Network Abuse' -> 'Malware'; subcategory: 'Suspicious TLS Activity' -> 'Malware Network Activity'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious TLS Activity",
+        "review_value": "Exploit kit-related network activity",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "category",
+        "proposal_value": "Network Abuse",
+        "review_value": "Malware",
+        "reason": "Category changed from 'Network Abuse' to 'Malware' based on rule semantics and ET prefix"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Suspicious TLS Activity",
+        "review_value": "Malware Network Activity",
+        "reason": "Subcategory refined to better match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Exploit kit-related network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Malware",
+      "subcategory": "Malware Network Activity",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Drive-by Compromise",
+      "mitre_technique_id": "T1189",
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious TLS Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TLS Activity",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Drive-by Compromise",
+      "mitre_technique_id": "T1189",
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2102994,
+    "rev": 5,
+    "msg": "GPL NETBIOS SMB InitiateSystemShutdown unicode andx attempt",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Suspicious TCP Activity' -> 'Suspicious network activity'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious TCP Activity",
+        "review_value": "Suspicious network activity",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Suspicious network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TCP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious TCP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TCP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2522714,
+    "rev": 6363,
+    "msg": "ET TOR Known Tor Relay/Router (Not Exit) Node Traffic group 715",
+    "decision": "EDIT",
+    "review_confidence": 0.82,
+    "review_note": "Edited 5 field(s): detected_behavior: 'Suspicious TCP Activity' -> 'Tor anonymity network usage'; detected_entity: 'None' -> 'Tor'; entity_type: 'None' -> 'Software'; category: 'Network Abuse' -> 'Policy Violation'; subcategory: 'Suspicious TCP Activity' -> 'Prohibited Application or Protocol'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious TCP Activity",
+        "review_value": "Tor anonymity network usage",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "detected_entity",
+        "proposal_value": null,
+        "review_value": "Tor",
+        "reason": "'Tor' appears directly in rule message/content"
+      },
+      {
+        "field": "entity_type",
+        "proposal_value": null,
+        "review_value": "Software",
+        "reason": "Corrected entity type to match entity classification"
+      },
+      {
+        "field": "category",
+        "proposal_value": "Network Abuse",
+        "review_value": "Policy Violation",
+        "reason": "Category changed from 'Network Abuse' to 'Policy Violation' based on rule semantics and ET prefix"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Suspicious TCP Activity",
+        "review_value": "Prohibited Application or Protocol",
+        "reason": "Subcategory refined to better match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Tor anonymity network usage",
+      "detected_entity": "Tor",
+      "entity_type": "Software",
+      "category": "Policy Violation",
+      "subcategory": "Prohibited Application or Protocol",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious TCP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TCP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2015857,
+    "rev": 5,
+    "msg": "ET TFTP Outbound TFTP Data Transfer with Cisco config",
+    "decision": "EDIT",
+    "review_confidence": 0.82,
+    "review_note": "Edited 3 field(s): detected_behavior: 'Suspicious UDP Activity' -> 'TFTP data transfer with sensitive content'; category: 'Network Abuse' -> 'Policy Violation'; subcategory: 'Suspicious UDP Activity' -> 'Prohibited Application or Protocol'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious UDP Activity",
+        "review_value": "TFTP data transfer with sensitive content",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "category",
+        "proposal_value": "Network Abuse",
+        "review_value": "Policy Violation",
+        "reason": "Category changed from 'Network Abuse' to 'Policy Violation' based on rule semantics and ET prefix"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Suspicious UDP Activity",
+        "review_value": "Prohibited Application or Protocol",
+        "reason": "Subcategory refined to better match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "TFTP data transfer with sensitive content",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Policy Violation",
+      "subcategory": "Prohibited Application or Protocol",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious UDP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious UDP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2500000,
+    "rev": 7731,
+    "msg": "ET COMPROMISED Known Compromised or Hostile Host Traffic group 1",
+    "decision": "EDIT",
+    "review_confidence": 0.82,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Suspicious IP Activity' -> 'Traffic from known malicious infrastructure'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious IP Activity",
+        "review_value": "Traffic from known malicious infrastructure",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Traffic from known malicious infrastructure",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious IP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious IP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious IP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2010494,
+    "rev": 5,
+    "msg": "ET SCAN Multiple MySQL Login Failures Possible Brute Force Attempt",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Network service scanning' -> 'Brute-force login attempt detection'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Network service scanning",
+        "review_value": "Brute-force login attempt detection",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Brute-force login attempt detection",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Reconnaissance",
+      "subcategory": "Service Scan",
+      "mitre_tactic": "Discovery",
+      "mitre_technique": "Network Service Scanning",
+      "mitre_technique_id": "T1046",
+      "cyber_kill_chain_phase": "Reconnaissance"
+    },
+    "original_proposal": {
+      "detected_behavior": "Network service scanning",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Reconnaissance",
+      "subcategory": "Service Scan",
+      "mitre_tactic": "Discovery",
+      "mitre_technique": "Network Service Scanning",
+      "mitre_technique_id": "T1046",
+      "cyber_kill_chain_phase": "Reconnaissance"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2066414,
+    "rev": 1,
+    "msg": "ET MALWARE Observed Win32/Lumma Stealer Related Domain (almzsff .shop) in TLS SNI",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Malware-related network activity' -> 'Lumma Stealer malware-related network activity'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Malware-related network activity",
+        "review_value": "Lumma Stealer malware-related network activity",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Lumma Stealer malware-related network activity",
+      "detected_entity": "Lumma Stealer",
+      "entity_type": "Malware",
+      "category": "Malware",
+      "subcategory": "Malware Network Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Malware-related network activity",
+      "detected_entity": "Lumma Stealer",
+      "entity_type": "Malware",
+      "category": "Malware",
+      "subcategory": "Malware Network Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2019089,
+    "rev": 6,
+    "msg": "ET EXPLOIT F5 BIG-IP rsync cmi authorized_keys successful exfiltration",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 3 field(s): mitre_tactic: 'None' -> 'Initial Access'; mitre_technique: 'None' -> 'Exploit Public-Facing Application'; mitre_technique_id: 'None' -> 'T1190'",
+    "changes": [
+      {
+        "field": "mitre_tactic",
+        "proposal_value": null,
+        "review_value": "Initial Access",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique",
+        "proposal_value": null,
+        "review_value": "Exploit Public-Facing Application",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique_id",
+        "proposal_value": null,
+        "review_value": "T1190",
+        "reason": "T1190 is defensible based on rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Exploit attempt against a network-accessible service",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Exploitation",
+      "subcategory": "Exploit Attempt",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "original_proposal": {
+      "detected_behavior": "Exploit attempt against a network-accessible service",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Exploitation",
+      "subcategory": "Exploit Attempt",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2053543,
+    "rev": 1,
+    "msg": "ET INFO DNS Over HTTPS Domain in DNS Lookup (dns .esnube .es)",
+    "decision": "APPROVE",
+    "review_confidence": 0.82,
+    "review_note": "Proposal matches independent assessment",
+    "changes": [],
+    "final_expected": {
+      "detected_behavior": "Informational network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Other",
+      "subcategory": "Informational Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Informational network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Other",
+      "subcategory": "Informational Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2059953,
+    "rev": 1,
+    "msg": "ET EXPLOIT_KIT LandUpdate808 Domain in DNS Lookup (telback .com)",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 3 field(s): detected_behavior: 'DNS lookup for suspicious infrastructure' -> 'Exploit kit-related network activity'; category: 'Suspicious DNS' -> 'Malware'; subcategory: 'Malicious Domain' -> 'Malware Network Activity'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "DNS lookup for suspicious infrastructure",
+        "review_value": "Exploit kit-related network activity",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "category",
+        "proposal_value": "Suspicious DNS",
+        "review_value": "Malware",
+        "reason": "Category changed from 'Suspicious DNS' to 'Malware' based on rule semantics and ET prefix"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Malicious Domain",
+        "review_value": "Malware Network Activity",
+        "reason": "Subcategory refined to better match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Exploit kit-related network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Malware",
+      "subcategory": "Malware Network Activity",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Drive-by Compromise",
+      "mitre_technique_id": "T1189",
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "DNS lookup for suspicious infrastructure",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Suspicious DNS",
+      "subcategory": "Malicious Domain",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Drive-by Compromise",
+      "mitre_technique_id": "T1189",
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2026337,
+    "rev": 4,
+    "msg": "ET WEB_SERVER JSP.SJavaWebManage WebShell Pass 20-09-2018 1",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 3 field(s): mitre_tactic: 'None' -> 'Initial Access'; mitre_technique: 'None' -> 'Exploit Public-Facing Application'; mitre_technique_id: 'None' -> 'T1190'",
+    "changes": [
+      {
+        "field": "mitre_tactic",
+        "proposal_value": null,
+        "review_value": "Initial Access",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique",
+        "proposal_value": null,
+        "review_value": "Exploit Public-Facing Application",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique_id",
+        "proposal_value": null,
+        "review_value": "T1190",
+        "reason": "T1190 is defensible based on rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Web attack attempt: Web Shell",
+      "detected_entity": "SJavaWebManage",
+      "entity_type": "Malware",
+      "category": "Web Attack",
+      "subcategory": "Web Shell",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "original_proposal": {
+      "detected_behavior": "Web attack attempt: Web Shell",
+      "detected_entity": "SJavaWebManage",
+      "entity_type": "Malware",
+      "category": "Web Attack",
+      "subcategory": "Web Shell",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2035500,
+    "rev": 2,
+    "msg": "ET MOBILE_MALWARE Trojan-Spy.AndroidOS.Realrat.c (DNS Lookup) 9",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'DNS command-and-control communication' -> 'Realrat command-and-control communication'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "DNS command-and-control communication",
+        "review_value": "Realrat command-and-control communication",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Realrat command-and-control communication",
+      "detected_entity": "Realrat",
+      "entity_type": "Malware",
+      "category": "Command and Control",
+      "subcategory": "DNS C2 Communication",
+      "mitre_tactic": "Command and Control",
+      "mitre_technique": "DNS",
+      "mitre_technique_id": "T1071.004",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "original_proposal": {
+      "detected_behavior": "DNS command-and-control communication",
+      "detected_entity": "Realrat",
+      "entity_type": "Malware",
+      "category": "Command and Control",
+      "subcategory": "DNS C2 Communication",
+      "mitre_tactic": "Command and Control",
+      "mitre_technique": "DNS",
+      "mitre_technique_id": "T1071.004",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2014385,
+    "rev": 6,
+    "msg": "ET DOS Microsoft Remote Desktop (RDP) Syn/Ack Outbound Flowbit Set",
+    "decision": "APPROVE",
+    "review_confidence": 0.9,
+    "review_note": "Proposal matches independent assessment",
+    "changes": [],
+    "final_expected": {
+      "detected_behavior": "Remote access software communication",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Remote Access",
+      "subcategory": "Remote Administration Tool",
+      "mitre_tactic": "Lateral Movement",
+      "mitre_technique": "Remote Desktop Protocol",
+      "mitre_technique_id": "T1021.001",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "original_proposal": {
+      "detected_behavior": "Remote access software communication",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Remote Access",
+      "subcategory": "Remote Administration Tool",
+      "mitre_tactic": "Lateral Movement",
+      "mitre_technique": "Remote Desktop Protocol",
+      "mitre_technique_id": "T1021.001",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2031901,
+    "rev": 7,
+    "msg": "ET PHISHING Successful Wildblue Phishing M1 2015-11-24",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 4 field(s): detected_behavior: 'Phishing Infrastructure' -> 'Credential phishing attempt'; mitre_tactic: 'None' -> 'Initial Access'; mitre_technique: 'None' -> 'Spearphishing Attachment'; mitre_technique_id: 'None' -> 'T1566.001'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Phishing Infrastructure",
+        "review_value": "Credential phishing attempt",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "mitre_tactic",
+        "proposal_value": null,
+        "review_value": "Initial Access",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique",
+        "proposal_value": null,
+        "review_value": "Spearphishing Attachment",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique_id",
+        "proposal_value": null,
+        "review_value": "T1566.001",
+        "reason": "T1566.001 is defensible based on rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Credential phishing attempt",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Phishing Infrastructure",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Spearphishing Attachment",
+      "mitre_technique_id": "T1566.001",
+      "cyber_kill_chain_phase": "Delivery"
+    },
+    "original_proposal": {
+      "detected_behavior": "Phishing Infrastructure",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Phishing Infrastructure",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Delivery"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2007184,
+    "rev": 11,
+    "msg": "ET WEB_SPECIFIC_APPS Fixit iDMS Pro Image Gallery SQL Injection Attempt -- filelist.asp show_id INSERT",
+    "decision": "APPROVE",
+    "review_confidence": 0.9,
+    "review_note": "Proposal matches independent assessment",
+    "changes": [],
+    "final_expected": {
+      "detected_behavior": "Web attack attempt: SQL Injection",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Web Attack",
+      "subcategory": "SQL Injection",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "original_proposal": {
+      "detected_behavior": "Web attack attempt: SQL Injection",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Web Attack",
+      "subcategory": "SQL Injection",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2046734,
+    "rev": 2,
+    "msg": "ET RETIRED Observed GobRAT Domain (wpksi .mefound .com) in TLS SNI",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 4 field(s): detected_behavior: 'Suspicious TLS Activity' -> 'GobRAT command-and-control communication'; category: 'Network Abuse' -> 'Command and Control'; subcategory: 'Suspicious TLS Activity' -> 'TLS C2 Communication'; cyber_kill_chain_phase: 'None' -> 'Command and Control'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious TLS Activity",
+        "review_value": "GobRAT command-and-control communication",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "category",
+        "proposal_value": "Network Abuse",
+        "review_value": "Command and Control",
+        "reason": "Category changed from 'Network Abuse' to 'Command and Control' based on rule semantics and ET prefix"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Suspicious TLS Activity",
+        "review_value": "TLS C2 Communication",
+        "reason": "Subcategory refined to better match rule behavior"
+      },
+      {
+        "field": "cyber_kill_chain_phase",
+        "proposal_value": null,
+        "review_value": "Command and Control",
+        "reason": "Kill Chain phase adjusted to match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "GobRAT command-and-control communication",
+      "detected_entity": "GobRAT",
+      "entity_type": "Malware",
+      "category": "Command and Control",
+      "subcategory": "TLS C2 Communication",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious TLS Activity",
+      "detected_entity": "GobRAT",
+      "entity_type": "Malware",
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TLS Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2103162,
+    "rev": 5,
+    "msg": "GPL NETBIOS SMB msqueue unicode bind attempt",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Suspicious TCP Activity' -> 'Suspicious network activity'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious TCP Activity",
+        "review_value": "Suspicious network activity",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Suspicious network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TCP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious TCP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TCP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2002953,
+    "rev": 5,
+    "msg": "ET P2P TOR 1.0 Outbound Circuit Traffic",
+    "decision": "EDIT",
+    "review_confidence": 0.82,
+    "review_note": "Edited 5 field(s): detected_behavior: 'Suspicious TCP Activity' -> 'Tor anonymity network usage'; detected_entity: 'None' -> 'Tor'; entity_type: 'None' -> 'Software'; category: 'Network Abuse' -> 'Policy Violation'; subcategory: 'Suspicious TCP Activity' -> 'Prohibited Application or Protocol'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious TCP Activity",
+        "review_value": "Tor anonymity network usage",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "detected_entity",
+        "proposal_value": null,
+        "review_value": "Tor",
+        "reason": "'Tor' appears directly in rule message/content"
+      },
+      {
+        "field": "entity_type",
+        "proposal_value": null,
+        "review_value": "Software",
+        "reason": "Corrected entity type to match entity classification"
+      },
+      {
+        "field": "category",
+        "proposal_value": "Network Abuse",
+        "review_value": "Policy Violation",
+        "reason": "Category changed from 'Network Abuse' to 'Policy Violation' based on rule semantics and ET prefix"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Suspicious TCP Activity",
+        "review_value": "Prohibited Application or Protocol",
+        "reason": "Subcategory refined to better match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Tor anonymity network usage",
+      "detected_entity": "Tor",
+      "entity_type": "Software",
+      "category": "Policy Violation",
+      "subcategory": "Prohibited Application or Protocol",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious TCP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TCP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2101732,
+    "rev": 10,
+    "msg": "GPL RPC portmap rwalld request UDP",
+    "decision": "EDIT",
+    "review_confidence": 0.82,
+    "review_note": "Edited 3 field(s): detected_behavior: 'Suspicious UDP Activity' -> 'RPC portmap enumeration'; category: 'Network Abuse' -> 'Discovery'; subcategory: 'Suspicious UDP Activity' -> 'None'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious UDP Activity",
+        "review_value": "RPC portmap enumeration",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "category",
+        "proposal_value": "Network Abuse",
+        "review_value": "Discovery",
+        "reason": "Category changed from 'Network Abuse' to 'Discovery' based on rule semantics and ET prefix"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Suspicious UDP Activity",
+        "review_value": null,
+        "reason": "Subcategory refined to better match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "RPC portmap enumeration",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Discovery",
+      "subcategory": null,
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious UDP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious UDP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2029780,
+    "rev": 3,
+    "msg": "ET HUNTING Possible Covid19 Themed Email Spam Outbound M5",
+    "decision": "EDIT",
+    "review_confidence": 0.82,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Suspicious SMTP Activity' -> 'Suspicious email activity'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious SMTP Activity",
+        "review_value": "Suspicious email activity",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Suspicious email activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious SMTP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious SMTP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious SMTP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2024364,
+    "rev": 5,
+    "msg": "ET SCAN Possible Nmap User-Agent Observed",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 5 field(s): detected_behavior: 'Network service scanning' -> 'Web scanning activity'; subcategory: 'Service Scan' -> 'Web Scan'; mitre_tactic: 'Discovery' -> 'None'; mitre_technique: 'Network Service Scanning' -> 'None'; mitre_technique_id: 'T1046' -> 'None'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Network service scanning",
+        "review_value": "Web scanning activity",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Service Scan",
+        "review_value": "Web Scan",
+        "reason": "Subcategory refined to better match rule behavior"
+      },
+      {
+        "field": "mitre_tactic",
+        "proposal_value": "Discovery",
+        "review_value": null,
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique",
+        "proposal_value": "Network Service Scanning",
+        "review_value": null,
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique_id",
+        "proposal_value": "T1046",
+        "review_value": null,
+        "reason": "T1046 not supported by rule behavior or not in local repository"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Web scanning activity",
+      "detected_entity": "Nmap",
+      "entity_type": "Attack Tool",
+      "category": "Reconnaissance",
+      "subcategory": "Web Scan",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Reconnaissance"
+    },
+    "original_proposal": {
+      "detected_behavior": "Network service scanning",
+      "detected_entity": "Nmap",
+      "entity_type": "Attack Tool",
+      "category": "Reconnaissance",
+      "subcategory": "Service Scan",
+      "mitre_tactic": "Discovery",
+      "mitre_technique": "Network Service Scanning",
+      "mitre_technique_id": "T1046",
+      "cyber_kill_chain_phase": "Reconnaissance"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2066757,
+    "rev": 1,
+    "msg": "ET MALWARE Observed Win32/Lumma Stealer Related Domain (possuhb .cyou) in TLS SNI",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Malware-related network activity' -> 'Lumma Stealer malware-related network activity'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Malware-related network activity",
+        "review_value": "Lumma Stealer malware-related network activity",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Lumma Stealer malware-related network activity",
+      "detected_entity": "Lumma Stealer",
+      "entity_type": "Malware",
+      "category": "Malware",
+      "subcategory": "Malware Network Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Malware-related network activity",
+      "detected_entity": "Lumma Stealer",
+      "entity_type": "Malware",
+      "category": "Malware",
+      "subcategory": "Malware Network Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2067417,
+    "rev": 3,
+    "msg": "ET EXPLOIT Quest KACE Desktop Authority Insecure Named Pipe AdminExec Operation (CVE-2025-67813)",
+    "decision": "APPROVE",
+    "review_confidence": 0.9,
+    "review_note": "Proposal matches independent assessment",
+    "changes": [],
+    "final_expected": {
+      "detected_behavior": "Exploit attempt against a network-accessible service",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Exploitation",
+      "subcategory": "Exploit Attempt",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "original_proposal": {
+      "detected_behavior": "Exploit attempt against a network-accessible service",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Exploitation",
+      "subcategory": "Exploit Attempt",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2012900,
+    "rev": 7,
+    "msg": "ET INFO DNS Query for a Suspicious *.ae.am domain",
+    "decision": "APPROVE",
+    "review_confidence": 0.82,
+    "review_note": "Proposal matches independent assessment",
+    "changes": [],
+    "final_expected": {
+      "detected_behavior": "Informational network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Other",
+      "subcategory": "Informational Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Informational network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Other",
+      "subcategory": "Informational Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2043750,
+    "rev": 3,
+    "msg": "ET DYN_DNS DYNAMIC_DNS HTTP Request to a *.vasilevsky .org Domain",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 2 field(s): detected_behavior: 'DNS lookup for suspicious infrastructure' -> 'DNS query to dynamic DNS domain'; subcategory: 'Malicious Domain' -> 'Unusual DNS Query'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "DNS lookup for suspicious infrastructure",
+        "review_value": "DNS query to dynamic DNS domain",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Malicious Domain",
+        "review_value": "Unusual DNS Query",
+        "reason": "Subcategory refined to better match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "DNS query to dynamic DNS domain",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Suspicious DNS",
+      "subcategory": "Unusual DNS Query",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "DNS lookup for suspicious infrastructure",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Suspicious DNS",
+      "subcategory": "Malicious Domain",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2016841,
+    "rev": 5,
+    "msg": "ET WEB_SERVER  ColdFusion path disclosure to get the absolute path",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 3 field(s): mitre_tactic: 'None' -> 'Initial Access'; mitre_technique: 'None' -> 'Exploit Public-Facing Application'; mitre_technique_id: 'None' -> 'T1190'",
+    "changes": [
+      {
+        "field": "mitre_tactic",
+        "proposal_value": null,
+        "review_value": "Initial Access",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique",
+        "proposal_value": null,
+        "review_value": "Exploit Public-Facing Application",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique_id",
+        "proposal_value": null,
+        "review_value": "T1190",
+        "reason": "T1190 is defensible based on rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Web attack attempt: Web Exploit Attempt",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Web Attack",
+      "subcategory": "Web Exploit Attempt",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "original_proposal": {
+      "detected_behavior": "Web attack attempt: Web Exploit Attempt",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Web Attack",
+      "subcategory": "Web Exploit Attempt",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2034598,
+    "rev": 2,
+    "msg": "ET MOBILE_MALWARE Android Brunhilda Dropper (multifuctionscanner .club in DNS Lookup)",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'DNS command-and-control communication' -> 'Brunhilda command-and-control communication'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "DNS command-and-control communication",
+        "review_value": "Brunhilda command-and-control communication",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Brunhilda command-and-control communication",
+      "detected_entity": "Brunhilda",
+      "entity_type": "Malware",
+      "category": "Command and Control",
+      "subcategory": "DNS C2 Communication",
+      "mitre_tactic": "Command and Control",
+      "mitre_technique": "DNS",
+      "mitre_technique_id": "T1071.004",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "original_proposal": {
+      "detected_behavior": "DNS command-and-control communication",
+      "detected_entity": "Brunhilda",
+      "entity_type": "Malware",
+      "category": "Command and Control",
+      "subcategory": "DNS C2 Communication",
+      "mitre_tactic": "Command and Control",
+      "mitre_technique": "DNS",
+      "mitre_technique_id": "T1071.004",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2063279,
+    "rev": 1,
+    "msg": "ET HUNTING ConnectWise ScreenConnect Revoked Code Signing Certificate M1",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 2 field(s): detected_behavior: 'Remote access software communication' -> 'ScreenConnect remote access software communication'; entity_type: 'Software' -> 'Remote Access Tool'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Remote access software communication",
+        "review_value": "ScreenConnect remote access software communication",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "entity_type",
+        "proposal_value": "Software",
+        "review_value": "Remote Access Tool",
+        "reason": "Corrected entity type to match entity classification"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "ScreenConnect remote access software communication",
+      "detected_entity": "ScreenConnect",
+      "entity_type": "Remote Access Tool",
+      "category": "Remote Access",
+      "subcategory": "Remote Administration Tool",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "original_proposal": {
+      "detected_behavior": "Remote access software communication",
+      "detected_entity": "Screenconnect",
+      "entity_type": "Software",
+      "category": "Remote Access",
+      "subcategory": "Remote Administration Tool",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2037271,
+    "rev": 1,
+    "msg": "ET PHISHING Caixa Credential Phish Landing Page 2022-07-05",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 4 field(s): detected_behavior: 'Phishing Infrastructure' -> 'Credential phishing attempt'; mitre_tactic: 'None' -> 'Initial Access'; mitre_technique: 'None' -> 'Spearphishing Attachment'; mitre_technique_id: 'None' -> 'T1566.001'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Phishing Infrastructure",
+        "review_value": "Credential phishing attempt",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "mitre_tactic",
+        "proposal_value": null,
+        "review_value": "Initial Access",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique",
+        "proposal_value": null,
+        "review_value": "Spearphishing Attachment",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique_id",
+        "proposal_value": null,
+        "review_value": "T1566.001",
+        "reason": "T1566.001 is defensible based on rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Credential phishing attempt",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Phishing Infrastructure",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Spearphishing Attachment",
+      "mitre_technique_id": "T1566.001",
+      "cyber_kill_chain_phase": "Delivery"
+    },
+    "original_proposal": {
+      "detected_behavior": "Phishing Infrastructure",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Phishing Infrastructure",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Delivery"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2047979,
+    "rev": 1,
+    "msg": "ET PHISHING [TW] NOTG Obfuscation Redirect Observed M2",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 4 field(s): detected_behavior: 'Phishing Infrastructure' -> 'Credential phishing attempt'; mitre_tactic: 'None' -> 'Initial Access'; mitre_technique: 'None' -> 'Spearphishing Attachment'; mitre_technique_id: 'None' -> 'T1566.001'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Phishing Infrastructure",
+        "review_value": "Credential phishing attempt",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "mitre_tactic",
+        "proposal_value": null,
+        "review_value": "Initial Access",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique",
+        "proposal_value": null,
+        "review_value": "Spearphishing Attachment",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique_id",
+        "proposal_value": null,
+        "review_value": "T1566.001",
+        "reason": "T1566.001 is defensible based on rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Credential phishing attempt",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Phishing Infrastructure",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Spearphishing Attachment",
+      "mitre_technique_id": "T1566.001",
+      "cyber_kill_chain_phase": "Delivery"
+    },
+    "original_proposal": {
+      "detected_behavior": "Phishing Infrastructure",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Phishing Infrastructure",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Delivery"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2066325,
+    "rev": 1,
+    "msg": "ET EXPLOIT_KIT LandUpdate808 Domain (fsglobe .com) in TLS SNI",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 3 field(s): detected_behavior: 'Suspicious TLS Activity' -> 'Exploit kit-related network activity'; category: 'Network Abuse' -> 'Malware'; subcategory: 'Suspicious TLS Activity' -> 'Malware Network Activity'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious TLS Activity",
+        "review_value": "Exploit kit-related network activity",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "category",
+        "proposal_value": "Network Abuse",
+        "review_value": "Malware",
+        "reason": "Category changed from 'Network Abuse' to 'Malware' based on rule semantics and ET prefix"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Suspicious TLS Activity",
+        "review_value": "Malware Network Activity",
+        "reason": "Subcategory refined to better match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Exploit kit-related network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Malware",
+      "subcategory": "Malware Network Activity",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Drive-by Compromise",
+      "mitre_technique_id": "T1189",
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious TLS Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TLS Activity",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Drive-by Compromise",
+      "mitre_technique_id": "T1189",
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2103120,
+    "rev": 4,
+    "msg": "GPL NETBIOS SMB llsrconnect unicode andx overflow attempt",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Suspicious TCP Activity' -> 'Suspicious network activity'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious TCP Activity",
+        "review_value": "Suspicious network activity",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Suspicious network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TCP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious TCP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TCP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2009985,
+    "rev": 2,
+    "msg": "ET FTP Possible FTP Daemon Username UNION SELECT SQL Injection Attempt",
+    "decision": "EDIT",
+    "review_confidence": 0.82,
+    "review_note": "Edited 4 field(s): detected_behavior: 'Suspicious TCP Activity' -> 'Web attack attempt: SQL Injection'; category: 'Network Abuse' -> 'Web Attack'; subcategory: 'Suspicious TCP Activity' -> 'SQL Injection'; cyber_kill_chain_phase: 'None' -> 'Exploitation'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious TCP Activity",
+        "review_value": "Web attack attempt: SQL Injection",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "category",
+        "proposal_value": "Network Abuse",
+        "review_value": "Web Attack",
+        "reason": "Category changed from 'Network Abuse' to 'Web Attack' based on rule semantics and ET prefix"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Suspicious TCP Activity",
+        "review_value": "SQL Injection",
+        "reason": "Subcategory refined to better match rule behavior"
+      },
+      {
+        "field": "cyber_kill_chain_phase",
+        "proposal_value": null,
+        "review_value": "Exploitation",
+        "reason": "Kill Chain phase adjusted to match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Web attack attempt: SQL Injection",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Web Attack",
+      "subcategory": "SQL Injection",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious TCP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious TCP Activity",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2101280,
+    "rev": 10,
+    "msg": "GPL RPC portmap listing UDP 111",
+    "decision": "EDIT",
+    "review_confidence": 0.82,
+    "review_note": "Edited 3 field(s): detected_behavior: 'Suspicious UDP Activity' -> 'RPC portmap enumeration'; category: 'Network Abuse' -> 'Discovery'; subcategory: 'Suspicious UDP Activity' -> 'None'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious UDP Activity",
+        "review_value": "RPC portmap enumeration",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "category",
+        "proposal_value": "Network Abuse",
+        "review_value": "Discovery",
+        "reason": "Category changed from 'Network Abuse' to 'Discovery' based on rule semantics and ET prefix"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Suspicious UDP Activity",
+        "review_value": null,
+        "reason": "Subcategory refined to better match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "RPC portmap enumeration",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Discovery",
+      "subcategory": null,
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious UDP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious UDP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2400004,
+    "rev": 4816,
+    "msg": "ET DROP Spamhaus DROP Listed Traffic Inbound group 5",
+    "decision": "EDIT",
+    "review_confidence": 0.82,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Suspicious IP Activity' -> 'Traffic from known malicious infrastructure'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious IP Activity",
+        "review_value": "Traffic from known malicious infrastructure",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Traffic from known malicious infrastructure",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious IP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious IP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious IP Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2009159,
+    "rev": 11,
+    "msg": "ET SCAN Toata Scanner User-Agent Detected",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 5 field(s): detected_behavior: 'Network service scanning' -> 'Web scanning activity'; subcategory: 'Service Scan' -> 'Web Scan'; mitre_tactic: 'Discovery' -> 'None'; mitre_technique: 'Network Service Scanning' -> 'None'; mitre_technique_id: 'T1046' -> 'None'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Network service scanning",
+        "review_value": "Web scanning activity",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Service Scan",
+        "review_value": "Web Scan",
+        "reason": "Subcategory refined to better match rule behavior"
+      },
+      {
+        "field": "mitre_tactic",
+        "proposal_value": "Discovery",
+        "review_value": null,
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique",
+        "proposal_value": "Network Service Scanning",
+        "review_value": null,
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique_id",
+        "proposal_value": "T1046",
+        "review_value": null,
+        "reason": "T1046 not supported by rule behavior or not in local repository"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Web scanning activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Reconnaissance",
+      "subcategory": "Web Scan",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Reconnaissance"
+    },
+    "original_proposal": {
+      "detected_behavior": "Network service scanning",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Reconnaissance",
+      "subcategory": "Service Scan",
+      "mitre_tactic": "Discovery",
+      "mitre_technique": "Network Service Scanning",
+      "mitre_technique_id": "T1046",
+      "cyber_kill_chain_phase": "Reconnaissance"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2056218,
+    "rev": 1,
+    "msg": "ET MALWARE Observed DNS Query to SloppyLemming/UNK_SloppyDisc Domain (sensors .opensecurity-legacy .com)",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Malware-related network activity' -> 'SloppyLemming malware-related network activity'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Malware-related network activity",
+        "review_value": "SloppyLemming malware-related network activity",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "SloppyLemming malware-related network activity",
+      "detected_entity": "SloppyLemming",
+      "entity_type": "Malware",
+      "category": "Malware",
+      "subcategory": "Malware Network Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Malware-related network activity",
+      "detected_entity": "Sloppylemming",
+      "entity_type": "Malware",
+      "category": "Malware",
+      "subcategory": "Malware Network Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2033307,
+    "rev": 1,
+    "msg": "ET EXPLOIT UDP Technology Firmware (IP Cam) - tmpapp.cgi RCE via Command Injection Attempt Inbound (CVE-2021-33544)",
+    "decision": "APPROVE",
+    "review_confidence": 0.9,
+    "review_note": "Proposal matches independent assessment",
+    "changes": [],
+    "final_expected": {
+      "detected_behavior": "Exploit attempt against a network-accessible service",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Exploitation",
+      "subcategory": "Web Exploit Attempt",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "original_proposal": {
+      "detected_behavior": "Exploit attempt against a network-accessible service",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Exploitation",
+      "subcategory": "Web Exploit Attempt",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2047872,
+    "rev": 1,
+    "msg": "ET INFO DNS Query for Port Mapping/Tunneling Service Domain (.portmap .host)",
+    "decision": "APPROVE",
+    "review_confidence": 0.82,
+    "review_note": "Proposal matches independent assessment",
+    "changes": [],
+    "final_expected": {
+      "detected_behavior": "Informational network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Other",
+      "subcategory": "Informational Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Informational network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Other",
+      "subcategory": "Informational Activity",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2060849,
+    "rev": 2,
+    "msg": "ET EXPLOIT_KIT Observed ClickFix Domain (authentication-to .help) in DNS Lookup",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 6 field(s): detected_behavior: 'DNS lookup for suspicious infrastructure' -> 'ClickFix malware-related network activity'; category: 'Suspicious DNS' -> 'Malware'; subcategory: 'Malicious Domain' -> 'Malware Network Activity'; mitre_tactic: 'None' -> 'Initial Access'; mitre_technique: 'None' -> 'Drive-by Compromise'; mitre_technique_id: 'None' -> 'T1189'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "DNS lookup for suspicious infrastructure",
+        "review_value": "ClickFix malware-related network activity",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "category",
+        "proposal_value": "Suspicious DNS",
+        "review_value": "Malware",
+        "reason": "Category changed from 'Suspicious DNS' to 'Malware' based on rule semantics and ET prefix"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "Malicious Domain",
+        "review_value": "Malware Network Activity",
+        "reason": "Subcategory refined to better match rule behavior"
+      },
+      {
+        "field": "mitre_tactic",
+        "proposal_value": null,
+        "review_value": "Initial Access",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique",
+        "proposal_value": null,
+        "review_value": "Drive-by Compromise",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique_id",
+        "proposal_value": null,
+        "review_value": "T1189",
+        "reason": "T1189 is defensible based on rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "ClickFix malware-related network activity",
+      "detected_entity": "ClickFix",
+      "entity_type": "Malware",
+      "category": "Malware",
+      "subcategory": "Malware Network Activity",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Drive-by Compromise",
+      "mitre_technique_id": "T1189",
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "DNS lookup for suspicious infrastructure",
+      "detected_entity": "ClickFix",
+      "entity_type": "Malware",
+      "category": "Suspicious DNS",
+      "subcategory": "Malicious Domain",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2013940,
+    "rev": 6,
+    "msg": "ET WEB_SERVER Weevely PHP backdoor detected (proc_open() function used)",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 3 field(s): mitre_tactic: 'None' -> 'Initial Access'; mitre_technique: 'None' -> 'Exploit Public-Facing Application'; mitre_technique_id: 'None' -> 'T1190'",
+    "changes": [
+      {
+        "field": "mitre_tactic",
+        "proposal_value": null,
+        "review_value": "Initial Access",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique",
+        "proposal_value": null,
+        "review_value": "Exploit Public-Facing Application",
+        "reason": "MITRE fields corrected to match canonical local repository"
+      },
+      {
+        "field": "mitre_technique_id",
+        "proposal_value": null,
+        "review_value": "T1190",
+        "reason": "T1190 is defensible based on rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Web attack attempt: Web Exploit Attempt",
+      "detected_entity": "Weevely",
+      "entity_type": "Malware",
+      "category": "Web Attack",
+      "subcategory": "Web Exploit Attempt",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "original_proposal": {
+      "detected_behavior": "Web attack attempt: Web Exploit Attempt",
+      "detected_entity": "Weevely",
+      "entity_type": "Malware",
+      "category": "Web Attack",
+      "subcategory": "Web Exploit Attempt",
+      "mitre_tactic": null,
+      "mitre_technique": null,
+      "mitre_technique_id": null,
+      "cyber_kill_chain_phase": "Exploitation"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2033221,
+    "rev": 3,
+    "msg": "ET ADWARE_PUP Nivesro Cheat CnC Activity M1",
+    "decision": "EDIT",
+    "review_confidence": 0.85,
+    "review_note": "Edited 4 field(s): detected_behavior: 'HTTP1 command-and-control communication' -> 'Nivesro command-and-control communication'; detected_entity: 'None' -> 'Nivesro'; entity_type: 'None' -> 'Malware'; subcategory: 'C2 Communication' -> 'HTTP C2 Communication'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "HTTP1 command-and-control communication",
+        "review_value": "Nivesro command-and-control communication",
+        "reason": "Behavior description adjusted for accuracy"
+      },
+      {
+        "field": "detected_entity",
+        "proposal_value": null,
+        "review_value": "Nivesro",
+        "reason": "'Nivesro' appears directly in rule message/content"
+      },
+      {
+        "field": "entity_type",
+        "proposal_value": null,
+        "review_value": "Malware",
+        "reason": "Corrected entity type to match entity classification"
+      },
+      {
+        "field": "subcategory",
+        "proposal_value": "C2 Communication",
+        "review_value": "HTTP C2 Communication",
+        "reason": "Subcategory refined to better match rule behavior"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Nivesro command-and-control communication",
+      "detected_entity": "Nivesro",
+      "entity_type": "Malware",
+      "category": "Command and Control",
+      "subcategory": "HTTP C2 Communication",
+      "mitre_tactic": "Exfiltration",
+      "mitre_technique": "Exfiltration Over C2 Channel",
+      "mitre_technique_id": "T1041",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "original_proposal": {
+      "detected_behavior": "HTTP1 command-and-control communication",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Command and Control",
+      "subcategory": "C2 Communication",
+      "mitre_tactic": "Exfiltration",
+      "mitre_technique": "Exfiltration Over C2 Channel",
+      "mitre_technique_id": "T1041",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2060632,
+    "rev": 1,
+    "msg": "ET REMOTE_ACCESS Observed TeamViewer RMM Related Domain (teamviewer .com) in TLS SNI",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Remote access software communication' -> 'TeamViewer remote access software communication'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Remote access software communication",
+        "review_value": "TeamViewer remote access software communication",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "TeamViewer remote access software communication",
+      "detected_entity": "TeamViewer",
+      "entity_type": "Remote Access Tool",
+      "category": "Remote Access",
+      "subcategory": "Remote Administration Tool",
+      "mitre_tactic": "Command and Control",
+      "mitre_technique": "Remote Access Software",
+      "mitre_technique_id": "T1219",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "original_proposal": {
+      "detected_behavior": "Remote access software communication",
+      "detected_entity": "TeamViewer",
+      "entity_type": "Remote Access Tool",
+      "category": "Remote Access",
+      "subcategory": "Remote Administration Tool",
+      "mitre_tactic": "Command and Control",
+      "mitre_technique": "Remote Access Software",
+      "mitre_technique_id": "T1219",
+      "cyber_kill_chain_phase": "Command and Control"
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "HIGH_CONFIDENCE_AGREEMENT"
+  },
+  {
+    "sid": 2005279,
+    "rev": 9,
+    "msg": "ET WEB_SPECIFIC_APPS Easebay Resources Login Manager SQL Injection Attempt -- memberlist.php init_row UPDATE",
+    "decision": "APPROVE",
+    "review_confidence": 0.9,
+    "review_note": "Proposal matches independent assessment",
+    "changes": [],
+    "final_expected": {
+      "detected_behavior": "Credential access-related network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Credential Access",
+      "subcategory": "Credential Activity",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Credential access-related network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Credential Access",
+      "subcategory": "Credential Activity",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  },
+  {
+    "sid": 2013682,
+    "rev": 5,
+    "msg": "ET WEB_SPECIFIC_APPS Simplis CMS download_file Parameter Local File Inclusion Attempt",
+    "decision": "EDIT",
+    "review_confidence": 0.88,
+    "review_note": "Minor edit to 1 field(s): detected_behavior: 'Suspicious HTTP Activity' -> 'Suspicious network activity'",
+    "changes": [
+      {
+        "field": "detected_behavior",
+        "proposal_value": "Suspicious HTTP Activity",
+        "review_value": "Suspicious network activity",
+        "reason": "Behavior description adjusted for accuracy"
+      }
+    ],
+    "final_expected": {
+      "detected_behavior": "Suspicious network activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious HTTP Activity",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": null
+    },
+    "original_proposal": {
+      "detected_behavior": "Suspicious HTTP Activity",
+      "detected_entity": null,
+      "entity_type": null,
+      "category": "Network Abuse",
+      "subcategory": "Suspicious HTTP Activity",
+      "mitre_tactic": "Initial Access",
+      "mitre_technique": "Exploit Public-Facing Application",
+      "mitre_technique_id": "T1190",
+      "cyber_kill_chain_phase": null
+    },
+    "verifier_verdict": "AGREE",
+    "verifier_agreement": "PARTIAL_AGREEMENT"
+  }
+]

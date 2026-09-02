@@ -1,0 +1,7 @@
+{
+  "source": "MITRE ATT&CK official STIX 2.1 repository",
+  "source_url": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/enterprise-attack/enterprise-attack.json",
+  "retrieved_at": "2026-09-02T08:40:26.491247+00:00",
+  "sha256": "dc1639caa5501d720e280cf1cbd8fbe009884a0c9b3e6e9ed9d0c25166c3d8f4",
+  "technique_count": 697
+}

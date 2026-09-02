@@ -1,0 +1,12 @@
+.env
+*.db
+__pycache__/
+.pytest_cache/
+.venv/
+node_modules/
+dist/
+*.py[cod]
+*.tsbuildinfo
+*.tar.gz
+.DS_Store
+work/
