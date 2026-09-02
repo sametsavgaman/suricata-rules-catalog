@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { StatusBadge } from "../components/StatusBadge";
 import { getClassificationFilters, getRules, getStats, importRules } from "../services/api";
@@ -18,6 +18,7 @@ export function Dashboard() {
   const pageSize = 50;
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const searchRef = useRef<HTMLInputElement>(null);
   const [modelFilters, setModelFilters] = useState<{models:string[]; providers:string[]; classifier_versions:string[]; inference_modes:string[]; runs:string[]}>({models:[],providers:[],classifier_versions:[],inference_modes:[],runs:[]});
   useEffect(() => { void getClassificationFilters().then(setModelFilters).catch(() => undefined); }, []);
 
@@ -36,6 +37,16 @@ export function Dashboard() {
   };
   useEffect(() => { void load(); }, [params.toString()]);
   useEffect(() => { setPage(1); }, [search, filters]);
+  useEffect(() => {
+    const onShortcut = (event: KeyboardEvent) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        searchRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onShortcut);
+    return () => window.removeEventListener("keydown", onShortcut);
+  }, []);
 
   const upload = async (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files?.length) return;
@@ -65,11 +76,11 @@ export function Dashboard() {
     ["Failed", stats.failed], ["Average Model Confidence", `${Math.round(stats.average_confidence * 100)}%`],
   ];
   return <>
-    <header className="topbar"><div><span className="eyebrow">RULE EXPLORER</span><h1>Suricata Rule Agent</h1><p>Browse raw rules and inspect evidence-backed final classifications.</p></div><label className="import-button">{busy ? "Importing…" : "Import .rules"}<input type="file" accept=".rules,text/plain" multiple disabled={busy} onChange={upload}/></label></header>
+    <header className="topbar reveal"><div><div className="brand-line"><span className="brand-mark">◈</span><span className="eyebrow">AI SECURITY ANALYSIS PLATFORM</span></div><h1>Suricata Rule Agent</h1><p>Evidence-backed classification for every detection rule.</p></div><div className="topbar-actions"><span className="live-status"><i/> System online</span><label className="import-button">{busy ? "Importing…" : "Import .rules"}<input type="file" accept=".rules,text/plain" multiple disabled={busy} onChange={upload}/></label></div></header>
     {error && <div className="error">{error}</div>}
-    <section className="stats-grid">{cards.map(([label, value]) => <article className="stat" key={label}><span>{label}</span><strong>{value}</strong></article>)}{Object.entries(stats.manual_review || {}).map(([label,value]) => <article className="stat manual-stat" key={label}><span>Manual {label.replaceAll("_"," ")}</span><strong>{value}</strong></article>)}</section>
+    <section className="stats-grid">{cards.map(([label, value], index) => <article className={`stat reveal reveal-${Math.min(index + 1, 5)}`} key={label}><span>{label}</span><strong>{value}</strong><em>{label === "Average Model Confidence" ? "uncalibrated model signal" : label === "Total Rules" ? "in current workspace" : "live queue"}</em></article>)}{Object.entries(stats.manual_review || {}).map(([label,value]) => <article className="stat manual-stat reveal" key={label}><span>Manual {label.replaceAll("_"," ")}</span><strong>{value}</strong></article>)}</section>
     <section className="panel">
-      <div className="panel-heading"><div><h2>Rule Explorer</h2><p>{total} matching rules · server-side page {page}</p></div><div className="explorer-actions"><button className="export-button" onClick={exportCsv} disabled={!rules.length}>Export CSV</button><button className="export-button" onClick={() => window.print()} disabled={!rules.length}>Print / PDF</button><input className="search" placeholder="Search SID, raw rule, entity, category, MITRE…" value={search} onChange={e => setSearch(e.target.value)} /></div></div>
+      <div className="panel-heading"><div><div className="section-kicker">LIVE DATASET</div><h2>Rule Explorer</h2><p>{total} matching rules · server-side page {page}</p></div><div className="explorer-actions"><button className="export-button" onClick={exportCsv} disabled={!rules.length}>↓ CSV</button><button className="export-button" onClick={() => window.print()} disabled={!rules.length}>▣ PDF / Print</button><label className="search-wrap"><span>⌕</span><input ref={searchRef} className="search" aria-label="Search rules" placeholder="Search SID, rule, entity, MITRE…" value={search} onChange={e => setSearch(e.target.value)} /><kbd>Ctrl K</kbd></label></div></div>
       <div className="filters">
         <select value={filters.category} onChange={e => setFilters({...filters, category:e.target.value})}><option value="">All categories</option>{Object.keys(stats.category_distribution).map(x => <option key={x}>{x}</option>)}</select>
         <input placeholder="MITRE ID" value={filters.mitre_technique_id} onChange={e => setFilters({...filters, mitre_technique_id:e.target.value})}/>
@@ -89,7 +100,7 @@ export function Dashboard() {
         <select value={filters.sort} onChange={e => setFilters({...filters, sort:e.target.value})}><option value="sid_desc">Newest SID</option><option value="sid_asc">Oldest SID</option><option value="confidence_desc">Confidence ↓</option><option value="confidence_asc">Confidence ↑</option><option value="recent">Recently classified</option></select>
       </div><div className="pagination"><button disabled={page <= 1} onClick={() => setPage(page - 1)}>← Previous</button><span>Page {page} / {Math.max(1, Math.ceil(total / pageSize))}</span><button disabled={page >= Math.ceil(total / pageSize)} onClick={() => setPage(page + 1)}>Next →</button></div>
       <div className="table-wrap"><table><thead><tr><th>SID</th><th>Message</th><th>Entity</th><th>Behavior</th><th>Category</th><th>MITRE</th><th>Model Confidence</th><th>Status</th></tr></thead><tbody>{rules.map(rule => {
-        const c = rule.classification; return <tr key={rule.id} onClick={() => navigate(`/rules/${rule.sid}`)}><td className="mono">{rule.sid}<small>rev {rule.rev}</small></td><td className="message">{rule.msg || "—"}<small>{rule.protocol} · {rule.classtype || "unclassified"}</small></td><td>{c?.detected_entity || "—"}</td><td>{c?.detected_behavior || "—"}</td><td>{c?.category || "—"}<small>{c?.subcategory}</small></td><td className="mono">{c?.mitre_technique_id || "—"}<small>{c?.mitre_technique}</small></td><td>{c ? <span className="confidence">{Math.round(c.confidence*100)}%</span> : "—"}</td><td><StatusBadge status={c?.classification_status}/><small className={`review-label ${rule.manual_review?.status?.toLowerCase() || "unreviewed"}`}>{rule.manual_review?.status || "UNREVIEWED"}</small></td></tr>;
+        const c = rule.classification; return <tr key={rule.id} onClick={() => navigate(`/rules/${rule.sid}`)}><td className="mono sid-cell"><span>{rule.sid}</span><small>rev {rule.rev}</small></td><td className="message">{rule.msg || "—"}<small>{rule.protocol} · {rule.classtype || "unclassified"}</small></td><td>{c?.detected_entity || <span className="dim">Not assigned</span>}</td><td>{c?.detected_behavior || <span className="dim">Not assigned</span>}</td><td>{c?.category || <span className="dim">—</span>}<small>{c?.subcategory}</small></td><td className="mono">{c?.mitre_technique_id || <span className="dim">—</span>}<small>{c?.mitre_technique}</small></td><td>{c ? <span className="confidence"><i style={{width:`${Math.round((c.model_confidence ?? c.confidence)*100)}%`}}/>{Math.round((c.model_confidence ?? c.confidence)*100)}%</span> : "—"}</td><td><StatusBadge status={c?.classification_status}/><small className={`review-label ${rule.manual_review?.status?.toLowerCase() || "unreviewed"}`}>{rule.manual_review?.status || "UNREVIEWED"}</small></td></tr>;
       })}</tbody></table>{!rules.length && <div className="empty">No rules match the current filters.</div>}</div>
     </section>
   </>;
