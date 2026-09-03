@@ -77,7 +77,10 @@ def main(directory):
             metrics = models[name]['audited_metrics']
             cells.append(f"{metrics['field_metrics'][field]['exact_accuracy']:.1%} (n={metrics['evaluated']})" if metrics else 'Unavailable')
         lines.append(f"| {field} | {cells[0]} | {cells[1]} |")
-    lines += ['', '## Fresh operational rules (no accuracy)', '', '| Model | Total | Successful | Entity assigned | MITRE assigned |', '|---|---:|---:|---:|---:|']
+    behavior = [models[name]['audited_metrics'] for name in ('gemini','ollama')]
+    if all(behavior):
+        lines.append(f"| Behavior normalized by existing heuristic | {behavior[0]['behavior_semantic_normalized_accuracy']:.1%} | {behavior[1]['behavior_semantic_normalized_accuracy']:.1%} |")
+    lines += ['', 'Behavior exact match is text equality; normalized behavior uses the existing project heuristic, not an independent semantic judge.', '', '## Fresh operational rules (no accuracy)', '', '| Model | Total | Successful | Entity assigned | MITRE assigned |', '|---|---:|---:|---:|---:|']
     for name,m in models.items():
         f=m['fresh_operational']
         lines.append(f"| {name} | {f['total']} | {f['succeeded']} | {f['entity_assigned']} | {f['mitre_assigned']} |")

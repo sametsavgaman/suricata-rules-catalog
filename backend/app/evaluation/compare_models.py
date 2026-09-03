@@ -11,6 +11,7 @@ from time import perf_counter
 from sqlalchemy import select
 
 from app.agent.factory import create_classification_provider, provider_config_error
+from app.agent.prompt import SYSTEM_PROMPT
 from app.config import get_settings
 from app.database.models import Rule, ClassificationStatus
 from app.database.session import Base, engine, SessionLocal, ensure_schema_extensions
@@ -93,8 +94,13 @@ async def run(args):
     golden = {(r.sid, r.rev): r for r in reviewed_records(GOLDEN)}
     stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
     outdir = args.resume.resolve() if args.resume else ROOT / 'data/evaluation/model-comparison' / stamp
+    inputs = {'sample_sha256': sample_hash, 'golden_sha256': golden_hash, 'limit': args.limit,
+        'prompt_sha256': hashlib.sha256(SYSTEM_PROMPT.encode()).hexdigest(),
+        'providers': {name: {'model': p.model_name, 'configuration': getattr(p, 'configuration', {})} for name, (s, p) in services_settings.items()}}
     output = []
     if args.resume:
+        if json.loads((outdir/'run-inputs.json').read_text(encoding='utf-8')) != inputs:
+            raise ValueError('Resume input/configuration mismatch; start a new comparison directory.')
         output = [json.loads(line) for line in (outdir / 'results.jsonl').read_text(encoding='utf-8').splitlines() if line.strip()]
         wanted = {(r['sid'], r['rev']) for r in selected}
         for row in output:
@@ -104,6 +110,7 @@ async def run(args):
                 raise ValueError('Resume model/version mismatch.')
     else:
         outdir.mkdir(parents=True, exist_ok=False)
+        (outdir/'run-inputs.json').write_text(json.dumps(inputs,indent=2),encoding='utf-8')
     completed = {(r['provider'], r['sid'], r['rev']) for r in output}
     if len(completed) != len(output):
         raise ValueError('Duplicate results in resume file.')

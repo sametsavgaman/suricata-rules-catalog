@@ -130,3 +130,21 @@ class ManualReview(Base):
     reviewer_type: Mapped[str] = mapped_column(String(32), default="HUMAN")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
     rule: Mapped[Rule] = relationship(back_populates="manual_reviews")
+
+class ApplicationSetting(Base):
+    __tablename__ = "application_settings"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    key: Mapped[str] = mapped_column(String(64), unique=True, index=True)
+    value: Mapped[str | None] = mapped_column(Text, nullable=True)
+    is_secret: Mapped[bool] = mapped_column(default=False)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, onupdate=utcnow)
+
+class ComparisonReview(Base):
+    __tablename__ = "comparison_reviews"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    rule_id: Mapped[int] = mapped_column(ForeignKey("rules.id", ondelete="CASCADE"), index=True)
+    classification_a_id: Mapped[int | None] = mapped_column(ForeignKey("classifications.id", ondelete="SET NULL"), nullable=True)
+    classification_b_id: Mapped[int | None] = mapped_column(ForeignKey("classifications.id", ondelete="SET NULL"), nullable=True)
+    preference: Mapped[str] = mapped_column(String(24))
+    note: Mapped[str | None] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)

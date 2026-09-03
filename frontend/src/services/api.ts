@@ -22,3 +22,9 @@ export function importRules(files: FileList) {
   Array.from(files).forEach(file => body.append("files", file));
   return request<{imported: number; skipped: number; failed: number}>("/rules/import", { method: "POST", body });
 }
+export function getModelConfig() { return request<any>("/model-lab/config"); }
+export function updateModelConfig(payload: any) { return request<any>("/model-lab/config", {method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}); }
+export function testModel(provider: "gemini"|"ollama") { return request<any>(`/model-lab/test/${provider}`, {method:"POST"}); }
+export function getOllamaModels() { return request<{models:string[];error?:string}>("/model-lab/ollama/models"); }
+export function compareModels(payload: {sid:number;rev?:number;models:string[]}) { return request<any>("/model-lab/compare", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}); }
+export function saveComparisonReview(sid:number,payload:any) { return request<any>(`/model-lab/${sid}/review`, {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}); }

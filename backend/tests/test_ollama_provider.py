@@ -63,3 +63,17 @@ def test_factory_and_environment(monkeypatch):
     provider = create_classification_provider(settings)
     assert provider.model_name == 'qwen3:custom'
     assert provider.inference_mode == 'LOCAL'
+
+
+def test_transient_retries_are_bounded(monkeypatch):
+    calls = []
+    async def no_wait(_):
+        return None
+    monkeypatch.setattr('app.agent.ollama.asyncio.sleep', no_wait)
+    def handler(request):
+        calls.append(request)
+        return httpx.Response(429, text='not logged')
+    provider = OllamaClassificationProvider(max_retries=2, transport=httpx.MockTransport(handler))
+    with pytest.raises(ProviderUnavailable, match='OLLAMA_HTTP_429'):
+        asyncio.run(provider.classify(context()))
+    assert len(calls) == 3

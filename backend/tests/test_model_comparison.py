@@ -17,6 +17,8 @@ from app.knowledge.mitre_repository import MitreRepository
 from app.main import app
 from app.parser.suricata_parser import SuricataRuleParser
 from app.services.classification_service import ClassificationService
+from app.evaluation.comparison_report import paired_analysis
+import pytest
 
 
 def test_frozen_sample_and_fresh_metrics_have_no_accuracy():
@@ -33,6 +35,21 @@ def test_frozen_sample_and_fresh_metrics_have_no_accuracy():
     assert summary['audited_metrics'] is None
     assert 'accuracy' not in json.dumps(summary['fresh_operational'])
     assert summary['usage']['total_tokens'] == 30
+
+
+def test_paired_report_checks_identity_and_does_not_call_agreement_accuracy():
+    common = dict(sid=1,rev=1,cohort='FRESH_OPERATIONAL',succeeded=True,
+        final_classification={'category':'Reconnaissance'},classification_id=1,
+        configuration={'context_sha256':'same','prompt_sha256':'same'})
+    g,q = {**common,'provider':'gemini'}, {**common,'provider':'ollama'}
+    report = paired_analysis([g,q])
+    assert report['successful_pairs']==1
+    assert report['agreement_not_accuracy']['category']==1
+    assert report['context_or_prompt_mismatches']==[]
+    q['configuration']={'context_sha256':'different','prompt_sha256':'same'}
+    assert paired_analysis([g,q])['context_or_prompt_mismatches']==[[1,1]]
+    with pytest.raises(ValueError,match='Duplicate'):
+        paired_analysis([g,q,q])
 
 
 def test_provider_filter_selects_each_models_result_and_review_is_scoped():

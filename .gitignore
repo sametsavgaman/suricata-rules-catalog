@@ -3,6 +3,7 @@
 *.db-journal
 *.db-wal
 *.db-shm
+.runtime-secrets.json
 __pycache__/
 .pytest_cache/
 .venv/
