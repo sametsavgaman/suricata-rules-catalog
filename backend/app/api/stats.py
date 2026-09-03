@@ -53,8 +53,12 @@ def get_stats(db: Session = Depends(get_db)):
             .where(latest_reviews.c.status == name)
         ) or 0
     reviewed_classified = sum(manual.values())
-    manual["UNREVIEWED"] = max(0, classified + review - reviewed_classified)
-    manual["NOT_CLASSIFIED"] = max(0, total_rules - classified - review)
+    # The dashboard's Manual Unreviewed queue is the set of rules that still
+    # have no usable AI classification.  Keep the narrower classified-but-not
+    # human-reviewed count separately for clients that need that distinction.
+    manual["UNREVIEWED"] = max(0, total_rules - classified)
+    manual["CLASSIFIED_UNREVIEWED"] = max(0, classified + review - reviewed_classified)
+    manual["NOT_CLASSIFIED"] = manual["UNREVIEWED"]
     return StatsResponse(
         total_rules=total_rules,
         classified_rules=classified,

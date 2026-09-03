@@ -43,7 +43,8 @@ def test_import_list_detail_and_stats():
         assert stats.status_code == 200
         assert stats.json()["total_rules"] == 20
         assert stats.json()["classified_rules"] == 0
-        assert stats.json()["manual_review"]["UNREVIEWED"] == 0
+        assert stats.json()["manual_review"]["UNREVIEWED"] == 20
+        assert stats.json()["manual_review"]["CLASSIFIED_UNREVIEWED"] == 0
         assert stats.json()["manual_review"]["NOT_CLASSIFIED"] == 20
 
 

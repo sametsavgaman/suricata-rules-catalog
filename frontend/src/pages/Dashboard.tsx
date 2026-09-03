@@ -76,7 +76,7 @@ export function Dashboard() {
       ["Manual approved", stats.manual_review?.APPROVED || 0],
       ["Manual rejected", stats.manual_review?.REJECTED || 0],
       ["Manual needs review", stats.manual_review?.NEEDS_REVIEW || 0],
-      ["Not classified", stats.manual_review?.NOT_CLASSIFIED || 0],
+      ["AI classified · human review pending", stats.manual_review?.CLASSIFIED_UNREVIEWED || 0],
     ].map(([label, value]) => <article className="stat manual-stat reveal" key={label}><span>{label}</span><strong>{value}</strong></article>)}</section>
     <section className="panel">
       <div className="panel-heading"><div><div className="section-kicker">LIVE DATASET</div><h2>Rule Explorer</h2><p className="result-count"><strong>{total}</strong> kayıt bulundu · sayfa {page} · {activeFilterCount ? `${activeFilterCount} aktif filtre` : "filtre uygulanmadı"}</p></div><div className="explorer-actions"><button className="export-button" onClick={exportCsv} disabled={!rules.length}>↓ CSV</button><button className="export-button" onClick={() => window.print()} disabled={!rules.length}>▣ PDF / Print</button><label className="search-wrap"><span>⌕</span><input ref={searchRef} className="search" aria-label="Search rules" placeholder="Search SID, rule, entity, MITRE…" value={search} onChange={e => setSearch(e.target.value)} /><kbd>Ctrl K</kbd></label></div></div>
