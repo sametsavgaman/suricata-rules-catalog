@@ -3,6 +3,7 @@ import json, os
 from pathlib import Path
 from sqlalchemy import select
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import SQLAlchemyError
 from app.database.models import ApplicationSetting
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -17,14 +18,20 @@ def save_setting(db: Session, key: str, value: str | None):
     if ALLOWLIST[key]:
         data = _secrets(); data[key] = value or ""; SECRET_FILE.write_text(json.dumps(data), encoding="utf-8")
         return
-    row = db.scalar(select(ApplicationSetting).where(ApplicationSetting.key == key))
+    try:
+        row = db.scalar(select(ApplicationSetting).where(ApplicationSetting.key == key))
+    except SQLAlchemyError:
+        row = None
     if not row: row = ApplicationSetting(key=key, is_secret=False); db.add(row)
     row.value = value
     db.commit()
 
 def get_value(db: Session, key: str) -> str | None:
     if ALLOWLIST[key]: return _secrets().get(key) or os.getenv(key)
-    row = db.scalar(select(ApplicationSetting).where(ApplicationSetting.key == key))
+    try:
+        row = db.scalar(select(ApplicationSetting).where(ApplicationSetting.key == key))
+    except SQLAlchemyError:
+        row = None
     return (row.value if row and row.value else os.getenv(key))
 
 def effective_settings(db: Session, settings):
