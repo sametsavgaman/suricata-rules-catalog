@@ -1,4 +1,5 @@
 from functools import lru_cache
+from pathlib import Path
 from urllib.parse import urlparse
 import socket
 
@@ -38,8 +39,19 @@ class Settings(BaseSettings):
             try:
                 socket.gethostbyname("db")
             except OSError:
-                self.database_url = "sqlite:///./suricata_rules.db"
+                self.database_url = _bundled_sqlite_url()
+        elif self.database_url == "sqlite:///./suricata_rules.db":
+            # Resolve the default relative URL from the repository root rather
+            # than the process cwd. This prevents `backend/suricata_rules.db`
+            # (an obsolete fixture) from being selected when uvicorn is started
+            # from the backend directory.
+            self.database_url = _bundled_sqlite_url()
         return self
+
+
+def _bundled_sqlite_url() -> str:
+    project_root = Path(__file__).resolve().parents[2]
+    return f"sqlite:///{(project_root / 'suricata_rules.db').as_posix()}"
 
 
 @lru_cache
