@@ -1,0 +1,3247 @@
+{
+  "sample_id": "operational-250-seed42-v1",
+  "sample_sha256": "c7fadde78e84014abc822675ed61e63b3d480374c342741c1be9a6f83fc377b3",
+  "status": "COMPLETE",
+  "models": {
+    "gemini": {
+      "total": 250,
+      "succeeded": 250,
+      "failed": 0,
+      "audited_metrics": {
+        "golden_samples": 97,
+        "evaluated": 97,
+        "failed": 0,
+        "field_metrics": {
+          "detected_behavior": {
+            "count": 97,
+            "exact_accuracy": 0.08247422680412371,
+            "normalized_accuracy": 0.08247422680412371
+          },
+          "detected_entity": {
+            "count": 97,
+            "exact_accuracy": 0.9587628865979382,
+            "normalized_accuracy": 0.9587628865979382
+          },
+          "entity_type": {
+            "count": 97,
+            "exact_accuracy": 0.9381443298969072,
+            "normalized_accuracy": 0.9381443298969072
+          },
+          "category": {
+            "count": 97,
+            "exact_accuracy": 0.8041237113402062,
+            "normalized_accuracy": 0.8041237113402062
+          },
+          "subcategory": {
+            "count": 97,
+            "exact_accuracy": 0.6494845360824743,
+            "normalized_accuracy": 0.6494845360824743
+          },
+          "mitre_tactic": {
+            "count": 97,
+            "exact_accuracy": 0.6494845360824743,
+            "normalized_accuracy": 0.7216494845360825
+          },
+          "mitre_technique": {
+            "count": 97,
+            "exact_accuracy": 0.6288659793814433,
+            "normalized_accuracy": 0.6288659793814433
+          },
+          "mitre_technique_id": {
+            "count": 97,
+            "exact_accuracy": 0.6701030927835051,
+            "normalized_accuracy": 0.6701030927835051
+          },
+          "cyber_kill_chain_phase": {
+            "count": 97,
+            "exact_accuracy": 0.7628865979381443,
+            "normalized_accuracy": 0.7628865979381443
+          }
+        },
+        "null_metrics": {
+          "detected_behavior": {
+            "expected_null_count": 0,
+            "expected_null_actual_null_rate": 0.0,
+            "null_hallucination_rate": 0.0,
+            "expected_non_null_count": 97,
+            "unexpected_null_rate": 0.010309278350515464
+          },
+          "detected_entity": {
+            "expected_null_count": 63,
+            "expected_null_actual_null_rate": 0.9523809523809523,
+            "null_hallucination_rate": 0.047619047619047616,
+            "expected_non_null_count": 34,
+            "unexpected_null_rate": 0.0
+          },
+          "entity_type": {
+            "expected_null_count": 63,
+            "expected_null_actual_null_rate": 0.9523809523809523,
+            "null_hallucination_rate": 0.047619047619047616,
+            "expected_non_null_count": 34,
+            "unexpected_null_rate": 0.0
+          },
+          "category": {
+            "expected_null_count": 0,
+            "expected_null_actual_null_rate": 0.0,
+            "null_hallucination_rate": 0.0,
+            "expected_non_null_count": 97,
+            "unexpected_null_rate": 0.0
+          },
+          "subcategory": {
+            "expected_null_count": 5,
+            "expected_null_actual_null_rate": 1.0,
+            "null_hallucination_rate": 0.0,
+            "expected_non_null_count": 92,
+            "unexpected_null_rate": 0.06521739130434782
+          },
+          "mitre_tactic": {
+            "expected_null_count": 50,
+            "expected_null_actual_null_rate": 0.8,
+            "null_hallucination_rate": 0.2,
+            "expected_non_null_count": 47,
+            "unexpected_null_rate": 0.3404255319148936
+          },
+          "mitre_technique": {
+            "expected_null_count": 50,
+            "expected_null_actual_null_rate": 0.8,
+            "null_hallucination_rate": 0.2,
+            "expected_non_null_count": 47,
+            "unexpected_null_rate": 0.3404255319148936
+          },
+          "mitre_technique_id": {
+            "expected_null_count": 50,
+            "expected_null_actual_null_rate": 0.8,
+            "null_hallucination_rate": 0.2,
+            "expected_non_null_count": 47,
+            "unexpected_null_rate": 0.3404255319148936
+          },
+          "cyber_kill_chain_phase": {
+            "expected_null_count": 48,
+            "expected_null_actual_null_rate": 0.6875,
+            "null_hallucination_rate": 0.3125,
+            "expected_non_null_count": 49,
+            "unexpected_null_rate": 0.04081632653061224
+          }
+        },
+        "confidence_calibration": {
+          "0.90-1.00": {
+            "count": 49,
+            "actual_accuracy": 0.6984126984126984
+          },
+          "0.80-0.89": {
+            "count": 44,
+            "actual_accuracy": 0.6666666666666666
+          },
+          "0.70-0.79": {
+            "count": 2,
+            "actual_accuracy": 0.6666666666666667
+          },
+          "0.50-0.69": {
+            "count": 1,
+            "actual_accuracy": 0.6666666666666666
+          },
+          "<0.50": {
+            "count": 1,
+            "actual_accuracy": 0.6666666666666666
+          }
+        },
+        "error_counts": {
+          "OTHER": 89,
+          "UNEXPECTED_NULL": 22,
+          "MITRE_TACTIC_ERROR": 34,
+          "MITRE_TECHNIQUE_ERROR": 36,
+          "CATEGORY_ERROR": 19,
+          "SUBCATEGORY_ERROR": 34,
+          "NULL_HALLUCINATION": 22,
+          "KILL_CHAIN_ERROR": 23,
+          "ENTITY_ERROR": 6
+        },
+        "lowest_performing_categories": [
+          {
+            "category": "Credential Access",
+            "count": 3,
+            "accuracy": 0.3333333333333333
+          },
+          {
+            "category": "Suspicious DNS",
+            "count": 4,
+            "accuracy": 0.5
+          },
+          {
+            "category": "Network Abuse",
+            "count": 19,
+            "accuracy": 0.5263157894736842
+          },
+          {
+            "category": "Command and Control",
+            "count": 11,
+            "accuracy": 0.7272727272727273
+          },
+          {
+            "category": "Remote Access",
+            "count": 6,
+            "accuracy": 0.8333333333333334
+          },
+          {
+            "category": "Other",
+            "count": 7,
+            "accuracy": 0.8571428571428571
+          },
+          {
+            "category": "Web Attack",
+            "count": 13,
+            "accuracy": 0.9230769230769231
+          },
+          {
+            "category": "Malware",
+            "count": 11,
+            "accuracy": 1.0
+          },
+          {
+            "category": "Exploitation",
+            "count": 7,
+            "accuracy": 1.0
+          },
+          {
+            "category": "Policy Violation",
+            "count": 6,
+            "accuracy": 1.0
+          },
+          {
+            "category": "Reconnaissance",
+            "count": 5,
+            "accuracy": 1.0
+          },
+          {
+            "category": "Discovery",
+            "count": 4,
+            "accuracy": 1.0
+          },
+          {
+            "category": "Denial of Service",
+            "count": 1,
+            "accuracy": 1.0
+          }
+        ],
+        "average_confidence": 0.856701030927835,
+        "behavior_semantic_normalized_accuracy": 0.20618556701030927,
+        "v2_null_metrics": {
+          "entity": {
+            "precision": 1.0,
+            "recall": 0.9523809523809523
+          },
+          "mitre": {
+            "precision": 0.7142857142857143,
+            "recall": 0.8
+          },
+          "kill_chain": {
+            "precision": 0.9428571428571428,
+            "recall": 0.6875
+          }
+        },
+        "tool_usage": {
+          "rates": {
+            "entity_candidates": 1.0,
+            "search_mitre": 1.0,
+            "search_similar_rules": 0.8556701030927835,
+            "lookup_cve": 0.14432989690721648
+          },
+          "average_tool_calls_per_rule": 3.0,
+          "semantic_verifier_rate": 1.0,
+          "average_llm_calls_per_rule": 1.0
+        }
+      },
+      "fresh_operational": {
+        "total": 153,
+        "succeeded": 153,
+        "category_distribution": {
+          "Exploitation": 23,
+          "Policy Violation": 16,
+          "Command and Control": 23,
+          "Network Abuse": 19,
+          "Malware": 21,
+          "Credential Access": 5,
+          "Denial of Service": 7,
+          "Other": 18,
+          "Remote Access": 3,
+          "Discovery": 2,
+          "Reconnaissance": 6,
+          "Web Attack": 8,
+          "Impact": 1,
+          "Suspicious DNS": 1
+        },
+        "entity_assigned": 33,
+        "mitre_assigned": 32,
+        "validator_distribution": {
+          "PASS": 153
+        }
+      },
+      "usage": {
+        "input_tokens": 265540,
+        "output_tokens": 54727,
+        "total_tokens": 320267
+      },
+      "usage_coverage": "SUCCESSFUL_RESPONSES_ONLY; usage on failed or retried requests may be unavailable",
+      "retry_count": "NOT_RECORDED",
+      "average_seconds": 2.453216,
+      "tool_usage": {
+        "entity_candidates": 250,
+        "search_mitre": 250,
+        "search_similar_rules": 221,
+        "lookup_cve": 29
+      },
+      "cost": "COST_NOT_CALCULATED",
+      "model": "gemini-3.5-flash-lite",
+      "p50_seconds": 1.4585,
+      "p95_seconds": 6.831
+    },
+    "ollama": {
+      "total": 250,
+      "succeeded": 250,
+      "failed": 0,
+      "audited_metrics": {
+        "golden_samples": 97,
+        "evaluated": 97,
+        "failed": 0,
+        "field_metrics": {
+          "detected_behavior": {
+            "count": 97,
+            "exact_accuracy": 0.26804123711340205,
+            "normalized_accuracy": 0.26804123711340205
+          },
+          "detected_entity": {
+            "count": 97,
+            "exact_accuracy": 0.9587628865979382,
+            "normalized_accuracy": 0.9587628865979382
+          },
+          "entity_type": {
+            "count": 97,
+            "exact_accuracy": 0.9381443298969072,
+            "normalized_accuracy": 0.9381443298969072
+          },
+          "category": {
+            "count": 97,
+            "exact_accuracy": 0.7835051546391752,
+            "normalized_accuracy": 0.7835051546391752
+          },
+          "subcategory": {
+            "count": 97,
+            "exact_accuracy": 0.6082474226804123,
+            "normalized_accuracy": 0.6082474226804123
+          },
+          "mitre_tactic": {
+            "count": 97,
+            "exact_accuracy": 0.6082474226804123,
+            "normalized_accuracy": 0.6804123711340206
+          },
+          "mitre_technique": {
+            "count": 97,
+            "exact_accuracy": 0.5876288659793815,
+            "normalized_accuracy": 0.5876288659793815
+          },
+          "mitre_technique_id": {
+            "count": 97,
+            "exact_accuracy": 0.6701030927835051,
+            "normalized_accuracy": 0.6701030927835051
+          },
+          "cyber_kill_chain_phase": {
+            "count": 97,
+            "exact_accuracy": 0.7319587628865979,
+            "normalized_accuracy": 0.7319587628865979
+          }
+        },
+        "null_metrics": {
+          "detected_behavior": {
+            "expected_null_count": 0,
+            "expected_null_actual_null_rate": 0.0,
+            "null_hallucination_rate": 0.0,
+            "expected_non_null_count": 97,
+            "unexpected_null_rate": 0.010309278350515464
+          },
+          "detected_entity": {
+            "expected_null_count": 63,
+            "expected_null_actual_null_rate": 0.9523809523809523,
+            "null_hallucination_rate": 0.047619047619047616,
+            "expected_non_null_count": 34,
+            "unexpected_null_rate": 0.0
+          },
+          "entity_type": {
+            "expected_null_count": 63,
+            "expected_null_actual_null_rate": 0.9523809523809523,
+            "null_hallucination_rate": 0.047619047619047616,
+            "expected_non_null_count": 34,
+            "unexpected_null_rate": 0.0
+          },
+          "category": {
+            "expected_null_count": 0,
+            "expected_null_actual_null_rate": 0.0,
+            "null_hallucination_rate": 0.0,
+            "expected_non_null_count": 97,
+            "unexpected_null_rate": 0.0
+          },
+          "subcategory": {
+            "expected_null_count": 5,
+            "expected_null_actual_null_rate": 0.0,
+            "null_hallucination_rate": 1.0,
+            "expected_non_null_count": 92,
+            "unexpected_null_rate": 0.021739130434782608
+          },
+          "mitre_tactic": {
+            "expected_null_count": 50,
+            "expected_null_actual_null_rate": 0.7,
+            "null_hallucination_rate": 0.3,
+            "expected_non_null_count": 47,
+            "unexpected_null_rate": 0.2553191489361702
+          },
+          "mitre_technique": {
+            "expected_null_count": 50,
+            "expected_null_actual_null_rate": 0.7,
+            "null_hallucination_rate": 0.3,
+            "expected_non_null_count": 47,
+            "unexpected_null_rate": 0.2553191489361702
+          },
+          "mitre_technique_id": {
+            "expected_null_count": 50,
+            "expected_null_actual_null_rate": 0.78,
+            "null_hallucination_rate": 0.22,
+            "expected_non_null_count": 47,
+            "unexpected_null_rate": 0.2978723404255319
+          },
+          "cyber_kill_chain_phase": {
+            "expected_null_count": 48,
+            "expected_null_actual_null_rate": 0.9791666666666666,
+            "null_hallucination_rate": 0.020833333333333332,
+            "expected_non_null_count": 49,
+            "unexpected_null_rate": 0.46938775510204084
+          }
+        },
+        "confidence_calibration": {
+          "0.90-1.00": {
+            "count": 56,
+            "actual_accuracy": 0.6785714285714286
+          },
+          "0.80-0.89": {
+            "count": 14,
+            "actual_accuracy": 0.7063492063492064
+          },
+          "0.70-0.79": {
+            "count": 5,
+            "actual_accuracy": 0.6666666666666666
+          },
+          "0.50-0.69": {
+            "count": 19,
+            "actual_accuracy": 0.6783625730994153
+          },
+          "<0.50": {
+            "count": 3,
+            "actual_accuracy": 0.7407407407407408
+          }
+        },
+        "error_counts": {
+          "OTHER": 71,
+          "UNEXPECTED_NULL": 34,
+          "MITRE_TACTIC_ERROR": 38,
+          "MITRE_TECHNIQUE_ERROR": 40,
+          "KILL_CHAIN_ERROR": 26,
+          "NULL_HALLUCINATION": 24,
+          "SUBCATEGORY_ERROR": 38,
+          "CATEGORY_ERROR": 21,
+          "ENTITY_ERROR": 6
+        },
+        "lowest_performing_categories": [
+          {
+            "category": "Discovery",
+            "count": 4,
+            "accuracy": 0.0
+          },
+          {
+            "category": "Denial of Service",
+            "count": 1,
+            "accuracy": 0.0
+          },
+          {
+            "category": "Other",
+            "count": 7,
+            "accuracy": 0.5714285714285714
+          },
+          {
+            "category": "Credential Access",
+            "count": 3,
+            "accuracy": 0.6666666666666666
+          },
+          {
+            "category": "Network Abuse",
+            "count": 19,
+            "accuracy": 0.6842105263157895
+          },
+          {
+            "category": "Malware",
+            "count": 11,
+            "accuracy": 0.7272727272727273
+          },
+          {
+            "category": "Command and Control",
+            "count": 11,
+            "accuracy": 0.8181818181818182
+          },
+          {
+            "category": "Web Attack",
+            "count": 13,
+            "accuracy": 0.9230769230769231
+          },
+          {
+            "category": "Exploitation",
+            "count": 7,
+            "accuracy": 1.0
+          },
+          {
+            "category": "Remote Access",
+            "count": 6,
+            "accuracy": 1.0
+          },
+          {
+            "category": "Policy Violation",
+            "count": 6,
+            "accuracy": 1.0
+          },
+          {
+            "category": "Reconnaissance",
+            "count": 5,
+            "accuracy": 1.0
+          },
+          {
+            "category": "Suspicious DNS",
+            "count": 4,
+            "accuracy": 1.0
+          }
+        ],
+        "average_confidence": 0.7861855670103093,
+        "behavior_semantic_normalized_accuracy": 0.36082474226804123,
+        "v2_null_metrics": {
+          "entity": {
+            "precision": 1.0,
+            "recall": 0.9523809523809523
+          },
+          "mitre": {
+            "precision": 0.7358490566037735,
+            "recall": 0.78
+          },
+          "kill_chain": {
+            "precision": 0.6714285714285714,
+            "recall": 0.9791666666666666
+          }
+        },
+        "tool_usage": {
+          "rates": {
+            "entity_candidates": 1.0,
+            "search_mitre": 1.0,
+            "search_similar_rules": 0.8556701030927835,
+            "lookup_cve": 0.14432989690721648
+          },
+          "average_tool_calls_per_rule": 3.0,
+          "semantic_verifier_rate": 1.0,
+          "average_llm_calls_per_rule": 1.0
+        }
+      },
+      "fresh_operational": {
+        "total": 153,
+        "succeeded": 153,
+        "category_distribution": {
+          "Exploitation": 21,
+          "Network Abuse": 32,
+          "Suspicious DNS": 9,
+          "Command and Control": 12,
+          "Policy Violation": 13,
+          "Malware": 26,
+          "Other": 23,
+          "Remote Access": 3,
+          "Web Attack": 10,
+          "Reconnaissance": 2,
+          "Credential Access": 2
+        },
+        "entity_assigned": 33,
+        "mitre_assigned": 31,
+        "validator_distribution": {
+          "PASS": 131,
+          "REVIEW": 22
+        }
+      },
+      "usage": {
+        "input_tokens": 256051,
+        "output_tokens": 57675,
+        "total_tokens": 313726
+      },
+      "usage_coverage": "SUCCESSFUL_RESPONSES_ONLY; usage on failed or retried requests may be unavailable",
+      "retry_count": "NOT_RECORDED",
+      "average_seconds": 6.537704,
+      "tool_usage": {
+        "entity_candidates": 250,
+        "search_mitre": 250,
+        "search_similar_rules": 221,
+        "lookup_cve": 29
+      },
+      "cost": "COST_NOT_CALCULATED",
+      "model": "qwen3:8b",
+      "p50_seconds": 6.188,
+      "p95_seconds": 9.378
+    }
+  },
+  "complete_pairs": 250,
+  "successful_pairs": 250,
+  "context_or_prompt_mismatches": [],
+  "agreement_not_accuracy": {
+    "detected_behavior": 0.12,
+    "detected_entity": 1.0,
+    "entity_type": 1.0,
+    "category": 0.708,
+    "subcategory": 0.68,
+    "mitre_tactic": 0.864,
+    "mitre_technique": 0.864,
+    "mitre_technique_id": 0.976,
+    "cyber_kill_chain_phase": 0.528
+  },
+  "inspection_disagreements": [
+    {
+      "sid": 2010935,
+      "rev": 3,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1035,
+      "qwen_classification_id": 1034
+    },
+    {
+      "sid": 2021837,
+      "rev": 7,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1037,
+      "qwen_classification_id": 1036
+    },
+    {
+      "sid": 2056356,
+      "rev": 2,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1039,
+      "qwen_classification_id": 1038
+    },
+    {
+      "sid": 2059511,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1041,
+      "qwen_classification_id": 1040
+    },
+    {
+      "sid": 2045262,
+      "rev": 3,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1043,
+      "qwen_classification_id": 1042
+    },
+    {
+      "sid": 2019842,
+      "rev": 7,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1045,
+      "qwen_classification_id": 1044
+    },
+    {
+      "sid": 2046466,
+      "rev": 2,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1047,
+      "qwen_classification_id": 1046
+    },
+    {
+      "sid": 2060513,
+      "rev": 2,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1049,
+      "qwen_classification_id": 1048
+    },
+    {
+      "sid": 2048071,
+      "rev": 2,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1051,
+      "qwen_classification_id": 1050
+    },
+    {
+      "sid": 2046259,
+      "rev": 5,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1053,
+      "qwen_classification_id": 1052
+    },
+    {
+      "sid": 2028779,
+      "rev": 2,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1055,
+      "qwen_classification_id": 1054
+    },
+    {
+      "sid": 2102510,
+      "rev": 10,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1057,
+      "qwen_classification_id": 1056
+    },
+    {
+      "sid": 2009698,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1061,
+      "qwen_classification_id": 1060
+    },
+    {
+      "sid": 2403330,
+      "rev": 111389,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1063,
+      "qwen_classification_id": 1062
+    },
+    {
+      "sid": 2002383,
+      "rev": 13,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1065,
+      "qwen_classification_id": 1064
+    },
+    {
+      "sid": 2062681,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1067,
+      "qwen_classification_id": 1066
+    },
+    {
+      "sid": 2023995,
+      "rev": 4,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1069,
+      "qwen_classification_id": 1068
+    },
+    {
+      "sid": 2021371,
+      "rev": 7,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1071,
+      "qwen_classification_id": 1070
+    },
+    {
+      "sid": 2023535,
+      "rev": 4,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1075,
+      "qwen_classification_id": 1074
+    },
+    {
+      "sid": 2030024,
+      "rev": 3,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1077,
+      "qwen_classification_id": 1076
+    },
+    {
+      "sid": 2050707,
+      "rev": 2,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1079,
+      "qwen_classification_id": 1078
+    },
+    {
+      "sid": 2032178,
+      "rev": 5,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1081,
+      "qwen_classification_id": 1080
+    },
+    {
+      "sid": 2064098,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1083,
+      "qwen_classification_id": 1082
+    },
+    {
+      "sid": 2049581,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1085,
+      "qwen_classification_id": 1084
+    },
+    {
+      "sid": 2103245,
+      "rev": 5,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1087,
+      "qwen_classification_id": 1086
+    },
+    {
+      "sid": 2522034,
+      "rev": 6363,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1089,
+      "qwen_classification_id": 1088
+    },
+    {
+      "sid": 2101923,
+      "rev": 7,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1091,
+      "qwen_classification_id": 1090
+    },
+    {
+      "sid": 2008228,
+      "rev": 13,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1095,
+      "qwen_classification_id": 1094
+    },
+    {
+      "sid": 2068124,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1097,
+      "qwen_classification_id": 1096
+    },
+    {
+      "sid": 2044010,
+      "rev": 2,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1099,
+      "qwen_classification_id": 1098
+    },
+    {
+      "sid": 2039495,
+      "rev": 2,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1101,
+      "qwen_classification_id": 1100
+    },
+    {
+      "sid": 2069316,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1103,
+      "qwen_classification_id": 1102
+    },
+    {
+      "sid": 2025062,
+      "rev": 5,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1105,
+      "qwen_classification_id": 1104
+    },
+    {
+      "sid": 2016711,
+      "rev": 8,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1107,
+      "qwen_classification_id": 1106
+    },
+    {
+      "sid": 2027413,
+      "rev": 4,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1109,
+      "qwen_classification_id": 1108
+    },
+    {
+      "sid": 2031797,
+      "rev": 5,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1111,
+      "qwen_classification_id": 1110
+    },
+    {
+      "sid": 2007299,
+      "rev": 9,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1113,
+      "qwen_classification_id": 1112
+    },
+    {
+      "sid": 2071589,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1115,
+      "qwen_classification_id": 1114
+    },
+    {
+      "sid": 2103271,
+      "rev": 5,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "mitre_tactic",
+        "mitre_technique"
+      ],
+      "gemini_classification_id": 1117,
+      "qwen_classification_id": 1116
+    },
+    {
+      "sid": 2100580,
+      "rev": 10,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1121,
+      "qwen_classification_id": 1120
+    },
+    {
+      "sid": 2025461,
+      "rev": 4,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1123,
+      "qwen_classification_id": 1122
+    },
+    {
+      "sid": 2045426,
+      "rev": 2,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1125,
+      "qwen_classification_id": 1124
+    },
+    {
+      "sid": 2000564,
+      "rev": 10,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1127,
+      "qwen_classification_id": 1126
+    },
+    {
+      "sid": 2052166,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1129,
+      "qwen_classification_id": 1128
+    },
+    {
+      "sid": 2041326,
+      "rev": 3,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1131,
+      "qwen_classification_id": 1130
+    },
+    {
+      "sid": 2011286,
+      "rev": 7,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "subcategory",
+        "mitre_tactic",
+        "mitre_technique"
+      ],
+      "gemini_classification_id": 1133,
+      "qwen_classification_id": 1132
+    },
+    {
+      "sid": 2048086,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1134,
+      "qwen_classification_id": 1135
+    },
+    {
+      "sid": 2060508,
+      "rev": 2,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1136,
+      "qwen_classification_id": 1137
+    },
+    {
+      "sid": 2025524,
+      "rev": 2,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1138,
+      "qwen_classification_id": 1139
+    },
+    {
+      "sid": 2066004,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "mitre_tactic",
+        "mitre_technique",
+        "mitre_technique_id"
+      ],
+      "gemini_classification_id": 1140,
+      "qwen_classification_id": 1141
+    },
+    {
+      "sid": 2064683,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1142,
+      "qwen_classification_id": 1143
+    },
+    {
+      "sid": 2015857,
+      "rev": 5,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1146,
+      "qwen_classification_id": 1147
+    },
+    {
+      "sid": 2500000,
+      "rev": 7731,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1149,
+      "qwen_classification_id": 1148
+    },
+    {
+      "sid": 2010494,
+      "rev": 5,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "mitre_tactic",
+        "mitre_technique",
+        "mitre_technique_id",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1151,
+      "qwen_classification_id": 1150
+    },
+    {
+      "sid": 2066414,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1153,
+      "qwen_classification_id": 1152
+    },
+    {
+      "sid": 2019089,
+      "rev": 6,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1155,
+      "qwen_classification_id": 1154
+    },
+    {
+      "sid": 2053543,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1158,
+      "qwen_classification_id": 1156
+    },
+    {
+      "sid": 2059953,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1160,
+      "qwen_classification_id": 1157
+    },
+    {
+      "sid": 2026337,
+      "rev": 4,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "mitre_tactic",
+        "mitre_technique",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1162,
+      "qwen_classification_id": 1159
+    },
+    {
+      "sid": 2035500,
+      "rev": 2,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1163,
+      "qwen_classification_id": 1161
+    },
+    {
+      "sid": 2031901,
+      "rev": 7,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1165,
+      "qwen_classification_id": 1164
+    },
+    {
+      "sid": 2007184,
+      "rev": 11,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1167,
+      "qwen_classification_id": 1166
+    },
+    {
+      "sid": 2103162,
+      "rev": 5,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "mitre_tactic",
+        "mitre_technique"
+      ],
+      "gemini_classification_id": 1171,
+      "qwen_classification_id": 1170
+    },
+    {
+      "sid": 2002953,
+      "rev": 5,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1173,
+      "qwen_classification_id": 1172
+    },
+    {
+      "sid": 2101732,
+      "rev": 10,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1175,
+      "qwen_classification_id": 1174
+    },
+    {
+      "sid": 2029780,
+      "rev": 3,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1177,
+      "qwen_classification_id": 1176
+    },
+    {
+      "sid": 2024364,
+      "rev": 5,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1179,
+      "qwen_classification_id": 1178
+    },
+    {
+      "sid": 2066757,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1181,
+      "qwen_classification_id": 1180
+    },
+    {
+      "sid": 2012900,
+      "rev": 7,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1185,
+      "qwen_classification_id": 1184
+    },
+    {
+      "sid": 2043750,
+      "rev": 3,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1187,
+      "qwen_classification_id": 1186
+    },
+    {
+      "sid": 2016841,
+      "rev": 5,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1189,
+      "qwen_classification_id": 1188
+    },
+    {
+      "sid": 2034598,
+      "rev": 2,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1191,
+      "qwen_classification_id": 1190
+    },
+    {
+      "sid": 2063279,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1192,
+      "qwen_classification_id": 1193
+    },
+    {
+      "sid": 2037271,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1194,
+      "qwen_classification_id": 1195
+    },
+    {
+      "sid": 2047979,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1196,
+      "qwen_classification_id": 1197
+    },
+    {
+      "sid": 2066325,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1198,
+      "qwen_classification_id": 1199
+    },
+    {
+      "sid": 2103120,
+      "rev": 4,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "mitre_tactic",
+        "mitre_technique",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1200,
+      "qwen_classification_id": 1201
+    },
+    {
+      "sid": 2009985,
+      "rev": 2,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1202,
+      "qwen_classification_id": 1203
+    },
+    {
+      "sid": 2101280,
+      "rev": 10,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1204,
+      "qwen_classification_id": 1205
+    },
+    {
+      "sid": 2400004,
+      "rev": 4816,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1206,
+      "qwen_classification_id": 1207
+    },
+    {
+      "sid": 2009159,
+      "rev": 11,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1208,
+      "qwen_classification_id": 1209
+    },
+    {
+      "sid": 2056218,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1210,
+      "qwen_classification_id": 1211
+    },
+    {
+      "sid": 2033307,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1212,
+      "qwen_classification_id": 1214
+    },
+    {
+      "sid": 2047872,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1213,
+      "qwen_classification_id": 1215
+    },
+    {
+      "sid": 2060849,
+      "rev": 2,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "mitre_tactic",
+        "mitre_technique",
+        "mitre_technique_id",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1216,
+      "qwen_classification_id": 1218
+    },
+    {
+      "sid": 2013940,
+      "rev": 6,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "mitre_tactic",
+        "mitre_technique",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1217,
+      "qwen_classification_id": 1220
+    },
+    {
+      "sid": 2033221,
+      "rev": 3,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1219,
+      "qwen_classification_id": 1222
+    },
+    {
+      "sid": 2060632,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1221,
+      "qwen_classification_id": 1224
+    },
+    {
+      "sid": 2005279,
+      "rev": 9,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1223,
+      "qwen_classification_id": 1225
+    },
+    {
+      "sid": 2013682,
+      "rev": 5,
+      "cohort": "AUDITED_BENCHMARK",
+      "fields": [
+        "detected_behavior",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1226,
+      "qwen_classification_id": 1228
+    },
+    {
+      "sid": 2014649,
+      "rev": 7,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1227,
+      "qwen_classification_id": 1230
+    },
+    {
+      "sid": 2011678,
+      "rev": 10,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1229,
+      "qwen_classification_id": 1232
+    },
+    {
+      "sid": 2026942,
+      "rev": 4,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1231,
+      "qwen_classification_id": 1234
+    },
+    {
+      "sid": 2404300,
+      "rev": 8031,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1233,
+      "qwen_classification_id": 1235
+    },
+    {
+      "sid": 2527019,
+      "rev": 1715,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "mitre_tactic",
+        "mitre_technique",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1236,
+      "qwen_classification_id": 1237
+    },
+    {
+      "sid": 2101989,
+      "rev": 7,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1239,
+      "qwen_classification_id": 1238
+    },
+    {
+      "sid": 2403426,
+      "rev": 111389,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1241,
+      "qwen_classification_id": 1240
+    },
+    {
+      "sid": 2025535,
+      "rev": 3,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1243,
+      "qwen_classification_id": 1242
+    },
+    {
+      "sid": 2031266,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1247,
+      "qwen_classification_id": 1246
+    },
+    {
+      "sid": 2040009,
+      "rev": 3,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1249,
+      "qwen_classification_id": 1248
+    },
+    {
+      "sid": 2017918,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1251,
+      "qwen_classification_id": 1250
+    },
+    {
+      "sid": 2035429,
+      "rev": 3,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1256,
+      "qwen_classification_id": 1257
+    },
+    {
+      "sid": 2047636,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1258,
+      "qwen_classification_id": 1259
+    },
+    {
+      "sid": 2103077,
+      "rev": 3,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1260,
+      "qwen_classification_id": 1261
+    },
+    {
+      "sid": 2021701,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "mitre_tactic",
+        "mitre_technique"
+      ],
+      "gemini_classification_id": 1262,
+      "qwen_classification_id": 1264
+    },
+    {
+      "sid": 2038086,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1263,
+      "qwen_classification_id": 1266
+    },
+    {
+      "sid": 2101904,
+      "rev": 8,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "mitre_tactic",
+        "mitre_technique",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1267,
+      "qwen_classification_id": 1270
+    },
+    {
+      "sid": 2063364,
+      "rev": 1,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1269,
+      "qwen_classification_id": 1273
+    },
+    {
+      "sid": 2047740,
+      "rev": 1,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "mitre_tactic",
+        "mitre_technique",
+        "mitre_technique_id"
+      ],
+      "gemini_classification_id": 1271,
+      "qwen_classification_id": 1275
+    },
+    {
+      "sid": 2028387,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1272,
+      "qwen_classification_id": 1277
+    },
+    {
+      "sid": 2026738,
+      "rev": 7,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1274,
+      "qwen_classification_id": 1280
+    },
+    {
+      "sid": 2101388,
+      "rev": 14,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "mitre_tactic",
+        "mitre_technique",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1276,
+      "qwen_classification_id": 1282
+    },
+    {
+      "sid": 2103183,
+      "rev": 4,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "mitre_tactic",
+        "mitre_technique",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1278,
+      "qwen_classification_id": 1285
+    },
+    {
+      "sid": 2009972,
+      "rev": 4,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1279,
+      "qwen_classification_id": 1287
+    },
+    {
+      "sid": 2060760,
+      "rev": 1,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1281,
+      "qwen_classification_id": 1289
+    },
+    {
+      "sid": 2100289,
+      "rev": 12,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "mitre_tactic",
+        "mitre_technique",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1283,
+      "qwen_classification_id": 1291
+    },
+    {
+      "sid": 2060615,
+      "rev": 1,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1284,
+      "qwen_classification_id": 1293
+    },
+    {
+      "sid": 2049972,
+      "rev": 3,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1286,
+      "qwen_classification_id": 1295
+    },
+    {
+      "sid": 2101279,
+      "rev": 15,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1288,
+      "qwen_classification_id": 1298
+    },
+    {
+      "sid": 2048631,
+      "rev": 1,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1290,
+      "qwen_classification_id": 1300
+    },
+    {
+      "sid": 2029645,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1292,
+      "qwen_classification_id": 1302
+    },
+    {
+      "sid": 2012255,
+      "rev": 5,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "mitre_tactic",
+        "mitre_technique",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1294,
+      "qwen_classification_id": 1304
+    },
+    {
+      "sid": 2100672,
+      "rev": 11,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1296,
+      "qwen_classification_id": 1306
+    },
+    {
+      "sid": 2101414,
+      "rev": 13,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1297,
+      "qwen_classification_id": 1308
+    },
+    {
+      "sid": 2102809,
+      "rev": 5,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1299,
+      "qwen_classification_id": 1310
+    },
+    {
+      "sid": 2037077,
+      "rev": 4,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1301,
+      "qwen_classification_id": 1312
+    },
+    {
+      "sid": 2023019,
+      "rev": 4,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1303,
+      "qwen_classification_id": 1315
+    },
+    {
+      "sid": 2007833,
+      "rev": 10,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1307,
+      "qwen_classification_id": 1318
+    },
+    {
+      "sid": 2003192,
+      "rev": 4,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1309,
+      "qwen_classification_id": 1319
+    },
+    {
+      "sid": 2012060,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "subcategory",
+        "mitre_tactic",
+        "mitre_technique",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1311,
+      "qwen_classification_id": 1320
+    },
+    {
+      "sid": 2016670,
+      "rev": 4,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1313,
+      "qwen_classification_id": 1321
+    },
+    {
+      "sid": 2014257,
+      "rev": 4,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1314,
+      "qwen_classification_id": 1323
+    },
+    {
+      "sid": 2018155,
+      "rev": 6,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "mitre_tactic",
+        "mitre_technique",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1316,
+      "qwen_classification_id": 1325
+    },
+    {
+      "sid": 2012148,
+      "rev": 7,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1322,
+      "qwen_classification_id": 1328
+    },
+    {
+      "sid": 2025094,
+      "rev": 7,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1324,
+      "qwen_classification_id": 1329
+    },
+    {
+      "sid": 2037615,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "mitre_tactic",
+        "mitre_technique",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1326,
+      "qwen_classification_id": 1331
+    },
+    {
+      "sid": 2404304,
+      "rev": 8031,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1327,
+      "qwen_classification_id": 1333
+    },
+    {
+      "sid": 2527012,
+      "rev": 1715,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "mitre_tactic",
+        "mitre_technique",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1330,
+      "qwen_classification_id": 1335
+    },
+    {
+      "sid": 2101639,
+      "rev": 13,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "mitre_tactic",
+        "mitre_technique"
+      ],
+      "gemini_classification_id": 1332,
+      "qwen_classification_id": 1337
+    },
+    {
+      "sid": 2016067,
+      "rev": 7,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1336,
+      "qwen_classification_id": 1341
+    },
+    {
+      "sid": 2037772,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1340,
+      "qwen_classification_id": 1344
+    },
+    {
+      "sid": 2064637,
+      "rev": 1,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1343,
+      "qwen_classification_id": 1347
+    },
+    {
+      "sid": 2019020,
+      "rev": 3,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1345,
+      "qwen_classification_id": 1349
+    },
+    {
+      "sid": 2400067,
+      "rev": 4816,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1346,
+      "qwen_classification_id": 1351
+    },
+    {
+      "sid": 2058163,
+      "rev": 1,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1348,
+      "qwen_classification_id": 1353
+    },
+    {
+      "sid": 2046673,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1350,
+      "qwen_classification_id": 1355
+    },
+    {
+      "sid": 2101441,
+      "rev": 5,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1352,
+      "qwen_classification_id": 1357
+    },
+    {
+      "sid": 2002154,
+      "rev": 5,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1354,
+      "qwen_classification_id": 1359
+    },
+    {
+      "sid": 2038015,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1356,
+      "qwen_classification_id": 1361
+    },
+    {
+      "sid": 2100376,
+      "rev": 8,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1358,
+      "qwen_classification_id": 1363
+    },
+    {
+      "sid": 2103068,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1360,
+      "qwen_classification_id": 1365
+    },
+    {
+      "sid": 2043898,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "mitre_tactic",
+        "mitre_technique",
+        "mitre_technique_id",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1362,
+      "qwen_classification_id": 1366
+    },
+    {
+      "sid": 2028381,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1364,
+      "qwen_classification_id": 1369
+    },
+    {
+      "sid": 2063298,
+      "rev": 1,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1367,
+      "qwen_classification_id": 1370
+    },
+    {
+      "sid": 2100606,
+      "rev": 7,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1368,
+      "qwen_classification_id": 1372
+    },
+    {
+      "sid": 2103244,
+      "rev": 5,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1371,
+      "qwen_classification_id": 1374
+    },
+    {
+      "sid": 2006371,
+      "rev": 12,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1373,
+      "qwen_classification_id": 1376
+    },
+    {
+      "sid": 2101937,
+      "rev": 9,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "mitre_tactic",
+        "mitre_technique",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1377,
+      "qwen_classification_id": 1380
+    },
+    {
+      "sid": 2050021,
+      "rev": 5,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "mitre_tactic",
+        "mitre_technique"
+      ],
+      "gemini_classification_id": 1379,
+      "qwen_classification_id": 1382
+    },
+    {
+      "sid": 2038808,
+      "rev": 3,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1381,
+      "qwen_classification_id": 1384
+    },
+    {
+      "sid": 2102035,
+      "rev": 7,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "category"
+      ],
+      "gemini_classification_id": 1383,
+      "qwen_classification_id": 1386
+    },
+    {
+      "sid": 2026003,
+      "rev": 1,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1385,
+      "qwen_classification_id": 1389
+    },
+    {
+      "sid": 2008537,
+      "rev": 11,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1387,
+      "qwen_classification_id": 1390
+    },
+    {
+      "sid": 2013268,
+      "rev": 5,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1388,
+      "qwen_classification_id": 1392
+    },
+    {
+      "sid": 2018144,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1391,
+      "qwen_classification_id": 1394
+    },
+    {
+      "sid": 2015959,
+      "rev": 3,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1393,
+      "qwen_classification_id": 1396
+    },
+    {
+      "sid": 2102785,
+      "rev": 5,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1395,
+      "qwen_classification_id": 1399
+    },
+    {
+      "sid": 2065179,
+      "rev": 1,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1397,
+      "qwen_classification_id": 1401
+    },
+    {
+      "sid": 2023901,
+      "rev": 3,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1398,
+      "qwen_classification_id": 1404
+    },
+    {
+      "sid": 2520127,
+      "rev": 6363,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1400,
+      "qwen_classification_id": 1406
+    },
+    {
+      "sid": 2003657,
+      "rev": 21,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1402,
+      "qwen_classification_id": 1408
+    },
+    {
+      "sid": 2100163,
+      "rev": 4,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1403,
+      "qwen_classification_id": 1410
+    },
+    {
+      "sid": 2017123,
+      "rev": 5,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "mitre_tactic",
+        "mitre_technique",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1405,
+      "qwen_classification_id": 1412
+    },
+    {
+      "sid": 2017441,
+      "rev": 4,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1407,
+      "qwen_classification_id": 1414
+    },
+    {
+      "sid": 2007454,
+      "rev": 8,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1409,
+      "qwen_classification_id": 1416
+    },
+    {
+      "sid": 2014402,
+      "rev": 3,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "mitre_tactic",
+        "mitre_technique",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1411,
+      "qwen_classification_id": 1418
+    },
+    {
+      "sid": 2013163,
+      "rev": 4,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "mitre_tactic",
+        "mitre_technique",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1413,
+      "qwen_classification_id": 1421
+    },
+    {
+      "sid": 2014353,
+      "rev": 8,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1415,
+      "qwen_classification_id": 1423
+    },
+    {
+      "sid": 2068435,
+      "rev": 1,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1417,
+      "qwen_classification_id": 1425
+    },
+    {
+      "sid": 2404302,
+      "rev": 8031,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1419,
+      "qwen_classification_id": 1428
+    },
+    {
+      "sid": 2527010,
+      "rev": 1715,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "mitre_tactic",
+        "mitre_technique",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1420,
+      "qwen_classification_id": 1430
+    },
+    {
+      "sid": 2101640,
+      "rev": 12,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "mitre_tactic",
+        "mitre_technique"
+      ],
+      "gemini_classification_id": 1422,
+      "qwen_classification_id": 1432
+    },
+    {
+      "sid": 2017873,
+      "rev": 3,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1426,
+      "qwen_classification_id": 1436
+    },
+    {
+      "sid": 2500032,
+      "rev": 7731,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1427,
+      "qwen_classification_id": 1438
+    },
+    {
+      "sid": 2031277,
+      "rev": 5,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1429,
+      "qwen_classification_id": 1440
+    },
+    {
+      "sid": 2040538,
+      "rev": 3,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1431,
+      "qwen_classification_id": 1442
+    },
+    {
+      "sid": 2021170,
+      "rev": 1,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1433,
+      "qwen_classification_id": 1445
+    },
+    {
+      "sid": 2400011,
+      "rev": 4816,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1435,
+      "qwen_classification_id": 1447
+    },
+    {
+      "sid": 2060226,
+      "rev": 1,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1437,
+      "qwen_classification_id": 1449
+    },
+    {
+      "sid": 2038802,
+      "rev": 3,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1439,
+      "qwen_classification_id": 1451
+    },
+    {
+      "sid": 2034841,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1443,
+      "qwen_classification_id": 1455
+    },
+    {
+      "sid": 2038389,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1444,
+      "qwen_classification_id": 1457
+    },
+    {
+      "sid": 2100366,
+      "rev": 8,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1446,
+      "qwen_classification_id": 1460
+    },
+    {
+      "sid": 2103007,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1448,
+      "qwen_classification_id": 1462
+    },
+    {
+      "sid": 2053602,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1450,
+      "qwen_classification_id": 1464
+    },
+    {
+      "sid": 2028372,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "mitre_tactic",
+        "mitre_technique",
+        "mitre_technique_id"
+      ],
+      "gemini_classification_id": 1452,
+      "qwen_classification_id": 1466
+    },
+    {
+      "sid": 2067084,
+      "rev": 1,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1454,
+      "qwen_classification_id": 1469
+    },
+    {
+      "sid": 2102549,
+      "rev": 3,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1456,
+      "qwen_classification_id": 1471
+    },
+    {
+      "sid": 2103276,
+      "rev": 4,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1458,
+      "qwen_classification_id": 1473
+    },
+    {
+      "sid": 2007801,
+      "rev": 5,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1459,
+      "qwen_classification_id": 1474
+    },
+    {
+      "sid": 2027523,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1461,
+      "qwen_classification_id": 1476
+    },
+    {
+      "sid": 2102409,
+      "rev": 3,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1463,
+      "qwen_classification_id": 1478
+    },
+    {
+      "sid": 2049816,
+      "rev": 4,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1467,
+      "qwen_classification_id": 1482
+    },
+    {
+      "sid": 2027237,
+      "rev": 3,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1468,
+      "qwen_classification_id": 1485
+    },
+    {
+      "sid": 2012096,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1470,
+      "qwen_classification_id": 1487
+    },
+    {
+      "sid": 2001581,
+      "rev": 15,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1472,
+      "qwen_classification_id": 1489
+    },
+    {
+      "sid": 2100640,
+      "rev": 7,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1475,
+      "qwen_classification_id": 1491
+    },
+    {
+      "sid": 2023255,
+      "rev": 3,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1477,
+      "qwen_classification_id": 1494
+    },
+    {
+      "sid": 2101413,
+      "rev": 12,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1479,
+      "qwen_classification_id": 1496
+    },
+    {
+      "sid": 2102752,
+      "rev": 5,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1481,
+      "qwen_classification_id": 1499
+    },
+    {
+      "sid": 2062768,
+      "rev": 1,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1483,
+      "qwen_classification_id": 1501
+    },
+    {
+      "sid": 2100719,
+      "rev": 10,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1484,
+      "qwen_classification_id": 1503
+    },
+    {
+      "sid": 2030880,
+      "rev": 1,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1488,
+      "qwen_classification_id": 1507
+    },
+    {
+      "sid": 2003194,
+      "rev": 7,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1490,
+      "qwen_classification_id": 1509
+    },
+    {
+      "sid": 2011246,
+      "rev": 5,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1492,
+      "qwen_classification_id": 1511
+    },
+    {
+      "sid": 2059881,
+      "rev": 1,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1495,
+      "qwen_classification_id": 1516
+    },
+    {
+      "sid": 2102004,
+      "rev": 8,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1497,
+      "qwen_classification_id": 1518
+    },
+    {
+      "sid": 2014744,
+      "rev": 5,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1498,
+      "qwen_classification_id": 1520
+    },
+    {
+      "sid": 2007909,
+      "rev": 12,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1500,
+      "qwen_classification_id": 1522
+    },
+    {
+      "sid": 2037499,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1502,
+      "qwen_classification_id": 1523
+    },
+    {
+      "sid": 2404301,
+      "rev": 8031,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "mitre_tactic",
+        "mitre_technique",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1504,
+      "qwen_classification_id": 1524
+    },
+    {
+      "sid": 2527005,
+      "rev": 1715,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "mitre_tactic",
+        "mitre_technique",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1506,
+      "qwen_classification_id": 1525
+    },
+    {
+      "sid": 2025067,
+      "rev": 3,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1508,
+      "qwen_classification_id": 1526
+    },
+    {
+      "sid": 2403353,
+      "rev": 111389,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1510,
+      "qwen_classification_id": 1527
+    },
+    {
+      "sid": 2040353,
+      "rev": 4,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "category",
+        "subcategory"
+      ],
+      "gemini_classification_id": 1512,
+      "qwen_classification_id": 1528
+    },
+    {
+      "sid": 2500030,
+      "rev": 7731,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1514,
+      "qwen_classification_id": 1529
+    },
+    {
+      "sid": 2031305,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "mitre_tactic",
+        "mitre_technique"
+      ],
+      "gemini_classification_id": 1515,
+      "qwen_classification_id": 1530
+    },
+    {
+      "sid": 2061756,
+      "rev": 1,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1517,
+      "qwen_classification_id": 1531
+    },
+    {
+      "sid": 2020702,
+      "rev": 5,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior",
+        "category",
+        "subcategory",
+        "cyber_kill_chain_phase"
+      ],
+      "gemini_classification_id": 1519,
+      "qwen_classification_id": 1532
+    },
+    {
+      "sid": 2400024,
+      "rev": 4816,
+      "cohort": "FRESH_OPERATIONAL",
+      "fields": [
+        "detected_behavior"
+      ],
+      "gemini_classification_id": 1521,
+      "qwen_classification_id": 1533
+    }
+  ],
+  "limitations": [
+    "Accuracy applies only to the reviewed audited cohort; fresh agreement is not accuracy.",
+    "Existing similar-rule retrieval can use other reviewed benchmark examples; not a fully held-out benchmark.",
+    "Token counts use different tokenizers. Local hardware/electricity and API cost not calculated.",
+    "Reported latency is end-to-end per-rule wall time, including provider retries and any cold loading.",
+    "No fine-tuning was performed. Model confidence is uncalibrated."
+  ]
+}

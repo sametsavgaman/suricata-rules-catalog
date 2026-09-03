@@ -1,0 +1,589 @@
+{
+  "sample_id": "operational-250-seed42-v1",
+  "sample_sha256": "c7fadde78e84014abc822675ed61e63b3d480374c342741c1be9a6f83fc377b3",
+  "golden_sha256": "64b6cd419a6992de71f873c10f315e488b55a3670d7dbdde080b4c25defe8f78",
+  "selected_count": 250,
+  "classifier_version": "v2.1",
+  "cache_policy": "FRESH_CALLS_BOTH_PROVIDERS",
+  "notice": "Accuracy applies only to reviewed audited records. Fresh cohort has no ground truth. Smoke metrics are not representative. Similar-rule retrieval uses other reviewed benchmark examples (existing V2 policy); this is not a fully held-out benchmark. Model confidence is uncalibrated. Token counts use different tokenizers.",
+  "models": {
+    "ollama": {
+      "model": "qwen3:8b",
+      "total": 250,
+      "succeeded": 250,
+      "failed": 0,
+      "audited_metrics": {
+        "golden_samples": 97,
+        "evaluated": 97,
+        "failed": 0,
+        "field_metrics": {
+          "detected_behavior": {
+            "count": 97,
+            "exact_accuracy": 0.26804123711340205,
+            "normalized_accuracy": 0.26804123711340205
+          },
+          "detected_entity": {
+            "count": 97,
+            "exact_accuracy": 0.9587628865979382,
+            "normalized_accuracy": 0.9587628865979382
+          },
+          "entity_type": {
+            "count": 97,
+            "exact_accuracy": 0.9381443298969072,
+            "normalized_accuracy": 0.9381443298969072
+          },
+          "category": {
+            "count": 97,
+            "exact_accuracy": 0.7835051546391752,
+            "normalized_accuracy": 0.7835051546391752
+          },
+          "subcategory": {
+            "count": 97,
+            "exact_accuracy": 0.6082474226804123,
+            "normalized_accuracy": 0.6082474226804123
+          },
+          "mitre_tactic": {
+            "count": 97,
+            "exact_accuracy": 0.6082474226804123,
+            "normalized_accuracy": 0.6804123711340206
+          },
+          "mitre_technique": {
+            "count": 97,
+            "exact_accuracy": 0.5876288659793815,
+            "normalized_accuracy": 0.5876288659793815
+          },
+          "mitre_technique_id": {
+            "count": 97,
+            "exact_accuracy": 0.6701030927835051,
+            "normalized_accuracy": 0.6701030927835051
+          },
+          "cyber_kill_chain_phase": {
+            "count": 97,
+            "exact_accuracy": 0.7319587628865979,
+            "normalized_accuracy": 0.7319587628865979
+          }
+        },
+        "null_metrics": {
+          "detected_behavior": {
+            "expected_null_count": 0,
+            "expected_null_actual_null_rate": 0.0,
+            "null_hallucination_rate": 0.0,
+            "expected_non_null_count": 97,
+            "unexpected_null_rate": 0.010309278350515464
+          },
+          "detected_entity": {
+            "expected_null_count": 63,
+            "expected_null_actual_null_rate": 0.9523809523809523,
+            "null_hallucination_rate": 0.047619047619047616,
+            "expected_non_null_count": 34,
+            "unexpected_null_rate": 0.0
+          },
+          "entity_type": {
+            "expected_null_count": 63,
+            "expected_null_actual_null_rate": 0.9523809523809523,
+            "null_hallucination_rate": 0.047619047619047616,
+            "expected_non_null_count": 34,
+            "unexpected_null_rate": 0.0
+          },
+          "category": {
+            "expected_null_count": 0,
+            "expected_null_actual_null_rate": 0.0,
+            "null_hallucination_rate": 0.0,
+            "expected_non_null_count": 97,
+            "unexpected_null_rate": 0.0
+          },
+          "subcategory": {
+            "expected_null_count": 5,
+            "expected_null_actual_null_rate": 0.0,
+            "null_hallucination_rate": 1.0,
+            "expected_non_null_count": 92,
+            "unexpected_null_rate": 0.021739130434782608
+          },
+          "mitre_tactic": {
+            "expected_null_count": 50,
+            "expected_null_actual_null_rate": 0.7,
+            "null_hallucination_rate": 0.3,
+            "expected_non_null_count": 47,
+            "unexpected_null_rate": 0.2553191489361702
+          },
+          "mitre_technique": {
+            "expected_null_count": 50,
+            "expected_null_actual_null_rate": 0.7,
+            "null_hallucination_rate": 0.3,
+            "expected_non_null_count": 47,
+            "unexpected_null_rate": 0.2553191489361702
+          },
+          "mitre_technique_id": {
+            "expected_null_count": 50,
+            "expected_null_actual_null_rate": 0.78,
+            "null_hallucination_rate": 0.22,
+            "expected_non_null_count": 47,
+            "unexpected_null_rate": 0.2978723404255319
+          },
+          "cyber_kill_chain_phase": {
+            "expected_null_count": 48,
+            "expected_null_actual_null_rate": 0.9791666666666666,
+            "null_hallucination_rate": 0.020833333333333332,
+            "expected_non_null_count": 49,
+            "unexpected_null_rate": 0.46938775510204084
+          }
+        },
+        "confidence_calibration": {
+          "0.90-1.00": {
+            "count": 56,
+            "actual_accuracy": 0.6785714285714286
+          },
+          "0.80-0.89": {
+            "count": 14,
+            "actual_accuracy": 0.7063492063492064
+          },
+          "0.70-0.79": {
+            "count": 5,
+            "actual_accuracy": 0.6666666666666666
+          },
+          "0.50-0.69": {
+            "count": 19,
+            "actual_accuracy": 0.6783625730994153
+          },
+          "<0.50": {
+            "count": 3,
+            "actual_accuracy": 0.7407407407407408
+          }
+        },
+        "error_counts": {
+          "OTHER": 71,
+          "UNEXPECTED_NULL": 34,
+          "MITRE_TACTIC_ERROR": 38,
+          "MITRE_TECHNIQUE_ERROR": 40,
+          "KILL_CHAIN_ERROR": 26,
+          "NULL_HALLUCINATION": 24,
+          "SUBCATEGORY_ERROR": 38,
+          "CATEGORY_ERROR": 21,
+          "ENTITY_ERROR": 6
+        },
+        "lowest_performing_categories": [
+          {
+            "category": "Discovery",
+            "count": 4,
+            "accuracy": 0.0
+          },
+          {
+            "category": "Denial of Service",
+            "count": 1,
+            "accuracy": 0.0
+          },
+          {
+            "category": "Other",
+            "count": 7,
+            "accuracy": 0.5714285714285714
+          },
+          {
+            "category": "Credential Access",
+            "count": 3,
+            "accuracy": 0.6666666666666666
+          },
+          {
+            "category": "Network Abuse",
+            "count": 19,
+            "accuracy": 0.6842105263157895
+          },
+          {
+            "category": "Malware",
+            "count": 11,
+            "accuracy": 0.7272727272727273
+          },
+          {
+            "category": "Command and Control",
+            "count": 11,
+            "accuracy": 0.8181818181818182
+          },
+          {
+            "category": "Web Attack",
+            "count": 13,
+            "accuracy": 0.9230769230769231
+          },
+          {
+            "category": "Exploitation",
+            "count": 7,
+            "accuracy": 1.0
+          },
+          {
+            "category": "Remote Access",
+            "count": 6,
+            "accuracy": 1.0
+          },
+          {
+            "category": "Policy Violation",
+            "count": 6,
+            "accuracy": 1.0
+          },
+          {
+            "category": "Reconnaissance",
+            "count": 5,
+            "accuracy": 1.0
+          },
+          {
+            "category": "Suspicious DNS",
+            "count": 4,
+            "accuracy": 1.0
+          }
+        ],
+        "average_confidence": 0.7861855670103093,
+        "behavior_semantic_normalized_accuracy": 0.36082474226804123,
+        "v2_null_metrics": {
+          "entity": {
+            "precision": 1.0,
+            "recall": 0.9523809523809523
+          },
+          "mitre": {
+            "precision": 0.7358490566037735,
+            "recall": 0.78
+          },
+          "kill_chain": {
+            "precision": 0.6714285714285714,
+            "recall": 0.9791666666666666
+          }
+        },
+        "tool_usage": {
+          "rates": {
+            "entity_candidates": 1.0,
+            "search_mitre": 1.0,
+            "search_similar_rules": 0.8556701030927835,
+            "lookup_cve": 0.14432989690721648
+          },
+          "average_tool_calls_per_rule": 3.0,
+          "semantic_verifier_rate": 1.0,
+          "average_llm_calls_per_rule": 1.0
+        }
+      },
+      "fresh_operational": {
+        "total": 153,
+        "succeeded": 153,
+        "category_distribution": {
+          "Exploitation": 21,
+          "Network Abuse": 32,
+          "Suspicious DNS": 9,
+          "Command and Control": 12,
+          "Policy Violation": 13,
+          "Malware": 26,
+          "Other": 23,
+          "Remote Access": 3,
+          "Web Attack": 10,
+          "Reconnaissance": 2,
+          "Credential Access": 2
+        },
+        "entity_assigned": 33,
+        "mitre_assigned": 31,
+        "validator_distribution": {
+          "PASS": 131,
+          "REVIEW": 22
+        }
+      },
+      "usage": {
+        "input_tokens": 256051,
+        "output_tokens": 57675,
+        "total_tokens": 313726
+      },
+      "usage_coverage": "SUCCESSFUL_RESPONSES_ONLY; usage on failed or retried requests may be unavailable",
+      "retry_count": "NOT_RECORDED",
+      "average_seconds": 6.537704,
+      "tool_usage": {
+        "entity_candidates": 250,
+        "search_mitre": 250,
+        "search_similar_rules": 221,
+        "lookup_cve": 29
+      },
+      "cost": "COST_NOT_CALCULATED"
+    },
+    "gemini": {
+      "model": "gemini-3.5-flash-lite",
+      "total": 250,
+      "succeeded": 250,
+      "failed": 0,
+      "audited_metrics": {
+        "golden_samples": 97,
+        "evaluated": 97,
+        "failed": 0,
+        "field_metrics": {
+          "detected_behavior": {
+            "count": 97,
+            "exact_accuracy": 0.08247422680412371,
+            "normalized_accuracy": 0.08247422680412371
+          },
+          "detected_entity": {
+            "count": 97,
+            "exact_accuracy": 0.9587628865979382,
+            "normalized_accuracy": 0.9587628865979382
+          },
+          "entity_type": {
+            "count": 97,
+            "exact_accuracy": 0.9381443298969072,
+            "normalized_accuracy": 0.9381443298969072
+          },
+          "category": {
+            "count": 97,
+            "exact_accuracy": 0.8041237113402062,
+            "normalized_accuracy": 0.8041237113402062
+          },
+          "subcategory": {
+            "count": 97,
+            "exact_accuracy": 0.6494845360824743,
+            "normalized_accuracy": 0.6494845360824743
+          },
+          "mitre_tactic": {
+            "count": 97,
+            "exact_accuracy": 0.6494845360824743,
+            "normalized_accuracy": 0.7216494845360825
+          },
+          "mitre_technique": {
+            "count": 97,
+            "exact_accuracy": 0.6288659793814433,
+            "normalized_accuracy": 0.6288659793814433
+          },
+          "mitre_technique_id": {
+            "count": 97,
+            "exact_accuracy": 0.6701030927835051,
+            "normalized_accuracy": 0.6701030927835051
+          },
+          "cyber_kill_chain_phase": {
+            "count": 97,
+            "exact_accuracy": 0.7628865979381443,
+            "normalized_accuracy": 0.7628865979381443
+          }
+        },
+        "null_metrics": {
+          "detected_behavior": {
+            "expected_null_count": 0,
+            "expected_null_actual_null_rate": 0.0,
+            "null_hallucination_rate": 0.0,
+            "expected_non_null_count": 97,
+            "unexpected_null_rate": 0.010309278350515464
+          },
+          "detected_entity": {
+            "expected_null_count": 63,
+            "expected_null_actual_null_rate": 0.9523809523809523,
+            "null_hallucination_rate": 0.047619047619047616,
+            "expected_non_null_count": 34,
+            "unexpected_null_rate": 0.0
+          },
+          "entity_type": {
+            "expected_null_count": 63,
+            "expected_null_actual_null_rate": 0.9523809523809523,
+            "null_hallucination_rate": 0.047619047619047616,
+            "expected_non_null_count": 34,
+            "unexpected_null_rate": 0.0
+          },
+          "category": {
+            "expected_null_count": 0,
+            "expected_null_actual_null_rate": 0.0,
+            "null_hallucination_rate": 0.0,
+            "expected_non_null_count": 97,
+            "unexpected_null_rate": 0.0
+          },
+          "subcategory": {
+            "expected_null_count": 5,
+            "expected_null_actual_null_rate": 1.0,
+            "null_hallucination_rate": 0.0,
+            "expected_non_null_count": 92,
+            "unexpected_null_rate": 0.06521739130434782
+          },
+          "mitre_tactic": {
+            "expected_null_count": 50,
+            "expected_null_actual_null_rate": 0.8,
+            "null_hallucination_rate": 0.2,
+            "expected_non_null_count": 47,
+            "unexpected_null_rate": 0.3404255319148936
+          },
+          "mitre_technique": {
+            "expected_null_count": 50,
+            "expected_null_actual_null_rate": 0.8,
+            "null_hallucination_rate": 0.2,
+            "expected_non_null_count": 47,
+            "unexpected_null_rate": 0.3404255319148936
+          },
+          "mitre_technique_id": {
+            "expected_null_count": 50,
+            "expected_null_actual_null_rate": 0.8,
+            "null_hallucination_rate": 0.2,
+            "expected_non_null_count": 47,
+            "unexpected_null_rate": 0.3404255319148936
+          },
+          "cyber_kill_chain_phase": {
+            "expected_null_count": 48,
+            "expected_null_actual_null_rate": 0.6875,
+            "null_hallucination_rate": 0.3125,
+            "expected_non_null_count": 49,
+            "unexpected_null_rate": 0.04081632653061224
+          }
+        },
+        "confidence_calibration": {
+          "0.90-1.00": {
+            "count": 49,
+            "actual_accuracy": 0.6984126984126984
+          },
+          "0.80-0.89": {
+            "count": 44,
+            "actual_accuracy": 0.6666666666666666
+          },
+          "0.70-0.79": {
+            "count": 2,
+            "actual_accuracy": 0.6666666666666667
+          },
+          "0.50-0.69": {
+            "count": 1,
+            "actual_accuracy": 0.6666666666666666
+          },
+          "<0.50": {
+            "count": 1,
+            "actual_accuracy": 0.6666666666666666
+          }
+        },
+        "error_counts": {
+          "OTHER": 89,
+          "UNEXPECTED_NULL": 22,
+          "MITRE_TACTIC_ERROR": 34,
+          "MITRE_TECHNIQUE_ERROR": 36,
+          "CATEGORY_ERROR": 19,
+          "SUBCATEGORY_ERROR": 34,
+          "NULL_HALLUCINATION": 22,
+          "KILL_CHAIN_ERROR": 23,
+          "ENTITY_ERROR": 6
+        },
+        "lowest_performing_categories": [
+          {
+            "category": "Credential Access",
+            "count": 3,
+            "accuracy": 0.3333333333333333
+          },
+          {
+            "category": "Suspicious DNS",
+            "count": 4,
+            "accuracy": 0.5
+          },
+          {
+            "category": "Network Abuse",
+            "count": 19,
+            "accuracy": 0.5263157894736842
+          },
+          {
+            "category": "Command and Control",
+            "count": 11,
+            "accuracy": 0.7272727272727273
+          },
+          {
+            "category": "Remote Access",
+            "count": 6,
+            "accuracy": 0.8333333333333334
+          },
+          {
+            "category": "Other",
+            "count": 7,
+            "accuracy": 0.8571428571428571
+          },
+          {
+            "category": "Web Attack",
+            "count": 13,
+            "accuracy": 0.9230769230769231
+          },
+          {
+            "category": "Malware",
+            "count": 11,
+            "accuracy": 1.0
+          },
+          {
+            "category": "Exploitation",
+            "count": 7,
+            "accuracy": 1.0
+          },
+          {
+            "category": "Policy Violation",
+            "count": 6,
+            "accuracy": 1.0
+          },
+          {
+            "category": "Reconnaissance",
+            "count": 5,
+            "accuracy": 1.0
+          },
+          {
+            "category": "Discovery",
+            "count": 4,
+            "accuracy": 1.0
+          },
+          {
+            "category": "Denial of Service",
+            "count": 1,
+            "accuracy": 1.0
+          }
+        ],
+        "average_confidence": 0.856701030927835,
+        "behavior_semantic_normalized_accuracy": 0.20618556701030927,
+        "v2_null_metrics": {
+          "entity": {
+            "precision": 1.0,
+            "recall": 0.9523809523809523
+          },
+          "mitre": {
+            "precision": 0.7142857142857143,
+            "recall": 0.8
+          },
+          "kill_chain": {
+            "precision": 0.9428571428571428,
+            "recall": 0.6875
+          }
+        },
+        "tool_usage": {
+          "rates": {
+            "entity_candidates": 1.0,
+            "search_mitre": 1.0,
+            "search_similar_rules": 0.8556701030927835,
+            "lookup_cve": 0.14432989690721648
+          },
+          "average_tool_calls_per_rule": 3.0,
+          "semantic_verifier_rate": 1.0,
+          "average_llm_calls_per_rule": 1.0
+        }
+      },
+      "fresh_operational": {
+        "total": 153,
+        "succeeded": 153,
+        "category_distribution": {
+          "Exploitation": 23,
+          "Policy Violation": 16,
+          "Command and Control": 23,
+          "Network Abuse": 19,
+          "Malware": 21,
+          "Credential Access": 5,
+          "Denial of Service": 7,
+          "Other": 18,
+          "Remote Access": 3,
+          "Discovery": 2,
+          "Reconnaissance": 6,
+          "Web Attack": 8,
+          "Impact": 1,
+          "Suspicious DNS": 1
+        },
+        "entity_assigned": 33,
+        "mitre_assigned": 32,
+        "validator_distribution": {
+          "PASS": 153
+        }
+      },
+      "usage": {
+        "input_tokens": 265540,
+        "output_tokens": 54727,
+        "total_tokens": 320267
+      },
+      "usage_coverage": "SUCCESSFUL_RESPONSES_ONLY; usage on failed or retried requests may be unavailable",
+      "retry_count": "NOT_RECORDED",
+      "average_seconds": 2.453216,
+      "tool_usage": {
+        "entity_candidates": 250,
+        "search_mitre": 250,
+        "search_similar_rules": 221,
+        "lookup_cve": 29
+      },
+      "cost": "COST_NOT_CALCULATED"
+    }
+  }
+}
