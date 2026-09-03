@@ -28,6 +28,7 @@ export function Dashboard() {
     Object.entries(filters).forEach(([key, item]) => item && value.set(key, item));
     return value;
   }, [search, filters, page]);
+  const activeFilterCount = Object.entries(filters).filter(([key, value]) => key !== "sort" && Boolean(value)).length + (search ? 1 : 0);
 
   const load = async () => {
     try {
@@ -80,7 +81,7 @@ export function Dashboard() {
     {error && <div className="error">{error}</div>}
     <section className="stats-grid">{cards.map(([label, value], index) => <article className={`stat reveal reveal-${Math.min(index + 1, 5)}`} key={label}><span>{label}</span><strong>{value}</strong><em>{label === "Average Model Confidence" ? "uncalibrated model signal" : label === "Total Rules" ? "in current workspace" : "live queue"}</em></article>)}{Object.entries(stats.manual_review || {}).map(([label,value]) => <article className="stat manual-stat reveal" key={label}><span>Manual {label.replaceAll("_"," ")}</span><strong>{value}</strong></article>)}</section>
     <section className="panel">
-      <div className="panel-heading"><div><div className="section-kicker">LIVE DATASET</div><h2>Rule Explorer</h2><p>{total} matching rules · server-side page {page}</p></div><div className="explorer-actions"><button className="export-button" onClick={exportCsv} disabled={!rules.length}>↓ CSV</button><button className="export-button" onClick={() => window.print()} disabled={!rules.length}>▣ PDF / Print</button><label className="search-wrap"><span>⌕</span><input ref={searchRef} className="search" aria-label="Search rules" placeholder="Search SID, rule, entity, MITRE…" value={search} onChange={e => setSearch(e.target.value)} /><kbd>Ctrl K</kbd></label></div></div>
+      <div className="panel-heading"><div><div className="section-kicker">LIVE DATASET</div><h2>Rule Explorer</h2><p className="result-count"><strong>{total}</strong> kayıt bulundu · sayfa {page} · {activeFilterCount ? `${activeFilterCount} aktif filtre` : "filtre uygulanmadı"}</p></div><div className="explorer-actions"><button className="export-button" onClick={exportCsv} disabled={!rules.length}>↓ CSV</button><button className="export-button" onClick={() => window.print()} disabled={!rules.length}>▣ PDF / Print</button><label className="search-wrap"><span>⌕</span><input ref={searchRef} className="search" aria-label="Search rules" placeholder="Search SID, rule, entity, MITRE…" value={search} onChange={e => setSearch(e.target.value)} /><kbd>Ctrl K</kbd></label></div></div>
       <div className="filters">
         <select value={filters.category} onChange={e => setFilters({...filters, category:e.target.value})}><option value="">All categories</option>{Object.keys(stats.category_distribution).map(x => <option key={x}>{x}</option>)}</select>
         <input placeholder="MITRE ID" value={filters.mitre_technique_id} onChange={e => setFilters({...filters, mitre_technique_id:e.target.value})}/>
