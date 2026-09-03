@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import classification, rules, stats, model_lab
+from app.api import classification, rules, stats, model_lab, catalog
 from app.config import get_settings
 from app.database.session import Base, engine, ensure_schema_extensions
 
@@ -28,6 +28,7 @@ app.include_router(rules.router, prefix="/api")
 app.include_router(classification.router, prefix="/api")
 app.include_router(stats.router, prefix="/api")
 app.include_router(model_lab.router, prefix="/api")
+app.include_router(catalog.router, prefix="/api")
 
 
 @app.get("/health")

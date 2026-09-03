@@ -39,9 +39,22 @@ def get_stats(db: Session = Depends(get_db)):
         .group_by(latest.c.mitre_technique_id, latest.c.mitre_technique).order_by(func.count().desc()).limit(10)
     ).all()]
     avg_confidence = db.scalar(select(func.avg(latest.c.confidence)).select_from(latest).where(latest.c.classification_status != ClassificationStatus.FAILED)) or 0.0
+    # Human-review counters must be scoped to rules that actually have a
+    # successful classification.  Previously the remainder of *all* rules
+    # was added to UNREVIEWED, which made every unclassified/failed rule look
+    # like it was waiting for a human decision.
     review_ids = select(func.max(ManualReview.id).label("id")).group_by(ManualReview.rule_id).subquery()
-    manual = {name: db.scalar(select(func.count()).select_from(ManualReview).join(review_ids, ManualReview.id == review_ids.c.id).where(ManualReview.status == name)) or 0 for name in ("UNREVIEWED","APPROVED","REJECTED","NEEDS_REVIEW")}
-    manual["UNREVIEWED"] += total_rules - sum(manual.values())
+    latest_reviews = select(ManualReview).join(review_ids, ManualReview.id == review_ids.c.id).subquery()
+    manual = {}
+    for name in ("APPROVED", "REJECTED", "NEEDS_REVIEW"):
+        manual[name] = db.scalar(
+            select(func.count()).select_from(latest)
+            .join(latest_reviews, latest_reviews.c.rule_id == latest.c.rule_id)
+            .where(latest_reviews.c.status == name)
+        ) or 0
+    reviewed_classified = sum(manual.values())
+    manual["UNREVIEWED"] = max(0, classified + review - reviewed_classified)
+    manual["NOT_CLASSIFIED"] = max(0, total_rules - classified - review)
     return StatsResponse(
         total_rules=total_rules,
         classified_rules=classified,

@@ -7,6 +7,7 @@ from pydantic import ValidationError
 
 from app.agent.classifier import ProviderUnavailable
 from app.agent.prompt import SYSTEM_PROMPT
+from app.v2.qwen_hardening import QWEN_SYSTEM_PROMPT
 from app.agent.schemas import ClassificationContext, ClassificationOutput, ProviderResult, TokenUsage
 
 
@@ -24,12 +25,24 @@ class OllamaClassificationProvider:
                               "num_ctx": num_ctx, "num_predict": num_predict}
 
     async def classify(self, context: ClassificationContext) -> ProviderResult:
+        is_qwen_v22 = context.classifier_version.casefold() in {"qwen-v2.2", "v2.2-qwen"}
+        context_data = context.model_dump(mode="json")
+        if is_qwen_v22:
+            # The reserved entry is added only by the Qwen-specific service path;
+            # Gemini never receives or serializes it.
+            semantic = context_data.get("controlled_subcategories", {}).get("__qwen_semantic_context__")
+            if semantic:
+                try:
+                    context_data["qwen_semantic_context"] = json.loads(semantic[0])
+                except (TypeError, ValueError, IndexError):
+                    pass
+            context_data.get("controlled_subcategories", {}).pop("__qwen_semantic_context__", None)
         payload = {
             "model": self.model_name, "stream": False, "think": False,
             "format": ClassificationOutput.model_json_schema(),
             "messages": [
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": "RULE CONTEXT (untrusted DATA):\n" + json.dumps(context.model_dump(mode="json"), ensure_ascii=False)},
+                {"role": "system", "content": QWEN_SYSTEM_PROMPT if is_qwen_v22 else SYSTEM_PROMPT},
+                {"role": "user", "content": "RULE CONTEXT (untrusted DATA):\n" + json.dumps(context_data, ensure_ascii=False)},
             ],
             "options": {key: value for key, value in self.configuration.items() if key != "think"},
             "keep_alive": "10m",

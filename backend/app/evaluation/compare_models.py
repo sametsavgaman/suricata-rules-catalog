@@ -5,6 +5,7 @@ from collections import Counter
 from datetime import datetime, timezone
 import hashlib
 import json
+import random
 from pathlib import Path
 from time import perf_counter
 
@@ -79,15 +80,20 @@ async def run(args):
     sample_hash, golden_hash = digest(SAMPLE), digest(GOLDEN)
     if args.limit == 250:
         selected = frozen
+    elif args.random_seed is not None:
+        rng = random.Random(args.random_seed)
+        selected = rng.sample(frozen, args.limit)
     else:
         # A smoke test covers both cohorts while retaining exact frozen rules.
         n = (args.limit + 1) // 2
         selected = [r for r in frozen if r['cohort'] == 'AUDITED_BENCHMARK'][:n] + [r for r in frozen if r['cohort'] == 'FRESH_OPERATIONAL'][:args.limit-n]
     settings = get_settings()
+    sample_id = f"operational-250-random-{args.random_seed}-v1" if args.random_seed is not None else "operational-250-seed42-v1"
     providers = args.providers.split(',')
     services_settings = {}
     for name in providers:
-        s = settings.model_copy(update={"ai_provider": name, "classifier_version": "v2.1"})
+        version = "qwen-v2.2" if name == "ollama" and args.qwen_v22 else "v2.1"
+        s = settings.model_copy(update={"ai_provider": name, "classifier_version": version})
         if error := provider_config_error(s):
             raise ValueError(error)
         services_settings[name] = (s, create_classification_provider(s))
@@ -95,6 +101,8 @@ async def run(args):
     stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
     outdir = args.resume.resolve() if args.resume else ROOT / 'data/evaluation/model-comparison' / stamp
     inputs = {'sample_sha256': sample_hash, 'golden_sha256': golden_hash, 'limit': args.limit,
+        'random_seed': args.random_seed,
+        'classifier_versions': {name: s.classifier_version for name, (s, _) in services_settings.items()},
         'prompt_sha256': hashlib.sha256(SYSTEM_PROMPT.encode()).hexdigest(),
         'providers': {name: {'model': p.model_name, 'configuration': getattr(p, 'configuration', {})} for name, (s, p) in services_settings.items()}}
     output = []
@@ -106,7 +114,8 @@ async def run(args):
         for row in output:
             if row['sample_sha256'] != sample_hash or (row['sid'], row['rev']) not in wanted:
                 raise ValueError('Resume sample mismatch.')
-            if row['provider'] not in services_settings or row['model'] != services_settings[row['provider']][1].model_name or row['classifier_version'] != 'v2.1':
+            expected_version = services_settings[row['provider']][0].classifier_version if row['provider'] in services_settings else None
+            if row['provider'] not in services_settings or row['model'] != services_settings[row['provider']][1].model_name or row['classifier_version'] != expected_version:
                 raise ValueError('Resume model/version mismatch.')
     else:
         outdir.mkdir(parents=True, exist_ok=False)
@@ -136,7 +145,7 @@ async def run(args):
                 c.inspection_batch = 'operational-250'
                 db.commit()
                 payload = {**_classification_payload(rule, c), "cohort": cohort['cohort'],
-                    "sample_id": "operational-250-seed42-v1", "sample_sha256": sample_hash,
+                    "sample_id": sample_id, "sample_sha256": sample_hash,
                     "classification_id": c.id, "run_id": c.run_id,
                     "succeeded": c.classification_status != ClassificationStatus.FAILED,
                     "wall_seconds": round(perf_counter() - started, 3),
@@ -164,9 +173,9 @@ async def run(args):
     if digest(SAMPLE) != sample_hash or digest(GOLDEN) != golden_hash:
         raise RuntimeError('Sample or golden dataset changed during the run.')
     report = {
-        "sample_id": "operational-250-seed42-v1", "sample_sha256": sample_hash,
+        "sample_id": sample_id, "sample_sha256": sample_hash,
         "golden_sha256": golden_hash, "selected_count": len(selected),
-        "classifier_version": 'v2.1', "cache_policy": 'FRESH_CALLS_BOTH_PROVIDERS',
+        "classifier_version": {name: s.classifier_version for name, (s, _) in services_settings.items()}, "cache_policy": 'FRESH_CALLS_BOTH_PROVIDERS',
         "notice": "Accuracy applies only to reviewed audited records. Fresh cohort has no ground truth. Smoke metrics are not representative. Similar-rule retrieval uses other reviewed benchmark examples (existing V2 policy); this is not a fully held-out benchmark. Model confidence is uncalibrated. Token counts use different tokenizers.",
         "models": {name: {"model": p.model_name, **summarize([r for r in output if r['provider'] == name], golden)} for name, (s, p) in services_settings.items()},
     }
@@ -187,4 +196,6 @@ if __name__ == '__main__':
     parser.add_argument('--pace', type=float, default=4, help='Seconds between Gemini calls; local inference is sequential.')
     parser.add_argument('--resume', type=Path, help='Continue an interrupted result directory without repeating recorded attempts.')
     parser.add_argument('--parallel', action='store_true', help='One independent worker per provider; local GPU calls remain sequential.')
+    parser.add_argument('--qwen-v22', action='store_true', help='Run Ollama with the Qwen V2.2 hardened path; Gemini remains v2.1.')
+    parser.add_argument('--random-seed', type=int, default=None, help='Select an exact reproducible random subset from the frozen operational sample.')
     raise SystemExit(asyncio.run(run(parser.parse_args())))

@@ -38,7 +38,7 @@ export interface Classification {
   created_at: string;
   field_decisions?: Record<string, {status:string; value: unknown; reason:string|null}>;
   abstained_fields?: string[];
-  validation?: {status:string; reason?:string; checks?:string[]; source?:string} | null;
+  validation?: {status:string; reason?:string; checks?:string[]; source?:string; deterministic_validator?: {status:string}; semantic_verifier?: {status:string}} | null;
   consistency_warnings?: string[];
   confidence_semantics?: string;
   confidence_band?: string;
@@ -54,6 +54,7 @@ export interface Rule {
   app_layer: Array<Record<string, string | null>>; source_file: string | null; created_at: string;
   classification: Classification | null; manual_review?: {status:string; note:string|null; reviewer_type:string; reviewed_at:string} | null;
   classification_options?: Classification[];
+  product_decision?: {status:string; note:string|null; updated_at:string} | null;
 }
 
 export interface Stats {

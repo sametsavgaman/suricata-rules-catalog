@@ -8,7 +8,7 @@ from app.agent.classifier import ClassificationProvider
 from app.agent.context import build_classification_context
 from app.agent.schemas import ProviderResult, TokenUsage
 from app.config import Settings
-from app.database.models import Classification, ClassificationRun, ClassificationStatus, Rule
+from app.database.models import Classification, ClassificationRun, ClassificationStatus, Rule, RuleProductDecision, ProductStatus
 from app.enrichment.deterministic_enrichment import enrich_rule
 from app.knowledge.mitre_repository import MitreRepository
 from app.parser.models import ParsedRule
@@ -17,6 +17,8 @@ from app.knowledge.taxonomy import SUBCATEGORIES
 from app.v2.tools import entity_candidates, extract_cves, search_mitre, search_similar_rules
 from app.v2.pipeline import finalize
 from app.v2.state import build_field_decisions
+from app.v2.qwen_hardening import build_semantic_context, canonicalize, qwen_entity_candidates
+from app.v2.mitre_decision import retrieve_candidates
 from pathlib import Path
 import hashlib
 import json
@@ -87,15 +89,28 @@ class ClassificationService:
         )
         hints = enrich_rule(parsed)
         v2_data=None; tool_names=[]; v2_entity=[]; v2_mitre=[]; similar=[]
-        if self.settings.classifier_version.casefold().startswith("v2"):
-            v2_entity=entity_candidates(parsed); tool_names.append("entity_candidates")
-            v2_mitre=search_mitre(parsed,self.mitre_repository); tool_names.append("search_mitre")
+        qwen_mode = provider_name == "ollama" and self.settings.classifier_version.casefold() in {"qwen-v2.2", "v2.2-qwen"}
+        if self.settings.classifier_version.casefold().startswith("v2") or qwen_mode:
+            v2_entity=entity_candidates(parsed)
+            if qwen_mode:
+                v2_entity=qwen_entity_candidates(parsed, v2_entity)
+            tool_names.append("entity_candidates")
+            v2_mitre=retrieve_candidates(parsed, self.mitre_repository) if qwen_mode else search_mitre(parsed,self.mitre_repository)
+            tool_names.append("mitre_decision_layer" if qwen_mode else "search_mitre")
             cves=extract_cves(parsed)
             if cves: tool_names.append("lookup_cve")
             elif len(tool_names)<self.settings.max_tool_calls_per_rule:
                 similar=search_similar_rules(parsed,Path(__file__).resolve().parents[3]/"data/evaluation/golden_dataset.jsonl"); tool_names.append("search_similar_rules")
             tool_names=tool_names[:self.settings.max_tool_calls_per_rule]
-            v2_data={"classifier_version":"v2","controlled_subcategories":{k.value:list(v) for k,v in SUBCATEGORIES.items()},"entity_candidates":v2_entity,"mitre_candidates":v2_mitre,"cve_context":cves,"similar_rules":similar}
+            controlled = {k.value:list(v) for k,v in SUBCATEGORIES.items()}
+            if qwen_mode:
+                controlled["__qwen_semantic_context__"] = [json.dumps(build_semantic_context(
+                    parsed, hints=hints, entity_candidates=v2_entity, mitre_candidates=v2_mitre,
+                    cves=cves, similar_rules=similar, controlled_subcategories={k.value:list(v) for k,v in SUBCATEGORIES.items()}
+                ), ensure_ascii=False)]
+            v2_data={"classifier_version": self.settings.classifier_version if qwen_mode else "v2",
+                     "controlled_subcategories":controlled,"entity_candidates":v2_entity,
+                     "mitre_candidates":v2_mitre,"cve_context":cves,"similar_rules":similar}
         context = build_classification_context(
             parsed, self.mitre_repository, max_contents=self.settings.max_agent_contents,
             max_content_chars=self.settings.max_agent_content_chars, hints=hints, v2_data=v2_data,
@@ -118,7 +133,16 @@ class ClassificationService:
                 from app.agent.schemas import ClassificationOutput
                 output = ClassificationOutput.model_validate(output)
             activity={}
-            if self.settings.classifier_version.casefold().startswith("v2"): output,activity_obj=finalize(output,rule=parsed,entity_candidates=v2_entity,mitre_candidates=v2_mitre,tool_names=tool_names,similar_count=len(similar)); activity=activity_obj.as_dict()
+            qwen_mode = provider_name == "ollama" and self.settings.classifier_version.casefold() in {"qwen-v2.2", "v2.2-qwen"}
+            if qwen_mode:
+                output, qwen_reasons = canonicalize(output, rule=parsed, mitre_candidates=v2_mitre, repository=self.mitre_repository)
+            else:
+                qwen_reasons = []
+            if self.settings.classifier_version.casefold().startswith("v2") or qwen_mode:
+                output,activity_obj=finalize(output,rule=parsed,entity_candidates=v2_entity,mitre_candidates=v2_mitre,tool_names=tool_names,similar_count=len(similar)); activity=activity_obj.as_dict()
+                if qwen_reasons:
+                    activity.setdefault("qwen_normalization", {})["reason_codes"] = qwen_reasons
+                    activity["qwen_normalization"]["input_version"] = "qwen_semantic_input_v2"
             validation = self.validator.validate(output, activity)
             values = output.model_dump(mode="json")
             decisions = activity.get("field_decisions") or build_field_decisions(values, activity.get("abstained_fields", []), legacy=False)
@@ -170,6 +194,13 @@ class ClassificationService:
         run.successful_rules = int(record.classification_status != ClassificationStatus.FAILED)
         run.failed_rules = int(record.classification_status == ClassificationStatus.FAILED)
         self.db.add(record)
+        # Product planning is a separate human decision. Ensure every
+        # successfully classified rule appears in the product workspace as
+        # NOT_EVALUATED, without auto-promoting it to CANDIDATE.
+        if record.classification_status != ClassificationStatus.FAILED and not self.db.scalar(
+            select(RuleProductDecision).where(RuleProductDecision.rule_id == rule.id)
+        ):
+            self.db.add(RuleProductDecision(rule_id=rule.id, status=ProductStatus.NOT_EVALUATED))
         self.db.commit()
         self.db.refresh(record)
         record._cache_hit = False

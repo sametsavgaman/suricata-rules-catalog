@@ -9,10 +9,18 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 export function getStats() { return request<Stats>("/stats"); }
+export function getCatalogStats() { return request<{total_rules:number;classified_rules:number;mitre_mapped:number;classification_records:number;product_status:Record<string,number>}>("/catalog/stats"); }
+export function getCatalogFacets() { return request<{categories:Array<{value:string;count:number}>;subcategories:Array<{value:string;count:number}>;entities:Array<{value:string;count:number}>;mitre_tactics:Array<{value:string;count:number}>;mitre_techniques:Array<{value:string;count:number}>;protocols:Array<{value:string;count:number}>}>("/catalog/facets"); }
+export function getCatalogCandidates(status?: string) { return request<{items:Rule[];total:number}>(`/catalog/candidates${status ? `?status=${encodeURIComponent(status)}` : ""}`); }
+export async function exportCatalogCsv(params: URLSearchParams) { const response = await fetch(`${API}/catalog/export.csv?${params}`); if (!response.ok) throw new Error("Export failed"); return response.blob(); }
 export function getRule(sid: string) { return request<Rule>(`/rules/${sid}`); }
 export function getNeighbors(sid: string) { return request<{previous_sid:number|null; next_sid:number|null}>(`/rules/${sid}/neighbors`); }
 export function getReview(sid: string) { return request<{status:string;note:string|null;reviewer_type:string;reviewed_at:string}>(`/rules/${sid}/review`); }
 export function getReviewHistory(sid: string) { return request<{items:Array<{status:string;note:string|null;reviewer_type:string;reviewed_at:string}>}>(`/rules/${sid}/review/history`); }
+export type ProductStatus = "NOT_EVALUATED" | "CANDIDATE" | "SHORTLISTED" | "APPROVED_FOR_PRODUCT" | "REJECTED_FOR_PRODUCT" | "ALREADY_INTEGRATED";
+export function getProductDecision(sid: string) { return request<{status:ProductStatus;note:string|null;updated_at:string}>(`/rules/${sid}/product`); }
+export function saveProductDecision(sid: string, status: ProductStatus, note?: string) { return request<{status:ProductStatus;note:string|null;updated_at:string}>(`/rules/${sid}/product`, {method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({status,note:note || null})}); }
+export function getProductHistory(sid: string) { return request<Array<{from_status:string|null;to_status:string;note:string|null;created_at:string}>>(`/rules/${sid}/product/history`); }
 export function saveReview(sid: string, status: string, note?: string, classification_id?: number | null) { return request<{status:string;note:string|null;reviewer_type:string;reviewed_at:string}>(`/rules/${sid}/review`, {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({status,note:note||null,classification_id:classification_id||null})}); }
 export function classifyRule(sid: number, force = false, executionProvider = "") { return request<Classification>(`/rules/${sid}/classify?force=${force}${executionProvider ? `&execution_provider=${encodeURIComponent(executionProvider)}` : ""}`, { method: "POST" }); }
 export function getRules(params: URLSearchParams) { return request<{items: Rule[]; total: number; offset:number; limit:number; page:number; total_pages:number}>(`/rules?${params}`); }

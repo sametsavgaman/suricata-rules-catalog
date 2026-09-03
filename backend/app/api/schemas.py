@@ -2,7 +2,7 @@ from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from app.database.models import ClassificationStatus
+from app.database.models import ClassificationStatus, ProductStatus
 from app.v2.state import canonical_state, confidence_summary
 
 
@@ -89,6 +89,24 @@ class RuleListResponse(BaseModel):
     limit: int
     page: int = 1
     total_pages: int = 1
+
+
+class ProductDecisionRequest(BaseModel):
+    status: ProductStatus
+    note: str | None = None
+
+
+class ProductDecisionRead(BaseModel):
+    status: ProductStatus
+    note: str | None = None
+    updated_at: datetime
+
+
+class ProductHistoryItem(BaseModel):
+    from_status: str | None
+    to_status: str
+    note: str | None = None
+    created_at: datetime
 
 
 class RuleNeighbors(BaseModel):

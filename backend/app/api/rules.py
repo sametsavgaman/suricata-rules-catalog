@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile
 from sqlalchemy import and_, func, or_, select
 from sqlalchemy.orm import Session
 
-from app.api.schemas import ClassificationRead, ImportFileResult, ImportResponse, RuleListResponse, RuleRead, RuleNeighbors, rule_to_read, ManualReviewRequest, ManualReviewResponse, ManualReviewHistoryResponse
-from app.database.models import Classification, ClassificationStatus, Rule, ManualReview
+from app.api.schemas import ClassificationRead, ImportFileResult, ImportResponse, RuleListResponse, RuleRead, RuleNeighbors, rule_to_read, ManualReviewRequest, ManualReviewResponse, ManualReviewHistoryResponse, ProductDecisionRequest, ProductDecisionRead, ProductHistoryItem
+from app.database.models import Classification, ClassificationStatus, Rule, ManualReview, ProductStatus, RuleProductDecision, RuleProductDecisionHistory
 from app.database.repository import RuleRepository
 from app.database.session import get_db
 from app.ingestion.rule_loader import RuleLoader
@@ -39,6 +39,7 @@ def list_rules(
     run_id: str | None = None,
     mitre_mapping_method: str | None = None,
     manual_review_status: str | None = Query(None, pattern="^(UNREVIEWED|APPROVED|REJECTED|NEEDS_REVIEW)$"),
+    product_status: ProductStatus | None = None,
     sort: str = Query("sid_desc"),
     search: str | None = None,
     offset: int = Query(0, ge=0),
@@ -58,7 +59,7 @@ def list_rules(
         Classification.classification_status != ClassificationStatus.FAILED,
         *selection,
     ).correlate(Rule).scalar_subquery()
-    stmt = select(Rule, Classification).outerjoin(Classification, Classification.id == latest_id)
+    stmt = select(Rule, Classification).outerjoin(Classification, Classification.id == latest_id).outerjoin(RuleProductDecision, RuleProductDecision.rule_id == Rule.id)
     filters = []
     mapping = {
         "category": (Classification.category, category),
@@ -75,6 +76,7 @@ def list_rules(
         "classifier_version": (Classification.classifier_version, classifier_version),
         "inference_mode": (Classification.inference_mode, inference_mode), "run_id": (Classification.run_id, run_id),
         "protocol": (Rule.protocol, protocol),
+        "product_status": (RuleProductDecision.status, product_status),
         "classtype": (Rule.classtype, classtype),
     }
     filters.extend(column == value for column, value in mapping.values() if value is not None)
@@ -82,7 +84,13 @@ def list_rules(
         review_scope = (ManualReview.rule_id == Rule.id, ManualReview.classification_id == Classification.id)
         latest_review = select(func.max(ManualReview.id)).where(*review_scope).correlate(Rule, Classification).scalar_subquery()
         review_exists = select(ManualReview.id).where(ManualReview.id == latest_review, ManualReview.status == manual_review_status).exists()
-        filters.append(or_(~select(ManualReview.id).where(*review_scope).exists(), review_exists) if manual_review_status == "UNREVIEWED" else review_exists)
+        if manual_review_status == "UNREVIEWED":
+            # UNREVIEWED is a human-review state for an existing
+            # classification, not a synonym for "no classification".
+            filters.append(Classification.id.is_not(None))
+            filters.append(or_(~select(ManualReview.id).where(*review_scope).exists(), review_exists))
+        else:
+            filters.append(review_exists)
     if confidence is not None: filters.append(Classification.confidence >= confidence)
     if confidence_min is not None: filters.append(Classification.confidence >= confidence_min)
     if confidence_max is not None: filters.append(Classification.confidence <= confidence_max)
@@ -123,6 +131,37 @@ def rule_neighbors(sid: int, db: Session = Depends(get_db)):
     previous = db.scalar(select(Rule.sid).where(Rule.sid < sid).order_by(Rule.sid.desc()).limit(1))
     next_sid = db.scalar(select(Rule.sid).where(Rule.sid > sid).order_by(Rule.sid.asc()).limit(1))
     return RuleNeighbors(previous_sid=previous, next_sid=next_sid)
+
+@router.get("/{sid}/product", response_model=ProductDecisionRead)
+def get_product_decision(sid: int, db: Session = Depends(get_db)):
+    rule = RuleRepository(db).by_sid(sid)
+    if not rule: raise HTTPException(404, "Rule not found")
+    decision = db.scalar(select(RuleProductDecision).where(RuleProductDecision.rule_id == rule.id))
+    if not decision:
+        decision = RuleProductDecision(rule_id=rule.id, status=ProductStatus.NOT_EVALUATED)
+        db.add(decision); db.commit(); db.refresh(decision)
+    return decision
+
+@router.get("/{sid}/product/history", response_model=list[ProductHistoryItem])
+def product_history(sid: int, db: Session = Depends(get_db)):
+    rule = RuleRepository(db).by_sid(sid)
+    if not rule: raise HTTPException(404, "Rule not found")
+    return db.scalars(select(RuleProductDecisionHistory).where(RuleProductDecisionHistory.rule_id == rule.id).order_by(RuleProductDecisionHistory.created_at.desc())).all()
+
+@router.put("/{sid}/product", response_model=ProductDecisionRead)
+def update_product_decision(sid: int, payload: ProductDecisionRequest, db: Session = Depends(get_db)):
+    rule = RuleRepository(db).by_sid(sid)
+    if not rule: raise HTTPException(404, "Rule not found")
+    decision = db.scalar(select(RuleProductDecision).where(RuleProductDecision.rule_id == rule.id))
+    previous = decision.status.value if decision else ProductStatus.NOT_EVALUATED.value
+    if decision is None:
+        decision = RuleProductDecision(rule_id=rule.id, status=payload.status, note=payload.note)
+        db.add(decision)
+    else:
+        decision.status, decision.note = payload.status, payload.note
+    db.add(RuleProductDecisionHistory(rule_id=rule.id, from_status=previous, to_status=payload.status.value, note=payload.note))
+    db.commit(); db.refresh(decision)
+    return decision
 
 @router.get("/{sid}/classifications")
 def list_classifications(sid: int, db: Session = Depends(get_db)):

@@ -148,3 +148,33 @@ class ComparisonReview(Base):
     preference: Mapped[str] = mapped_column(String(24))
     note: Mapped[str | None] = mapped_column(Text, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
+class ProductStatus(StrEnum):
+    NOT_EVALUATED = "NOT_EVALUATED"
+    CANDIDATE = "CANDIDATE"
+    SHORTLISTED = "SHORTLISTED"
+    APPROVED_FOR_PRODUCT = "APPROVED_FOR_PRODUCT"
+    REJECTED_FOR_PRODUCT = "REJECTED_FOR_PRODUCT"
+    ALREADY_INTEGRATED = "ALREADY_INTEGRATED"
+
+
+class RuleProductDecision(Base):
+    __tablename__ = "rule_product_decisions"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    rule_id: Mapped[int] = mapped_column(ForeignKey("rules.id", ondelete="CASCADE"), unique=True, index=True)
+    status: Mapped[ProductStatus] = mapped_column(SAEnum(ProductStatus), default=ProductStatus.NOT_EVALUATED, index=True)
+    note: Mapped[str | None] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, onupdate=utcnow)
+    rule: Mapped[Rule] = relationship()
+
+
+class RuleProductDecisionHistory(Base):
+    __tablename__ = "rule_product_decision_history"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    rule_id: Mapped[int] = mapped_column(ForeignKey("rules.id", ondelete="CASCADE"), index=True)
+    from_status: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    to_status: Mapped[str] = mapped_column(String(32))
+    note: Mapped[str | None] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)

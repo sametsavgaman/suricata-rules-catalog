@@ -43,6 +43,8 @@ def test_import_list_detail_and_stats():
         assert stats.status_code == 200
         assert stats.json()["total_rules"] == 20
         assert stats.json()["classified_rules"] == 0
+        assert stats.json()["manual_review"]["UNREVIEWED"] == 0
+        assert stats.json()["manual_review"]["NOT_CLASSIFIED"] == 20
 
 
 def test_missing_rule_is_404():
@@ -50,4 +52,3 @@ def test_missing_rule_is_404():
     Base.metadata.create_all(engine)
     with TestClient(app) as client:
         assert client.get("/api/rules/123456789").status_code == 404
-
