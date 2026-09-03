@@ -4,6 +4,9 @@
 *.db-wal
 *.db-shm
 .runtime-secrets.json
+data/evaluation/model-comparison/*/
+!data/evaluation/model-comparison/20260903T060724303787Z/
+!data/evaluation/model-comparison/20260903T060724303787Z/**
 __pycache__/
 .pytest_cache/
 .venv/
