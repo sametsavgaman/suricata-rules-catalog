@@ -40,11 +40,18 @@ From `backend`:
 ```powershell
 .\.venv\Scripts\python.exe -m app.evaluation.compare_models --limit 5
 .\.venv\Scripts\python.exe -m app.evaluation.compare_models --limit 250
+.\.venv\Scripts\python.exe -m app.evaluation.compare_models --limit 250 --parallel
 ```
 
 The command uses the configured Gemini model and `OLLAMA_MODEL`. It reads the existing operational sample, requires 250 unique SID/REV pairs (97 audited + 153 fresh), and verifies sample/golden hashes at completion. Smaller smoke subsets cover both cohorts. Missing exact database revisions fail preflight rather than silently resampling.
 
 Every run writes a timestamped directory under `data/evaluation/model-comparison/` containing `results.jsonl`, `report.json`, and `report.md`. Both providers run fresh; old Gemini results are retained. Each result includes provider/model/version, classification ID, prompt/context fingerprints, measured token counts and timing. Failures are retained and the batch continues. Gemini uses existing bounded retries; local transient HTTP errors have bounded retries. API failure messages are not exported. No training data or ground truth is created automatically.
+
+`--parallel` uses one independent worker per provider, with separate DB sessions and serialized result writes. GPU requests remain sequential. `--resume PATH` continues a saved results directory and skips every recorded attempt, including failures. Use the same sample size, providers and models. To regenerate the readable comparison and disagreement queues without making any API calls:
+
+```powershell
+.\.venv\Scripts\python.exe -m app.evaluation.comparison_report ..\data\evaluation\model-comparison\RUN_DIRECTORY
+```
 
 Accuracy applies only to reviewed audited records. Fresh rules provide descriptive statistics, not accuracy. Existing similar-rule retrieval draws from other reviewed benchmark examples, so these results should not be described as a fully held-out test. Small smoke metrics are not representative. Token counts use different tokenizers; wall time includes cold model loading when it occurs. Hardware/electricity costs are not measured: `COST_NOT_CALCULATED`.
 

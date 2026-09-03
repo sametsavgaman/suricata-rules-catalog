@@ -111,19 +111,21 @@ async def run(args):
     Base.metadata.create_all(engine)
     ensure_schema_extensions()
     repo = MitreRepository()
-    with SessionLocal() as db, (outdir / 'results.jsonl').open('a' if args.resume else 'x', encoding='utf-8') as stream:
-        rules = []
+    with SessionLocal() as db:
         for row in selected:
             rule = db.scalar(select(Rule).where(Rule.sid == row['sid'], Rule.rev == row['rev']))
             if rule is None:
                 raise ValueError(f"Frozen rule missing from database: {row['sid']}/{row['rev']}; import its exact revision first.")
-            rules.append((row, rule))
-        for index, (cohort, rule) in enumerate(rules, 1):
-            for name, (s, provider) in services_settings.items():
+    write_lock = asyncio.Lock()
+    async def worker(name, s, provider, stream):
+        with SessionLocal() as db:
+            service = ClassificationService(db, provider, s, repo)
+            for index, cohort in enumerate(selected, 1):
+                rule = db.scalar(select(Rule).where(Rule.sid == cohort['sid'], Rule.rev == cohort['rev']))
                 if (name, rule.sid, rule.rev) in completed:
                     continue
                 started = perf_counter()
-                c = await ClassificationService(db, provider, s, repo).classify(rule, force=True)
+                c = await service.classify(rule, force=True)
                 c.inspection_batch = 'operational-250'
                 db.commit()
                 payload = {**_classification_payload(rule, c), "cohort": cohort['cohort'],
@@ -137,12 +139,21 @@ async def run(args):
                 if not payload['succeeded']:
                     # Do not serialize provider exception text, which may contain request data.
                     payload['failure'] = list(c.validation_issues)
-                stream.write(json.dumps(payload, ensure_ascii=False) + '\n')
-                stream.flush()
-                output.append(payload)
+                async with write_lock:
+                    stream.write(json.dumps(payload, ensure_ascii=False) + '\n')
+                    stream.flush()
+                    output.append(payload)
                 print(f"[{index}/{len(selected)}] [{name}] SID {rule.sid} {'OK' if payload['succeeded'] else 'FAILED'} {payload['wall_seconds']}s", flush=True)
                 if name == 'gemini' and args.pace:
                     await asyncio.sleep(args.pace)
+    with (outdir / 'results.jsonl').open('a' if args.resume else 'x', encoding='utf-8') as stream:
+        if args.parallel:
+            async with asyncio.TaskGroup() as group:
+                for name, (s, provider) in services_settings.items():
+                    group.create_task(worker(name, s, provider, stream))
+        else:
+            for name, (s, provider) in services_settings.items():
+                await worker(name, s, provider, stream)
     if digest(SAMPLE) != sample_hash or digest(GOLDEN) != golden_hash:
         raise RuntimeError('Sample or golden dataset changed during the run.')
     report = {
@@ -168,4 +179,5 @@ if __name__ == '__main__':
     parser.add_argument('--providers', default='ollama,gemini', choices=['ollama', 'gemini', 'ollama,gemini'])
     parser.add_argument('--pace', type=float, default=4, help='Seconds between Gemini calls; local inference is sequential.')
     parser.add_argument('--resume', type=Path, help='Continue an interrupted result directory without repeating recorded attempts.')
+    parser.add_argument('--parallel', action='store_true', help='One independent worker per provider; local GPU calls remain sequential.')
     raise SystemExit(asyncio.run(run(parser.parse_args())))
