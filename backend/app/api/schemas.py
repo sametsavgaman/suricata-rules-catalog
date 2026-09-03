@@ -51,6 +51,7 @@ class ClassificationRead(BaseModel):
     confidence_band: str = "LOW"
     confidence_band_definition: str | None = None
     field_coverage: dict = Field(default_factory=dict)
+    manual_review: dict | None = None
 
 
 class RuleRead(BaseModel):
@@ -129,6 +130,22 @@ class StatsResponse(BaseModel):
     manual_review: dict[str, int] = Field(default_factory=dict)
 
 
+def classification_to_read(item, reviews=()) -> ClassificationRead:
+    value = ClassificationRead.model_validate(item)
+    decisions, abstained, validation, strength, warnings = canonical_state(item)
+    confidence = confidence_summary(item, decisions)
+    matching_reviews = [r for r in reviews if r.classification_id == item.id]
+    current = matching_reviews[-1] if matching_reviews else None
+    return value.model_copy(update={
+        "field_decisions": decisions, "abstained_fields": abstained,
+        "validation": validation, "evidence_strength": strength, "consistency_warnings": warnings,
+        "confidence_semantics": confidence['semantics'], "confidence_band": confidence['band'],
+        "confidence_band_definition": confidence['band_definition'], "field_coverage": confidence['field_coverage'],
+        "manual_review": {"status": current.status, "note": current.note,
+            "reviewer_type": current.reviewer_type, "reviewed_at": current.created_at} if current else None,
+    })
+
+
 def rule_to_read(rule, classification=None) -> RuleRead:
     if classification is None and getattr(rule, "classifications", None):
         non_failed = [item for item in rule.classifications if item.classification_status != ClassificationStatus.FAILED]
@@ -139,19 +156,9 @@ def rule_to_read(rule, classification=None) -> RuleRead:
     reviews = getattr(rule, "manual_reviews", [])
     current = reviews[-1] if reviews else None
     review = {"status": current.status, "note": current.note, "reviewer_type": current.reviewer_type, "reviewed_at": current.created_at} if current else None
-    normalized = None
-    if classification:
-        normalized = ClassificationRead.model_validate(classification)
-        decisions, abstained, validation, evidence_strength, warnings = canonical_state(classification)
-        confidence = confidence_summary(classification, decisions)
-        normalized = normalized.model_copy(update={
-            "field_decisions": decisions, "abstained_fields": abstained,
-            "validation": validation, "evidence_strength": evidence_strength,
-            "consistency_warnings": warnings, "confidence_semantics": confidence["semantics"],
-            "confidence_band": confidence["band"], "confidence_band_definition": confidence["band_definition"],
-            "field_coverage": confidence["field_coverage"],
-        })
-    options = [ClassificationRead.model_validate(item).model_dump(mode="json") for item in sorted(getattr(rule, "classifications", []), key=lambda x: (x.created_at, x.id), reverse=True)]
+    normalized = classification_to_read(classification, reviews) if classification else None
+    options = [classification_to_read(item, reviews).model_dump(mode='json')
+        for item in sorted(getattr(rule, "classifications", []), key=lambda x: (x.created_at, x.id), reverse=True)]
     return RuleRead(**data, classification=normalized, manual_review=review, classification_options=options)
 
 

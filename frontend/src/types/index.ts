@@ -1,6 +1,7 @@
 export type Status = "AUTO_CLASSIFIED" | "REVIEW_REQUIRED" | "FAILED";
 
 export interface Classification {
+  manual_review?: {status:string;note:string|null;reviewer_type:string;reviewed_at:string} | null;
   id: number;
   detected_behavior: string | null;
   detected_entity: string | null;

@@ -14,7 +14,7 @@ export function getNeighbors(sid: string) { return request<{previous_sid:number|
 export function getReview(sid: string) { return request<{status:string;note:string|null;reviewer_type:string;reviewed_at:string}>(`/rules/${sid}/review`); }
 export function getReviewHistory(sid: string) { return request<{items:Array<{status:string;note:string|null;reviewer_type:string;reviewed_at:string}>}>(`/rules/${sid}/review/history`); }
 export function saveReview(sid: string, status: string, note?: string, classification_id?: number | null) { return request<{status:string;note:string|null;reviewer_type:string;reviewed_at:string}>(`/rules/${sid}/review`, {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({status,note:note||null,classification_id:classification_id||null})}); }
-export function classifyRule(sid: number, force = false) { return request<Classification>(`/rules/${sid}/classify?force=${force}`, { method: "POST" }); }
+export function classifyRule(sid: number, force = false, executionProvider = "") { return request<Classification>(`/rules/${sid}/classify?force=${force}${executionProvider ? `&execution_provider=${encodeURIComponent(executionProvider)}` : ""}`, { method: "POST" }); }
 export function getRules(params: URLSearchParams) { return request<{items: Rule[]; total: number; offset:number; limit:number; page:number; total_pages:number}>(`/rules?${params}`); }
 export function getClassificationFilters() { return request<{models:string[]; providers:string[]; classifier_versions:string[]; inference_modes:string[]; runs:string[]}>("/rules/filters"); }
 export function importRules(files: FileList) {

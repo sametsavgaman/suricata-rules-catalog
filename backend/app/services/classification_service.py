@@ -18,6 +18,9 @@ from app.v2.tools import entity_candidates, extract_cves, search_mitre, search_s
 from app.v2.pipeline import finalize
 from app.v2.state import build_field_decisions
 from pathlib import Path
+import hashlib
+import json
+from app.agent.prompt import SYSTEM_PROMPT
 
 
 class ClassificationService:
@@ -58,8 +61,8 @@ class ClassificationService:
         display_name = {"gemini-3.5-flash-lite": "Gemini 3.5 Flash Lite", "qwen3:8b": "Qwen3 8B"}.get(model_name, model_name)
         run = ClassificationRun(run_id=run_id, provider=provider_name, model_name=model_name,
                                 model_display_name=display_name, classifier_version=self.settings.classifier_version,
-                                inference_mode="API" if provider_name == "gemini" else "LOCAL",
-                                started_at=datetime.now(timezone.utc), total_rules=1, configuration_json={}, rule_id=rule.id)
+                                inference_mode=getattr(self.provider, "inference_mode", "API"),
+                                started_at=datetime.now(timezone.utc), total_rules=1, configuration_json=getattr(self.provider, "configuration", {}), rule_id=rule.id)
         self.db.add(run); self.db.flush(); started = perf_counter()
         parsed = ParsedRule(
             raw_rule=rule.raw_rule,
@@ -97,6 +100,12 @@ class ClassificationService:
             parsed, self.mitre_repository, max_contents=self.settings.max_agent_contents,
             max_content_chars=self.settings.max_agent_content_chars, hints=hints, v2_data=v2_data,
         )
+        run.configuration_json = {**run.configuration_json,
+            "context_sha256": hashlib.sha256(json.dumps(context.model_dump(mode='json'), sort_keys=True, ensure_ascii=False).encode()).hexdigest(),
+            "prompt_sha256": hashlib.sha256(SYSTEM_PROMPT.encode()).hexdigest()}
+        # Record the attempt without holding a SQLite write lock during inference.
+        # The final classification and its canonical state are still saved together.
+        self.db.commit()
         try:
             provider_result = await self.provider.classify(context)
             if isinstance(provider_result, ProviderResult):
@@ -138,7 +147,7 @@ class ClassificationService:
                 mitre_retrieval_score=activity.get("mitre_retrieval_score"), evidence_strength=activity.get("evidence_strength"),
                 model_confidence=activity.get("model_confidence"), validator_mitre_status=activity.get("validator_mitre_status"),
                 run_id=run_id, classification_run_id=run.id, model_display_name=display_name,
-                inference_mode=run.inference_mode, model_config_json={},
+                inference_mode=run.inference_mode, model_config_json=run.configuration_json,
                 inference_duration_ms=round((perf_counter() - started) * 1000, 2),
             )
         except Exception as exc:
@@ -147,7 +156,7 @@ class ClassificationService:
                 model_name=model_name,
                 provider=provider_name,
                 run_id=run_id, classification_run_id=run.id, model_display_name=display_name,
-                inference_mode=run.inference_mode, model_config_json={},
+                inference_mode=run.inference_mode, model_config_json=run.configuration_json,
                 inference_duration_ms=round((perf_counter() - started) * 1000, 2),
                 classifier_version=self.settings.classifier_version,
                 agent_activity={},

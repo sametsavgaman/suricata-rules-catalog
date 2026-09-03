@@ -48,9 +48,15 @@ def list_rules(
     # Failed provider attempts are historical diagnostics, not the current
     # user-facing classification. Prefer the latest non-failed result so an
     # old 404 does not mask a later successful classification.
+    selection = [column == value for column, value in (
+        (Classification.provider, provider), (Classification.model_name, model_name),
+        (Classification.classifier_version, classifier_version),
+        (Classification.inference_mode, inference_mode), (Classification.run_id, run_id),
+    ) if value is not None]
     latest_id = select(func.max(Classification.id)).where(
         Classification.rule_id == Rule.id,
         Classification.classification_status != ClassificationStatus.FAILED,
+        *selection,
     ).correlate(Rule).scalar_subquery()
     stmt = select(Rule, Classification).outerjoin(Classification, Classification.id == latest_id)
     filters = []
@@ -73,9 +79,10 @@ def list_rules(
     }
     filters.extend(column == value for column, value in mapping.values() if value is not None)
     if manual_review_status:
-        latest_review = select(func.max(ManualReview.id)).where(ManualReview.rule_id == Rule.id).correlate(Rule).scalar_subquery()
+        review_scope = (ManualReview.rule_id == Rule.id, ManualReview.classification_id == Classification.id)
+        latest_review = select(func.max(ManualReview.id)).where(*review_scope).correlate(Rule, Classification).scalar_subquery()
         review_exists = select(ManualReview.id).where(ManualReview.id == latest_review, ManualReview.status == manual_review_status).exists()
-        filters.append(or_(~select(ManualReview.id).where(ManualReview.rule_id == Rule.id).exists(), review_exists) if manual_review_status == "UNREVIEWED" else review_exists)
+        filters.append(or_(~select(ManualReview.id).where(*review_scope).exists(), review_exists) if manual_review_status == "UNREVIEWED" else review_exists)
     if confidence is not None: filters.append(Classification.confidence >= confidence)
     if confidence_min is not None: filters.append(Classification.confidence >= confidence_min)
     if confidence_max is not None: filters.append(Classification.confidence <= confidence_max)
@@ -150,11 +157,12 @@ def save_review(sid: int, payload: ManualReviewRequest, db: Session = Depends(ge
     if payload.status not in {"UNREVIEWED","APPROVED","REJECTED","NEEDS_REVIEW"}: raise HTTPException(400,"Invalid manual review status")
     rule = RuleRepository(db).by_sid(sid)
     if not rule: raise HTTPException(404, "Rule not found")
-    current = rule.manual_reviews[-1] if rule.manual_reviews else None
-    if current and current.status == payload.status and current.note == payload.note: return ManualReviewResponse(status=current.status,note=current.note,reviewer_type=current.reviewer_type,reviewed_at=current.created_at)
     classification = next((c for c in rule.classifications if payload.classification_id and c.id == payload.classification_id), None)
     if payload.classification_id and classification is None: raise HTTPException(400, "Classification does not belong to this rule")
     classification = classification or (rule.classifications[-1] if rule.classifications else None)
+    matching = [r for r in rule.manual_reviews if r.classification_id == (classification.id if classification else None)]
+    current = matching[-1] if matching else None
+    if current and current.status == payload.status and current.note == payload.note: return ManualReviewResponse(status=current.status,note=current.note,reviewer_type=current.reviewer_type,reviewed_at=current.created_at)
     row=ManualReview(rule_id=rule.id,classification_id=classification.id if classification else None,status=payload.status,note=payload.note,reviewer_type="HUMAN")
     db.add(row); db.commit(); db.refresh(row)
     return ManualReviewResponse(status=row.status,note=row.note,reviewer_type=row.reviewer_type,reviewed_at=row.created_at)

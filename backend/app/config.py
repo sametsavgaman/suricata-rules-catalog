@@ -15,6 +15,11 @@ class Settings(BaseSettings):
     ai_provider: str = "openai"
     gemini_api_key: str | None = None
     gemini_model: str | None = None
+    ollama_base_url: str = "http://127.0.0.1:11434"
+    ollama_model: str = "qwen3:8b"
+    ollama_timeout_seconds: float = Field(default=180, gt=0)
+    ollama_num_ctx: int = Field(default=8192, ge=2048)
+    ollama_num_predict: int = Field(default=1536, ge=256)
     gemini_input_cost_per_million: float | None = Field(default=None, validation_alias=AliasChoices("GEMINI_INPUT_COST_PER_MILLION", "GEMINI_INPUT_COST_PER_1M"))
     gemini_output_cost_per_million: float | None = Field(default=None, validation_alias=AliasChoices("GEMINI_OUTPUT_COST_PER_MILLION", "GEMINI_OUTPUT_COST_PER_1M"))
     ai_max_retries: int = 3
@@ -29,7 +34,7 @@ class Settings(BaseSettings):
     openai_input_cost_per_million: float | None = None
     openai_output_cost_per_million: float | None = None
 
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore", env_ignore_empty=True)
+    model_config = SettingsConfigDict(env_file=Path(__file__).resolve().parents[2] / ".env", extra="ignore", env_ignore_empty=True)
 
     @model_validator(mode="after")
     def local_database_fallback(self):
