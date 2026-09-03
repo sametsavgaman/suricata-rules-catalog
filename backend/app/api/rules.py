@@ -132,8 +132,13 @@ def list_classifications(sid: int, db: Session = Depends(get_db)):
 
 @router.get("/filters")
 def classification_filters(db: Session = Depends(get_db)):
-    return {"models": [x for (x,) in db.execute(select(Classification.model_name).where(Classification.model_name.is_not(None)).distinct()).all()],
-            "providers": [x for (x,) in db.execute(select(Classification.provider).where(Classification.provider.is_not(None)).distinct()).all()],
+    # Only current provider-owned identities belong in the interactive model
+    # selector. Legacy imports encoded model names such as ``v2.1:...`` and
+    # had no provider; retaining them made empty filter choices look valid.
+    active = and_(Classification.provider.in_(["gemini", "ollama"]),
+                  ~Classification.model_name.like("v%:%"))
+    return {"models": [x for (x,) in db.execute(select(Classification.model_name).where(Classification.model_name.is_not(None), active).distinct()).all()],
+            "providers": [x for (x,) in db.execute(select(Classification.provider).where(Classification.provider.is_not(None), active).distinct()).all()],
             "classifier_versions": [x for (x,) in db.execute(select(Classification.classifier_version).distinct()).all()],
             "inference_modes": [x for (x,) in db.execute(select(Classification.inference_mode).where(Classification.inference_mode.is_not(None)).distinct()).all()],
             "runs": [x for (x,) in db.execute(select(Classification.run_id).where(Classification.run_id.is_not(None)).distinct()).all()]}
