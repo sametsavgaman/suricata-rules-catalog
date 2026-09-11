@@ -92,6 +92,28 @@ need it.
 > Never commit a populated `.env` file. `.env.example` intentionally contains
 > only empty values or safe placeholders.
 
+## Public SQLite catalogue snapshot
+
+The repository includes a ready-to-use catalogue snapshot at
+`data/catalog/suricata_rules_catalog.db`. It contains the public Suricata rule
+corpus, completed classification records, and derived detection-family data.
+Local settings, API credentials, execution runs, batch coordination records,
+human notes, product decisions, and operational history are removed before the
+snapshot is published.
+
+The database is stored with Git LFS because it is larger than GitHub's regular
+file limit. Install Git LFS before cloning, then copy the snapshot to the project
+root if you want the application to use it with the default SQLite configuration:
+
+```powershell
+git lfs install
+git lfs pull
+Copy-Item data/catalog/suricata_rules_catalog.db suricata_rules.db
+```
+
+The copied root database remains ignored by Git, so local classifications and
+runtime changes cannot be committed accidentally.
+
 ## Local development (SQLite)
 
 Backend:
