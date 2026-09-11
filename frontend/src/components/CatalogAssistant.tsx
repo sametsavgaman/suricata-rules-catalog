@@ -7,7 +7,7 @@ type Filters = Record<string, string | null>;
 export type CatalogAnswer = {
   status: "RESULTS" | "CLARIFY" | "OUT_OF_SCOPE" | "EXPLANATION";
   answer: string; filters: Filters; total: number | null; offset: number; limit: number;
-  planner_model: string | null; source: string; resource: "RULES" | "FAMILIES";
+  planner_model: string | null; planner_provider: "gemini" | "claude" | "openai" | null; source: string; resource: "RULES" | "FAMILIES";
   items: Array<{sid: number; rev: number; classification_id: number | null; message: string | null;
     category: string | null; subcategory: string | null; entity: string | null; mitre_id: string | null;
     mitre_tactic: string | null; provider: string | null; model: string | null; product_status: string}>;
@@ -42,7 +42,7 @@ export function AssistantResults({result}: {result: CatalogAnswer}) {
     </tr>)}</tbody></table></div>}
     {result.families?.length > 0 && <div className="ca-family-results">{result.families.map(family=><Link to={`/catalog/families/${family.slug}`} key={family.id}><div><span>{family.family_type}</span><h3>{family.name}</h3><p>{family.categories.slice(0,2).join(" · ")||"Classification pending"}</p></div><div><b>{family.rule_count}</b><small>rules</small><em>{family.protocols.slice(0,3).join(" · ")||"—"}</em></div></Link>)}</div>}
     {result.status === "RESULTS" && result.total === 0 && <div className="ca-empty">{t("No records match these conditions. Try a broader category or fewer filters.")}</div>}
-    {result.planner_model && <p className="ca-caption">{t("Interpreted by")}: {result.planner_model} · {t("Result source")}: {t("local catalog")}</p>}
+    {result.planner_model && <p className="ca-caption">{t("Interpreted by")}: {result.planner_provider?.toUpperCase()} · {result.planner_model} · {t("Result source")}: {t("local catalog")}</p>}
   </div>;
 }
 
@@ -71,24 +71,24 @@ export function CatalogAssistant() {
     if (!result || busy) return;
     const current = new AbortController(); controller.current = current;
     setBusy(true); setError("");
-    try { const response = await callAssistant("search", {filters:result.filters, resource:result.resource, offset, limit:result.limit}, current.signal); if (!current.signal.aborted) setResult({...response, planner_model:result.planner_model}); }
+    try { const response = await callAssistant("search", {filters:result.filters, resource:result.resource, offset, limit:result.limit}, current.signal); if (!current.signal.aborted) setResult({...response, planner_model:result.planner_model, planner_provider:result.planner_provider}); }
     catch (e) { if (!current.signal.aborted) setError(e instanceof Error ? e.message : "Connection error"); }
     finally { if (!current.signal.aborted) setBusy(false); }
   };
   const clear = () => {controller.current?.abort(); setBusy(false); setResult(null); setError(""); setQuestion(""); setSubmitted(""); input.current?.focus();};
 
   return <section id="catalog-assistant" className="catalog-assistant" aria-labelledby="catalog-assistant-title">
-    <div className="ca-intro"><div className="ca-mark" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none"><path d="M30 51V29M30 36C10 36 10 16 10 16s20 0 20 20Zm0-7C50 29 50 9 50 9S30 9 30 29Z" stroke="currentColor" strokeWidth="1.5"/><circle cx="30" cy="51" r="3" fill="currentColor"/><path d="M14 20 26 32M46 13 34 25" stroke="currentColor" opacity=".5"/></svg></div><div><div className="ca-eyebrow">{t("Catalog Intelligence")}</div><h2 id="catalog-assistant-title">{t("Let’s find the right rule together.")}</h2><p>{t("Ask about a category, behavior, or MITRE technique to retrieve relevant catalog records and their sources.")}</p></div><span className="ca-mode"><i/> {t("Gemini-powered search")}</span></div>
+    <div className="ca-intro"><div className="ca-mark" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none"><path d="M30 51V29M30 36C10 36 10 16 10 16s20 0 20 20Zm0-7C50 29 50 9 50 9S30 9 30 29Z" stroke="currentColor" strokeWidth="1.5"/><circle cx="30" cy="51" r="3" fill="currentColor"/><path d="M14 20 26 32M46 13 34 25" stroke="currentColor" opacity=".5"/></svg></div><div><div className="ca-eyebrow">{t("Catalog Intelligence")}</div><h2 id="catalog-assistant-title">{t("Let’s find the right rule together.")}</h2><p>{t("Ask about a category, behavior, or MITRE technique to retrieve relevant catalog records and their sources.")}</p></div><span className="ca-mode"><i/> {t("Helper-model search")}</span></div>
     <form className="ca-form" onSubmit={e => {e.preventDefault(); void ask();}}>
       <label htmlFor="catalog-question">{t("Ask the catalog")}</label>
       <textarea id="catalog-question" aria-describedby="ca-privacy" ref={input} value={question} maxLength={1000} minLength={3} required rows={2} placeholder={t("Example: List rules in the C2 category that use DNS…")} onChange={e => setQuestion(e.target.value)} onKeyDown={e => {if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {e.preventDefault(); void ask();}}}/>
-      <div className="ca-form-footer"><span id="ca-privacy">{t("Only your question is sent to Gemini. Each question is independent.")}</span><span className="ca-char-count">{question.length}/1000</span><button type="submit" disabled={busy || question.trim().length < 3}>{busy ? t("Processing…") : t("Search catalog")}<span aria-hidden="true">↗</span></button></div>
+      <div className="ca-form-footer"><span id="ca-privacy">{t("Only your question is sent to the selected helper model. Each question is independent.")}</span><span className="ca-char-count">{question.length}/1000</span><button type="submit" disabled={busy || question.trim().length < 3}>{busy ? t("Processing…") : t("Search catalog")}<span aria-hidden="true">↗</span></button></div>
     </form>
     <div className="ca-suggestions" aria-label={locale === "tr" ? "Örnek sorular" : "Example questions"}>{visibleExamples.map(example => <button type="button" disabled={busy} key={example} onClick={() => {setQuestion(example); input.current?.focus();}}>{example}<span aria-hidden="true">↗</span></button>)}</div>
     {(submitted || result) && <div className="ca-session"><span>{t("Last question")}: {submitted}</span><button type="button" onClick={clear}>{t("Clear")}</button></div>}
     {error && <div className="ca-error" role="alert">{error} <Link to="/models">{t("Model Lab")}</Link></div>}
     <div aria-live="polite" aria-busy={busy}>{busy && <div className="ca-loading" role="status"><span/> {result ? t("Loading records…") : t("Interpreting your question and searching the catalog…")}</div>}{result && <AssistantResults result={result}/>}</div>
     {result?.status === "RESULTS" && (result.total || 0) > 0 && <div className="ca-pagination"><button type="button" disabled={busy || result.offset === 0} onClick={() => void page(Math.max(0, result.offset - result.limit))}>{t("← Previous")}</button><span>{result.offset + 1}–{Math.min(result.offset + (result.resource === "FAMILIES" ? result.families.length : result.items.length), result.total || 0)} / {result.total?.toLocaleString("tr-TR")}</span><button type="button" disabled={busy || result.offset + result.limit >= (result.total || 0)} onClick={() => void page(result.offset + result.limit)}>{t("Next →")}</button></div>}
-    <details className="ca-how"><summary>{t("How does this assistant work?")}</summary><p>{t("Gemini converts your question into a constrained filter plan. The backend validates that plan and searches the catalog. Records, approvals, and model results are never changed. Review the signature and its behavior in your own network before making product decisions. Changing pages does not trigger another Gemini call.")}</p></details>
+    <details className="ca-how"><summary>{t("How does this assistant work?")}</summary><p>{t("The selected helper model converts your question into a constrained filter plan. The backend validates that plan and searches the catalog. Records, approvals, and model results are never changed. Review the signature and its behavior in your own network before making product decisions. Changing pages does not trigger another model call.")}</p></details>
   </section>;
 }

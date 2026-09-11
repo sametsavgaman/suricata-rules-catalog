@@ -607,6 +607,19 @@ const translations: Record<Locale, Record<string, string>> = {
 // Kept separate from the historical dictionary so newly audited UI copy can
 // be reviewed and extended without rewriting the large legacy block above.
 const supplementalTranslations: Record<string, string> = {
+  "Unclassified / awaiting processing": "Henüz sınıflandırılmamış / işlem bekliyor",
+  "AUXILIARY AI": "YARDIMCI YAPAY ZEKA",
+  "Select helper model": "Yardımcı modeli seç",
+  "Helper provider": "Yardımcı sağlayıcı",
+  "Current": "Mevcut",
+  "Catalog questions and forced MITRE requests use this model. The main Qwen classification pipeline remains unchanged.": "Katalog soruları ve zorunlu MITRE istekleri bu modeli kullanır. Ana Qwen sınıflandırma hattı değişmeden kalır.",
+  "Only configured providers that pass the connection check can be selected. API keys remain on the backend.": "Yalnızca yapılandırılmış ve bağlantı kontrolünü geçen sağlayıcılar seçilebilir. API anahtarları arka uçta kalır.",
+  "Test and activate this provider before selecting it as the helper model.": "Bu sağlayıcıyı yardımcı model seçmeden önce bağlantısını test edip etkinleştirin.",
+  "Helper model saved. Auxiliary workflows will use this provider.": "Yardımcı model kaydedildi. Yardımcı iş akışları bu sağlayıcıyı kullanacak.",
+  "Save helper model": "Yardımcı modeli kaydet",
+  "Helper-model search": "Yardımcı model destekli arama",
+  "Only your question is sent to the selected helper model. Each question is independent.": "Seçili yardımcı modele yalnızca sorunuz gönderilir. Her soru birbirinden bağımsızdır.",
+  "The selected helper model converts your question into a constrained filter plan. The backend validates that plan and searches the catalog. Records, approvals, and model results are never changed. Review the signature and its behavior in your own network before making product decisions. Changing pages does not trigger another model call.": "Seçili yardımcı model sorunuzu sınırlandırılmış bir filtre planına dönüştürür. Arka uç bu planı doğrular ve yerel katalogda arama yapar. Kayıtlar, onaylar ve model sonuçları değiştirilmez. Ürün kararı vermeden önce imzayı ve kendi ağınızdaki davranışını inceleyin. Sayfa değiştirmek yeni bir model çağrısı başlatmaz.",
   "DETECTION CONTENT WORKSPACE": "TESPİT İÇERİĞİ ÇALIŞMA ALANI",
   "Loading categories…": "Kategoriler yükleniyor…",
   "Loading tactics…": "Taktikler yükleniyor…",
@@ -1230,6 +1243,8 @@ export function useI18n() {
     "MITRE unassigned": "MITRE atanmamış",
     "Only your question is sent to Gemini. Each question is independent.":
       "Yalnızca sorunuz Gemini’ye gönderilir",
+    "Only your question is sent to the selected helper model. Each question is independent.":
+      "Seçili yardımcı modele yalnızca sorunuz gönderilir. Her soru birbirinden bağımsızdır.",
   };
   return {
     locale: "en" as Locale,

@@ -16,6 +16,7 @@ from app.api.dependencies import get_classification_service
 from app.services.runtime_config import ALLOWLIST, get_value, save_setting, effective_settings
 from app.knowledge.mitre_repository import MitreRepository
 from app.services.classification_service import ClassificationService
+from app.services.helper_model import HelperProvider, helper_config_error
 
 router = APIRouter(prefix="/model-lab", tags=["model-lab"])
 
@@ -31,6 +32,7 @@ class ConfigUpdate(BaseModel):
     ollama_base_url: str | None = Field(None, max_length=256)
     ollama_model: str | None = Field(None, max_length=128)
     ai_provider: Literal["openai", "gemini", "claude", "ollama"] | None = None
+    helper_provider: HelperProvider | None = None
 
 class CompareRequest(BaseModel):
     sid: int
@@ -56,13 +58,14 @@ def config(db: Session = Depends(get_db)):
     settings = effective_settings(db, get_settings())
     return {"openai": {"api_key_configured": bool(settings.openai_api_key), "model": settings.openai_model or "", "base_url": settings.openai_base_url or "https://api.openai.com/v1", "provider": "openai", "inference_mode": "API_COMPATIBLE"}, "claude": {"api_key_configured": bool(settings.claude_api_key), "model": settings.claude_model or "", "base_url": settings.claude_base_url, "provider": "claude", "inference_mode": "API"}, "gemini": {"api_key_configured": bool(settings.gemini_api_key), "model": settings.gemini_model or "", "provider": "gemini", "inference_mode": "API"},
             "ollama": {"base_url": settings.ollama_base_url, "model": settings.ollama_model, "provider": "ollama", "inference_mode": "LOCAL"},
-            "default_provider": settings.ai_provider, "classifier_version": settings.classifier_version}
+            "default_provider": settings.ai_provider, "helper_provider": settings.helper_provider,
+            "classifier_version": settings.classifier_version}
 
 @router.put("/config")
 def update_config(payload: ConfigUpdate, db: Session = Depends(get_db)):
     if payload.ollama_model not in (None, "", "qwen3:8b"):
         raise HTTPException(400, "Qwen reference model is fixed to qwen3:8b")
-    values = {"OPENAI_BASE_URL": payload.openai_base_url, "OPENAI_MODEL": payload.openai_model, "CLAUDE_BASE_URL": payload.claude_base_url, "CLAUDE_MODEL": payload.claude_model, "GEMINI_MODEL": payload.gemini_model, "OLLAMA_BASE_URL": payload.ollama_base_url, "OLLAMA_MODEL": payload.ollama_model, "AI_PROVIDER": payload.ai_provider}
+    values = {"OPENAI_BASE_URL": payload.openai_base_url, "OPENAI_MODEL": payload.openai_model, "CLAUDE_BASE_URL": payload.claude_base_url, "CLAUDE_MODEL": payload.claude_model, "GEMINI_MODEL": payload.gemini_model, "OLLAMA_BASE_URL": payload.ollama_base_url, "OLLAMA_MODEL": payload.ollama_model, "AI_PROVIDER": payload.ai_provider, "HELPER_PROVIDER": payload.helper_provider}
     if payload.ollama_base_url and not (payload.ollama_base_url.startswith("http://localhost") or payload.ollama_base_url.startswith("http://127.0.0.1")):
         raise HTTPException(400, "Ollama URL must use localhost or 127.0.0.1")
     prospective = effective_settings(db, get_settings())
@@ -72,6 +75,7 @@ def update_config(payload: ConfigUpdate, db: Session = Depends(get_db)):
             "claude_base_url": payload.claude_base_url, "claude_model": payload.claude_model,
             "gemini_model": payload.gemini_model, "ollama_base_url": payload.ollama_base_url,
             "ollama_model": payload.ollama_model, "ai_provider": payload.ai_provider,
+            "helper_provider": payload.helper_provider,
         }.items() if value is not None and value != ""
     }
     for attr, value in (("openai_api_key", payload.openai_api_key),
@@ -82,6 +86,10 @@ def update_config(payload: ConfigUpdate, db: Session = Depends(get_db)):
     prospective = prospective.model_copy(update=prospective_updates)
     if payload.ai_provider:
         error = provider_config_error(prospective)
+        if error:
+            raise HTTPException(400, error)
+    if payload.helper_provider:
+        error = helper_config_error(prospective, payload.helper_provider)
         if error:
             raise HTTPException(400, error)
     for key, value in values.items():

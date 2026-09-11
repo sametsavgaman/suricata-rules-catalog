@@ -17,6 +17,7 @@ class Settings(BaseSettings):
     claude_model: str | None = None
     claude_base_url: str = "https://api.anthropic.com"
     ai_provider: str = "openai"
+    helper_provider: str = "gemini"
     gemini_api_key: str | None = None
     gemini_model: str | None = None
     ollama_base_url: str = "http://127.0.0.1:11434"

@@ -14,7 +14,7 @@ router = APIRouter(tags=["stats"])
 def get_stats(db: Session = Depends(get_db)):
     # Provider failures are diagnostic attempts, not reviewable classifications.
     # Report the latest successful/reviewable result per rule; rules with no such
-    # result are counted as failed below.
+    # result are counted as awaiting classification below.
     latest_ids = select(func.max(Classification.id).label("id")).where(
         Classification.classification_status != ClassificationStatus.FAILED
     ).group_by(Classification.rule_id).subquery()
@@ -23,7 +23,7 @@ def get_stats(db: Session = Depends(get_db)):
     total_rules = db.scalar(select(func.count(Rule.id))) or 0
     classified = db.scalar(select(func.count()).select_from(latest).where(latest.c.classification_status == ClassificationStatus.AUTO_CLASSIFIED)) or 0
     review = db.scalar(select(func.count()).select_from(latest).where(latest.c.classification_status == ClassificationStatus.REVIEW_REQUIRED)) or 0
-    failed = max(0, total_rules - classified - review)
+    pending_classification = max(0, total_rules - classified - review)
 
     def distribution(column, limit: int | None = None):
         stmt = select(column, func.count().label("count")).select_from(latest).where(column.is_not(None)).group_by(column).order_by(func.count().desc())
@@ -63,7 +63,8 @@ def get_stats(db: Session = Depends(get_db)):
         total_rules=total_rules,
         classified_rules=classified,
         review_required=review,
-        failed=failed,
+        failed=pending_classification,  # Backward-compatible API field.
+        pending_classification=pending_classification,
         category_distribution=categories,
         top_detected_entities=entities,
         top_mitre_techniques=techniques,

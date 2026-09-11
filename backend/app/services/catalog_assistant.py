@@ -1,5 +1,4 @@
 """Bounded natural-language query planning. No model SQL, tools or record writes."""
-import asyncio
 import json
 from functools import lru_cache
 from typing import Annotated, Literal
@@ -14,6 +13,7 @@ from app.knowledge.kill_chain import KillChainPhase
 from app.knowledge.taxonomy import Category, SUBCATEGORIES
 from app.knowledge.mitre_repository import MitreRepository
 from app.services.detection_families import FamilyFilters, FamilySearch, family_summaries, normalize_family_name
+from app.services.helper_model import HelperProvider, generate_structured
 
 Text = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=120)]
 
@@ -112,6 +112,7 @@ class CatalogAnswer(StrictModel):
     offset: int = 0
     limit: int = 12
     planner_model: str | None = None
+    planner_provider: HelperProvider | None = None
     source: str = "LOCAL_CATALOG"
 
 
@@ -162,38 +163,19 @@ def validate_filters(filters: CatalogFilters):
         raise ValueError("MITRE tactic mismatch")
 
 
-async def plan_question(question: str, settings) -> CatalogPlan:
-    from google import genai
-    # Only schema + static taxonomy + question go to Google. No catalogue rows
-    # or application_settings/secrets are included in contents.
-    def clean(value):
-        if isinstance(value, dict):
-            return {k: clean(v) for k, v in value.items() if k != "additionalProperties"}
-        if isinstance(value, list):
-            return [clean(v) for v in value]
-        return value
-    client = genai.Client(api_key=settings.gemini_api_key, http_options={"timeout": 25000, "retry_options": {"attempts": 1}})
-    try:
-        async with asyncio.timeout(30):
-            for attempt in range(2):
-                try:
-                    response = await client.aio.models.generate_content(
-                        model=settings.gemini_model,
-                        contents=json.dumps({"question": question}, ensure_ascii=False),
-                        config={"system_instruction": PLANNER_INSTRUCTION + "\nTaxonomy: " + json.dumps(SUBCATEGORIES),
-                                "temperature": 0, "max_output_tokens": 1500,
-                                "response_mime_type": "application/json", "response_schema": clean(CatalogPlan.model_json_schema())},
-                    )
-                    break
-                except Exception as exc:
-                    if attempt or getattr(exc, "code", None) not in {429, 500, 502, 503, 504}:
-                        raise
-                    await asyncio.sleep(2)
-        # Independently validate the raw JSON. SDK parsing must not hide extras.
-        return CatalogPlan.model_validate_json(response.text or "")
-    finally:
-        await client.aio.aclose()
-        client.close()
+async def plan_question(question: str, settings, provider: HelperProvider | None = None) -> CatalogPlan:
+    # Only schema + static taxonomy + question go to the selected helper. No
+    # catalogue rows, application settings, runtime secrets or SQL are sent.
+    plan, _, _ = await generate_structured(
+        settings,
+        provider=provider,
+        instruction=PLANNER_INSTRUCTION + "\nTaxonomy: " + json.dumps(SUBCATEGORIES),
+        payload=json.dumps({"question": question}, ensure_ascii=False),
+        schema=CatalogPlan,
+        max_output_tokens=1500,
+        timeout_seconds=30,
+    )
+    return plan
 
 
 def query_catalog(db: Session, request: CatalogSearch) -> CatalogAnswer:

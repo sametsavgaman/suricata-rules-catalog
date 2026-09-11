@@ -21,6 +21,7 @@ from app.services.catalog_assistant import (
     plan_question, query_catalog, query_family_catalog, validate_filters,
 )
 from app.services.scenario_analysis import ScenarioAnalysis, ScenarioQuestion, evaluate_scenario, plan_scenario
+from app.services.helper_model import generate_structured, helper_config_error, helper_model_name, selected_helper_provider
 
 router = APIRouter(prefix="/catalog/assistant", tags=["catalog assistant"])
 _requests = {"ask": deque(), "search": deque(), "translate": deque(), "scenario": deque()}
@@ -29,6 +30,10 @@ _inference = asyncio.Semaphore(1)
 class TranslationRequest(BaseModel):
     texts: list[str] = Field(min_length=1, max_length=20)
     locale: str = "tr"
+
+
+class TranslationResult(BaseModel):
+    translations: list[str] = Field(min_length=1, max_length=20)
 
 
 async def guarded_payload(request: Request):
@@ -97,25 +102,27 @@ async def ask(response: Response, payload=Depends(guarded_payload), db: Session 
     except ValidationError:
         raise HTTPException(422, "Soru 3–1000 karakter olmalı; yalnızca question alanı kabul edilir.") from None
     settings = effective_settings(db, get_settings())
-    if not settings.gemini_api_key or not settings.gemini_model:
-        raise HTTPException(503, "Gemini yapılandırılmamış. Model Lab üzerinden bağlantıyı ayarlayın.")
+    helper_provider = selected_helper_provider(settings)
+    if helper_config_error(settings, helper_provider):
+        raise HTTPException(503, "Seçili yardımcı model yapılandırılmamış. Model Lab üzerinden bağlantıyı ayarlayın.")
     if _inference.locked():
         raise HTTPException(429, "Asistan başka bir soruyu işliyor. Kısa süre sonra tekrar deneyin.", headers={"Retry-After": "10"})
     async with _inference:
         try:
-            plan = await plan_question(question.question, settings)
+            plan = await plan_question(question.question, settings, helper_provider)
             validate_filters(plan.filters)
         except (ValidationError, ValueError):
             return CatalogAnswer(status="CLARIFY", answer="Bu isteği güvenilir filtrelere çeviremedim. Kategori, MITRE ID, protokol veya ürün durumunu açıkça belirterek tekrar sorun.")
         except Exception:
             # Do not return provider exception strings (URLs, credentials, prompts).
-            raise HTTPException(502, "Gemini isteği tamamlanamadı. Model Lab bağlantısını kontrol edip tekrar deneyin.") from None
+            raise HTTPException(502, "Yardımcı model isteği tamamlanamadı. Model Lab bağlantısını kontrol edip tekrar deneyin.") from None
+    planner_model = helper_model_name(settings, helper_provider)
     if plan.intent == "OUT_OF_SCOPE":
-        return CatalogAnswer(status="OUT_OF_SCOPE", answer="Katalogdaki Suricata kurallarını arama ve platformun işleyişini açıklama konusunda yardımcı olabilirim.", planner_model=settings.gemini_model)
+        return CatalogAnswer(status="OUT_OF_SCOPE", answer="Katalogdaki Suricata kurallarını arama ve platformun işleyişini açıklama konusunda yardımcı olabilirim.", planner_model=planner_model, planner_provider=helper_provider)
     if plan.intent == "CLARIFY":
-        return CatalogAnswer(status="CLARIFY", answer="Hangi ölçüte göre kayıt seçelim? Örneğin C2 kategorisi, DNS protokolü, bir MITRE ID veya APPROVED_FOR_PRODUCT ürün durumu belirtebilirsiniz. Birden fazla koşul birlikte uygulanır.", planner_model=settings.gemini_model)
+        return CatalogAnswer(status="CLARIFY", answer="Hangi ölçüte göre kayıt seçelim? Örneğin C2 kategorisi, DNS protokolü, bir MITRE ID veya APPROVED_FOR_PRODUCT ürün durumu belirtebilirsiniz. Birden fazla koşul birlikte uygulanır.", planner_model=planner_model, planner_provider=helper_provider)
     if plan.intent == "EXPLAIN_TOPIC":
-        return CatalogAnswer(status="EXPLANATION", answer=EXPLANATIONS.get(plan.topic, EXPLANATIONS["product_selection"]), planner_model=settings.gemini_model, source="PLATFORM_GUIDE")
+        return CatalogAnswer(status="EXPLANATION", answer=EXPLANATIONS.get(plan.topic, EXPLANATIONS["product_selection"]), planner_model=planner_model, planner_provider=helper_provider, source="PLATFORM_GUIDE")
     if plan.intent in {"LIST_FAMILIES", "COUNT_FAMILIES"}:
         answer = await run_in_threadpool(execute_search, db, CatalogSearch(filters=plan.filters, resource="FAMILIES"))
         if plan.intent == "COUNT_FAMILIES":
@@ -124,7 +131,8 @@ async def ask(response: Response, payload=Depends(guarded_payload), db: Session 
         answer = await run_in_threadpool(execute_search, db, CatalogSearch(filters=plan.filters))
         if plan.intent == "COUNT_RULES":
             answer.items = []
-    answer.planner_model = settings.gemini_model
+    answer.planner_model = planner_model
+    answer.planner_provider = helper_provider
     return answer
 
 
@@ -142,7 +150,7 @@ async def scenario(response: Response, payload=Depends(guarded_payload), db: Ses
     if config_error:
         raise HTTPException(503, f"{question.provider.upper()} provider is not configured. Configure it in Model Lab first.")
     if _inference.locked():
-        raise HTTPException(429, "Başka bir Gemini isteği işleniyor. Kısa süre sonra tekrar deneyin.", headers={"Retry-After": "10"})
+        raise HTTPException(429, "Başka bir yardımcı model isteği işleniyor. Kısa süre sonra tekrar deneyin.", headers={"Retry-After": "10"})
     async with _inference:
         try:
             plan = await plan_scenario(question.question, selected, question.provider)
@@ -172,16 +180,21 @@ async def translate_texts(response: Response, raw_payload=Depends(guarded_payloa
     if payload.locale != "tr":
         return {"translations": payload.texts}
     settings = effective_settings(db, get_settings())
-    if not settings.gemini_api_key or not settings.gemini_model:
+    helper_provider = selected_helper_provider(settings)
+    if helper_config_error(settings, helper_provider):
         return {"translations": payload.texts, "fallback": True}
     try:
-        from google import genai
-        client = genai.Client(api_key=settings.gemini_api_key)
-        prompt = "Translate each item into precise Turkish for a cybersecurity analyst. Preserve IDs, product names and technical tokens. Return only a JSON array in the same order. ITEMS:\n" + json.dumps(payload.texts, ensure_ascii=False)
-        result = await client.aio.models.generate_content(model=settings.gemini_model, contents=prompt, config={"response_mime_type": "application/json"})
-        values = json.loads(getattr(result, "text", "[]"))
-        if not isinstance(values, list) or len(values) != len(payload.texts):
+        result, provider, model = await generate_structured(
+            settings,
+            provider=helper_provider,
+            instruction="Translate each item into precise Turkish for a cybersecurity analyst. Preserve IDs, product names and technical tokens. Return the translations in exactly the same order.",
+            payload=json.dumps({"texts": payload.texts}, ensure_ascii=False),
+            schema=TranslationResult,
+            max_output_tokens=1800,
+            timeout_seconds=30,
+        )
+        if len(result.translations) != len(payload.texts):
             raise ValueError("invalid translation response")
-        return {"translations": [str(x) for x in values]}
+        return {"translations": [str(x) for x in result.translations], "provider": provider, "model": model}
     except Exception:
         return {"translations": payload.texts, "fallback": True}

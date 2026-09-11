@@ -213,6 +213,7 @@ class StatsResponse(BaseModel):
     classified_rules: int
     review_required: int
     failed: int
+    pending_classification: int = 0
     category_distribution: dict[str, int]
     top_detected_entities: list[dict]
     top_mitre_techniques: list[dict]

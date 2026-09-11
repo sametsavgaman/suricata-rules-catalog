@@ -394,7 +394,7 @@ export function RuleDetail() {
       setForcedMitreOpen(false);
       setForcedMitreAccepted(false);
     } catch (e) {
-      setForcedMitreError(e instanceof Error ? e.message : "Gemini MITRE eşlemesi tamamlanamadı.");
+      setForcedMitreError(e instanceof Error ? e.message : "Yardımcı model MITRE eşlemesini tamamlayamadı.");
     } finally {
       setForcedMitreBusy(false);
     }
@@ -666,7 +666,7 @@ export function RuleDetail() {
           {forcedMitre?.mapping && (
             <div className="forced-mitre-warning" role="alert">
               <strong>{locale === "tr" ? "Zorla MITRE sınıflandırması" : "Forced MITRE classification"}</strong>
-              <p>{locale === "tr" ? "Normal sınıflandırma MITRE eşlemesi üretmedi. Bu sonuç kullanıcı isteğiyle Gemini tarafından zorla oluşturulmuştur; yanıltıcı olabilir." : "The normal classification produced no MITRE mapping. This result was forced through Gemini at the user's request and may be misleading."}</p>
+              <p>{locale === "tr" ? "Normal sınıflandırma MITRE eşlemesi üretmedi. Bu sonuç kullanıcı isteğiyle seçili yardımcı model tarafından zorla oluşturulmuştur; yanıltıcı olabilir." : "The normal classification produced no MITRE mapping. This result was forced through the selected helper model at the user's request and may be misleading."}</p>
             </div>
           )}
           {c ? (
@@ -717,7 +717,7 @@ export function RuleDetail() {
               <label>
                 {t("MITRE tactic")}
                 {forcedMitre?.mapping ? (
-                  <Value>{label(forcedMitre.mapping.tactic)}<small>Gemini · {forcedMitre.mapping.model_name}</small></Value>
+                  <Value>{label(forcedMitre.mapping.tactic)}<small>{forcedMitre.mapping.provider.toUpperCase()} · {forcedMitre.mapping.model_name}</small></Value>
                 ) : (
                   <FieldValue classification={c} field="mitre_tactic" localized={localizedProse}>{label(c.mitre_tactic)}</FieldValue>
                 )}
@@ -768,24 +768,6 @@ export function RuleDetail() {
           )}
           {c && (
             <DecisionAssessment classification={c} localized={localizedProse} />
-          )}
-          {c && forcedMitre?.eligible && (
-            <div className="forced-mitre-action">
-              {!forcedMitreOpen ? (
-                <>
-                  <p>{locale === "tr" ? "Normal sınıflandırıcı bu kuralı bir MITRE tekniğine bağlamadı. İsterseniz Gemini'den yalnızca bu kural için uyarılı, en iyi tahmin eşlemesi isteyebilirsiniz." : "The normal classifier did not map this rule to MITRE. You can request a warning-labelled best-effort Gemini mapping for this rule only."}</p>
-                  <button type="button" onClick={() => setForcedMitreOpen(true)}>{forcedMitre.mapping ? (locale === "tr" ? "Zorla yeniden sınıflandır" : "Force classification again") : (locale === "tr" ? "Zorla MITRE sınıflandır" : "Force MITRE classification")}</button>
-                </>
-              ) : (
-                <div className="forced-mitre-confirm">
-                  <strong>{locale === "tr" ? "Bu işlem normal sonucu değiştirmez" : "This does not change the normal result"}</strong>
-                  <p>{locale === "tr" ? "Gemini'ye kuralın ayrıştırılmış sinyalleri, normal sınıflandırma özeti ve yerel ATT&CK deposundan sınırlı adaylar gönderilir. Üretilen sonuç kesin kabul edilmemelidir." : "Gemini receives parsed rule signals, the normal classification summary, and a bounded set of candidates from the local ATT&CK repository. The result must not be treated as certain."}</p>
-                  <label><input type="checkbox" checked={forcedMitreAccepted} onChange={(event) => setForcedMitreAccepted(event.target.checked)} /> {locale === "tr" ? "Sonucun yanıltıcı olabileceğini anlıyorum." : "I understand that the result may be misleading."}</label>
-                  {forcedMitreError && <div className="error">{forcedMitreError}</div>}
-                  <div><button type="button" className="primary" disabled={!forcedMitreAccepted || forcedMitreBusy} onClick={() => void runForcedMitre()}>{forcedMitreBusy ? (locale === "tr" ? "Gemini değerlendiriyor…" : "Gemini is evaluating…") : (locale === "tr" ? "Onayla ve çalıştır" : "Confirm and run")}</button><button type="button" disabled={forcedMitreBusy} onClick={() => setForcedMitreOpen(false)}>{t("Cancel")}</button></div>
-                </div>
-              )}
-            </div>
           )}
         </article>
         <div className="flow-connector" aria-hidden="true">
@@ -848,6 +830,24 @@ export function RuleDetail() {
                   : c.mitre_retrieval_score.toFixed(2)}
                 <small>{t("Retrieval relevance, not model confidence.")}</small>
               </p>
+              {forcedMitre?.eligible && (
+                <div className="forced-mitre-action">
+                  {!forcedMitreOpen ? (
+                    <>
+                      <p>{locale === "tr" ? "Normal sınıflandırıcı bu kuralı bir MITRE tekniğine bağlamadı. Yalnızca bu kural için seçili yardımcı modelden uyarılı, en iyi tahmin eşlemesi isteyebilirsiniz." : "The normal classifier did not map this rule to MITRE. You can request a warning-labelled best-effort mapping from the selected helper model for this rule only."}</p>
+                      <button type="button" onClick={() => setForcedMitreOpen(true)}>{forcedMitre.mapping ? (locale === "tr" ? "Zorla yeniden sınıflandır (sonuç yanlış olabilir)" : "Force classification again (may be wrong)") : (locale === "tr" ? "Zorla sınıflandır (sonuç yanlış olabilir)" : "Force classification (may be wrong)")}</button>
+                    </>
+                  ) : (
+                    <div className="forced-mitre-confirm">
+                      <strong>{locale === "tr" ? "Bu işlem normal sonucu değiştirmez" : "This does not change the normal result"}</strong>
+                      <p>{locale === "tr" ? "Seçili yardımcı modele kuralın ayrıştırılmış sinyalleri, normal sınıflandırma özeti ve yerel ATT&CK deposundan öneri adayları gönderilir. Model başka bir kanonik teknik de seçebilir; sonuç yerel depoda doğrulanır fakat davranışsal doğruluğu garanti edilmez." : "The selected helper model receives parsed rule signals, the normal classification summary, and suggestions from the local ATT&CK repository. It may choose another canonical technique; the ID is validated locally, but behavioral correctness is not guaranteed."}</p>
+                      <label><input type="checkbox" checked={forcedMitreAccepted} onChange={(event) => setForcedMitreAccepted(event.target.checked)} /> {locale === "tr" ? "Sonucun yanıltıcı olabileceğini anlıyorum." : "I understand that the result may be misleading."}</label>
+                      {forcedMitreError && <div className="error">{forcedMitreError}</div>}
+                      <div><button type="button" className="primary" disabled={!forcedMitreAccepted || forcedMitreBusy} onClick={() => void runForcedMitre()}>{forcedMitreBusy ? (locale === "tr" ? "Yardımcı model değerlendiriyor…" : "Helper model is evaluating…") : (locale === "tr" ? "Onayla ve çalıştır" : "Confirm and run")}</button><button type="button" disabled={forcedMitreBusy} onClick={() => setForcedMitreOpen(false)}>{t("Cancel")}</button></div>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           ) : (
             <div className="empty">

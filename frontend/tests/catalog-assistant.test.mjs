@@ -33,7 +33,7 @@ test('question form has accessible labels, bounded input and data disclosure', (
   const html = render(CatalogAssistant,{});
   assert.ok(html.includes('for="catalog-question"'));
   assert.ok(html.includes('maxLength="1000"'));
-  assert.ok(html.includes('Yalnızca sorunuz Gemini’ye gönderilir'));
+  assert.ok(html.includes('Seçili yardımcı modele yalnızca sorunuz gönderilir'));
   assert.ok(html.includes('aria-live="polite"'));
 });
 test('family results are structured, linked and never rendered as model prose', () => {

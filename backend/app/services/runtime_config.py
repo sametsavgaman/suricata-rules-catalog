@@ -8,7 +8,7 @@ from app.database.models import ApplicationSetting
 
 ROOT = Path(__file__).resolve().parents[3]
 SECRET_FILE = ROOT / ".runtime-secrets.json"
-ALLOWLIST = {"AI_PROVIDER": False, "GEMINI_MODEL": False, "OLLAMA_BASE_URL": False, "OLLAMA_MODEL": False, "OPENAI_BASE_URL": False, "OPENAI_MODEL": False, "CLAUDE_BASE_URL": False, "CLAUDE_MODEL": False, "OPENAI_API_KEY": True, "GEMINI_API_KEY": True, "CLAUDE_API_KEY": True}
+ALLOWLIST = {"AI_PROVIDER": False, "HELPER_PROVIDER": False, "GEMINI_MODEL": False, "OLLAMA_BASE_URL": False, "OLLAMA_MODEL": False, "OPENAI_BASE_URL": False, "OPENAI_MODEL": False, "CLAUDE_BASE_URL": False, "CLAUDE_MODEL": False, "OPENAI_API_KEY": True, "GEMINI_API_KEY": True, "CLAUDE_API_KEY": True}
 
 def _secrets() -> dict:
     try: return json.loads(SECRET_FILE.read_text(encoding="utf-8"))
@@ -36,7 +36,7 @@ def get_value(db: Session, key: str) -> str | None:
 
 def effective_settings(db: Session, settings):
     updates = {}
-    for key, attr in (("AI_PROVIDER","ai_provider"),("GEMINI_MODEL","gemini_model"),("OLLAMA_BASE_URL","ollama_base_url"),("OLLAMA_MODEL","ollama_model"),("OPENAI_BASE_URL","openai_base_url"),("OPENAI_MODEL","openai_model"),("OPENAI_API_KEY","openai_api_key"),("GEMINI_API_KEY","gemini_api_key"),("CLAUDE_BASE_URL","claude_base_url"),("CLAUDE_MODEL","claude_model"),("CLAUDE_API_KEY","claude_api_key")):
+    for key, attr in (("AI_PROVIDER","ai_provider"),("HELPER_PROVIDER","helper_provider"),("GEMINI_MODEL","gemini_model"),("OLLAMA_BASE_URL","ollama_base_url"),("OLLAMA_MODEL","ollama_model"),("OPENAI_BASE_URL","openai_base_url"),("OPENAI_MODEL","openai_model"),("OPENAI_API_KEY","openai_api_key"),("GEMINI_API_KEY","gemini_api_key"),("CLAUDE_BASE_URL","claude_base_url"),("CLAUDE_MODEL","claude_model"),("CLAUDE_API_KEY","claude_api_key")):
         value = get_value(db, key)
         if value: updates[attr] = value
     return settings.model_copy(update=updates) if updates else settings

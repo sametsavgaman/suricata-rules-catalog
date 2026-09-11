@@ -35,9 +35,10 @@ supported CVE supplies deterministic evidence; otherwise it remains
 classification, benchmark or human review. Browse it at
 `http://localhost:5173/catalog/families`.
 
-The compact **Kataloğa sor** assistant uses Gemini only to turn a Turkish or
-English question into a strict allowlisted filter plan. Counts and records come
-from bounded, read-only SQLAlchemy queries. Gemini receives no rule rows, SQL,
+The compact **Kataloğa sor** assistant uses the helper provider selected in
+Model Lab (Gemini, Claude, or OpenAI/Codex) to turn a Turkish or English question
+into a strict allowlisted filter plan. Counts and records come from bounded,
+read-only SQLAlchemy queries. The helper model receives no rule rows, SQL,
 database URL, runtime secrets or API key. See `docs/detection-families.md` and
 `docs/catalog-assistant.md` for the contracts.
 
@@ -128,6 +129,7 @@ The Vite development server proxies `/api` to port 8000. Without `OPENAI_API_KEY
 | `GEMINI_MODEL` | `gemini-3.5-flash-lite` | Gemini model used by Gemini-backed workflows |
 | `CLAUDE_API_KEY` | unset | Your own Anthropic credential; required only when Claude is selected |
 | `CLAUDE_MODEL` | unset | Claude model available to your account |
+| `HELPER_PROVIDER` | `gemini` | Cloud provider used for catalog questions, translations, and forced MITRE requests (`gemini`, `claude`, or `openai`) |
 | `OLLAMA_BASE_URL` | `http://127.0.0.1:11434` | Local Ollama endpoint; no cloud API token required |
 | `OLLAMA_MODEL` | `qwen3:8b` | Local reference model used for token-free bulk classification |
 | `FRONTEND_ORIGIN` | `http://localhost:5173` | CORS origin |

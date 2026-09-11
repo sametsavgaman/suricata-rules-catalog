@@ -27,6 +27,36 @@ def test_model_lab_accepts_every_supported_default_provider(provider):
     assert model_lab.ConfigUpdate(ai_provider=provider).ai_provider == provider
 
 
+@pytest.mark.parametrize("provider", ["openai", "gemini", "claude"])
+def test_model_lab_accepts_every_supported_helper_provider(provider):
+    assert model_lab.ConfigUpdate(helper_provider=provider).helper_provider == provider
+
+
+def test_configured_helper_provider_can_be_selected(monkeypatch):
+    saved = []
+    settings = Settings(claude_api_key="secret", claude_model="claude-test")
+    monkeypatch.setattr(model_lab, "get_settings", lambda: settings)
+    monkeypatch.setattr(model_lab, "effective_settings", lambda db, value: value)
+    monkeypatch.setattr(model_lab, "save_setting", lambda db, key, value: saved.append((key, value)))
+    monkeypatch.setattr(model_lab, "config", lambda db: {"helper_provider": "claude"})
+    result = model_lab.update_config(model_lab.ConfigUpdate(helper_provider="claude"), object())
+    assert result["helper_provider"] == "claude"
+    assert ("HELPER_PROVIDER", "claude") in saved
+
+
+def test_unconfigured_helper_provider_cannot_be_selected(monkeypatch):
+    saved = []
+    settings = Settings(openai_api_key=None, openai_model="gpt-test")
+    monkeypatch.setattr(model_lab, "get_settings", lambda: settings)
+    monkeypatch.setattr(model_lab, "effective_settings", lambda db, value: value)
+    monkeypatch.setattr(model_lab, "save_setting", lambda db, key, value: saved.append((key, value)))
+    with pytest.raises(model_lab.HTTPException) as exc:
+        model_lab.update_config(model_lab.ConfigUpdate(helper_provider="openai"), object())
+    assert exc.value.status_code == 400
+    assert exc.value.detail == "OPENAI_API_KEY_NOT_CONFIGURED"
+    assert saved == []
+
+
 def test_claude_config_can_be_saved_and_selected(monkeypatch):
     saved = []
     monkeypatch.setattr(model_lab, "effective_settings", lambda db, value: value)

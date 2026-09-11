@@ -447,11 +447,11 @@ async def create_forced_mitre(sid: int, payload: ForcedMitreRequest, db: Session
         raise HTTPException(409, "The normal classification already has a MITRE mapping; forced mapping is unavailable.")
     settings = effective_settings(db, get_settings())
     try:
-        proposal, technique, candidates, selected = await propose_forced_mitre(rule, classification, settings)
+        proposal, technique, candidates, selected, provider, model = await propose_forced_mitre(rule, classification, settings)
     except (ValueError, RuntimeError) as exc:
         raise HTTPException(422, str(exc)) from exc
     except Exception as exc:
-        raise HTTPException(502, f"Gemini forced MITRE classification failed: {exc}") from exc
+        raise HTTPException(502, "The selected helper model could not complete the forced MITRE mapping.") from exc
     row = ForcedMitreMapping(
         rule_id=rule.id,
         classification_id=classification.id,
@@ -459,10 +459,10 @@ async def create_forced_mitre(sid: int, payload: ForcedMitreRequest, db: Session
         technique_name=technique.name,
         tactic=technique.tactics[0] if technique.tactics else None,
         confidence=proposal.confidence,
-        evidence=[*selected.get("evidence", []), *[{"type": "GEMINI_RATIONALE", "value": value} for value in proposal.evidence]][:8],
+        evidence=[*(selected.get("evidence", []) if selected else []), *[{"type": "HELPER_MODEL_RATIONALE", "value": value} for value in proposal.evidence]][:8],
         explanation=proposal.explanation,
-        provider="gemini",
-        model_name=settings.gemini_model,
+        provider=provider,
+        model_name=model,
         candidate_snapshot=candidates,
     )
     db.add(row)
