@@ -59,6 +59,23 @@
   .rules-page table td:last-child .pack-picker {
     display: inline-block;
   }
+  /* Keep the action reachable even when the wide evidence table scrolls. */
+  .rules-page table th:last-child {
+    position: sticky;
+    right: 0;
+    z-index: 4;
+    background: #0b1215;
+  }
+  .rules-page table td:last-child {
+    position: sticky;
+    right: 0;
+    z-index: 2;
+    background: #101c22;
+    box-shadow: -10px 0 16px -14px #000;
+  }
+  .rules-page tbody tr:hover td:last-child {
+    background: #15242b;
+  }
 }
 .scenario-provider-picker button.unavailable{border-style:dashed;filter:grayscale(.35)}.scenario-provider-picker button.available{border-color:#477965}.model-choice.unavailable{opacity:.42;filter:grayscale(.45);cursor:not-allowed;border-style:dashed}.model-choice.unavailable:hover{transform:none;border-color:var(--line);background:#0b1215}.model-choice.available:not(.selected){border-color:#315348}
 .forced-mitre-warning{margin:18px 22px 0;padding:15px 17px;border:1px solid #9d762e;border-left:4px solid #efbd56;border-radius:7px;background:linear-gradient(105deg,#352910,#201b12);color:#f6d990}.forced-mitre-warning strong{font:700 12px "IBM Plex Mono";text-transform:uppercase;letter-spacing:.06em}.forced-mitre-warning p{margin:7px 0 0;color:#dccda9;font-size:13px;line-height:1.55}.forced-mitre-action{padding:18px 22px;border-top:1px solid var(--line);background:#0b1517}.forced-mitre-action>p,.forced-mitre-confirm p{color:var(--muted);font-size:13px;line-height:1.55}.forced-mitre-action button{padding:10px 13px;border:1px solid #755b2b;border-radius:6px;background:#292214;color:#f0cd83;cursor:pointer}.forced-mitre-confirm{display:grid;gap:11px}.forced-mitre-confirm>strong{color:#e7d19c}.forced-mitre-confirm>label{display:flex;align-items:flex-start;gap:9px;color:#d6c9a9;font-size:13px;line-height:1.45}.forced-mitre-confirm>label input{margin-top:3px}.forced-mitre-confirm>div:last-child{display:flex;gap:8px}.forced-mitre-confirm .primary{background:#d6a94e;color:#1b1408}.forced-mitre-provenance{margin-bottom:20px;padding:14px 15px;border:1px solid #745c2e;border-radius:7px;background:#2a2214}.forced-mitre-provenance strong{color:#f0c66f}.forced-mitre-provenance p{margin:7px 0}.forced-mitre-provenance small{color:#ad9d79}
