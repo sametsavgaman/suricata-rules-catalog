@@ -149,7 +149,7 @@ export async function warmAppCache() {
   const familyParams = new URLSearchParams({ limit: "24", offset: "0" });
   const mitreParams = new URLSearchParams({ limit: "50", offset: "0", kind: "all" });
   await Promise.allSettled([
-    getStats(), getCatalogStats(), getClassificationFilters(), getRules(rulesParams),
+    getStats(), getCatalogStats(), getRules(rulesParams),
   ]);
   return Promise.allSettled([
     getCatalogFacets(), getFamilyStats(), getFamilies(familyParams),
