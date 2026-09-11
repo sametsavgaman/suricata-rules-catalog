@@ -64,12 +64,13 @@ export function Dashboard() {
     classifier_version: "",
     inference_mode: "",
     product_status: urlParams.get("product_status") || "",
-    sort: "sid_desc",
+    sort: "recent",
   });
   const [page, setPage] = useState(1);
   const pageSize = 50;
   const [error, setError] = useState("");
   const [initialLoading, setInitialLoading] = useState(true);
+  const loadSequence = useRef(0);
   const [busy, setBusy] = useState(false);
   const [productBusySid, setProductBusySid] = useState<number | null>(null);
   const searchRef = useRef<HTMLInputElement>(null);
@@ -115,21 +116,24 @@ export function Dashboard() {
     (search ? 1 : 0);
 
   const load = async () => {
+    const sequence = ++loadSequence.current;
     try {
       const [statsData, rulesData, catalogData] = await Promise.all([
         getStats(),
         getRules(params),
         getCatalogStats(),
       ]);
+      if (sequence !== loadSequence.current) return;
       setStats(statsData);
       setCatalogStats(catalogData);
       setRules(rulesData.items);
       setTotal(rulesData.total);
       setError("");
     } catch (e) {
+      if (sequence !== loadSequence.current) return;
       setError(e instanceof Error ? e.message : "Request failed");
     } finally {
-      setInitialLoading(false);
+      if (sequence === loadSequence.current) setInitialLoading(false);
     }
   };
   useEffect(() => {
@@ -438,43 +442,6 @@ export function Dashboard() {
           </div>
         </div>
         <div className="filters rules-filter-grid">
-          <div className="model-presets" aria-label="Model quick filters">
-            <button
-              type="button"
-              className={
-                filters.classifier_version === "qwen-v2.2" ? "active" : ""
-              }
-              onClick={() =>
-                setFilters({
-                  ...filters,
-                  provider: "ollama",
-                  model_name: "qwen3:8b",
-                  classifier_version: "qwen-v2.2",
-                })
-              }
-            >
-              Qwen V2.2
-            </button>
-            <button
-              type="button"
-              className={
-                filters.provider === "gemini" &&
-                filters.classifier_version === "v2.1"
-                  ? "active"
-                  : ""
-              }
-              onClick={() =>
-                setFilters({
-                  ...filters,
-                  provider: "gemini",
-                  model_name: "",
-                  classifier_version: "v2.1",
-                })
-              }
-            >
-              Gemini V2.1
-            </button>
-          </div>
           <select
             value={filters.category}
             onChange={(e) =>
@@ -650,9 +617,8 @@ export function Dashboard() {
             value={filters.sort}
             onChange={(e) => setFilters({ ...filters, sort: e.target.value })}
           >
-            <option value="sid_desc">Newest SID</option>
-            <option value="sid_asc">Oldest SID</option>
-            <option value="recent">Recently classified</option>
+            <option value="recent">{t("Last classified")}</option>
+            <option value="first_classified">{t("First classified")}</option>
           </select>
         </div>
         <div className="pagination">

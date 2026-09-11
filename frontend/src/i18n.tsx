@@ -49,6 +49,8 @@ const translations: Record<Locale, Record<string, string>> = {
     "Interpreting your question and searching the catalog…":
       "Sorunuz yorumlanıyor ve katalog aranıyor…",
     "Loading records…": "Kayıtlar yükleniyor…",
+    "Last classified": "En son sınıflandırılan",
+    "First classified": "İlk sınıflandırılan",
     "Preparing Rule Explorer…": "Kural Gezgini hazırlanıyor…",
     "How does this assistant work?": "Bu asistan nasıl çalışır?",
     "← Previous": "← Önceki",

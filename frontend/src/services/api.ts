@@ -11,7 +11,7 @@ export function clearApiCache() { getCache.clear(); }
 
 function cacheTtl(path: string) {
   return path === "/stats" || path === "/catalog/stats" || path === "/rules/filters" ||
-    path === "/rules?limit=50&offset=0&sort=sid_desc"
+    path === "/rules?limit=50&offset=0&sort=recent"
     ? DASHBOARD_CACHE_TTL
     : GET_CACHE_TTL;
 }
@@ -145,7 +145,7 @@ export function analyzeScenario(question:string, provider:ScenarioProvider = "ge
 
 /** Warm only read-only, lightweight catalogue data after the first screen paints. */
 export async function warmAppCache() {
-  const rulesParams = new URLSearchParams({ limit: "50", offset: "0", sort: "sid_desc" });
+  const rulesParams = new URLSearchParams({ limit: "50", offset: "0", sort: "recent" });
   const familyParams = new URLSearchParams({ limit: "24", offset: "0" });
   const mitreParams = new URLSearchParams({ limit: "50", offset: "0", kind: "all" });
   await Promise.allSettled([
