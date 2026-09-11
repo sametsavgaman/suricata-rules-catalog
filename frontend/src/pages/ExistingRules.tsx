@@ -50,11 +50,12 @@ export function ExistingRules() {
 
   const params = useMemo(() => {
     const value = new URLSearchParams({
-      product_status: "ALREADY_INTEGRATED",
       limit: String(PAGE_SIZE),
       offset: String((page - 1) * PAGE_SIZE),
       sort: "sid_desc",
     });
+    value.append("product_statuses", "ALREADY_INTEGRATED");
+    value.append("product_statuses", "APPROVED_FOR_PRODUCT");
     if (deferredSearch.trim()) value.set("search", deferredSearch.trim());
     return value;
   }, [page, deferredSearch]);
@@ -65,7 +66,10 @@ export function ExistingRules() {
       .then(([result, stats]) => {
         setRules(result.items);
         setTotal(result.total);
-        setWorkspaceTotal(stats.product_status.ALREADY_INTEGRATED || 0);
+        setWorkspaceTotal(
+          (stats.product_status.ALREADY_INTEGRATED || 0) +
+          (stats.product_status.APPROVED_FOR_PRODUCT || 0),
+        );
         setError("");
       })
       .catch((cause) => setError(cause instanceof Error ? cause.message : "Existing rules could not be loaded"))
@@ -292,7 +296,7 @@ export function ExistingRules() {
     </section>
 
     <section className="existing-rules-metrics" aria-label={t("Existing rule summary")}>
-      <div><b>{workspaceTotal.toLocaleString()}</b><span>{t("Integrated in product")}</span></div>
+      <div><b>{workspaceTotal.toLocaleString()}</b><span>{t("Approved or integrated in product")}</span></div>
       <div><b>{total.toLocaleString()}</b><span>{t("Matching current filter")}</span></div>
       <div><b>{classified.toLocaleString()}</b><span>{t("With classification")}</span></div>
       <div><b>{mapped.toLocaleString()}</b><span>{t("MITRE mapped on page")}</span></div>
@@ -314,13 +318,13 @@ export function ExistingRules() {
           <div className="existing-rule-id"><span>SID</span><b>{rule.sid}</b><small>rev {rule.rev}</small></div>
           <div className="existing-rule-main"><strong>{rule.msg || t("Untitled rule")}</strong><small>{rule.protocol} · {rule.source_file || t("unknown source")}</small><div className="existing-rule-tags">{rule.families?.slice(0, 3).map((family) => <em key={family.slug}>{family.name}</em>)}{classification?.mitre_technique_id && <em className="mitre">{classification.mitre_technique_id}</em>}</div></div>
           <div className="existing-rule-decision"><span>{classification?.category ? label(classification.category) : t("Unclassified")}</span><small>{classification?.detected_entity || t("No entity assigned")}</small></div>
-          <div className="existing-rule-status"><StatusBadge status={classification?.classification_status} /><small>{t("ALREADY INTEGRATED")}</small></div>
+          <div className="existing-rule-status"><StatusBadge status={classification?.classification_status} /><small>{label(rule.product_decision?.status || "ALREADY_INTEGRATED")}</small></div>
           <div className="existing-rule-actions" onClick={(event) => event.stopPropagation()} onKeyDown={(event) => event.stopPropagation()}>
             <AddToRulePack sid={rule.sid} compact />
             <button className="remove-product-rule" type="button" onClick={() => { setRemoveMessage(""); setRemoveError(""); setRemoveTarget(rule); }}>{t("Remove from product")}</button>
           </div>
         </article>;
-      })}</div> : <div className="existing-empty"><b>{workspaceTotal ? t("No integrated rules match the current search.") : t("No rules are marked as existing yet.")}</b><span>{workspaceTotal ? t("Try a broader search or clear the filter.") : t("Upload the product ruleset above, or mark a rule as Already Integrated from its decision panel.")}</span>{!workspaceTotal && <Link to="/catalog/rules">{t("Open Rules to review product decisions →")}</Link>}</div>}
+      })}</div> : <div className="existing-empty"><b>{workspaceTotal ? t("No approved or integrated rules match the current search.") : t("No rules are marked as existing yet.")}</b><span>{workspaceTotal ? t("Try a broader search or clear the filter.") : t("Upload the product ruleset above, or approve or integrate a rule from its product decision panel.")}</span>{!workspaceTotal && <Link to="/catalog/rules">{t("Open Rules to review product decisions →")}</Link>}</div>}
       <div className="pagination"><button disabled={page <= 1} onClick={() => setPage((value) => value - 1)}>{t("← Previous")}</button><span>{t("page")} {page} / {pages}</span><button disabled={page >= pages} onClick={() => setPage((value) => value + 1)}>{t("Next →")}</button></div>
     </section>
 

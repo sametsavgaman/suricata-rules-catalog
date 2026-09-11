@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { DecisionAssessment } from "../components/DecisionAssessment";
 import { RuleDecisionCard } from "../components/RuleDecisionCard";
+import { AddToRulePack } from "../components/AddToRulePack";
 import { StatusBadge } from "../components/StatusBadge";
 import {
   classifyRule,
@@ -654,6 +655,7 @@ export function RuleDetail() {
           </button>
           <button onClick={exportRuleCsv}>{t("Export CSV")}</button>
           <button onClick={exportRulePdf}>{t("Export PDF")}</button>
+          <AddToRulePack sid={rule.sid} />
           <button className="primary" disabled={busy} onClick={classify}>
             {busy
               ? t("Classifying…")

@@ -69,6 +69,7 @@ def list_rules(
     mitre_mapping_method: str | None = None,
     manual_review_status: str | None = Query(None, pattern="^(UNREVIEWED|APPROVED|REJECTED|NEEDS_REVIEW)$"),
     product_status: ProductStatus | None = None,
+    product_statuses: list[ProductStatus] | None = Query(None),
     family: list[str] | None = Query(None, max_length=140),
     sort: str = Query("sid_desc"),
     search: str | None = None,
@@ -83,7 +84,7 @@ def list_rules(
             protocol, classtype, confidence, confidence_min, confidence_max, entity_status,
             mitre_status, mitre_tactic, kill_chain_phase, has_cve, inspection_batch, provider,
             model_name, classifier_version, inference_mode, run_id, mitre_mapping_method,
-            manual_review_status, product_status, search,
+            manual_review_status, product_status, product_statuses, search,
         ))
     )
     if cacheable_dashboard_page:
@@ -148,7 +149,7 @@ def list_rules(
         "classifier_version": (Classification.classifier_version, classifier_version),
         "inference_mode": (Classification.inference_mode, inference_mode), "run_id": (Classification.run_id, run_id),
         "protocol": (Rule.protocol, protocol),
-        "product_status": (RuleProductDecision.status, product_status),
+        "product_status": (RuleProductDecision.status, product_statuses or product_status),
         "classtype": (Rule.classtype, classtype),
         "family": (DetectionFamily.slug, family),
     }

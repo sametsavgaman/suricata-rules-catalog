@@ -417,7 +417,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "Rules marked ": "İşaretli kurallar ",
     "in the product decision ledger are collected here as the current NDR baseline. Use this view to verify coverage before adding new content.":
       "ürün karar defterinde mevcut NDR tabanı olarak burada toplanır. Yeni içerik eklemeden önce kapsamı doğrulamak için bu görünümü kullanın.",
-    "Integrated in product": "Ürüne entegre",
+    "Approved or integrated in product": "Ürün için onaylanan veya entegre edilen",
     "Matching current filter": "Geçerli filtreyle eşleşen",
     "With classification": "Sınıflandırılmış",
     "MITRE mapped on page": "Sayfada MITRE eşlemeli",
@@ -428,8 +428,8 @@ const translations: Record<Locale, Record<string, string>> = {
     "Search existing rules": "Mevcut kurallarda ara",
     "Search SID, message, MITRE…": "SID, mesaj, MITRE ara…",
     "Loading existing rules…": "Mevcut kurallar yükleniyor…",
-    "No integrated rules match the current search.":
-      "Aramayla eşleşen entegre kural yok.",
+    "No approved or integrated rules match the current search.":
+      "Aramayla eşleşen onaylı veya entegre kural yok.",
     "No rules are marked as existing yet.":
       "Henüz mevcut olarak işaretlenmiş kural yok.",
     "Mark a rule as Already Integrated from its product decision panel; it will appear here automatically.":
@@ -438,6 +438,8 @@ const translations: Record<Locale, Record<string, string>> = {
       "Daha geniş bir arama deneyin veya filtreyi temizleyin.",
     "Open Rules to review product decisions →":
       "Ürün kararlarını incelemek için Kuralları açın →",
+    "Upload the product ruleset above, or approve or integrate a rule from its product decision panel.":
+      "Yukarıdan ürün kural setini yükleyin veya bir kuralı ürün karar panelinden onaylayın ya da entegre edin.",
     "No entity assigned": "Varlık atanmamış",
     "ALREADY INTEGRATED": "ZATEN ENTEGRE",
     "Open rule details": "Kural detayını aç",
