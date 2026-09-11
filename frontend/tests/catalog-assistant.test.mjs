@@ -60,4 +60,5 @@ test('Detection Families page exposes useful filters and conservative coverage l
 test('Detection Families filters submit canonical values instead of translated labels', () => {
   assert.match(familyPageSource, /key=\{x\.value\} value=\{x\.value\}/);
   assert.match(familyPageSource, /key=\{x\} value=\{x\}/);
+  assert.match(familyPageSource, /<option key=\{x\} value=\{x\}>\{label\(x\)\}<\/option>/);
 });
