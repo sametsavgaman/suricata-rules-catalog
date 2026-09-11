@@ -1,14 +1,15 @@
 # Katalog asistanı — uygulama sözleşmesi
 
-Detection Catalog içindeki **Kataloğa sor** alanı mevcut Gemini modelini kullanır.
-Her soru bağımsızdır; sohbet geçmişi saklanmaz. Soru Google'a gönderilir. DB kayıtları,
+Detection Catalog içindeki **Kataloğa sor** alanı Model Lab'de seçilen yardımcı modeli
+(Gemini, Claude veya OpenAI/Codex) kullanır. Her soru bağımsızdır; sohbet geçmişi
+saklanmaz. Soru seçilen sağlayıcıya gönderilir. DB kayıtları,
 raw rule, runtime ayarları ve anahtarlar prompt'a eklenmez. Statik taxonomy ve sistem
 talimatı sunucuda tutulur; frontend isteği yalnız `question` içerir.
 
 ## Akış
 
 1. `POST /api/catalog/assistant/ask` gövdesi: `{"question":"C2 kurallarını getir"}`.
-2. Gemini `generate_content` ile CatalogPlan JSON üretir. SQL, URL, araç, rol veya
+2. Seçili yardımcı model CatalogPlan JSON üretir. SQL, URL, araç, rol veya
    serbest cevap alanı yoktur. Çıktı backend'de extra=forbid ile tekrar doğrulanır.
 3. LIST_RULES / COUNT_RULES veya LIST_FAMILIES / COUNT_FAMILIES için SQLAlchemy
    izin verilen filtrelerle sorgu kurar.
@@ -19,14 +20,14 @@ talimatı sunucuda tutulur; frontend isteği yalnız `question` içerir.
    EXPLAIN_TOPIC cevapları denetlenmiş platform metinleridir.
 6. Sonraki sayfa: `POST /api/catalog/assistant/search` —
    `{"filters":{"category":"Command and Control"},"offset":12,"limit":12}`.
-   Bu işlemde Gemini çağrılmaz.
+   Bu işlemde yardımcı model çağrılmaz.
 
 ## Senaryo analizi
 
 `POST /api/catalog/assistant/scenario` gövdesi `{"question":"...","provider":"gemini"}` kabul eder.
 `provider` değeri `gemini`, `claude` veya `openai` olabilir; arayüzde `openai` Codex / OpenAI
 olarak gösterilir. Model Lab'de anahtar ve model tanımlı olmayan sağlayıcılar devre dışı kalır.
-Gemini burada serbest bir sonuç üretmez; saldırı anlatısını 1–10 gözlemlenebilir adıma,
+Seçilen model burada serbest bir sonuç üretmez; saldırı anlatısını 1–10 gözlemlenebilir adıma,
 MITRE ID'lerine, kısa anahtar kelimelere ve protokollere ayıran `ScenarioPlan` JSON'u
 çıkarır. Backend her ID'yi yerel ATT&CK deposunda doğrular ve her adım için yerel
 katalogdan exact-MITRE, keyword veya protocol kanıtı arar. `COVERED`, `PARTIAL` ve
@@ -54,10 +55,9 @@ ve classification ID azalan sıradadır. Model confidence sıralama/uygunluk öl
   proxy loopback'ten gelen istek gibi görünür. LAN/çok kullanıcılı kullanım için
   kimlik doğrulama, kullanıcı yetkileri ve ortak kota deposu gereklidir.
 - Catalog sorusu 3–1000, senaryo sorusu 10–3000 karakter; gövde 8 KiB; sayfa 1–50 kayıt; offset en fazla 1.000.000.
-- Süreç başına dakikada 6 Gemini sorusu / 60 sayfa sorgusu; bir aktif Gemini çağrısı.
+- Süreç başına dakikada 6 yardımcı model sorusu / 60 sayfa sorgusu; bir aktif model çağrısı.
   Limitler bellek içindedir, restart ile sıfırlanır; dağıtık kota değildir.
-- Gemini çağrısı toplam 30 saniye; yalnız transient HTTP hatalarında bir tekrar,
-  2 saniye bekleme. SDK otomatik retry kapalı. SQLite sorgusu 5 saniyelik VM bütçesi.
+- Yardımcı model çağrısı toplam 30 saniyeyle sınırlandırılır. SQLite sorgusu 5 saniyelik VM bütçesi kullanır.
 - Asistan kayıt güncellemez; serializer yalnız açıkça seçilmiş alanları döndürür.
   HTML/Markdown model çıktısı render edilmez. React kaynak metnini escape eder.
 - Model hiçbir katalog satırı, raw rule veya family sonucu görmez. Kayıt içindeki

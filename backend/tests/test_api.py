@@ -89,10 +89,10 @@ def test_forced_mitre_is_only_available_after_normal_classifier_abstains(monkeyp
                      "evidence": [{"type": "LOCAL_NAME_MATCH", "value": "SMB/Windows Admin Shares"}]}
         proposal = ForcedMitreProposal(technique_id="T1021.002", confidence=.48,
                                        explanation="Best-effort mapping from SMB service evidence.", evidence=["Destination port 445"])
-        return proposal, technique, [candidate], candidate
+        return proposal, technique, [candidate], candidate, "claude", "claude-test"
 
     monkeypatch.setattr(rules_api, "propose_forced_mitre", fake_proposal)
-    monkeypatch.setattr(rules_api, "effective_settings", lambda *args: type("S", (), {"gemini_model": "gemini-test"})())
+    monkeypatch.setattr(rules_api, "effective_settings", lambda *args: type("S", (), {})())
     with TestClient(app) as client:
         before = client.get(f"/api/rules/7770001/forced-mitre?classification_id={classification_id}")
         assert before.status_code == 200 and before.json() == {"eligible": True, "reason": None, "mapping": None}
@@ -103,7 +103,8 @@ def test_forced_mitre_is_only_available_after_normal_classifier_abstains(monkeyp
         assert created.json()["forced"] is True
         assert "may be misleading" in created.json()["warning"]
         state = client.get(f"/api/rules/7770001/forced-mitre?classification_id={classification_id}").json()
-        assert state["mapping"]["provider"] == "gemini"
+        assert state["mapping"]["provider"] == "claude"
+        assert state["mapping"]["model_name"] == "claude-test"
         audit = client.get("/api/audit-log", params={"action": "FORCED_MITRE", "sid": 7770001})
         assert audit.status_code == 200 and audit.json()["total"] == 1
 

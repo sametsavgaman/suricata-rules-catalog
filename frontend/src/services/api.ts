@@ -54,7 +54,7 @@ export function getMitreTechnique(techniqueId:string){return request<MitreTechni
 export function getMitreTechniqueRules(techniqueId:string,offset=0,limit=50){return request<MitreTechniqueRules>(`/mitre/techniques/${encodeURIComponent(techniqueId)}/rules?offset=${offset}&limit=${limit}`);}
 export async function exportCatalogCsv(params: URLSearchParams) { const response = await fetch(`${API}/catalog/export.csv?${params}`); if (!response.ok) throw new Error("Export failed"); return response.blob(); }
 export function getRule(sid: string) { return request<Rule>(`/rules/${sid}`); }
-export type ForcedMitreMapping = {id:number;classification_id:number;technique_id:string;technique_name:string;tactic:string|null;confidence:number;evidence:Array<Record<string,unknown>>;explanation:string;provider:"gemini";model_name:string;created_at:string;forced:true;warning:string};
+export type ForcedMitreMapping = {id:number;classification_id:number;technique_id:string;technique_name:string;tactic:string|null;confidence:number;evidence:Array<Record<string,unknown>>;explanation:string;provider:"gemini"|"claude"|"openai";model_name:string;created_at:string;forced:true;warning:string};
 export type ForcedMitreState = {eligible:boolean;reason:string|null;mapping:ForcedMitreMapping|null};
 export function getForcedMitre(sid:string,classificationId:number){return request<ForcedMitreState>(`/rules/${sid}/forced-mitre?classification_id=${classificationId}`);}
 export function forceMitre(sid:string,classificationId:number){return request<ForcedMitreMapping>(`/rules/${sid}/forced-mitre`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({classification_id:classificationId,acknowledge_risk:true})});}

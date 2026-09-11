@@ -27,6 +27,7 @@ const emptyStats: Stats = {
   classified_rules: 0,
   review_required: 0,
   failed: 0,
+  pending_classification: 0,
   category_distribution: {},
   top_detected_entities: [],
   top_mitre_techniques: [],
@@ -228,7 +229,7 @@ export function Dashboard() {
     ["Total Rules", stats.total_rules],
     ["Classified", stats.classified_rules],
     ["Review Required", stats.review_required],
-    ["Failed", stats.failed],
+    ["Unclassified / awaiting processing", stats.pending_classification ?? stats.failed],
     ["MITRE Mapped", catalogStats.mitre_mapped],
     [
       "Approved for Product",

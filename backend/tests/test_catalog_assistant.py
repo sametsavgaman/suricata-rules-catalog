@@ -113,6 +113,7 @@ def test_ask_is_read_only_and_pagination_does_not_call_model(client, catalog, mo
     assert response.status_code == 200, response.text
     data = response.json()
     assert data["total"] == 2 and data["planner_model"] == "test-model"
+    assert data["planner_provider"] == "gemini"
     assert "secret-test" not in response.text and "raw_rule" not in response.text
     def fail(*args): raise AssertionError("Pagination must not call Gemini")
     monkeypatch.setattr(api, "plan_question", fail)

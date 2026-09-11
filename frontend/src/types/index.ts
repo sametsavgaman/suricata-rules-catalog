@@ -59,7 +59,7 @@ export interface Rule {
 }
 
 export interface Stats {
-  total_rules: number; classified_rules: number; review_required: number; failed: number;
+  total_rules: number; classified_rules: number; review_required: number; failed: number; pending_classification: number;
   category_distribution: Record<string, number>; top_detected_entities: Array<{name: string; count: number}>;
   top_mitre_techniques: Array<{id: string; name: string; count: number}>; average_confidence: number;
   manual_review?: Record<string, number>;
