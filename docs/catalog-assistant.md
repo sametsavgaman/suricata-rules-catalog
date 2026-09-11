@@ -38,8 +38,10 @@ dakikada en fazla dört senaryo isteğine izin verir.
 Filtreler VE ile birleşir: family_name, category, subcategory, detected_entity, mitre_tactic,
 mitre_technique_id, protocol, provider, product_status, entity_status, mitre_status,
 search. Ek filtreler: entity_type, model_name, classifier_version, inspection_batch,
-cyber_kill_chain_phase, has_cve, classification_status. Provider `gemini` veya
-`ollama` olabilir. LIKE jokerleri literal aranır.
+cyber_kill_chain_phase, has_cve, classification_status. Provider `openai`,
+`gemini`, `claude` veya `ollama` olabilir. Doğal dil planında GPT, OpenAI ve
+Codex ifadeleri `openai`; Claude `claude`; Qwen ise `ollama` olarak
+kanonikleştirilir. LIKE jokerleri literal aranır.
 NOT_EVALUATED, ürün kararı satırı bulunmayan kayıtları da kapsar. Sonuçlar SID, REV
 ve classification ID azalan sıradadır. Model confidence sıralama/uygunluk ölçüsü değildir.
 

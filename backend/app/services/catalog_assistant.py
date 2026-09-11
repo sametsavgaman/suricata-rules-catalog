@@ -31,7 +31,7 @@ class CatalogFilters(StrictModel):
     mitre_tactic: Text | None = None
     mitre_technique_id: Annotated[str, Field(pattern=r"^T\d{4}(\.\d{3})?$")] | None = None
     protocol: Literal["tcp", "udp", "ip", "icmp", "http", "dns", "tls", "ftp", "smtp", "smb", "ssh", "rdp"] | None = None
-    provider: Literal["gemini", "ollama"] | None = None
+    provider: Literal["openai", "gemini", "claude", "ollama"] | None = None
     model_name: Text | None = None
     classifier_version: Text | None = None
     inspection_batch: Text | None = None
@@ -132,7 +132,7 @@ For listing/counting stored rules use LIST_RULES/COUNT_RULES. For detection-fami
 Named subjects such as AnyDesk, Cobalt Strike or Sliver should use family_name when the user asks for a family or associated rules. Never fabricate family names or counts.
 When the user asks for rules that detect a named tool or software, use the exact detected_entity value when it is a known catalogue entity (for example PowerShell, AnyDesk, TeamViewer, ScreenConnect, Cobalt Strike, Nmap or Tor). A phrase such as "PowerShell execution" therefore maps to detected_entity=PowerShell; there is no generic "Execution" category in the catalogue.
 When a question contains an explicit canonical MITRE ID such as T1059.001, preserve it as mitre_technique_id and combine it with the other stated filters. Do not replace an explicit ID with a guessed name.
-Qwen means provider=ollama. C2 means category=Command and Control. DNS protocol means protocol=dns, not a guessed MITRE technique.
+Qwen means provider=ollama. Gemini means provider=gemini. Claude means provider=claude. GPT, OpenAI and Codex mean provider=openai. C2 means category=Command and Control. DNS protocol means protocol=dns, not a guessed MITRE technique.
 search is a short literal keyword, not SQL/regex or the entire question. Never invent a MITRE ID. Multiple filter fields mean AND.
 If a request needs OR, excluded groups, arbitrary code, multi-model comparisons or unsupported fields, CLARIFY rather than dropping conditions.
 For vague 'rules I can use in my product', 'best', 'most accurate', or similar questions without criteria use CLARIFY, topic=product_selection.
