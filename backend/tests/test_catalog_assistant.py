@@ -27,7 +27,13 @@ def catalog():
                 f'alert dns any any -> any any (msg:"DNS C2 sample {sid}"; sid:{sid}; rev:1;)'), "sample.rules")
             if sid == 900003:  # imported but never classified
                 continue
-            for provider, category, status in (("GEMINI", "Malware", "AUTO_CLASSIFIED"), ("ollama", "Command and Control", "AUTO_CLASSIFIED"), ("ollama", None, "FAILED")):
+            for provider, category, status in (
+                ("GEMINI", "Malware", "AUTO_CLASSIFIED"),
+                ("claude", "Credential Access", "AUTO_CLASSIFIED"),
+                ("openai", "Exploitation", "AUTO_CLASSIFIED"),
+                ("ollama", "Command and Control", "AUTO_CLASSIFIED"),
+                ("ollama", None, "FAILED"),
+            ):
                 db.add(Classification(rule_id=rule.id, provider=provider, category=category,
                     model_name=provider, classifier_version="test", classification_status=ClassificationStatus(status), confidence=.8))
             if sid == 900002:
@@ -58,6 +64,22 @@ def test_latest_success_per_provider_and_and_filters(catalog):
     assert query_catalog(catalog, CatalogSearch()).total == 3  # Imported rules count once; attempts never multiply them.
     assert query_catalog(catalog, CatalogSearch(filters=CatalogFilters(product_status="NOT_EVALUATED"))).total == 2
     assert query_catalog(catalog, CatalogSearch(filters=CatalogFilters(product_status="CANDIDATE"))).total == 1
+
+
+@pytest.mark.parametrize(
+    ("provider", "category"),
+    [
+        ("gemini", "Malware"),
+        ("claude", "Credential Access"),
+        ("openai", "Exploitation"),
+        ("ollama", "Command and Control"),
+    ],
+)
+def test_all_supported_classification_providers_can_filter_catalog(catalog, provider, category):
+    filters = CatalogFilters(provider=provider, category=category)
+    result = query_catalog(catalog, CatalogSearch(filters=filters))
+    assert result.total == 2
+    assert all((item.provider or "").casefold() == provider for item in result.items)
 
 
 def test_unclassified_catalog_rule_is_counted_without_inventing_classification(catalog):
