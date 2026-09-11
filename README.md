@@ -4,6 +4,10 @@ Deterministically parses Suricata `.rules` files, enriches each parsed rule with
 
 The included 20-rule dataset is explicitly synthetic test data. It is not presented as Emerging Threats content.
 
+![Suricata Rules Catalog detection catalogue overview](docs/images/catalog-overview.png)
+
+<p align="center"><em>Explore, classify, validate, and curate more than 52,000 Suricata detections from one evidence-driven workspace.</em></p>
+
 ## Architecture
 
 ```text
@@ -51,6 +55,23 @@ backend\.venv\Scripts\python.exe -m app.enrichment.backfill_detection_families
 
 The OpenAI adapter uses the Responses API's Pydantic structured-output parser and disables response storage for this stateless classification call.
 
+## Interface preview
+
+### Evidence-driven rule detail
+
+Each rule page keeps the original Suricata signature, model provenance,
+classification evidence, MITRE mapping, validator result, human-review state,
+and product decision together.
+
+![Evidence-driven Suricata rule detail](docs/images/rule-detail.png)
+
+### Detection families
+
+The family explorer groups related malware, tools, behaviors, and capabilities
+only when explainable evidence supports the relationship.
+
+![Detection Families explorer](docs/images/detection-families.png)
+
 ## Quick start with Docker
 
 ```bash
@@ -92,6 +113,28 @@ need it.
 
 > Never commit a populated `.env` file. `.env.example` intentionally contains
 > only empty values or safe placeholders.
+
+## Public SQLite catalogue snapshot
+
+The repository includes a ready-to-use catalogue snapshot at
+`data/catalog/suricata_rules_catalog.db`. It contains the public Suricata rule
+corpus, completed classification records, and derived detection-family data.
+Local settings, API credentials, execution runs, batch coordination records,
+human notes, product decisions, and operational history are removed before the
+snapshot is published.
+
+The database is stored with Git LFS because it is larger than GitHub's regular
+file limit. Install Git LFS before cloning, then copy the snapshot to the project
+root if you want the application to use it with the default SQLite configuration:
+
+```powershell
+git lfs install
+git lfs pull
+Copy-Item data/catalog/suricata_rules_catalog.db suricata_rules.db
+```
+
+The copied root database remains ignored by Git, so local classifications and
+runtime changes cannot be committed accidentally.
 
 ## Local development (SQLite)
 

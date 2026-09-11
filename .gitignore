@@ -1,5 +1,6 @@
 .env
 *.db
+!data/catalog/suricata_rules_catalog.db
 *.db-journal
 *.db-wal
 *.db-shm
