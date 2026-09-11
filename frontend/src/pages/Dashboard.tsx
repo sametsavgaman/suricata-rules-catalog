@@ -406,10 +406,26 @@ export function Dashboard() {
             <div className="section-kicker">{t("LIVE DATASET")}</div>
             <h2>{t("Rule Explorer")}</h2>
             <p className="result-count">
-              <strong>{initialLoading ? "—" : total}</strong>{" "}
-              {locale === "tr"
-                ? `kayıt bulundu · sayfa ${page} · ${activeFilterCount ? `${activeFilterCount} aktif filtre` : "filtre uygulanmadı"}`
-                : `records found · page ${page} · ${activeFilterCount ? `${activeFilterCount} active filters` : "no filters applied"}`}
+              {initialLoading ? (
+                locale === "tr" ? "Veriler yükleniyor…" : "Loading records…"
+              ) : activeFilterCount ? (
+                locale === "tr" ? (
+                  <>
+                    Filtreleme sonucu <strong>{total}</strong> veri gösteriliyor · sayfa {page} · {activeFilterCount} aktif filtre
+                  </>
+                ) : (
+                  <>
+                    Filtering result: <strong>{total}</strong> records shown · page {page} · {activeFilterCount} active filters
+                  </>
+                )
+              ) : (
+                <>
+                  <strong>{total}</strong>{" "}
+                  {locale === "tr"
+                    ? `kayıt bulundu · sayfa ${page} · filtre uygulanmadı`
+                    : `records found · page ${page} · no filters applied`}
+                </>
+              )}
             </p>
           </div>
           <div className="explorer-actions">
