@@ -34,6 +34,22 @@ const emptyStats: Stats = {
   average_confidence: 0,
 };
 
+function filtersFromUrl(params: URLSearchParams) {
+  return {
+    category: params.get("category") || "",
+    mitre_technique_id: params.get("mitre_technique_id") || "",
+    mitre_tactic: params.get("mitre_tactic") || "",
+    entity_type: params.get("entity_type") || "",
+    status: params.get("status") || "",
+    manual_review_status: params.get("manual_review_status") || "",
+    entity_status: params.get("entity_status") || "",
+    mitre_status: params.get("mitre_status") || "",
+    mitre_mapping_method: params.get("mitre_mapping_method") || "",
+    product_status: params.get("product_status") || "",
+    sort: params.get("sort") || "recent",
+  };
+}
+
 export function Dashboard() {
   const { t, label, locale } = useI18n();
   const navigate = useNavigate();
@@ -46,24 +62,13 @@ export function Dashboard() {
   }>({ total_rules: 0, mitre_mapped: 0, product_status: {} });
   const [rules, setRules] = useState<Rule[]>([]);
   const [total, setTotal] = useState(0);
-  const [search, setSearch] = useState("");
-  const [filters, setFilters] = useState({
-    category: urlParams.get("category") || "",
-    mitre_technique_id: urlParams.get("mitre_technique_id") || "",
-    mitre_tactic: urlParams.get("mitre_tactic") || "",
-    entity_type: "",
-    status: "",
-    manual_review_status: "",
-    entity_status: "",
-    mitre_status: "",
-    mitre_mapping_method: "",
-    product_status: urlParams.get("product_status") || "",
-    sort: "recent",
-  });
+  const [search, setSearch] = useState(() => urlParams.get("search") || "");
+  const [filters, setFilters] = useState(() => filtersFromUrl(urlParams));
   const [page, setPage] = useState(1);
   const pageSize = 50;
   const [error, setError] = useState("");
   const [initialLoading, setInitialLoading] = useState(true);
+  const [statsLoading, setStatsLoading] = useState(true);
   const loadSequence = useRef(0);
   const [busy, setBusy] = useState(false);
   const [productBusySid, setProductBusySid] = useState<number | null>(null);
@@ -92,17 +97,26 @@ export function Dashboard() {
     selectedFamilies.length +
     (search ? 1 : 0);
 
-  const load = async () => {
-    const sequence = ++loadSequence.current;
+  const loadStats = async () => {
     try {
-      const [statsData, rulesData, catalogData] = await Promise.all([
+      const [statsData, catalogData] = await Promise.all([
         getStats(),
-        getRules(params),
         getCatalogStats(),
       ]);
-      if (sequence !== loadSequence.current) return;
       setStats(statsData);
       setCatalogStats(catalogData);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Request failed");
+    } finally {
+      setStatsLoading(false);
+    }
+  };
+
+  const loadRules = async () => {
+    const sequence = ++loadSequence.current;
+    try {
+      const rulesData = await getRules(params);
+      if (sequence !== loadSequence.current) return;
       setRules(rulesData.items);
       setTotal(rulesData.total);
       setError("");
@@ -113,14 +127,18 @@ export function Dashboard() {
       if (sequence === loadSequence.current) setInitialLoading(false);
     }
   };
+
   useEffect(() => {
-    void load();
+    void loadStats();
+  }, []);
+  useEffect(() => {
+    void loadRules();
   }, [params.toString()]);
   useEffect(() => {
     const next = new URLSearchParams();
     if (search) next.set("search", search);
     Object.entries(filters).forEach(([key, value]) => {
-      if (value && key !== "sort") next.set(key, value);
+      if (value && (key !== "sort" || value !== "recent")) next.set(key, value);
     });
     selectedFamilies.forEach((f) => next.append("family", f));
     window.history.replaceState(
@@ -148,7 +166,7 @@ export function Dashboard() {
     setBusy(true);
     try {
       await importRules(event.target.files);
-      await load();
+      await Promise.all([loadStats(), loadRules()]);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Import failed");
     } finally {
@@ -239,6 +257,50 @@ export function Dashboard() {
     link.download = "suricata-catalog.pdf";
     link.click();
     URL.revokeObjectURL(url);
+  };
+
+  const printPdf = () => {
+    const printWindow = window.open("", "_blank", "width=1280,height=900");
+    if (!printWindow) {
+      // Popup blockers can prevent the lightweight print document. Keep the
+      // browser's native fallback available in that case.
+      window.print();
+      return;
+    }
+    printWindow.opener = null;
+    const escapeHtml = (value: unknown) => String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+    const cell = (value: unknown, fallback = "—") => escapeHtml(value || fallback);
+    const rowsHtml = rules.map((rule) => {
+      const classification = rule.classification;
+      const families = rule.families?.map((family) => family.name).join(", ");
+      return `<tr>
+        <td class="sid">${cell(rule.sid)}<small>REV ${cell(rule.rev)}</small></td>
+        <td>${cell(rule.msg)}<small>${cell(`${rule.protocol || "—"} · ${rule.classtype || "unclassified"}`)}</small></td>
+        <td>${cell(classification?.detected_entity, "Not assigned")}</td>
+        <td>${cell(families, "Unassigned")}</td>
+        <td>${cell(classification?.detected_behavior, "Not assigned")}</td>
+        <td>${cell(classification?.category, "Not assigned")}<small>${cell(classification?.subcategory, "")}</small></td>
+        <td>${cell(classification?.mitre_technique_id)}<small>${cell(classification?.mitre_technique, "")}</small></td>
+        <td>${cell(classification?.classification_status, "NOT CLASSIFIED")}</td>
+      </tr>`;
+    }).join("");
+    printWindow.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Suricata Detection Catalog</title><style>
+      @page{size:A4 landscape;margin:8mm}*{box-sizing:border-box}body{margin:0;color:#111;font:9px Arial,sans-serif}h1{margin:0 0 4px;font-size:16px}p{margin:0 0 10px;color:#444;font-size:9px}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{padding:4px 5px;border:1px solid #bbb;text-align:left;vertical-align:top;overflow-wrap:anywhere;word-break:break-word}th{background:#e9eee9;font-size:8px}td{line-height:1.25}td small{display:block;margin-top:2px;color:#555;font-size:7px}.sid{font-family:monospace;font-weight:700}th:nth-child(1){width:7%}th:nth-child(2){width:24%}th:nth-child(3){width:11%}th:nth-child(4){width:13%}th:nth-child(5){width:14%}th:nth-child(6){width:11%}th:nth-child(7){width:12%}th:nth-child(8){width:8%}tr{break-inside:avoid;page-break-inside:avoid}</style></head><body>
+      <h1>Suricata Detection Catalog</h1><p>${escapeHtml(`Displayed ${rules.length} of ${total} matching rules · page ${page}`)}</p>
+      <table><thead><tr><th>SID</th><th>Message</th><th>Entity</th><th>Families</th><th>Behavior</th><th>Category</th><th>MITRE</th><th>Status</th></tr></thead><tbody>${rowsHtml}</tbody></table>
+    </body></html>`);
+    printWindow.document.close();
+    const startPrint = () => {
+      printWindow.focus();
+      printWindow.addEventListener("afterprint", () => printWindow.close(), { once: true });
+      printWindow.print();
+    };
+    window.setTimeout(startPrint, 60);
   };
 
   const toggleExistingRule = async (
@@ -412,8 +474,8 @@ export function Dashboard() {
             key={cardLabel}
           >
             <span>{t(String(cardLabel))}</span>
-            <strong className={initialLoading ? "dashboard-stat-loading" : undefined}>
-              {initialLoading ? "···" : value}
+            <strong className={statsLoading ? "dashboard-stat-loading" : undefined}>
+              {statsLoading ? "···" : value}
             </strong>
             <em>
               {cardLabel === "Total Rules"
@@ -434,8 +496,8 @@ export function Dashboard() {
         ].map(([cardLabel, value]) => (
           <article className="stat manual-stat reveal" key={cardLabel}>
             <span>{localeText(t, locale, String(cardLabel))}</span>
-            <strong className={initialLoading ? "dashboard-stat-loading" : undefined}>
-              {initialLoading ? "···" : value}
+            <strong className={statsLoading ? "dashboard-stat-loading" : undefined}>
+              {statsLoading ? "···" : value}
             </strong>
           </article>
         ))}
@@ -485,7 +547,7 @@ export function Dashboard() {
             </button>
             <button
               className="export-button print-button"
-              onClick={() => window.print()}
+              onClick={printPdf}
               disabled={!rules.length}
             >
               ▣ {t("Print PDF")}
@@ -511,20 +573,20 @@ export function Dashboard() {
               setFilters({ ...filters, category: e.target.value })
             }
           >
-            <option value="">All categories</option>
+            <option value="">{t("All categories")}</option>
             {Object.keys(stats.category_distribution).map((x) => (
               <option key={x}>{x}</option>
             ))}
           </select>
           <input
-            placeholder="MITRE ID"
+            placeholder={t("MITRE ID")}
             value={filters.mitre_technique_id}
             onChange={(e) =>
               setFilters({ ...filters, mitre_technique_id: e.target.value })
             }
           />
           <input
-            placeholder="MITRE tactic"
+            placeholder={t("MITRE tactic")}
             value={filters.mitre_tactic}
             onChange={(e) =>
               setFilters({ ...filters, mitre_tactic: e.target.value })
@@ -536,7 +598,7 @@ export function Dashboard() {
               setFilters({ ...filters, entity_type: e.target.value })
             }
           >
-            <option value="">All entity types</option>
+            <option value="">{t("All entity types")}</option>
             {[
               "Attack Tool",
               "Malware",
@@ -547,17 +609,17 @@ export function Dashboard() {
               "Other",
               "Unknown",
             ].map((x) => (
-              <option key={x}>{x}</option>
+              <option key={x} value={x}>{label(x)}</option>
             ))}
           </select>
           <select
             value={filters.status}
             onChange={(e) => setFilters({ ...filters, status: e.target.value })}
           >
-            <option value="">All statuses</option>
-            <option value="AUTO_CLASSIFIED">Classified</option>
-            <option value="REVIEW_REQUIRED">Review required</option>
-            <option value="FAILED">Failed</option>
+            <option value="">{t("All statuses")}</option>
+            <option value="AUTO_CLASSIFIED">{t("Classified")}</option>
+            <option value="REVIEW_REQUIRED">{t("Review required")}</option>
+            <option value="FAILED">{t("Failed")}</option>
           </select>
           <select
             value={filters.manual_review_status}
@@ -565,11 +627,11 @@ export function Dashboard() {
               setFilters({ ...filters, manual_review_status: e.target.value })
             }
           >
-            <option value="">Manual review: any</option>
-            <option value="UNREVIEWED">Unreviewed</option>
-            <option value="APPROVED">Approved</option>
-            <option value="REJECTED">Rejected</option>
-            <option value="NEEDS_REVIEW">Needs review</option>
+            <option value="">{t("Manual review: any")}</option>
+            <option value="UNREVIEWED">{t("Unreviewed")}</option>
+            <option value="APPROVED">{t("Approved")}</option>
+            <option value="REJECTED">{t("Rejected")}</option>
+            <option value="NEEDS_REVIEW">{t("Needs review")}</option>
           </select>
           <select
             value={filters.entity_status}
@@ -577,9 +639,9 @@ export function Dashboard() {
               setFilters({ ...filters, entity_status: e.target.value })
             }
           >
-            <option value="">Entity: any</option>
-            <option value="has">Has entity</option>
-            <option value="none">Null entity</option>
+            <option value="">{t("Entity: any")}</option>
+            <option value="has">{t("Has entity")}</option>
+            <option value="none">{t("Null entity")}</option>
           </select>
           <select
             value={filters.mitre_status}
@@ -587,9 +649,9 @@ export function Dashboard() {
               setFilters({ ...filters, mitre_status: e.target.value })
             }
           >
-            <option value="">MITRE: any</option>
-            <option value="has">Has MITRE</option>
-            <option value="none">Null MITRE</option>
+            <option value="">{t("MITRE: any")}</option>
+            <option value="has">{t("Has MITRE")}</option>
+            <option value="none">{t("Null MITRE")}</option>
           </select>
           <select
             value={filters.mitre_mapping_method}
@@ -597,12 +659,12 @@ export function Dashboard() {
               setFilters({ ...filters, mitre_mapping_method: e.target.value })
             }
           >
-            <option value="">MITRE provenance: any</option>
-            <option value="EXACT_SOURCE_MAPPING">Exact source</option>
-            <option value="DERIVED_SUBTECHNIQUE">Derived sub-technique</option>
-            <option value="INFERRED_MAPPING">Inferred</option>
-            <option value="SOURCE_MAPPING_OVERRIDDEN">Source overridden</option>
-            <option value="NO_SUPPORTED_MAPPING">No mapping</option>
+            <option value="">{t("MITRE provenance: any")}</option>
+            <option value="EXACT_SOURCE_MAPPING">{t("Exact source")}</option>
+            <option value="DERIVED_SUBTECHNIQUE">{t("Derived sub-technique")}</option>
+            <option value="INFERRED_MAPPING">{t("Inferred")}</option>
+            <option value="SOURCE_MAPPING_OVERRIDDEN">{t("Source overridden")}</option>
+            <option value="NO_SUPPORTED_MAPPING">{t("No mapping")}</option>
           </select>
           <select
             value={filters.product_status}
@@ -610,11 +672,11 @@ export function Dashboard() {
               setFilters({ ...filters, product_status: e.target.value })
             }
           >
-            <option value="">Product status: any</option>
-            <option value="NOT_EVALUATED">Not evaluated</option>
-            <option value="APPROVED_FOR_PRODUCT">Approved</option>
-            <option value="REJECTED_FOR_PRODUCT">Rejected</option>
-            <option value="ALREADY_INTEGRATED">Integrated</option>
+            <option value="">{t("Product status: any")}</option>
+            <option value="NOT_EVALUATED">{t("Not evaluated")}</option>
+            <option value="APPROVED_FOR_PRODUCT">{t("Approved")}</option>
+            <option value="REJECTED_FOR_PRODUCT">{t("Rejected")}</option>
+            <option value="ALREADY_INTEGRATED">{t("Integrated")}</option>
           </select>
           <select
             value={filters.sort}
@@ -664,23 +726,23 @@ export function Dashboard() {
                     key={rule.id}
                     onClick={() => navigate(`/rules/${rule.sid}`)}
                   >
-                    <td className="mono sid-cell">
+                    <td className="mono sid-cell" data-label="SID">
                       <span>{rule.sid}</span>
                       <small>rev {rule.rev}</small>
                       <CompareSelectButton sid={rule.sid} compact />
                     </td>
-                    <td className="message">
+                    <td className="message" data-label={t("Message")}>
                       {rule.msg || "—"}
                       <small>
                         {rule.protocol} · {rule.classtype || "unclassified"}
                       </small>
                     </td>
-                    <td>
+                    <td data-label={t("Entity")}>
                       {c?.detected_entity || (
                         <span className="dim">Not assigned</span>
                       )}
                     </td>
-                    <td>
+                    <td data-label={t("Families")}>
                       <div
                         className="family-chips-inline"
                         aria-label="Detection families"
@@ -699,12 +761,12 @@ export function Dashboard() {
                         <AddToRulePack sid={rule.sid} compact />
                       </div>
                     </td>
-                    <td>
+                    <td data-label={t("Behavior")}>
                       {c?.detected_behavior || (
                         <span className="dim">Not assigned</span>
                       )}
                     </td>
-                    <td>
+                    <td data-label={t("Category")}>
                       {c?.category ? (
                         label(c.category)
                       ) : (
@@ -714,14 +776,14 @@ export function Dashboard() {
                         {c?.subcategory ? label(c.subcategory) : ""}
                       </small>
                     </td>
-                    <td className="mono">
+                    <td className="mono" data-label="MITRE">
                       {c?.mitre_technique_id || <span className="dim">—</span>}
                       <small>{c?.mitre_technique}</small>
                     </td>
-                    <td>
+                    <td data-label={t("Decision checks")}>
                       <DecisionAssessment classification={c} compact />
                     </td>
-                    <td>
+                    <td data-label={t("Status")}>
                       <StatusBadge status={c?.classification_status} />
                       <small
                         className={`review-label ${c ? c.manual_review?.status?.toLowerCase() || "unreviewed" : "not-classified"}`}

@@ -123,7 +123,7 @@ def list_rules(
         category, subcategory, detected_entity, mitre_technique_id, entity_type, status,
         mitre_tactic, kill_chain_phase, inspection_batch, provider, model_name,
         classifier_version, inference_mode, run_id, mitre_mapping_method,
-    )) or manual_review_status or entity_status == "has" or mitre_status == "has"
+    )) or manual_review_status or entity_status in {"has", "none"} or mitre_status in {"has", "none"}
     latest_join = stmt.join if classification_filter else stmt.outerjoin
     stmt = latest_join(latest_ids, latest_ids.c.rule_id == Rule.id)
     stmt = (stmt

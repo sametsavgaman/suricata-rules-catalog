@@ -1175,6 +1175,12 @@ function translatedValue(key: string, locale: Locale) {
 }
 
 export const valueLabels: Record<string, string> = {
+  "Attack Tool": "Saldırı aracı",
+  "Remote Access Tool": "Uzaktan erişim aracı",
+  Product: "Ürün",
+  Software: "Yazılım",
+  Protocol: "Protokol",
+  Unknown: "Bilinmiyor",
   Reconnaissance: "Keşif",
   Discovery: "Keşif",
   Malware: "Kötü Amaçlı Yazılım",

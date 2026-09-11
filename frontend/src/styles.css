@@ -177,3 +177,41 @@
 .rule-decision-card .decision-card-actions{position:relative;z-index:20;overflow:visible}
 .rule-decision-card .decision-card-actions .pack-picker{position:relative;z-index:30}
 .rule-decision-card .decision-card-actions .pack-picker-menu{z-index:100;right:auto;left:0;top:calc(100% + 8px);width:290px}
+/* Keep the Rule Explorer usable when a laptop or browser side panel leaves
+   less than the desktop table width. Long evidence is wrapped instead of
+   forcing the right-hand action/status columns off-screen. */
+@media(max-width:1200px){
+  .rules-page .table-wrap{overflow:visible}
+  .rules-page table{width:100%;min-width:0;table-layout:fixed}
+  .rules-page th,.rules-page td{padding:11px 8px;font-size:11px;overflow-wrap:anywhere;word-break:break-word}
+  .rules-page th:nth-child(1),.rules-page td:nth-child(1){width:8%}
+  .rules-page th:nth-child(2),.rules-page td:nth-child(2){width:18%}
+  .rules-page th:nth-child(3),.rules-page td:nth-child(3){width:10%}
+  .rules-page th:nth-child(4),.rules-page td:nth-child(4){width:13%}
+  .rules-page th:nth-child(5),.rules-page td:nth-child(5){width:14%}
+  .rules-page th:nth-child(6),.rules-page td:nth-child(6){width:11%}
+  .rules-page th:nth-child(7),.rules-page td:nth-child(7){width:10%}
+  .rules-page th:nth-child(8),.rules-page td:nth-child(8){width:9%}
+  .rules-page th:nth-child(9),.rules-page td:nth-child(9){width:7%}
+  .rules-page .message,.rules-page .family-chips-inline{min-width:0;max-width:none}
+  .rules-page .family-chips-inline{gap:3px}
+  .rules-page .family-chips-inline span{font-size:9px;padding:3px 5px}
+  .rules-page .pack-picker-trigger{max-width:100%;overflow:hidden;text-overflow:ellipsis}
+  .rules-page .existing-rule-toggle{white-space:normal;text-align:left}
+}
+@media(max-width:760px){
+  .rules-page .table-wrap{overflow:visible}
+  .rules-page table,.rules-page tbody{display:block}
+  .rules-page table{min-width:0}
+  .rules-page thead{display:none}
+  .rules-page tbody{display:grid;gap:12px}
+  .rules-page tbody tr{display:block;transform:none;border:1px solid var(--line);border-radius:9px;background:linear-gradient(145deg,rgba(18,31,35,.98),rgba(11,19,23,.98));overflow:visible}
+  .rules-page tbody tr:hover{transform:none}
+  .rules-page tbody td{display:block;width:auto!important;padding:10px 12px;border-top:1px solid var(--line-soft);font-size:12px}
+  .rules-page tbody td:first-child{border-top:0}
+  .rules-page tbody td::before{content:attr(data-label);display:block;margin-bottom:5px;color:var(--muted);font:600 9px "IBM Plex Mono";letter-spacing:.08em;text-transform:uppercase}
+  .rules-page tbody td>*{max-width:100%;overflow-wrap:anywhere}
+  .rules-page .family-chips-inline{display:flex;min-width:0}
+  .rules-page .family-pack-action{margin-top:8px}
+  .rules-page .family-pack-action .pack-picker-menu{max-width:calc(100vw - 72px)}
+}

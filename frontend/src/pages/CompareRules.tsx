@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { getRule } from "../services/api";
 import { AddToRulePack } from "../components/AddToRulePack";
-import { clearCompareSelection, setCompareSelection } from "../services/compareSelection";
+import { COMPARE_SELECTION_EVENT, clearCompareSelection, loadCompareSelection, setCompareSelection } from "../services/compareSelection";
 import { useI18n } from "../i18n";
 import type { Rule } from "../types";
 
@@ -12,7 +12,8 @@ function loadRecent(): string[][] { try { const value = JSON.parse(localStorage.
 export function CompareRules() {
   const { t } = useI18n();
   const [params, setParams] = useSearchParams();
-  const initial = (params.get("sids") || "").split(",").filter(Boolean).slice(0, 4);
+  const urlSids = (params.get("sids") || "").split(",").filter(Boolean).slice(0, 4);
+  const initial = urlSids.length ? urlSids : loadCompareSelection().map(String).slice(0, 4);
   const [inputs, setInputs] = useState<string[]>(initial.length ? [...initial, ...Array(Math.max(0, 2 - initial.length)).fill("")] : ["", ""]);
   const [rules, setRules] = useState<Rule[]>([]);
   const [recent, setRecent] = useState<string[][]>(() => loadRecent());
@@ -25,6 +26,7 @@ export function CompareRules() {
     const sids = [...new Set(source.map((value) => value.trim()).filter(Boolean))].slice(0, 4);
     if (sids.length < 2) { setError(t("Enter at least two SIDs, or open Compare from a rule row.")); return; }
     const requestId = ++compareRequest.current;
+    autoComparedKey.current = sids.join(",");
     setCompareSelection(sids.map(Number));
     setLoading(true); setError("");
     try { const values = await Promise.all(sids.map(getRule)); if (requestId !== compareRequest.current) return; setRules(values); setInputs([...sids, ...Array(Math.max(0, 2 - sids.length)).fill("")]); if (updateUrl) { autoComparedKey.current = sids.join(","); setParams({ sids: sids.join(",") }); } const next = [sids, ...recent.filter((item) => item.join(",") !== sids.join(","))].slice(0, 5); setRecent(next); localStorage.setItem(RECENT_KEY, JSON.stringify(next)); }
@@ -38,6 +40,32 @@ export function CompareRules() {
       void compare(initial, false);
     }
     else if (initial.length === 1) setInputs([initial[0], ""]);
+  }, [params.toString()]);
+  useEffect(() => {
+    const syncBasket = () => {
+      const selected = loadCompareSelection().map(String).slice(0, 4);
+      const selectedKey = selected.join(",");
+      if (selectedKey !== initial.join(",")) {
+        setParams(selected.length ? { sids: selectedKey } : {}, { replace: true });
+      }
+      if (selected.length >= 2) {
+        if (selectedKey === autoComparedKey.current) return;
+        autoComparedKey.current = selectedKey;
+        setInputs([...selected, ...Array(Math.max(0, 2 - selected.length)).fill("")]);
+        void compare(selected, false);
+      } else {
+        autoComparedKey.current = "";
+        setInputs(selected.length ? [selected[0], ""] : ["", ""]);
+        setRules([]);
+        setError("");
+      }
+    };
+    window.addEventListener(COMPARE_SELECTION_EVENT, syncBasket);
+    window.addEventListener("storage", syncBasket);
+    return () => {
+      window.removeEventListener(COMPARE_SELECTION_EVENT, syncBasket);
+      window.removeEventListener("storage", syncBasket);
+    };
   }, [params.toString()]);
   const setInput = (index: number, value: string) => setInputs((current) => current.map((item, itemIndex) => itemIndex === index ? value : item));
   const useRecent = (sids: string[]) => setInputs([...sids, ...Array(Math.max(0, 2 - sids.length)).fill("")]);

@@ -128,7 +128,8 @@ export function getModelStatus(force = false) {
   const now = Date.now();
   if (!force && modelStatusCache && now - modelStatusCache.at < 60_000) return Promise.resolve(modelStatusCache.value);
   if (!force && modelStatusRequest) return modelStatusRequest;
-  modelStatusRequest = request<{providers: Record<string, ProviderHealth>; checked_at: number}>("/model-lab/status")
+  const path = force ? `/model-lab/status?fresh=${now}` : "/model-lab/status";
+  modelStatusRequest = request<{providers: Record<string, ProviderHealth>; checked_at: number}>(path)
     .then(value => { modelStatusCache = { value, at: Date.now() }; return value; })
     .finally(() => { modelStatusRequest = null; });
   return modelStatusRequest;

@@ -50,37 +50,36 @@ export function ScenarioCoverage() {
     let active = true;
     setHealthBusy(true);
 
-    // Configuration is a local, fast read. Use it to render configured API
-    // providers immediately, then refresh the live connection result in the
-    // background. The previous flow kept every provider button in “Checking”
-    // until all live model probes (including unreachable local Ollama) ended.
+    // Configuration supplies model labels only. A configured key/model is not
+    // proof that the provider is reachable, so keep every provider in
+    // “Checking” until the authoritative live probe completes.
     const refreshLiveStatus = () => {
-      void getModelStatus()
+      void getModelStatus(true)
         .then((status) => {
-          if (active) setProviderHealth(status.providers || {});
+          if (active) {
+            setProviderHealth(status.providers || {});
+            setHealthBusy(false);
+          }
         })
-        .catch(() => undefined);
+        .catch(() => {
+          if (active) {
+            setProviderHealth({});
+            setHealthBusy(false);
+          }
+        });
     };
     void getModelConfig()
       .then((config) => {
         if (!active) return;
         setModelConfig(config);
-        const configured: Record<string, ProviderHealth> = {};
-        for (const name of ["openai", "gemini", "claude"]) {
-          if (config[name]?.api_key_configured && config[name]?.model) {
-            configured[name] = {
-              ok: true,
-              provider: name,
-              model: config[name].model,
-            };
-          }
-        }
-        setProviderHealth(configured);
-        setHealthBusy(false);
+        setProviderHealth({});
         refreshLiveStatus();
       })
       .catch(() => {
-        if (active) setHealthBusy(false);
+        if (active) {
+          setProviderHealth({});
+          setHealthBusy(true);
+        }
         refreshLiveStatus();
       });
     return () => {
