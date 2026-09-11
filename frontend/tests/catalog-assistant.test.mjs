@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { createServer } from 'vite';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -12,6 +13,7 @@ try {
   ({DetectionFamilies} = await server.ssrLoadModule('/src/pages/DetectionFamilies.tsx'));
 } finally { await server.close(); }
 const render = (component, props) => renderToStaticMarkup(React.createElement(MemoryRouter, {}, React.createElement(component, props)));
+const familyPageSource = readFileSync(new URL('../src/pages/DetectionFamilies.tsx', import.meta.url), 'utf8');
 const result = {status:'RESULTS', answer:'1 kayıt bulundu', filters:{category:'Malware'}, total:1, items:[{
   sid:123, rev:2, classification_id:42, message:'<img src=x onerror=alert(1)>', category:'Malware', subcategory:null,
   entity:null, mitre_id:null, mitre_tactic:null, provider:'gemini', model:'model-test', product_status:'NOT_EVALUATED',
@@ -54,4 +56,8 @@ test('Detection Families page exposes useful filters and conservative coverage l
   assert.ok(html.includes('MITRE technique'));
   assert.ok(html.includes('Product status: any'));
   assert.ok(html.includes('conservative coverage'));
+});
+test('Detection Families filters submit canonical values instead of translated labels', () => {
+  assert.match(familyPageSource, /key=\{x\.value\} value=\{x\.value\}/);
+  assert.match(familyPageSource, /key=\{x\} value=\{x\}/);
 });
