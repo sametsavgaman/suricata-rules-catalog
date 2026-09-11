@@ -19,6 +19,9 @@ import type { Rule } from "../types";
 import { useI18n } from "../i18n";
 
 const PAGE_SIZE = 40;
+const MAX_RULESET_FILES = 10;
+const MAX_RULESET_FILE_BYTES = 25 * 1024 * 1024;
+const MAX_RULESET_TOTAL_BYTES = 50 * 1024 * 1024;
 
 export function ExistingRules() {
   const { t, label } = useI18n();
@@ -99,6 +102,25 @@ export function ExistingRules() {
   async function inspectFiles(files: File[]) {
     if (!files.length) return;
     if (fileInput.current) fileInput.current.value = "";
+    const invalidExtension = files.find((file) => !file.name.toLowerCase().endsWith(".rules"));
+    const oversized = files.find((file) => file.size > MAX_RULESET_FILE_BYTES);
+    const totalBytes = files.reduce((sum, file) => sum + file.size, 0);
+    const clientError = files.length > MAX_RULESET_FILES
+      ? t("Select no more than 10 .rules files at once.")
+      : invalidExtension
+        ? t("Only UTF-8 .rules files are accepted. ZIP, JSON, PDF, executable and generic text files are rejected.")
+        : oversized
+          ? t("Each ruleset file must be 25 MB or smaller.")
+          : totalBytes > MAX_RULESET_TOTAL_BYTES
+            ? t("The combined upload must be 50 MB or smaller.")
+            : "";
+    if (clientError) {
+      setSelectedFiles([]);
+      setPreview(null);
+      setImportResult(null);
+      setUploadError(clientError);
+      return;
+    }
     setSelectedFiles(files);
     setPreview(null);
     setImportResult(null);
@@ -173,6 +195,8 @@ export function ExistingRules() {
   const classified = rules.filter((rule) => Boolean(rule.classification)).length;
   const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
   const selectedNames = selectedFiles.map((file) => file.name).join(", ");
+  const previewErrors = preview?.files.flatMap((file) => file.errors.map((message) => `${file.filename}: ${message}`)) || [];
+  const importErrors = importResult?.files.flatMap((file) => file.errors.map((message) => `${file.filename}: ${message}`)) || [];
 
   return <div className="existing-rules-page">
     <header className="existing-rules-hero">
@@ -188,12 +212,22 @@ export function ExistingRules() {
           <span className="workbench-index">01</span>
           <div><div className="section-kicker">{t("IMPORT PRODUCT BASELINE")}</div><h2>{t("Upload your current ruleset")}</h2></div>
         </div>
+        <div className="ruleset-format-guide">
+          <div className="ruleset-format-title"><strong>{t("Accepted ruleset format")}</strong><span>{t("Validated before any database write")}</span></div>
+          <div className="ruleset-format-grid">
+            <div><b>.rules · UTF-8</b><span>{t("Plain-text Suricata rules only. Up to 10 files, 25 MB each and 50 MB combined.")}</span></div>
+            <div><b>SID · REV</b><span>{t("Every active rule needs a numeric SID. REV is recommended and defaults to 1 when omitted.")}</span></div>
+            <div><b>HEADER → OPTIONS</b><span>{t("Use the standard seven-field Suricata header followed by a parenthesized option block.")}</span></div>
+          </div>
+          <pre><code>{'alert tcp $HOME_NET any -> $EXTERNAL_NET 443 (msg:"Example TLS detection"; flow:established,to_server; sid:9000001; rev:1;)'}</code></pre>
+          <details><summary>{t("Formatting and safety notes")}</summary><ul><li>{t("One rule per line is simplest; multiline rules are accepted when the final option block ends with ).")}</li><li>{t("Blank lines and lines beginning with # are ignored.")}</li><li>{t("ZIP archives, JSON, PDF, executables, binary data and renamed non-rule files are rejected.")}</li><li>{t("The server also limits each file to 100,000 rules and each individual rule to 64 KB.")}</li><li>{t("Preview parses and validates the files without changing the catalogue. Import becomes available only when valid rules are found.")}</li></ul></details>
+        </div>
         <label
           className={`ruleset-dropzone ${uploading ? "busy" : ""}`}
           onDragOver={(event) => event.preventDefault()}
           onDrop={(event) => { event.preventDefault(); void inspectFiles(Array.from(event.dataTransfer.files)); }}
         >
-          <input ref={fileInput} type="file" accept=".rules,.txt,text/plain" multiple
+          <input ref={fileInput} type="file" accept=".rules" multiple
             onChange={(event) => void inspectFiles(Array.from(event.target.files || []))} />
           <span className="dropzone-mark" aria-hidden="true">⇧</span>
           <strong>{uploading === "preview" ? t("Parsing ruleset…") : t("Drop .rules files here")}</strong>
@@ -215,6 +249,7 @@ export function ExistingRules() {
             <div><b>{preview.reusable_classifications.toLocaleString()}</b><span>{t("Existing Qwen classifications will be reused")}</span></div>
             <div className="gemini"><b>{preview.gemini_candidates.toLocaleString()}</b><span>{t("New or unclassified rules will use Gemini")}</span></div>
           </div>
+          {previewErrors.length > 0 && <div className="ruleset-validation-errors" role="alert"><strong>{t("Rejected content")}</strong><ul>{previewErrors.slice(0, 12).map((message, index) => <li key={`${index}:${message}`}>{message}</li>)}</ul>{previewErrors.length > 12 && <small>{previewErrors.length - 12} {t("additional validation errors were hidden")}</small>}</div>}
           <p>{t("New rules and revisions will be added to the catalogue. Every successfully parsed rule will be marked Already Integrated with its source filename.")}</p>
           {preview.gemini_candidates > 0 && <label className="gemini-consent">
             <input type="checkbox" checked={geminiConsent} onChange={(event) => setGeminiConsent(event.target.checked)} />
@@ -227,6 +262,7 @@ export function ExistingRules() {
         {importResult && <div className="ruleset-message success" aria-live="polite">
           <strong>{t("Product baseline updated")}</strong>
           <span>{importResult.marked_existing.toLocaleString()} {t("rules marked existing")} · {importResult.reused_classifications.toLocaleString()} {t("Qwen results reused")} · {importResult.queued_for_gemini.toLocaleString()} {t("queued for Gemini")}</span>
+          {importErrors.length > 0 && <small>{importErrors.length} {t("items were rejected safely; inspect the files and preview again.")}</small>}
         </div>}
 
         {batch && <div className={`gemini-batch ${batch.status.toLowerCase()}`} aria-live="polite">

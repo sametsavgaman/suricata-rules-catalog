@@ -1,4 +1,6 @@
 import re
+from dataclasses import dataclass
+from pathlib import PurePosixPath, PureWindowsPath
 from uuid import uuid4
 
 from fastapi import APIRouter, BackgroundTasks, Depends, File, HTTPException, Query, UploadFile
@@ -23,6 +25,20 @@ from app.config import get_settings
 
 router = APIRouter(prefix="/rules", tags=["rules"])
 MAX_BASELINE_UPLOAD_BYTES = 25 * 1024 * 1024
+MAX_BASELINE_TOTAL_BYTES = 50 * 1024 * 1024
+MAX_BASELINE_FILES = 10
+MAX_BASELINE_RULES_PER_FILE = 100_000
+MAX_BASELINE_RULE_BYTES = 64 * 1024
+MAX_BASELINE_PARSE_ERRORS = 100
+BASELINE_ALLOWED_CONTENT_TYPES = {"", "text/plain", "application/octet-stream", "application/x-suricata-rules"}
+
+
+@dataclass(frozen=True)
+class PreparedRulesetUpload:
+    filename: str
+    rules: list[str]
+    errors: list[str]
+    size: int
 
 
 @router.get("", response_model=RuleListResponse)
@@ -159,28 +175,87 @@ def list_rules(
     )
 
 
-async def _read_ruleset_upload(upload: UploadFile) -> tuple[list[str], list[str]]:
-    errors: list[str] = []
+def _validated_ruleset_filename(upload: UploadFile) -> tuple[str | None, str | None]:
+    filename = (upload.filename or "").strip()
+    if not filename or len(filename) > 128 or any(ord(char) < 32 for char in filename):
+        return None, "Filename is missing, too long, or contains control characters"
+    if PurePosixPath(filename).name != filename or PureWindowsPath(filename).name != filename:
+        return None, "Filename must not contain a path"
+    if not filename.casefold().endswith(".rules"):
+        return None, "Only .rules files are accepted; ZIP, JSON, PDF, executable, and generic text files are rejected"
+    return filename, None
+
+
+async def _read_ruleset_upload(upload: UploadFile) -> PreparedRulesetUpload:
+    filename, filename_error = _validated_ruleset_filename(upload)
+    display_name = filename or "rejected-upload.rules"
+    size_hint = int(getattr(upload, "size", 0) or 0)
+    if filename_error:
+        await upload.close()
+        return PreparedRulesetUpload(display_name, [], [filename_error], size_hint)
+    if size_hint > MAX_BASELINE_UPLOAD_BYTES:
+        await upload.close()
+        return PreparedRulesetUpload(display_name, [], ["File exceeds the 25 MB ruleset limit"], size_hint)
+    content_type = (upload.content_type or "").split(";", 1)[0].strip().casefold()
+    if content_type not in BASELINE_ALLOWED_CONTENT_TYPES:
+        await upload.close()
+        return PreparedRulesetUpload(display_name, [], [f"Unsupported content type: {content_type or 'unknown'}"], size_hint)
+    payload = bytearray()
     try:
-        payload = await upload.read()
-        if len(payload) > MAX_BASELINE_UPLOAD_BYTES:
-            return [], ["File exceeds the 25 MB ruleset limit"]
-        loaded = RuleLoader().load_text(payload.decode("utf-8", errors="replace"))
-        return loaded.rules, errors
-    except Exception as exc:
-        return [], [str(exc)]
+        while chunk := await upload.read(64 * 1024):
+            payload.extend(chunk)
+            if len(payload) > MAX_BASELINE_UPLOAD_BYTES:
+                return PreparedRulesetUpload(display_name, [], ["File exceeds the 25 MB ruleset limit"], len(payload))
+        try:
+            text = bytes(payload).decode("utf-8-sig", errors="strict")
+        except UnicodeDecodeError:
+            return PreparedRulesetUpload(display_name, [], ["Ruleset must be valid UTF-8 plain text"], len(payload))
+        if "\x00" in text or any(ord(char) < 32 and char not in "\r\n\t" for char in text):
+            return PreparedRulesetUpload(display_name, [], ["Binary data or unsupported control characters detected"], len(payload))
+        try:
+            loaded = RuleLoader().load_text(text)
+        except ValueError:
+            return PreparedRulesetUpload(display_name, [], ["Ruleset contains an incomplete multiline rule"], len(payload))
+        if not loaded.rules:
+            return PreparedRulesetUpload(display_name, [], ["No active Suricata rules were found"], len(payload))
+        if len(loaded.rules) > MAX_BASELINE_RULES_PER_FILE:
+            return PreparedRulesetUpload(display_name, [], ["File exceeds the 100,000-rule safety limit"], len(payload))
+        if any(len(rule.encode("utf-8")) > MAX_BASELINE_RULE_BYTES for rule in loaded.rules):
+            return PreparedRulesetUpload(display_name, [], ["A rule exceeds the 64 KB per-rule safety limit"], len(payload))
+        return PreparedRulesetUpload(display_name, loaded.rules, [], len(payload))
+    except Exception:
+        return PreparedRulesetUpload(display_name, [], ["Ruleset could not be read safely"], len(payload))
+    finally:
+        await upload.close()
+
+
+async def _prepare_ruleset_uploads(files: list[UploadFile]) -> list[PreparedRulesetUpload]:
+    if not files:
+        raise HTTPException(422, "At least one .rules file is required")
+    if len(files) > MAX_BASELINE_FILES:
+        raise HTTPException(413, f"A maximum of {MAX_BASELINE_FILES} files can be inspected at once")
+    prepared: list[PreparedRulesetUpload] = []
+    total_bytes = 0
+    for upload in files:
+        item = await _read_ruleset_upload(upload)
+        total_bytes += item.size
+        if total_bytes > MAX_BASELINE_TOTAL_BYTES:
+            raise HTTPException(413, "Combined upload exceeds the 50 MB safety limit")
+        prepared.append(item)
+    return prepared
 
 
 @router.post("/existing/preview", response_model=ExistingRulesetPreviewResponse)
 async def preview_existing_ruleset(files: list[UploadFile] = File(...), db: Session = Depends(get_db)):
     parser = SuricataRuleParser()
+    uploads = await _prepare_ruleset_uploads(files)
     results: list[ExistingRulesetPreviewFile] = []
     totals = {"discovered": 0, "exact_matches": 0, "new_catalog_rules": 0,
               "revision_updates": 0, "reusable_classifications": 0,
               "gemini_candidates": 0, "duplicates": 0, "failed": 0}
     seen: set[tuple[int, int]] = set()
-    for upload in files:
-        raw_rules, errors = await _read_ruleset_upload(upload)
+    for upload in uploads:
+        raw_rules, errors = upload.rules, list(upload.errors)
         exact_matches = new_catalog_rules = revision_updates = duplicates = 0
         reusable_classifications = gemini_candidates = 0
         for index, raw in enumerate(raw_rules, start=1):
@@ -208,9 +283,13 @@ async def preview_existing_ruleset(files: list[UploadFile] = File(...), db: Sess
                     if db.scalar(select(Rule.id).where(Rule.sid == parsed.sid).limit(1)) is not None:
                         revision_updates += 1
             except Exception as exc:
-                errors.append(f"rule {index}: {exc}")
+                if len(errors) < MAX_BASELINE_PARSE_ERRORS:
+                    errors.append(f"rule {index}: {exc}")
+                if len(errors) >= MAX_BASELINE_PARSE_ERRORS:
+                    errors.append(f"Parsing stopped after {MAX_BASELINE_PARSE_ERRORS} errors")
+                    break
         item = ExistingRulesetPreviewFile(
-            filename=upload.filename or "product.rules", discovered=len(raw_rules),
+            filename=upload.filename, discovered=len(raw_rules),
             exact_matches=exact_matches, new_catalog_rules=new_catalog_rules,
             revision_updates=revision_updates, reusable_classifications=reusable_classifications,
             gemini_candidates=gemini_candidates, duplicates=duplicates, errors=errors,
@@ -230,16 +309,17 @@ async def preview_existing_ruleset(files: list[UploadFile] = File(...), db: Sess
 @router.post("/existing/import", response_model=ExistingRulesetImportResponse)
 async def import_existing_ruleset(background_tasks: BackgroundTasks, files: list[UploadFile] = File(...), db: Session = Depends(get_db)):
     parser, repository = SuricataRuleParser(), RuleRepository(db)
+    uploads = await _prepare_ruleset_uploads(files)
     results: list[ExistingRulesetImportFile] = []
     totals = {"discovered": 0, "matched_existing": 0, "imported": 0,
               "marked_existing": 0, "already_marked": 0, "duplicates": 0, "failed": 0}
     seen: set[tuple[int, int]] = set()
     imported_rules: dict[int, Rule] = {}
     filenames: list[str] = []
-    for upload in files:
-        raw_rules, errors = await _read_ruleset_upload(upload)
+    for upload in uploads:
+        raw_rules, errors = upload.rules, list(upload.errors)
         matched_existing = imported = marked_existing = already_marked = duplicates = 0
-        filename = upload.filename or "product.rules"
+        filename = upload.filename
         filenames.append(filename)
         for index, raw in enumerate(raw_rules, start=1):
             try:
@@ -271,7 +351,11 @@ async def import_existing_ruleset(background_tasks: BackgroundTasks, files: list
                     ))
                     marked_existing += 1
             except Exception as exc:
-                errors.append(f"rule {index}: {exc}")
+                if len(errors) < MAX_BASELINE_PARSE_ERRORS:
+                    errors.append(f"rule {index}: {exc}")
+                if len(errors) >= MAX_BASELINE_PARSE_ERRORS:
+                    errors.append(f"Parsing stopped after {MAX_BASELINE_PARSE_ERRORS} errors")
+                    break
         item = ExistingRulesetImportFile(
             filename=filename, discovered=len(raw_rules), matched_existing=matched_existing,
             imported=imported, marked_existing=marked_existing, already_marked=already_marked,
@@ -582,29 +666,28 @@ def save_overrides(sid: int, payload: ClassificationOverrideRequest, db: Session
 
 @router.post("/import", response_model=ImportResponse)
 async def import_rules(files: list[UploadFile] = File(...), db: Session = Depends(get_db)):
-    loader, parser, repository = RuleLoader(), SuricataRuleParser(), RuleRepository(db)
+    parser, repository = SuricataRuleParser(), RuleRepository(db)
+    uploads = await _prepare_ruleset_uploads(files)
     results: list[ImportFileResult] = []
     total_imported = total_skipped = total_failed = 0
-    for upload in files:
-        errors: list[str] = []
+    for upload in uploads:
+        errors = list(upload.errors)
         imported = skipped = 0
-        try:
-            text = (await upload.read()).decode("utf-8", errors="replace")
-            loaded = loader.load_text(text)
-        except Exception as exc:
-            loaded = None
-            errors.append(str(exc))
-        if loaded:
-            for index, raw in enumerate(loaded.rules, start=1):
-                try:
-                    _, created = repository.upsert(parser.parse(raw), upload.filename)
-                    imported += int(created)
-                    skipped += int(not created)
-                except Exception as exc:
+        raw_rules = upload.rules
+        for index, raw in enumerate(raw_rules, start=1):
+            try:
+                _, created = repository.upsert(parser.parse(raw), upload.filename)
+                imported += int(created)
+                skipped += int(not created)
+            except Exception as exc:
+                if len(errors) < MAX_BASELINE_PARSE_ERRORS:
                     errors.append(f"rule {index}: {exc}")
+                if len(errors) >= MAX_BASELINE_PARSE_ERRORS:
+                    errors.append(f"Parsing stopped after {MAX_BASELINE_PARSE_ERRORS} errors")
+                    break
         db.commit()
         total_imported += imported
         total_skipped += skipped
         total_failed += len(errors)
-        results.append(ImportFileResult(filename=upload.filename or "upload.rules", discovered=len(loaded.rules) if loaded else 0, imported=imported, skipped=skipped, errors=errors))
+        results.append(ImportFileResult(filename=upload.filename, discovered=len(raw_rules), imported=imported, skipped=skipped, errors=errors))
     return ImportResponse(files=results, imported=total_imported, skipped=total_skipped, failed=total_failed)

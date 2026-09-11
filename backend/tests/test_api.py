@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import sessionmaker
@@ -173,6 +174,48 @@ def test_product_ruleset_preview_and_import_marks_existing_without_ai():
         assert repeated.json()["imported"] == 0
         assert repeated.json()["marked_existing"] == 0
         assert repeated.json()["already_marked"] == 20
+
+
+@pytest.mark.parametrize(
+    ("filename", "payload", "content_type", "expected"),
+    [
+        ("notes.txt", b"not a ruleset", "text/plain", "Only .rules files are accepted"),
+        ("renamed.rules", b"\x00\x01\x02binary", "application/octet-stream", "Binary data"),
+        ("photo.rules", b"not really an image", "image/jpeg", "Unsupported content type"),
+        ("invalid.rules", b"\xff\xfe\xfd", "text/plain", "valid UTF-8"),
+        ("empty.rules", b"# comments only\n", "text/plain", "No active Suricata rules"),
+        ("../escaped.rules", b'alert tcp any any -> any any (sid:1;)', "text/plain", "must not contain a path"),
+    ],
+)
+def test_ruleset_upload_rejects_unrelated_or_unsafe_files_without_database_writes(filename, payload, content_type, expected):
+    Base.metadata.drop_all(engine)
+    Base.metadata.create_all(engine)
+    with TestClient(app) as client:
+        preview = client.post("/api/rules/existing/preview", files=[("files", (filename, payload, content_type))])
+        assert preview.status_code == 200, preview.text
+        body = preview.json()
+        assert body["discovered"] == 0 and body["new_catalog_rules"] == 0
+        assert expected in " ".join(body["files"][0]["errors"])
+
+        imported = client.post("/api/rules/existing/import", files=[("files", (filename, payload, content_type))])
+        assert imported.status_code == 200, imported.text
+        assert imported.json()["imported"] == 0
+        assert client.get("/api/rules", params={"limit": 1}).json()["total"] == 0
+
+
+def test_ruleset_upload_enforces_file_count_and_streamed_size_limits(monkeypatch):
+    Base.metadata.drop_all(engine)
+    Base.metadata.create_all(engine)
+    valid = b'alert tcp any any -> any any (msg:"safe"; sid:9991001; rev:1;)'
+    with TestClient(app) as client:
+        too_many = [("files", (f"{index}.rules", valid, "text/plain")) for index in range(rules_api.MAX_BASELINE_FILES + 1)]
+        response = client.post("/api/rules/existing/preview", files=too_many)
+        assert response.status_code == 413
+
+        monkeypatch.setattr(rules_api, "MAX_BASELINE_UPLOAD_BYTES", 16)
+        response = client.post("/api/rules/existing/preview", files=[("files", ("large.rules", valid, "text/plain"))])
+        assert response.status_code == 200
+        assert "25 MB ruleset limit" in " ".join(response.json()["files"][0]["errors"])
 
 
 def test_product_rule_can_be_removed_from_existing_baseline_without_deleting_catalogue_record():
