@@ -8,6 +8,6 @@ export function createRulePack(name:string,sids:number[]=[]):StoredRulePack{cons
 export function updateRulePack(packId:string,changes:Partial<Pick<StoredRulePack,"name"|"sids">>){const packs=loadRulePacks().map(p=>p.id===packId?clean({...p,...changes,updatedAt:new Date().toISOString()}):p);saveRulePacks(packs);return packs.find(p=>p.id===packId)}
 export function addRuleToPack(packId:string,sid:number){const pack=loadRulePacks().find(p=>p.id===packId);if(pack)updateRulePack(packId,{sids:[...pack.sids,sid]})}
 export function removeRuleFromPack(packId:string,sid:number){const pack=loadRulePacks().find(p=>p.id===packId);if(pack)updateRulePack(packId,{sids:pack.sids.filter(x=>x!==sid)})}
-export function deleteRulePack(packId:string){const remaining=loadRulePacks().filter(p=>p.id!==packId);saveRulePacks(remaining);if(getActiveRulePackId()===packId)localStorage.setItem(ACTIVE_KEY,remaining[0]?.id||"");window.dispatchEvent(new Event("rule-pack-change"))}
-export function getActiveRulePackId(){return localStorage.getItem(ACTIVE_KEY)||loadRulePacks()[0]?.id||""}
+export function deleteRulePack(packId:string){const remaining=loadRulePacks().filter(p=>p.id!==packId);const activeId=localStorage.getItem(ACTIVE_KEY)||"";saveRulePacks(remaining);if(activeId===packId||!remaining.some(p=>p.id===activeId))localStorage.setItem(ACTIVE_KEY,remaining[0]?.id||"");window.dispatchEvent(new Event("rule-pack-change"))}
+export function getActiveRulePackId(){const packs=loadRulePacks(),stored=localStorage.getItem(ACTIVE_KEY)||"";return packs.some(p=>p.id===stored)?stored:packs[0]?.id||""}
 export function setActiveRulePack(packId:string){localStorage.setItem(ACTIVE_KEY,packId);window.dispatchEvent(new Event("rule-pack-change"))}

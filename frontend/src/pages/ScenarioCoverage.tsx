@@ -49,18 +49,39 @@ export function ScenarioCoverage() {
   useEffect(() => {
     let active = true;
     setHealthBusy(true);
+
+    // Configuration is a local, fast read. Use it to render configured API
+    // providers immediately, then refresh the live connection result in the
+    // background. The previous flow kept every provider button in “Checking”
+    // until all live model probes (including unreachable local Ollama) ended.
+    const refreshLiveStatus = () => {
+      void getModelStatus()
+        .then((status) => {
+          if (active) setProviderHealth(status.providers || {});
+        })
+        .catch(() => undefined);
+    };
     void getModelConfig()
       .then((config) => {
-        if (active) setModelConfig(config);
+        if (!active) return;
+        setModelConfig(config);
+        const configured: Record<string, ProviderHealth> = {};
+        for (const name of ["openai", "gemini", "claude"]) {
+          if (config[name]?.api_key_configured && config[name]?.model) {
+            configured[name] = {
+              ok: true,
+              provider: name,
+              model: config[name].model,
+            };
+          }
+        }
+        setProviderHealth(configured);
+        setHealthBusy(false);
+        refreshLiveStatus();
       })
-      .catch(() => undefined);
-    void getModelStatus()
-      .then((status) => {
-        if (active) setProviderHealth(status.providers || {});
-      })
-      .catch(() => undefined)
-      .finally(() => {
+      .catch(() => {
         if (active) setHealthBusy(false);
+        refreshLiveStatus();
       });
     return () => {
       active = false;
@@ -109,7 +130,10 @@ export function ScenarioCoverage() {
     if (question.length < 10 || activeAnalysis.current) return;
     const controller = new AbortController();
     activeAnalysis.current = controller;
-    const timeout = window.setTimeout(() => controller.abort(), 90_000);
+    // Provider planning plus the bounded local evidence pass can take longer
+    // on a large SQLite catalogue. Keep the request alive long enough for a
+    // valid result instead of presenting a misleading timeout error.
+    const timeout = window.setTimeout(() => controller.abort(), 180_000);
     setBusy(true);
     setError("");
     setResult(null);

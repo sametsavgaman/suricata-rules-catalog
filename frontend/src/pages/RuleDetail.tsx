@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { DecisionAssessment } from "../components/DecisionAssessment";
 import { RuleDecisionCard } from "../components/RuleDecisionCard";
 import { AddToRulePack } from "../components/AddToRulePack";
+import { CompareSelectButton } from "../components/CompareSelectButton";
 import { StatusBadge } from "../components/StatusBadge";
 import {
   classifyRule,
@@ -577,12 +578,7 @@ export function RuleDetail() {
         </div>
       )}
       <div className="detail-actions" style={{ marginBottom: 16 }}>
-        <Link
-          className="compare-detail-action"
-          to={`/catalog/compare?sids=${rule.sid}`}
-        >
-          {t("Compare")}
-        </Link>
+        <CompareSelectButton sid={rule.sid} />
         <label htmlFor="execution-provider">
           {t("Run classification with")}
         </label>

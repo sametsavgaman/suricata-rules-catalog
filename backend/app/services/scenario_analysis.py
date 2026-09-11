@@ -40,7 +40,10 @@ class ScenarioPlanStep(StrictModel):
 
 class ScenarioPlan(StrictModel):
     summary: str = Field(min_length=1, max_length=600)
-    steps: list[ScenarioPlanStep] = Field(min_length=1, max_length=10)
+    # Keep the evidence pass bounded. A long narrative does not become more
+    # useful when it is split into many near-duplicate steps; each step also
+    # triggers local catalogue work.
+    steps: list[ScenarioPlanStep] = Field(min_length=1, max_length=6)
     assumptions: list[str] = Field(default_factory=list, max_length=8)
 
 
@@ -77,7 +80,7 @@ class ScenarioAnalysis(StrictModel):
 
 
 SCENARIO_INSTRUCTION = """You are a cybersecurity detection analyst. Convert the customer scenario into ScenarioPlan JSON.
-Return only JSON matching the schema. Decompose the narrative into 1-10 observable attack steps.
+Return only JSON matching the schema. Decompose the narrative into 1-6 distinct observable attack steps.
 Use a MITRE ATT&CK technique ID only when the behavior clearly supports it; otherwise use null.
 Use short literal product/tool/behavior keywords that could occur in a Suricata rule message or classification.
 Use only the protocol enum values from the schema. Do not claim that a rule detects an attack, do not invent SIDs,
@@ -95,6 +98,8 @@ def _clean_schema(value):
 
 def _normalize_plan(raw: str) -> ScenarioPlan:
     value = json.loads(raw or "{}")
+    if isinstance(value, dict) and isinstance(value.get("steps"), list):
+        value["steps"] = value["steps"][:6]
     for step in value.get("steps", []) if isinstance(value, dict) else []:
         if isinstance(step, dict):
             if isinstance(step.get("technique_id"), str):
@@ -145,7 +150,7 @@ async def plan_scenario(question: str, settings, provider: Literal["gemini", "cl
 
 
 def _search(db: Session, filters: CatalogFilters, limit: int) -> CatalogAnswer:
-    return query_catalog(db, CatalogSearch(filters=filters, limit=limit, offset=0))
+    return query_catalog(db, CatalogSearch(filters=filters, limit=limit, offset=0), count_total=False)
 
 
 def evaluate_scenario(db: Session, plan: ScenarioPlan, model_name: str, provider: Literal["gemini", "claude", "openai"] = "gemini") -> ScenarioAnalysis:

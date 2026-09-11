@@ -54,11 +54,10 @@ test('Detection Families page exposes useful filters and conservative coverage l
   assert.ok(html.includes('Search detection families'));
   assert.ok(html.includes('MITRE tactic'));
   assert.ok(html.includes('MITRE technique'));
-  assert.ok(html.includes('Product status: any'));
+  assert.ok(!html.includes('Product status: any'));
   assert.ok(html.includes('conservative coverage'));
 });
 test('Detection Families filters submit canonical values instead of translated labels', () => {
   assert.match(familyPageSource, /key=\{x\.value\} value=\{x\.value\}/);
-  assert.match(familyPageSource, /key=\{x\} value=\{x\}/);
-  assert.match(familyPageSource, /<option key=\{x\} value=\{x\}>\{label\(x\)\}<\/option>/);
+  assert.doesNotMatch(familyPageSource, /url\.get\("product_status"\)|set\("product_status"|Family product status|Product status: any/);
 });

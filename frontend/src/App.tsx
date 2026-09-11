@@ -18,6 +18,7 @@ import { ExistingRules } from "./pages/ExistingRules";
 import { Welcome } from "./pages/Welcome";
 import { warmAppCache } from "./services/api";
 import { AuditLog } from "./pages/AuditLog";
+import { CompareTray } from "./components/CompareTray";
 function AppFrame() {
   const { t } = useI18n();
   const { pathname } = useLocation();
@@ -142,6 +143,7 @@ function AppFrame() {
         <Route path="/docs" element={<Documentation />} />
         <Route path="/audit-log" element={<AuditLog />} />
       </Routes>
+      <CompareTray />
     </main>
   );
 }

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import type { Rule } from "../types";
 import { AddToRulePack } from "./AddToRulePack";
+import { CompareSelectButton } from "./CompareSelectButton";
 import { useI18n } from "../i18n";
 
 type ProductState = { status: string; note: string | null } | null;
@@ -89,9 +90,7 @@ export function RuleDecisionCard({
         </small>
       </div>
       <div className="decision-card-actions">
-        <Link to={`/catalog/compare?sids=${rule.sid},`}>
-          {t("Compare this rule")}
-        </Link>
+        <CompareSelectButton sid={rule.sid} />
         <AddToRulePack sid={rule.sid} />
         <Link className="primary" to="/catalog/rule-packs">
           {t("Open pack builder")}

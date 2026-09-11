@@ -6,10 +6,11 @@ import {
   useRef,
   useState,
 } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { DecisionAssessment } from "../components/DecisionAssessment";
 import { StatusBadge } from "../components/StatusBadge";
 import { AddToRulePack } from "../components/AddToRulePack";
+import { CompareSelectButton } from "../components/CompareSelectButton";
 import {
   exportCatalogCsv,
   getCatalogStats,
@@ -175,6 +176,69 @@ export function Dashboard() {
     } catch (e) {
       setError(e instanceof Error ? e.message : "Export failed");
     }
+  };
+
+  const exportPdf = () => {
+    const safe = (value: unknown) => String(value ?? "")
+      .normalize("NFKD")
+      .replace(/[^\x20-\x7e]/g, "?")
+      .replace(/([\\()])/g, "\\$1");
+    const wrap = (value: string, width = 112) => {
+      const words = value.split(/\s+/);
+      const lines: string[] = [];
+      let current = "";
+      for (const word of words) {
+        if (!word) continue;
+        if ((current + " " + word).trim().length > width && current) {
+          lines.push(current);
+          current = word;
+        } else current = `${current} ${word}`.trim();
+      }
+      if (current) lines.push(current);
+      return lines.length ? lines : [""];
+    };
+    const lines = [
+      `Suricata Detection Catalog · displayed ${rules.length} of ${total} matching rules · page ${page}`,
+      `Generated ${new Date().toLocaleString("en-US")}`,
+      ...rules.flatMap((rule) => [
+        `SID ${rule.sid} / REV ${rule.rev} · ${rule.protocol.toUpperCase()} · ${rule.action}`,
+        ...wrap(`Message: ${rule.msg || "—"}`),
+        `Entity: ${rule.classification?.detected_entity || "Not assigned"} · Category: ${rule.classification?.category || "Not assigned"}`,
+        `MITRE: ${rule.classification?.mitre_technique_id || "—"} ${rule.classification?.mitre_technique || ""}`,
+        `Status: ${rule.classification?.classification_status || "NOT CLASSIFIED"} · Source: ${rule.source_file || "—"}`,
+        "",
+      ]),
+    ].flatMap((line) => wrap(line));
+    const pageLines = 43;
+    const chunks = Array.from({ length: Math.max(1, Math.ceil(lines.length / pageLines)) }, (_, index) => lines.slice(index * pageLines, (index + 1) * pageLines));
+    const objects: Array<string | null> = [null];
+    objects[1] = "<< /Type /Catalog /Pages 2 0 R >>";
+    objects[2] = "";
+    objects[3] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>";
+    const pageIds: number[] = [];
+    chunks.forEach((chunk, index) => {
+      const pageId = 4 + index * 2;
+      const contentId = pageId + 1;
+      pageIds.push(pageId);
+      const content = ["BT", "/F1 8 Tf", "40 560 Td", "12 TL", ...chunk.map((line, lineIndex) => `(${safe(line)}) Tj${lineIndex === chunk.length - 1 ? "" : " T*"}`), "ET"].join("\n");
+      objects[pageId] = `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R >> >> /Contents ${contentId} 0 R >>`;
+      objects[contentId] = `<< /Length ${content.length} >>\nstream\n${content}\nendstream`;
+    });
+    objects[2] = `<< /Type /Pages /Kids [${pageIds.map((id) => `${id} 0 R`).join(" ")}] /Count ${pageIds.length} >>`;
+    let pdf = "%PDF-1.4\n";
+    const offsets = [0];
+    for (let id = 1; id < objects.length; id += 1) {
+      offsets[id] = pdf.length;
+      pdf += `${id} 0 obj\n${objects[id]}\nendobj\n`;
+    }
+    const xref = pdf.length;
+    pdf += `xref\n0 ${objects.length}\n0000000000 65535 f \n${offsets.slice(1).map((offset) => `${String(offset).padStart(10, "0")} 00000 n `).join("\n")}\ntrailer\n<< /Size ${objects.length} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;
+    const url = URL.createObjectURL(new Blob([pdf], { type: "application/pdf" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "suricata-catalog.pdf";
+    link.click();
+    URL.revokeObjectURL(url);
   };
 
   const toggleExistingRule = async (
@@ -410,14 +474,21 @@ export function Dashboard() {
               onClick={exportCsv}
               disabled={!rules.length}
             >
-              ↓ CSV
+              ↓ {t("Download CSV")}
             </button>
             <button
               className="export-button"
+              onClick={exportPdf}
+              disabled={!rules.length}
+            >
+              ↓ {t("Download PDF")}
+            </button>
+            <button
+              className="export-button print-button"
               onClick={() => window.print()}
               disabled={!rules.length}
             >
-              ▣ PDF / Print
+              ▣ {t("Print PDF")}
             </button>
             <label className="search-wrap">
               <span>⌕</span>
@@ -580,7 +651,6 @@ export function Dashboard() {
                 <th>MITRE</th>
                 <th>Decision checks</th>
                 <th>Status</th>
-                <th>Rule pack</th>
               </tr>
             </thead>
             <tbody>
@@ -597,13 +667,7 @@ export function Dashboard() {
                     <td className="mono sid-cell">
                       <span>{rule.sid}</span>
                       <small>rev {rule.rev}</small>
-                      <Link
-                        className="row-compare-link"
-                        to={`/catalog/compare?sids=${rule.sid}`}
-                        onClick={(event) => event.stopPropagation()}
-                      >
-                        Compare
-                      </Link>
+                      <CompareSelectButton sid={rule.sid} compact />
                     </td>
                     <td className="message">
                       {rule.msg || "—"}
@@ -630,6 +694,9 @@ export function Dashboard() {
                         ) : (
                           <span className="dim">Unassigned</span>
                         )}
+                      </div>
+                      <div className="family-pack-action">
+                        <AddToRulePack sid={rule.sid} compact />
                       </div>
                     </td>
                     <td>
@@ -685,9 +752,6 @@ export function Dashboard() {
                             ? `✓ ${t("In product")}`
                             : t("Mark existing")}
                       </button>
-                    </td>
-                    <td>
-                      <AddToRulePack sid={rule.sid} compact />
                     </td>
                   </tr>
                 );

@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { getRule } from "../services/api";
 import { AddToRulePack } from "../components/AddToRulePack";
+import { clearCompareSelection, setCompareSelection } from "../services/compareSelection";
 import { useI18n } from "../i18n";
 import type { Rule } from "../types";
 
@@ -17,22 +18,43 @@ export function CompareRules() {
   const [recent, setRecent] = useState<string[][]>(() => loadRecent());
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const autoComparedKey = useRef("");
+  const compareRequest = useRef(0);
 
-  const compare = async (source = inputs) => {
+  const compare = async (source = inputs, updateUrl = true) => {
     const sids = [...new Set(source.map((value) => value.trim()).filter(Boolean))].slice(0, 4);
     if (sids.length < 2) { setError(t("Enter at least two SIDs, or open Compare from a rule row.")); return; }
+    const requestId = ++compareRequest.current;
+    setCompareSelection(sids.map(Number));
     setLoading(true); setError("");
-    try { const values = await Promise.all(sids.map(getRule)); setRules(values); setInputs([...sids, ...Array(Math.max(0, 2 - sids.length)).fill("")]); setParams({ sids: sids.join(",") }); const next = [sids, ...recent.filter((item) => item.join(",") !== sids.join(","))].slice(0, 5); setRecent(next); localStorage.setItem(RECENT_KEY, JSON.stringify(next)); }
-    catch (cause) { setError(cause instanceof Error ? cause.message : t("Rules could not be loaded")); }
-    finally { setLoading(false); }
+    try { const values = await Promise.all(sids.map(getRule)); if (requestId !== compareRequest.current) return; setRules(values); setInputs([...sids, ...Array(Math.max(0, 2 - sids.length)).fill("")]); if (updateUrl) { autoComparedKey.current = sids.join(","); setParams({ sids: sids.join(",") }); } const next = [sids, ...recent.filter((item) => item.join(",") !== sids.join(","))].slice(0, 5); setRecent(next); localStorage.setItem(RECENT_KEY, JSON.stringify(next)); }
+    catch (cause) { if (requestId !== compareRequest.current) return; setError(cause instanceof Error ? cause.message : t("Rules could not be loaded")); }
+    finally { if (requestId === compareRequest.current) setLoading(false); }
   };
-  useEffect(() => { if (initial.length >= 2) void compare(initial); }, []);
+  useEffect(() => {
+    const key = initial.join(",");
+    if (initial.length >= 2 && key !== autoComparedKey.current) {
+      autoComparedKey.current = key;
+      void compare(initial, false);
+    }
+    else if (initial.length === 1) setInputs([initial[0], ""]);
+  }, [params.toString()]);
   const setInput = (index: number, value: string) => setInputs((current) => current.map((item, itemIndex) => itemIndex === index ? value : item));
   const useRecent = (sids: string[]) => setInputs([...sids, ...Array(Math.max(0, 2 - sids.length)).fill("")]);
+  const clearComparison = () => {
+    compareRequest.current += 1;
+    autoComparedKey.current = "";
+    clearCompareSelection();
+    setInputs(["", ""]);
+    setRules([]);
+    setError("");
+    setLoading(false);
+    setParams({});
+  };
 
   return <div className="product-intelligence-page compare-page">
     <header className="intelligence-hero compare-hero"><div className="section-kicker">{t("RULE COMPARISON · EVIDENCE DESK")}</div><h1>{t("Compare rules by evidence, not guesswork.")}</h1><p>{t("Build a set from any rule row or family profile, then inspect detection behavior, MITRE provenance, validation and product readiness side by side.")}</p><div className="compare-hero-notes"><span><b>01</b> {t("Select from the catalogue")}</span><span><b>02</b> {t("Keep the same evidence lens")}</span><span><b>03</b> {t("Decide what to review next")}</span></div></header>
-    <section className="compare-workbench"><div className="panel compare-console"><div className="compare-console-head"><div><div className="section-kicker">{t("COMPARISON SET")}</div><h2>{t("Assemble your evidence desk")}</h2><p>{t("Use the Compare action on a rule to prefill one slot, then add one to three peers.")}</p></div><span className="compare-count">{inputs.filter(Boolean).length} / 4</span></div><div className="compare-inputs">{inputs.map((value, index) => <label key={index}><span>{t("Rule")} {index + 1} · SID</span><input value={value} onChange={(event) => setInput(index, event.target.value)} onKeyDown={(event) => { if (event.key === "Enter") void compare(); }} placeholder={index === 0 ? "e.g. 2060513" : t("Add a peer SID")}/></label>)}{inputs.length < 4 && <button className="compare-add-rule" onClick={() => setInputs([...inputs, ""])}><span aria-hidden="true">+</span><b>{t("Add another rule")}</b><small>{inputs.length}/4</small></button>}</div><div className="compare-console-actions"><button className="primary compare-run" disabled={loading} onClick={() => void compare()}>{loading ? t("Loading evidence…") : t("Compare selected rules")}</button><Link className="compare-browse-link" to="/catalog/rules">{t("Browse Rule Explorer →")}</Link></div>{recent.length > 0 && <div className="compare-recent"><span>{t("Recent sets")}</span>{recent.map((set) => <button key={set.join(",")} onClick={() => useRecent(set)}>{set.join(" × ")}</button>)}</div>}</div><aside className="compare-guide"><div className="section-kicker">{t("HOW TO USE THIS VIEW")}</div><h2>{rules.length ? t("Evidence set loaded") : t("Start anywhere in the catalogue")}</h2><p>{rules.length ? t("Each card is the same rule contract, so differences stay visible and reviewable.") : t("You no longer need to remember two SIDs before arriving here. Open Compare directly from a rule, a family, or a catalogue row.")}</p><div className="compare-steps"><div><b>01</b><span>{t("Open a rule and choose ")}<strong>{t("Compare")}</strong>.</span></div><div><b>02</b><span>{t("Add a peer from the same family or tactic.")}</span></div><div><b>03</b><span>{t("Review evidence, then add the right rule to a pack.")}</span></div></div>{!rules.length && <Link to="/catalog/families" className="compare-guide-link">{t("Explore detection families ↗")}</Link>}</aside></section>
+    <section className="compare-workbench"><div className="panel compare-console"><div className="compare-console-head"><div><div className="section-kicker">{t("COMPARISON SET")}</div><h2>{t("Assemble your evidence desk")}</h2><p>{t("Use the Compare action on a rule to prefill one slot, then add one to three peers.")}</p></div><span className="compare-count">{inputs.filter(Boolean).length} / 4</span></div><div className="compare-inputs">{inputs.map((value, index) => <label key={index}><span>{t("Rule")} {index + 1} · SID</span><input value={value} onChange={(event) => setInput(index, event.target.value)} onKeyDown={(event) => { if (event.key === "Enter") void compare(); }} placeholder={index === 0 ? "e.g. 2060513" : t("Add a peer SID")}/></label>)}{inputs.length < 4 && <button className="compare-add-rule" onClick={() => setInputs([...inputs, ""]) }><span aria-hidden="true">+</span><b>{t("Add another rule")}</b><small>{inputs.length}/4</small></button>}</div><div className="compare-console-actions"><button className="primary compare-run" disabled={loading} onClick={() => void compare()}>{loading ? t("Loading evidence…") : t("Compare selected rules")}</button><button type="button" className="compare-clear" onClick={clearComparison}>{t("Clear comparison")}</button><Link className="compare-browse-link" to="/catalog/rules">{t("Browse Rule Explorer →")}</Link></div>{recent.length > 0 && <div className="compare-recent"><span>{t("Recent sets")}</span>{recent.map((set) => <button key={set.join(",")} onClick={() => useRecent(set)}>{set.join(" × ")}</button>)}</div>}</div><aside className="compare-guide"><div className="section-kicker">{t("HOW TO USE THIS VIEW")}</div><h2>{rules.length ? t("Evidence set loaded") : t("Start anywhere in the catalogue")}</h2><p>{rules.length ? t("Each card is the same rule contract, so differences stay visible and reviewable.") : t("You no longer need to remember two SIDs before arriving here. Open Compare directly from a rule, a family, or a catalogue row.")}</p><div className="compare-steps"><div><b>01</b><span>{t("Open a rule and choose ")}<strong>{t("Compare")}</strong>.</span></div><div><b>02</b><span>{t("Add a peer from the same family or tactic.")}</span></div><div><b>03</b><span>{t("Review evidence, then add the right rule to a pack.")}</span></div></div>{!rules.length && <Link to="/catalog/families" className="compare-guide-link">{t("Explore detection families ↗")}</Link>}</aside></section>
     {error && <div className="error">{error}</div>}{rules.length > 0 && <section className="rule-comparison-grid">{rules.map((rule) => <ComparisonCard key={rule.sid} rule={rule}/>)}</section>}
   </div>;
 }

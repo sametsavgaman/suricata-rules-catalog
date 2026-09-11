@@ -178,7 +178,7 @@ async def plan_question(question: str, settings, provider: HelperProvider | None
     return plan
 
 
-def query_catalog(db: Session, request: CatalogSearch) -> CatalogAnswer:
+def query_catalog(db: Session, request: CatalogSearch, *, count_total: bool = True) -> CatalogAnswer:
     f = request.filters
     validate_filters(f)
     selection = [Classification.classification_status != ClassificationStatus.FAILED]
@@ -239,7 +239,10 @@ def query_catalog(db: Session, request: CatalogSearch) -> CatalogAnswer:
         stmt = stmt.where(or_(Rule.msg.icontains(f.search, autoescape=True),
                              Classification.detected_behavior.icontains(f.search, autoescape=True),
                              Classification.detected_entity.icontains(f.search, autoescape=True)))
-    total = db.scalar(select(func.count()).select_from(stmt.subquery())) or 0
+    # Scenario analysis only needs the bounded rule rows. Counting the complete
+    # latest-classification subquery for every extracted step is expensive on
+    # the local SQLite catalogue and adds no evidence to that response.
+    total = (db.scalar(select(func.count()).select_from(stmt.subquery())) or 0) if count_total else 0
     rows = db.execute(stmt.order_by(Rule.sid.desc(), Rule.rev.desc(), Classification.id.desc()).offset(request.offset).limit(request.limit)).mappings()
     return CatalogAnswer(status="RESULTS", answer=f"Seçilen ölçütlere uyan {total:,} kayıt bulundu. Her SID/REV bir kez sayıldı; varsa seçilen sağlayıcının en son başarılı sınıflandırması gösterildi.",
                          filters=f, total=total, items=[CatalogItem.model_validate(dict(row)) for row in rows], offset=request.offset, limit=request.limit)
