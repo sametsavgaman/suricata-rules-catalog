@@ -13,6 +13,7 @@ from app.api.schemas import rule_to_read
 from app.database.models import Classification, ClassificationStatus, ProductStatus, Rule, RuleProductDecision
 from app.database.repository import RuleRepository
 from app.database.session import SessionLocal, get_db
+from app.services.dashboard_cache import get_dashboard_cache, set_dashboard_cache
 
 router = APIRouter(prefix="/catalog", tags=["catalog"])
 _FACETS_CACHE_TTL = 60.0
@@ -25,6 +26,10 @@ def _latest(db: Session):
 
 @router.get("/stats")
 def catalog_stats(db: Session = Depends(get_db)):
+    cached = get_dashboard_cache(db, "catalog-stats")
+    if cached is not None:
+        return cached
+
     latest_ids = select(func.max(Classification.id).label("id")).where(Classification.classification_status != ClassificationStatus.FAILED).group_by(Classification.rule_id).subquery()
     latest = select(Classification).join(latest_ids, Classification.id == latest_ids.c.id).subquery()
     total = db.scalar(select(func.count(Rule.id))) or 0
@@ -34,7 +39,10 @@ def catalog_stats(db: Session = Depends(get_db)):
     products = {s.value: db.scalar(select(func.count()).select_from(RuleProductDecision).where(RuleProductDecision.status == s)) or 0 for s in ProductStatus}
     # NOT_EVALUATED is the implicit default for rules without a decision row.
     products[ProductStatus.NOT_EVALUATED.value] += max(0, total - sum(products.values()))
-    return {"total_rules": total, "classified_rules": classified, "mitre_mapped": mapped, "classification_records": classification_records, "product_status": products}
+    result = {"total_rules": total, "classified_rules": classified, "mitre_mapped": mapped,
+              "classification_records": classification_records, "product_status": products}
+    set_dashboard_cache(db, "catalog-stats", result)
+    return result
 
 @router.get("/facets")
 def catalog_facets(db: Session = Depends(get_db)):

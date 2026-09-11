@@ -24,7 +24,7 @@ function AppFrame() {
   useEffect(() => {
     const timer = window.setTimeout(() => {
       void warmAppCache();
-    }, 350);
+    }, 0);
     return () => window.clearTimeout(timer);
   }, []);
   const rulesRoute =

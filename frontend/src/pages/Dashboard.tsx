@@ -69,6 +69,7 @@ export function Dashboard() {
   const [page, setPage] = useState(1);
   const pageSize = 50;
   const [error, setError] = useState("");
+  const [initialLoading, setInitialLoading] = useState(true);
   const [busy, setBusy] = useState(false);
   const [productBusySid, setProductBusySid] = useState<number | null>(null);
   const searchRef = useRef<HTMLInputElement>(null);
@@ -77,13 +78,11 @@ export function Dashboard() {
     providers: string[];
     classifier_versions: string[];
     inference_modes: string[];
-    runs: string[];
   }>({
     models: [],
     providers: [],
     classifier_versions: [],
     inference_modes: [],
-    runs: [],
   });
   const selectedFamilies = useMemo(
     () => urlParams.getAll("family"),
@@ -129,6 +128,8 @@ export function Dashboard() {
       setError("");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Request failed");
+    } finally {
+      setInitialLoading(false);
     }
   };
   useEffect(() => {
@@ -367,7 +368,9 @@ export function Dashboard() {
             key={cardLabel}
           >
             <span>{t(String(cardLabel))}</span>
-            <strong>{value}</strong>
+            <strong className={initialLoading ? "dashboard-stat-loading" : undefined}>
+              {initialLoading ? "···" : value}
+            </strong>
             <em>
               {cardLabel === "Total Rules"
                 ? localeText(t, locale, "in current workspace")
@@ -387,7 +390,9 @@ export function Dashboard() {
         ].map(([cardLabel, value]) => (
           <article className="stat manual-stat reveal" key={cardLabel}>
             <span>{localeText(t, locale, String(cardLabel))}</span>
-            <strong>{value}</strong>
+            <strong className={initialLoading ? "dashboard-stat-loading" : undefined}>
+              {initialLoading ? "···" : value}
+            </strong>
           </article>
         ))}
       </section>
@@ -397,7 +402,7 @@ export function Dashboard() {
             <div className="section-kicker">{t("LIVE DATASET")}</div>
             <h2>{t("Rule Explorer")}</h2>
             <p className="result-count">
-              <strong>{total}</strong>{" "}
+              <strong>{initialLoading ? "—" : total}</strong>{" "}
               {locale === "tr"
                 ? `kayıt bulundu · sayfa ${page} · ${activeFilterCount ? `${activeFilterCount} aktif filtre` : "filtre uygulanmadı"}`
                 : `records found · page ${page} · ${activeFilterCount ? `${activeFilterCount} active filters` : "no filters applied"}`}
@@ -791,8 +796,10 @@ export function Dashboard() {
               })}
             </tbody>
           </table>
-          {!rules.length && (
-            <div className="empty">No rules match the current filters.</div>
+          {initialLoading ? (
+            <div className="empty dashboard-data-loader"><i aria-hidden="true" />{t("Preparing Rule Explorer…")}</div>
+          ) : !rules.length && (
+            <div className="empty">{t("No rules match the current filters.")}</div>
           )}
         </div>
       </section>
