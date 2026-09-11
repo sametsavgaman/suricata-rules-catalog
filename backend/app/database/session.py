@@ -34,6 +34,15 @@ def ensure_schema_extensions() -> None:
             Base.metadata.tables["forced_mitre_mappings"],
         ],
     )
+    if "classifications" in inspect(engine).get_table_names():
+        # create_all does not reliably add newly declared indexes to an
+        # already-existing table on every SQLAlchemy/backend combination.
+        # Keep the migration additive and idempotent for existing catalogs.
+        with engine.begin() as conn:
+            conn.execute(text(
+                "CREATE INDEX IF NOT EXISTS ix_classifications_status_rule_id_id "
+                "ON classifications (classification_status, rule_id, id)"
+            ))
     if not settings.database_url.startswith("sqlite"): return
     if "classification_runs" not in inspect(engine).get_table_names():
         Base.metadata.create_all(engine, tables=[Base.metadata.tables["classification_runs"]])

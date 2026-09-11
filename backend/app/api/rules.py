@@ -77,7 +77,7 @@ def list_rules(
     db: Session = Depends(get_db),
 ):
     cacheable_dashboard_page = (
-        offset == 0 and limit == 50 and sort == "sid_desc" and not family and
+        offset == 0 and limit == 50 and sort == "recent" and not family and
         all(value is None for value in (
             category, subcategory, detected_entity, mitre_technique_id, entity_type, status,
             protocol, classtype, confidence, confidence_min, confidence_max, entity_status,
@@ -93,39 +93,48 @@ def list_rules(
 
     # Failed provider attempts are historical diagnostics, not the current
     # user-facing classification. Prefer the latest non-failed result so an
-    # old 404 does not mask a later successful classification.
+    # old 404 does not mask a later successful classification. When a status
+    # filter is selected, include that status in the latest-row scope so the
+    # filter is both semantically correct (including FAILED) and indexable.
     selection = [column == value for column, value in (
         (Classification.provider, provider), (Classification.model_name, model_name),
         (Classification.classifier_version, classifier_version),
         (Classification.inference_mode, inference_mode), (Classification.run_id, run_id),
     ) if value is not None]
-    latest_scope = [Classification.classification_status != ClassificationStatus.FAILED, *selection]
+    latest_scope = [
+        (Classification.classification_status == status
+         if status is not None
+         else Classification.classification_status != ClassificationStatus.FAILED),
+        *selection,
+    ]
     latest_ids = (select(Classification.rule_id, func.max(Classification.id).label("latest_id"))
                   .where(*latest_scope)
                   .group_by(Classification.rule_id).subquery())
-    category_rule_ids = None
-    if category is not None:
-        # Filter against the globally latest successful classification. A
-        # category must not resurrect an older classification for a rule.
-        category_rule_ids = (select(latest_ids.c.rule_id)
-                             .join(Classification, Classification.id == latest_ids.c.latest_id)
-                             .where(Classification.category == category).subquery())
     stmt = select(Rule, Classification, RuleProductDecision).options(
         selectinload(Rule.manual_reviews),
         selectinload(Rule.classification_overrides),
         selectinload(Rule.family_assignments).selectinload(RuleFamilyAssignment.family),
     )
-    if category_rule_ids is not None:
-        stmt = stmt.join(category_rule_ids, category_rule_ids.c.rule_id == Rule.id)
-    stmt = stmt.outerjoin(latest_ids, latest_ids.c.rule_id == Rule.id)
+    # A LEFT JOIN is needed for the unclassified default view. Once a filter
+    # targets classification data, use INNER JOINs so SQLite can use the
+    # latest-row/status indexes instead of materializing the whole catalog.
+    classification_filter = any(value is not None for value in (
+        category, subcategory, detected_entity, mitre_technique_id, entity_type, status,
+        mitre_tactic, kill_chain_phase, inspection_batch, provider, model_name,
+        classifier_version, inference_mode, run_id, mitre_mapping_method,
+    )) or manual_review_status or entity_status == "has" or mitre_status == "has"
+    latest_join = stmt.join if classification_filter else stmt.outerjoin
+    stmt = latest_join(latest_ids, latest_ids.c.rule_id == Rule.id)
     stmt = (stmt
-            .outerjoin(Classification, Classification.id == latest_ids.c.latest_id)
+            .join(Classification, Classification.id == latest_ids.c.latest_id)
+            if classification_filter else stmt.outerjoin(Classification, Classification.id == latest_ids.c.latest_id))
+    stmt = (stmt
             .outerjoin(RuleProductDecision, RuleProductDecision.rule_id == Rule.id)
             .outerjoin(RuleFamilyAssignment, RuleFamilyAssignment.rule_id == Rule.id)
             .outerjoin(DetectionFamily, DetectionFamily.id == RuleFamilyAssignment.family_id))
     filters = []
     mapping = {
-        "category": (Classification.category, None),
+        "category": (Classification.category, category),
         "subcategory": (Classification.subcategory, subcategory),
         "detected_entity": (Classification.detected_entity, detected_entity),
         "mitre_technique_id": (Classification.mitre_technique_id, mitre_technique_id),
@@ -176,13 +185,17 @@ def list_rules(
                            Classification.cyber_kill_chain_phase.ilike(pattern), DetectionFamily.name.ilike(pattern)))
     if filters:
         stmt = stmt.where(and_(*filters))
-    count_query = stmt.subquery()
-    # Joins used for family/product filters can produce more than one row for
-    # a rule; pagination totals must count unique rule records.
-    count = db.scalar(select(func.count(func.distinct(count_query.c.id)))) or 0
+    # Count only the narrow rule identifier instead of materializing every
+    # JSON/text column from Rule and Classification into a subquery. The
+    # latter made broad status filters (e.g. all AUTO_CLASSIFIED rows) appear
+    # frozen on the SQLite catalog. Joins used for family/product filters can
+    # still duplicate rows, hence the distinct rule id.
+    count_stmt = stmt.with_only_columns(func.count(func.distinct(Rule.id))).order_by(None)
+    count = db.scalar(count_stmt) or 0
     ordering = {"sid_asc": Rule.sid.asc(), "confidence_desc": Classification.confidence.desc(),
                 "confidence_asc": Classification.confidence.asc(), "category": Classification.category.asc(),
-                "recent": Classification.created_at.desc()}.get(sort, Rule.sid.desc())
+                "recent": Classification.created_at.desc().nulls_last(),
+                "first_classified": Classification.created_at.asc().nulls_last()}.get(sort, Rule.sid.desc())
     rows = db.execute(stmt.order_by(ordering, Rule.sid.desc()).offset(offset).limit(limit)).all()
     pages = max(1, (count + limit - 1) // limit)
     response = RuleListResponse(
@@ -208,7 +221,7 @@ def warm_rule_explorer(db: Session) -> None:
         mitre_tactic=None, kill_chain_phase=None, has_cve=None, inspection_batch=None,
         provider=None, model_name=None, classifier_version=None, inference_mode=None,
         run_id=None, mitre_mapping_method=None, manual_review_status=None,
-        product_status=None, family=None, sort="sid_desc", search=None, offset=0, limit=50,
+        product_status=None, family=None, sort="recent", search=None, offset=0, limit=50,
         db=db,
     )
 

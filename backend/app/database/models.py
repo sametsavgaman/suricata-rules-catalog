@@ -84,6 +84,12 @@ class ClassificationRun(Base):
 
 class Classification(Base):
     __tablename__ = "classifications"
+    __table_args__ = (
+        # Rule Explorer frequently asks for the newest classification per
+        # rule, optionally restricted by status. Keep that grouped lookup
+        # covered even on the bundled SQLite database.
+        Index("ix_classifications_status_rule_id_id", "classification_status", "rule_id", "id"),
+    )
 
     id: Mapped[int] = mapped_column(primary_key=True)
     rule_id: Mapped[int] = mapped_column(ForeignKey("rules.id", ondelete="CASCADE"), index=True)
