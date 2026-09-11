@@ -4,6 +4,10 @@ Deterministically parses Suricata `.rules` files, enriches each parsed rule with
 
 The included 20-rule dataset is explicitly synthetic test data. It is not presented as Emerging Threats content.
 
+![Suricata Rules Catalog detection catalogue overview](docs/images/catalog-overview.png)
+
+<p align="center"><em>Explore, classify, validate, and curate more than 52,000 Suricata detections from one evidence-driven workspace.</em></p>
+
 ## Architecture
 
 ```text
@@ -49,6 +53,23 @@ backend\.venv\Scripts\python.exe -m app.enrichment.backfill_detection_families
 ```
 
 The OpenAI adapter uses the Responses API's Pydantic structured-output parser and disables response storage for this stateless classification call.
+
+## Interface preview
+
+### Evidence-driven rule detail
+
+Each rule page keeps the original Suricata signature, model provenance,
+classification evidence, MITRE mapping, validator result, human-review state,
+and product decision together.
+
+![Evidence-driven Suricata rule detail](docs/images/rule-detail.png)
+
+### Detection families
+
+The family explorer groups related malware, tools, behaviors, and capabilities
+only when explainable evidence supports the relationship.
+
+![Detection Families explorer](docs/images/detection-families.png)
 
 ## Quick start with Docker
 
