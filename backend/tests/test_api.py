@@ -40,6 +40,11 @@ def test_import_list_detail_and_stats():
         assert listing.status_code == 200
         assert listing.json()["total"] == 1
         assert listing.json()["items"][0]["sid"] == 9900001
+        assert listing.json()["items"][0]["classification_options"] == []
+
+        selectors = client.get("/api/rules/filters")
+        assert selectors.status_code == 200
+        assert "runs" not in selectors.json()
 
         detail = client.get("/api/rules/9900001")
         assert detail.status_code == 200

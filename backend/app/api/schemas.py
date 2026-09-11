@@ -244,8 +244,8 @@ def classification_to_read(item, reviews=(), overrides=()) -> ClassificationRead
     })
 
 
-def rule_to_read(rule, classification=None, product_decision=None) -> RuleRead:
-    if classification is None and getattr(rule, "classifications", None):
+def rule_to_read(rule, classification=None, product_decision=None, *, include_classification_options: bool = True) -> RuleRead:
+    if classification is None and include_classification_options and getattr(rule, "classifications", None):
         non_failed = [item for item in rule.classifications if item.classification_status != ClassificationStatus.FAILED]
         classification = non_failed[-1] if non_failed else None
     fields = RuleRead.model_fields.keys() - {"classification", "metadata", "manual_review", "classification_options", "families", "product_decision"}
@@ -256,8 +256,9 @@ def rule_to_read(rule, classification=None, product_decision=None) -> RuleRead:
     review = {"status": current.status, "note": current.note, "reviewer_type": current.reviewer_type, "reviewed_at": current.created_at} if current else None
     overrides = getattr(rule, "classification_overrides", [])
     normalized = classification_to_read(classification, reviews, overrides) if classification else None
-    options = [classification_to_read(item, reviews, overrides).model_dump(mode='json')
+    options = ([classification_to_read(item, reviews, overrides).model_dump(mode='json')
         for item in sorted(getattr(rule, "classifications", []), key=lambda x: (x.created_at, x.id), reverse=True)]
+        if include_classification_options else [])
     data["families"] = [{"slug": a.family.slug, "name": a.family.name, "family_type": getattr(a.family.family_type, "value", a.family.family_type)}
                         for a in getattr(rule, "family_assignments", []) if getattr(a, "family", None)]
     data["product_decision"] = ({"status": getattr(product_decision.status, "value", product_decision.status),

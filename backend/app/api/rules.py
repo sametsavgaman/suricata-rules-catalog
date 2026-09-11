@@ -5,7 +5,7 @@ from uuid import uuid4
 
 from fastapi import APIRouter, BackgroundTasks, Depends, File, HTTPException, Query, UploadFile
 from sqlalchemy import and_, func, or_, select
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 
 from app.api.schemas import ClassificationRead, ImportFileResult, ImportResponse, ExistingRulesetPreviewFile, ExistingRulesetPreviewResponse, ExistingRulesetImportFile, ExistingRulesetImportResponse, ProductRulesetBatchRead, RuleListResponse, RuleRead, RuleNeighbors, rule_to_read, ManualReviewRequest, ManualReviewResponse, ManualReviewHistoryResponse, ProductDecisionRequest, ProductDecisionRead, ProductHistoryItem, ClassificationOverrideRequest, ForcedMitreRequest, ForcedMitreRead, ForcedMitreState
 from app.database.models import Classification, ClassificationStatus, ClassificationOverride, DetectionFamily, ForcedMitreMapping, ProductRulesetImportBatch, ProductRulesetImportItem, Rule, RuleFamilyAssignment, ManualReview, ProductStatus, RuleProductDecision, RuleProductDecisionHistory
@@ -20,6 +20,7 @@ from app.knowledge.taxonomy import Category, SUBCATEGORIES
 from app.services.product_ruleset_import import process_product_ruleset_batch, retry_product_ruleset_batch
 from app.services.forced_mitre import propose_forced_mitre
 from app.services.runtime_config import effective_settings
+from app.services.dashboard_cache import clear_dashboard_cache, get_dashboard_cache, set_dashboard_cache
 from app.config import get_settings
 
 
@@ -75,6 +76,21 @@ def list_rules(
     limit: int = Query(50, ge=1, le=500),
     db: Session = Depends(get_db),
 ):
+    cacheable_dashboard_page = (
+        offset == 0 and limit == 50 and sort == "sid_desc" and not family and
+        all(value is None for value in (
+            category, subcategory, detected_entity, mitre_technique_id, entity_type, status,
+            protocol, classtype, confidence, confidence_min, confidence_max, entity_status,
+            mitre_status, mitre_tactic, kill_chain_phase, has_cve, inspection_batch, provider,
+            model_name, classifier_version, inference_mode, run_id, mitre_mapping_method,
+            manual_review_status, product_status, search,
+        ))
+    )
+    if cacheable_dashboard_page:
+        cached = get_dashboard_cache(db, "initial-rule-page")
+        if cached is not None:
+            return RuleListResponse.model_validate(cached)
+
     # Failed provider attempts are historical diagnostics, not the current
     # user-facing classification. Prefer the latest non-failed result so an
     # old 404 does not mask a later successful classification.
@@ -94,7 +110,11 @@ def list_rules(
         category_rule_ids = (select(latest_ids.c.rule_id)
                              .join(Classification, Classification.id == latest_ids.c.latest_id)
                              .where(Classification.category == category).subquery())
-    stmt = select(Rule, Classification, RuleProductDecision)
+    stmt = select(Rule, Classification, RuleProductDecision).options(
+        selectinload(Rule.manual_reviews),
+        selectinload(Rule.classification_overrides),
+        selectinload(Rule.family_assignments).selectinload(RuleFamilyAssignment.family),
+    )
     if category_rule_ids is not None:
         stmt = stmt.join(category_rule_ids, category_rule_ids.c.rule_id == Rule.id)
     stmt = stmt.outerjoin(latest_ids, latest_ids.c.rule_id == Rule.id)
@@ -165,13 +185,31 @@ def list_rules(
                 "recent": Classification.created_at.desc()}.get(sort, Rule.sid.desc())
     rows = db.execute(stmt.order_by(ordering, Rule.sid.desc()).offset(offset).limit(limit)).all()
     pages = max(1, (count + limit - 1) // limit)
-    return RuleListResponse(
-        items=[rule_to_read(rule, classification, product_decision) for rule, classification, product_decision in rows],
+    response = RuleListResponse(
+        items=[rule_to_read(rule, classification, product_decision, include_classification_options=False)
+               for rule, classification, product_decision in rows],
         total=count,
         offset=offset,
         limit=limit,
         page=(offset // limit) + 1,
         total_pages=pages,
+    )
+    if cacheable_dashboard_page:
+        set_dashboard_cache(db, "initial-rule-page", response.model_dump(mode="json"))
+    return response
+
+
+def warm_rule_explorer(db: Session) -> None:
+    """Build the exact unfiltered first page used by the Rule Explorer."""
+    list_rules(
+        category=None, subcategory=None, detected_entity=None, mitre_technique_id=None,
+        entity_type=None, status=None, protocol=None, classtype=None, confidence=None,
+        confidence_min=None, confidence_max=None, entity_status=None, mitre_status=None,
+        mitre_tactic=None, kill_chain_phase=None, has_cve=None, inspection_batch=None,
+        provider=None, model_name=None, classifier_version=None, inference_mode=None,
+        run_id=None, mitre_mapping_method=None, manual_review_status=None,
+        product_status=None, family=None, sort="sid_desc", search=None, offset=0, limit=50,
+        db=db,
     )
 
 
@@ -397,6 +435,7 @@ async def import_existing_ruleset(background_tasks: BackgroundTasks, files: list
         ))
         db.add_all(ProductRulesetImportItem(batch_id=batch_id, rule_id=rule.id) for rule in queued_rules)
     db.commit()
+    clear_dashboard_cache()
     if batch_id:
         background_tasks.add_task(process_product_ruleset_batch, batch_id)
     return ExistingRulesetImportResponse(
@@ -463,6 +502,7 @@ def update_product_decision(sid: int, payload: ProductDecisionRequest, db: Sessi
         decision.status, decision.note = payload.status, payload.note
     db.add(RuleProductDecisionHistory(rule_id=rule.id, from_status=previous, to_status=payload.status.value, note=payload.note))
     db.commit(); db.refresh(decision)
+    clear_dashboard_cache()
     return decision
 
 @router.get("/{sid}/classifications")
@@ -473,16 +513,21 @@ def list_classifications(sid: int, db: Session = Depends(get_db)):
 
 @router.get("/filters")
 def classification_filters(db: Session = Depends(get_db)):
+    cached = get_dashboard_cache(db, "classification-filters")
+    if cached is not None:
+        return cached
+
     # Only current provider-owned identities belong in the interactive model
     # selector. Legacy imports encoded model names such as ``v2.1:...`` and
     # had no provider; retaining them made empty filter choices look valid.
     active = and_(Classification.provider.in_(["gemini", "ollama"]),
                   ~Classification.model_name.like("v%:%"))
-    return {"models": [x for (x,) in db.execute(select(Classification.model_name).where(Classification.model_name.is_not(None), active).distinct()).all()],
-            "providers": [x for (x,) in db.execute(select(Classification.provider).where(Classification.provider.is_not(None), active).distinct()).all()],
-            "classifier_versions": [x for (x,) in db.execute(select(Classification.classifier_version).distinct()).all()],
-            "inference_modes": [x for (x,) in db.execute(select(Classification.inference_mode).where(Classification.inference_mode.is_not(None)).distinct()).all()],
-            "runs": [x for (x,) in db.execute(select(Classification.run_id).where(Classification.run_id.is_not(None)).distinct()).all()]}
+    result = {"models": [x for (x,) in db.execute(select(Classification.model_name).where(Classification.model_name.is_not(None), active).distinct()).all()],
+              "providers": [x for (x,) in db.execute(select(Classification.provider).where(Classification.provider.is_not(None), active).distinct()).all()],
+              "classifier_versions": [x for (x,) in db.execute(select(Classification.classifier_version).distinct()).all()],
+              "inference_modes": [x for (x,) in db.execute(select(Classification.inference_mode).where(Classification.inference_mode.is_not(None)).distinct()).all()]}
+    set_dashboard_cache(db, "classification-filters", result)
+    return result
 
 
 @router.get("/{sid}", response_model=RuleRead)
@@ -573,6 +618,7 @@ def save_review(sid: int, payload: ManualReviewRequest, db: Session = Depends(ge
     if current and current.status == payload.status and current.note == payload.note: return ManualReviewResponse(status=current.status,note=current.note,reviewer_type=current.reviewer_type,reviewed_at=current.created_at)
     row=ManualReview(rule_id=rule.id,classification_id=classification.id if classification else None,status=payload.status,note=payload.note,reviewer_type="HUMAN")
     db.add(row); db.commit(); db.refresh(row)
+    clear_dashboard_cache()
     return ManualReviewResponse(status=row.status,note=row.note,reviewer_type=row.reviewer_type,reviewed_at=row.created_at)
 
 OVERRIDE_FIELDS = {"detected_behavior", "detected_entity", "entity_type", "category", "subcategory",
@@ -661,6 +707,7 @@ def save_overrides(sid: int, payload: ClassificationOverrideRequest, db: Session
             field_name=field, original_value=None if original is None else str(original),
             corrected_value=corrected, reason=payload.reason, admin_id="not_recorded"))
     db.commit()
+    clear_dashboard_cache()
     return list_overrides(sid, db)
 
 
@@ -686,6 +733,7 @@ async def import_rules(files: list[UploadFile] = File(...), db: Session = Depend
                     errors.append(f"Parsing stopped after {MAX_BASELINE_PARSE_ERRORS} errors")
                     break
         db.commit()
+        clear_dashboard_cache()
         total_imported += imported
         total_skipped += skipped
         total_failed += len(errors)

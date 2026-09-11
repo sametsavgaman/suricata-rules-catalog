@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from app.api.schemas import StatsResponse
 from app.database.models import Classification, ClassificationStatus, Rule, ManualReview
 from app.database.session import get_db
+from app.services.dashboard_cache import get_dashboard_cache, set_dashboard_cache
 
 
 router = APIRouter(tags=["stats"])
@@ -12,6 +13,10 @@ router = APIRouter(tags=["stats"])
 
 @router.get("/stats", response_model=StatsResponse)
 def get_stats(db: Session = Depends(get_db)):
+    cached = get_dashboard_cache(db, "stats")
+    if cached is not None:
+        return StatsResponse.model_validate(cached)
+
     # Provider failures are diagnostic attempts, not reviewable classifications.
     # Report the latest successful/reviewable result per rule; rules with no such
     # result are counted as awaiting classification below.
@@ -59,7 +64,7 @@ def get_stats(db: Session = Depends(get_db)):
     manual["UNREVIEWED"] = max(0, total_rules - classified)
     manual["CLASSIFIED_UNREVIEWED"] = max(0, classified + review - reviewed_classified)
     manual["NOT_CLASSIFIED"] = manual["UNREVIEWED"]
-    return StatsResponse(
+    result = StatsResponse(
         total_rules=total_rules,
         classified_rules=classified,
         review_required=review,
@@ -71,3 +76,5 @@ def get_stats(db: Session = Depends(get_db)):
         average_confidence=round(float(avg_confidence), 4),
         manual_review=manual,
     )
+    set_dashboard_cache(db, "stats", result.model_dump(mode="json"))
+    return result

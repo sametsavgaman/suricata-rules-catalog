@@ -3,10 +3,18 @@ import type { Classification, Rule, Stats } from "../types";
 const API = import.meta.env.VITE_API_URL || "/api";
 
 const GET_CACHE_TTL = 30_000;
+const DASHBOARD_CACHE_TTL = 60_000;
 const getCache = new Map<string, { expiresAt: number; value: unknown }>();
 const inFlight = new Map<string, Promise<unknown>>();
 
 export function clearApiCache() { getCache.clear(); }
+
+function cacheTtl(path: string) {
+  return path === "/stats" || path === "/catalog/stats" || path === "/rules/filters" ||
+    path === "/rules?limit=50&offset=0&sort=sid_desc"
+    ? DASHBOARD_CACHE_TTL
+    : GET_CACHE_TTL;
+}
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const method = (init?.method || "GET").toUpperCase();
@@ -21,7 +29,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     const response = await fetch(`${API}${path}`, init);
     if (!response.ok) throw new Error((await response.json().catch(() => null))?.detail || response.statusText);
     const value = await response.json() as T;
-    if (method === "GET") getCache.set(key, { expiresAt: Date.now() + GET_CACHE_TTL, value });
+    if (method === "GET") getCache.set(key, { expiresAt: Date.now() + cacheTtl(path), value });
     else clearApiCache();
     return value;
   })();
@@ -72,7 +80,7 @@ export function getRuleOverrides(sid: string) { return request<{items:any[]}>(`/
 export function saveRuleOverrides(sid: string, payload: any) { return request<{items:any[]}>(`/rules/${sid}/overrides`, {method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}); }
 export type AuditLogItem = {event_id:string;sid:number;action:string;classification_id:number|null;field_name:string|null;from_value:string|null;to_value:string|null;detail:string|null;created_at:string};
 export function getAuditLogs(params: URLSearchParams) { return request<{items:AuditLogItem[];total:number;offset:number;limit:number}>(`/audit-log?${params}`); }
-export function getClassificationFilters() { return request<{models:string[]; providers:string[]; classifier_versions:string[]; inference_modes:string[]; runs:string[]}>("/rules/filters"); }
+export function getClassificationFilters() { return request<{models:string[]; providers:string[]; classifier_versions:string[]; inference_modes:string[]}>("/rules/filters"); }
 export function importRules(files: FileList) {
   const body = new FormData();
   Array.from(files).forEach(file => body.append("files", file));
@@ -136,13 +144,15 @@ export type ScenarioProvider = "gemini" | "claude" | "openai";
 export function analyzeScenario(question:string, provider:ScenarioProvider = "gemini", signal?: AbortSignal) { return request<ScenarioAnalysis>("/catalog/assistant/scenario", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({question, provider}),signal}); }
 
 /** Warm only read-only, lightweight catalogue data after the first screen paints. */
-export function warmAppCache() {
+export async function warmAppCache() {
   const rulesParams = new URLSearchParams({ limit: "50", offset: "0", sort: "sid_desc" });
   const familyParams = new URLSearchParams({ limit: "24", offset: "0" });
   const mitreParams = new URLSearchParams({ limit: "50", offset: "0", kind: "all" });
+  await Promise.allSettled([
+    getStats(), getCatalogStats(), getClassificationFilters(), getRules(rulesParams),
+  ]);
   return Promise.allSettled([
-    getStats(), getCatalogStats(), getCatalogFacets(), getClassificationFilters(),
-    getFamilyStats(), getFamilies(familyParams), getMitreOverview(), getMitreTechniques(mitreParams),
-    getRules(rulesParams), getModelConfig(),
+    getCatalogFacets(), getFamilyStats(), getFamilies(familyParams),
+    getMitreOverview(), getMitreTechniques(mitreParams), getModelConfig(),
   ]);
 }

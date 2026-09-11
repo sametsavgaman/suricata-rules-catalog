@@ -10,6 +10,7 @@ from app.config import get_settings
 from app.database.session import Base, engine, ensure_schema_extensions
 from app.api.catalog import warm_catalog_facets
 from app.services.detection_families import warm_family_cache
+from app.services.dashboard_cache import warm_dashboard_cache
 
 logger = logging.getLogger(__name__)
 
@@ -19,6 +20,7 @@ async def _warm_read_models() -> None:
         await asyncio.gather(
             asyncio.to_thread(warm_family_cache),
             asyncio.to_thread(warm_catalog_facets),
+            asyncio.to_thread(warm_dashboard_cache),
         )
     except Exception:
         # Read-model warming is an optimization; a failed warm-up must never
@@ -30,13 +32,17 @@ async def _warm_read_models() -> None:
 async def lifespan(_: FastAPI):
     Base.metadata.create_all(bind=engine)
     ensure_schema_extensions()
-    warm_task = asyncio.create_task(_warm_read_models())
+    # In-memory SQLite databases are connection-local and are used only by
+    # tests; a background thread would see a different, empty database.
+    warm_task = (None if settings.database_url in {"sqlite:///:memory:", "sqlite://"}
+                 else asyncio.create_task(_warm_read_models()))
     try:
         yield
     finally:
-        warm_task.cancel()
-        with suppress(asyncio.CancelledError):
-            await warm_task
+        if warm_task is not None:
+            warm_task.cancel()
+            with suppress(asyncio.CancelledError):
+                await warm_task
 
 
 settings = get_settings()
