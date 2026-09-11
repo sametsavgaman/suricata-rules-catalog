@@ -13,7 +13,7 @@ from app.services.runtime_config import effective_settings
 _mitre_repository = MitreRepository()
 
 
-def get_classification_service(db: Session = Depends(get_db), execution_provider: Literal["gemini", "ollama"] | None = None) -> ClassificationService:
+def get_classification_service(db: Session = Depends(get_db), execution_provider: Literal["openai", "gemini", "claude", "ollama"] | None = None) -> ClassificationService:
     settings = get_settings()
     settings = effective_settings(db, settings)
     if execution_provider:

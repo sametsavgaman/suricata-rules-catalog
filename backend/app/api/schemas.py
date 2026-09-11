@@ -80,6 +80,8 @@ class RuleRead(BaseModel):
     classification: ClassificationRead | None = None
     manual_review: dict | None = None
     classification_options: list[dict] = Field(default_factory=list)
+    families: list[dict] = Field(default_factory=list)
+    product_decision: dict | None = None
 
 
 class RuleListResponse(BaseModel):
@@ -129,6 +131,76 @@ class ImportResponse(BaseModel):
     failed: int
 
 
+class ExistingRulesetPreviewFile(BaseModel):
+    filename: str
+    discovered: int
+    exact_matches: int
+    new_catalog_rules: int
+    revision_updates: int
+    reusable_classifications: int
+    gemini_candidates: int
+    duplicates: int
+    errors: list[str] = Field(default_factory=list)
+
+
+class ExistingRulesetPreviewResponse(BaseModel):
+    files: list[ExistingRulesetPreviewFile]
+    discovered: int
+    exact_matches: int
+    new_catalog_rules: int
+    revision_updates: int
+    reusable_classifications: int
+    gemini_candidates: int
+    duplicates: int
+    failed: int
+
+
+class ExistingRulesetImportFile(BaseModel):
+    filename: str
+    discovered: int
+    matched_existing: int
+    imported: int
+    marked_existing: int
+    already_marked: int
+    duplicates: int
+    errors: list[str] = Field(default_factory=list)
+
+
+class ExistingRulesetImportResponse(BaseModel):
+    files: list[ExistingRulesetImportFile]
+    discovered: int
+    matched_existing: int
+    imported: int
+    marked_existing: int
+    already_marked: int
+    duplicates: int
+    failed: int
+    reused_classifications: int = 0
+    queued_for_gemini: int = 0
+    classification_batch_id: str | None = None
+
+
+class ProductRulesetBatchRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    batch_id: str
+    filenames: list[str]
+    status: str
+    provider: str
+    model_name: str | None = None
+    classifier_version: str
+    discovered: int
+    reused_classifications: int
+    queued: int
+    processed: int
+    auto_classified: int
+    review_required: int
+    failed: int
+    error_message: str | None = None
+    created_at: datetime
+    completed_at: datetime | None = None
+
+
 class BatchClassificationResponse(BaseModel):
     requested: int
     auto_classified: int
@@ -148,8 +220,15 @@ class StatsResponse(BaseModel):
     manual_review: dict[str, int] = Field(default_factory=dict)
 
 
-def classification_to_read(item, reviews=()) -> ClassificationRead:
+def classification_to_read(item, reviews=(), overrides=()) -> ClassificationRead:
     value = ClassificationRead.model_validate(item)
+    corrected = {
+        override.field_name: override.corrected_value
+        for override in overrides
+        if override.active and (override.classification_id is None or override.classification_id == item.id)
+    }
+    if corrected:
+        value = value.model_copy(update=corrected)
     decisions, abstained, validation, strength, warnings = canonical_state(item)
     confidence = confidence_summary(item, decisions)
     matching_reviews = [r for r in reviews if r.classification_id == item.id]
@@ -164,19 +243,25 @@ def classification_to_read(item, reviews=()) -> ClassificationRead:
     })
 
 
-def rule_to_read(rule, classification=None) -> RuleRead:
+def rule_to_read(rule, classification=None, product_decision=None) -> RuleRead:
     if classification is None and getattr(rule, "classifications", None):
         non_failed = [item for item in rule.classifications if item.classification_status != ClassificationStatus.FAILED]
         classification = non_failed[-1] if non_failed else None
-    fields = RuleRead.model_fields.keys() - {"classification", "metadata", "manual_review", "classification_options"}
+    fields = RuleRead.model_fields.keys() - {"classification", "metadata", "manual_review", "classification_options", "families", "product_decision"}
     data = {field: getattr(rule, field) for field in fields}
     data["metadata"] = rule.rule_metadata
     reviews = getattr(rule, "manual_reviews", [])
     current = reviews[-1] if reviews else None
     review = {"status": current.status, "note": current.note, "reviewer_type": current.reviewer_type, "reviewed_at": current.created_at} if current else None
-    normalized = classification_to_read(classification, reviews) if classification else None
-    options = [classification_to_read(item, reviews).model_dump(mode='json')
+    overrides = getattr(rule, "classification_overrides", [])
+    normalized = classification_to_read(classification, reviews, overrides) if classification else None
+    options = [classification_to_read(item, reviews, overrides).model_dump(mode='json')
         for item in sorted(getattr(rule, "classifications", []), key=lambda x: (x.created_at, x.id), reverse=True)]
+    data["families"] = [{"slug": a.family.slug, "name": a.family.name, "family_type": getattr(a.family.family_type, "value", a.family.family_type)}
+                        for a in getattr(rule, "family_assignments", []) if getattr(a, "family", None)]
+    data["product_decision"] = ({"status": getattr(product_decision.status, "value", product_decision.status),
+                                  "note": product_decision.note, "updated_at": product_decision.updated_at}
+                                 if product_decision is not None else None)
     return RuleRead(**data, classification=normalized, manual_review=review, classification_options=options)
 
 
@@ -195,3 +280,37 @@ class ManualReviewResponse(BaseModel):
 
 class ManualReviewHistoryResponse(BaseModel):
     items: list[ManualReviewResponse]
+
+class ClassificationOverrideRequest(BaseModel):
+    classification_id: int | None = None
+    corrections: dict[str, str | None] = Field(min_length=1, max_length=20)
+    reason: str = Field(min_length=3, max_length=2000)
+
+
+class ForcedMitreRequest(BaseModel):
+    classification_id: int
+    acknowledge_risk: bool
+
+
+class ForcedMitreRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    classification_id: int
+    technique_id: str
+    technique_name: str
+    tactic: str | None
+    confidence: float
+    evidence: list[dict]
+    explanation: str
+    provider: str
+    model_name: str
+    created_at: datetime
+    forced: bool = True
+    warning: str = "This MITRE mapping was forced at the user's request and may be misleading."
+
+
+class ForcedMitreState(BaseModel):
+    eligible: bool
+    reason: str | None = None
+    mapping: ForcedMitreRead | None = None

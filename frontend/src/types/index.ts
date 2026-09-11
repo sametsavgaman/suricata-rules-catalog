@@ -54,6 +54,7 @@ export interface Rule {
   app_layer: Array<Record<string, string | null>>; source_file: string | null; created_at: string;
   classification: Classification | null; manual_review?: {status:string; note:string|null; reviewer_type:string; reviewed_at:string} | null;
   classification_options?: Classification[];
+  families?: Array<{slug:string;name:string;family_type:string}>;
   product_decision?: {status:string; note:string|null; updated_at:string} | null;
 }
 

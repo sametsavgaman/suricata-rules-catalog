@@ -20,10 +20,10 @@ class ProviderUnavailable(RuntimeError):
 class OpenAIClassificationProvider:
     """One Responses API call per rule, validated directly into a Pydantic model."""
 
-    def __init__(self, api_key: str | None, model_name: str | None):
+    def __init__(self, api_key: str | None, model_name: str | None, base_url: str | None = None):
         self.model_name = model_name or "NOT_CONFIGURED"
         self._configured_model = model_name
-        self._client = AsyncOpenAI(api_key=api_key) if api_key else None
+        self._client = AsyncOpenAI(api_key=api_key, base_url=base_url or None) if api_key else None
 
     async def classify(self, context: ClassificationContext) -> ProviderResult:
         if self._client is None:

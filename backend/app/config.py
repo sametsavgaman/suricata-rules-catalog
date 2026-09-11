@@ -12,6 +12,10 @@ class Settings(BaseSettings):
     database_url: str = "sqlite:///./suricata_rules.db"
     openai_api_key: str | None = None
     openai_model: str | None = None
+    openai_base_url: str | None = None
+    claude_api_key: str | None = None
+    claude_model: str | None = None
+    claude_base_url: str = "https://api.anthropic.com"
     ai_provider: str = "openai"
     gemini_api_key: str | None = None
     gemini_model: str | None = None

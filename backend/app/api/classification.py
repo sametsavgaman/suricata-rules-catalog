@@ -31,7 +31,17 @@ async def classify_all(
     db: Session = Depends(get_db),
     service: ClassificationService = Depends(get_classification_service),
 ):
-    rules = RuleRepository(db).unclassified(limit)
+    provider_name = (
+        getattr(service.provider, "provider_name", None)
+        or service.provider.__class__.__name__.replace("ClassificationProvider", "").lower()
+        or "unknown"
+    )
+    rules = RuleRepository(db).unclassified(
+        limit,
+        target_provider=provider_name,
+        target_model=service.provider.model_name,
+        classifier_version=service.settings.classifier_version,
+    )
     counts = {status: 0 for status in ClassificationStatus}
     for rule in rules:
         result = await service.classify(rule)
@@ -42,4 +52,3 @@ async def classify_all(
         review_required=counts[ClassificationStatus.REVIEW_REQUIRED],
         failed=counts[ClassificationStatus.FAILED],
     )
-

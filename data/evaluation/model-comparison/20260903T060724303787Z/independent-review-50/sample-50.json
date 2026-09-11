@@ -1,0 +1,368 @@
+{
+  "seed": 42,
+  "sampling": "random.Random(42).sample(sorted SID/REV pairs,50); no disagreement/confidence selection",
+  "sample_id": "operational-250-seed42-v1",
+  "total": 50,
+  "cohorts": {
+    "FRESH_OPERATIONAL": 34,
+    "AUDITED_BENCHMARK": 16
+  },
+  "records": [
+    {
+      "index": 1,
+      "sid": 2064637,
+      "rev": 1,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-dyn_dns.rules"
+    },
+    {
+      "index": 2,
+      "sid": 2012060,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-web_client.rules"
+    },
+    {
+      "index": 3,
+      "sid": 2003194,
+      "rev": 7,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-voip.rules"
+    },
+    {
+      "index": 4,
+      "sid": 2101388,
+      "rev": 14,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-misc.rules"
+    },
+    {
+      "index": 5,
+      "sid": 2025067,
+      "rev": 3,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-chat.rules"
+    },
+    {
+      "index": 6,
+      "sid": 2023019,
+      "rev": 4,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-telnet.rules"
+    },
+    {
+      "index": 7,
+      "sid": 2020702,
+      "rev": 5,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-dos.rules"
+    },
+    {
+      "index": 8,
+      "sid": 2013682,
+      "rev": 5,
+      "cohort": "AUDITED_BENCHMARK",
+      "source_file": "emerging-web_specific_apps.rules"
+    },
+    {
+      "index": 9,
+      "sid": 2101280,
+      "rev": 10,
+      "cohort": "AUDITED_BENCHMARK",
+      "source_file": "emerging-rpc.rules"
+    },
+    {
+      "index": 10,
+      "sid": 2011286,
+      "rev": 7,
+      "cohort": "AUDITED_BENCHMARK",
+      "source_file": "emerging-web_server.rules"
+    },
+    {
+      "index": 11,
+      "sid": 2068435,
+      "rev": 1,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-attack_response.rules"
+    },
+    {
+      "index": 12,
+      "sid": 2527005,
+      "rev": 1715,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\threatview_CS_c2.rules"
+    },
+    {
+      "index": 13,
+      "sid": 2403415,
+      "rev": 111389,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\ciarmy.rules"
+    },
+    {
+      "index": 14,
+      "sid": 2050707,
+      "rev": 2,
+      "cohort": "AUDITED_BENCHMARK",
+      "source_file": "emerging-remote_access.rules"
+    },
+    {
+      "index": 15,
+      "sid": 2009985,
+      "rev": 2,
+      "cohort": "AUDITED_BENCHMARK",
+      "source_file": "emerging-ftp.rules"
+    },
+    {
+      "index": 16,
+      "sid": 2060513,
+      "rev": 2,
+      "cohort": "AUDITED_BENCHMARK",
+      "source_file": "emerging-remote_access.rules"
+    },
+    {
+      "index": 17,
+      "sid": 2038015,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-hunting.rules"
+    },
+    {
+      "index": 18,
+      "sid": 2005279,
+      "rev": 9,
+      "cohort": "AUDITED_BENCHMARK",
+      "source_file": "emerging-web_specific_apps.rules"
+    },
+    {
+      "index": 19,
+      "sid": 2003657,
+      "rev": 21,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-user_agents.rules"
+    },
+    {
+      "index": 20,
+      "sid": 2010494,
+      "rev": 5,
+      "cohort": "AUDITED_BENCHMARK",
+      "source_file": "emerging-scan.rules"
+    },
+    {
+      "index": 21,
+      "sid": 2019089,
+      "rev": 6,
+      "cohort": "AUDITED_BENCHMARK",
+      "source_file": "emerging-exploit.rules"
+    },
+    {
+      "index": 22,
+      "sid": 2021371,
+      "rev": 7,
+      "cohort": "AUDITED_BENCHMARK",
+      "source_file": "emerging-info.rules"
+    },
+    {
+      "index": 23,
+      "sid": 2047740,
+      "rev": 1,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-info.rules"
+    },
+    {
+      "index": 24,
+      "sid": 2060760,
+      "rev": 1,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-phishing.rules"
+    },
+    {
+      "index": 25,
+      "sid": 2527010,
+      "rev": 1715,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\threatview_CS_c2.rules"
+    },
+    {
+      "index": 26,
+      "sid": 2056218,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "source_file": "emerging-malware.rules"
+    },
+    {
+      "index": 27,
+      "sid": 2017873,
+      "rev": 3,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-coinminer.rules"
+    },
+    {
+      "index": 28,
+      "sid": 2100606,
+      "rev": 7,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-misc.rules"
+    },
+    {
+      "index": 29,
+      "sid": 2066004,
+      "rev": 1,
+      "cohort": "AUDITED_BENCHMARK",
+      "source_file": "emerging-web_specific_apps.rules"
+    },
+    {
+      "index": 30,
+      "sid": 2100366,
+      "rev": 8,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-icmp.rules"
+    },
+    {
+      "index": 31,
+      "sid": 2500010,
+      "rev": 7731,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\compromised.rules"
+    },
+    {
+      "index": 32,
+      "sid": 2037772,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-current_events.rules"
+    },
+    {
+      "index": 33,
+      "sid": 2019842,
+      "rev": 7,
+      "cohort": "AUDITED_BENCHMARK",
+      "source_file": "emerging-web_client.rules"
+    },
+    {
+      "index": 34,
+      "sid": 2040009,
+      "rev": 3,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-dyn_dns.rules"
+    },
+    {
+      "index": 35,
+      "sid": 2060508,
+      "rev": 2,
+      "cohort": "AUDITED_BENCHMARK",
+      "source_file": "emerging-remote_access.rules"
+    },
+    {
+      "index": 36,
+      "sid": 2025094,
+      "rev": 7,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-adware_pup.rules"
+    },
+    {
+      "index": 37,
+      "sid": 2102809,
+      "rev": 5,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-sql.rules"
+    },
+    {
+      "index": 38,
+      "sid": 2001581,
+      "rev": 15,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-scan.rules"
+    },
+    {
+      "index": 39,
+      "sid": 2101640,
+      "rev": 12,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-chat.rules"
+    },
+    {
+      "index": 40,
+      "sid": 2102785,
+      "rev": 5,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-sql.rules"
+    },
+    {
+      "index": 41,
+      "sid": 2014649,
+      "rev": 7,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-activex.rules"
+    },
+    {
+      "index": 42,
+      "sid": 2100289,
+      "rev": 12,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-pop3.rules"
+    },
+    {
+      "index": 43,
+      "sid": 2404304,
+      "rev": 8031,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\botcc.rules"
+    },
+    {
+      "index": 44,
+      "sid": 2029780,
+      "rev": 3,
+      "cohort": "AUDITED_BENCHMARK",
+      "source_file": "emerging-hunting.rules"
+    },
+    {
+      "index": 45,
+      "sid": 2103244,
+      "rev": 5,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-netbios.rules"
+    },
+    {
+      "index": 46,
+      "sid": 2014402,
+      "rev": 3,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-worm.rules"
+    },
+    {
+      "index": 47,
+      "sid": 2403426,
+      "rev": 111389,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\ciarmy.rules"
+    },
+    {
+      "index": 48,
+      "sid": 2101732,
+      "rev": 10,
+      "cohort": "AUDITED_BENCHMARK",
+      "source_file": "emerging-rpc.rules"
+    },
+    {
+      "index": 49,
+      "sid": 2029645,
+      "rev": 2,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\emerging-scan.rules"
+    },
+    {
+      "index": 50,
+      "sid": 2520127,
+      "rev": 6363,
+      "cohort": "FRESH_OPERATIONAL",
+      "source_file": "data\\rules\\et-open\\tor.rules"
+    }
+  ],
+  "source_hashes": {
+    "data\\evaluation\\operational-250\\sample-250.jsonl": "c7fadde78e84014abc822675ed61e63b3d480374c342741c1be9a6f83fc377b3",
+    "data\\evaluation\\model-comparison\\20260903T060724303787Z\\results.jsonl": "c912a61465d23b3e56c4c5ccffcdbc1945d5edcc2d85036d81c1178b9b91a9dd",
+    "data\\evaluation\\golden_dataset.jsonl": "64b6cd419a6992de71f873c10f315e488b55a3670d7dbdde080b4c25defe8f78",
+    "data\\mitre\\enterprise-techniques.json": "40dbcb0fee079d7ef4fa3740fcb93c10867238ffd3486154f43f7b1fd94fc567"
+  }
+}

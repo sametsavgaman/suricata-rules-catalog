@@ -26,6 +26,28 @@ Core boundaries are deliberately small:
 - `services/` owns the single-call, cache, status, and persistence flow.
 - `knowledge/` can later be replaced with semantic retrieval or pgvector without changing the parser.
 
+## Detection Families and catalogue assistant
+
+The catalogue includes a conservative Detection Families projection. A rule is
+grouped only when an explicit entity, known name, controlled behavior pattern or
+supported CVE supplies deterministic evidence; otherwise it remains
+`UNASSIGNED`. Family state lives in separate tables and never rewrites a rule,
+classification, benchmark or human review. Browse it at
+`http://localhost:5173/catalog/families`.
+
+The compact **Kataloğa sor** assistant uses Gemini only to turn a Turkish or
+English question into a strict allowlisted filter plan. Counts and records come
+from bounded, read-only SQLAlchemy queries. Gemini receives no rule rows, SQL,
+database URL, runtime secrets or API key. See `docs/detection-families.md` and
+`docs/catalog-assistant.md` for the contracts.
+
+Backfill existing rules from the project root:
+
+```powershell
+$env:PYTHONPATH="backend"
+backend\.venv\Scripts\python.exe -m app.enrichment.backfill_detection_families
+```
+
 The OpenAI adapter uses the Responses API's Pydantic structured-output parser and disables response storage for this stateless classification call.
 
 ## Quick start with Docker
@@ -37,6 +59,38 @@ docker compose up --build
 ```
 
 Open the dashboard at `http://localhost:5173`; API docs are at `http://localhost:8000/docs`.
+
+## Bring your own AI provider
+
+Copy `.env.example` to a local `.env` file and add only the credentials for the
+provider you want to use. The application supports local Qwen through Ollama as
+well as user-supplied Gemini, OpenAI, or Claude API credentials. Set
+`AI_PROVIDER` to the selected provider and configure its model name. Credentials
+remain local: `.env`, runtime secrets, SQLite databases, logs, and generated
+batch results are excluded from Git.
+
+```env
+# Token-free local inference
+AI_PROVIDER=ollama
+OLLAMA_BASE_URL=http://127.0.0.1:11434
+OLLAMA_MODEL=qwen3:8b
+
+# Or use your own Gemini account
+AI_PROVIDER=gemini
+GEMINI_API_KEY=
+GEMINI_MODEL=gemini-3.5-flash-lite
+```
+
+This project is designed to be token-friendly. Suricata parsing, evidence
+extraction, taxonomy checks, local MITRE lookup, validation, and catalogue
+queries run deterministically without an LLM. Classification uses one provider
+call per uncached `SID + REV`, successful results are reused, and configurable
+content/output limits keep prompts bounded. Teams can use local Qwen for bulk
+catalogue processing and reserve a cloud provider for selected workflows that
+need it.
+
+> Never commit a populated `.env` file. `.env.example` intentionally contains
+> only empty values or safe placeholders.
 
 ## Local development (SQLite)
 
@@ -70,6 +124,12 @@ The Vite development server proxies `/api` to port 8000. Without `OPENAI_API_KEY
 | `DATABASE_URL` | `sqlite:///./suricata_rules.db` | SQLAlchemy URL; PostgreSQL uses `postgresql+psycopg://...` |
 | `OPENAI_API_KEY` | unset | Required only for classification |
 | `OPENAI_MODEL` | unset | Responses API model available to your account; no model is assumed |
+| `GEMINI_API_KEY` | unset | Your own Gemini credential; required only when Gemini is selected |
+| `GEMINI_MODEL` | `gemini-3.5-flash-lite` | Gemini model used by Gemini-backed workflows |
+| `CLAUDE_API_KEY` | unset | Your own Anthropic credential; required only when Claude is selected |
+| `CLAUDE_MODEL` | unset | Claude model available to your account |
+| `OLLAMA_BASE_URL` | `http://127.0.0.1:11434` | Local Ollama endpoint; no cloud API token required |
+| `OLLAMA_MODEL` | `qwen3:8b` | Local reference model used for token-free bulk classification |
 | `FRONTEND_ORIGIN` | `http://localhost:5173` | CORS origin |
 | `MAX_AGENT_CONTENTS` | `20` | Maximum content clauses sent per rule |
 | `MAX_AGENT_CONTENT_CHARS` | `4000` | Combined content-character budget |
@@ -107,6 +167,10 @@ Each rule is isolated: a provider or validation failure is persisted and does no
 
 - `GET /api/rules` — filters: `category`, `subcategory`, `detected_entity`, `mitre_technique_id`, `entity_type`, `status`, `protocol`, `classtype`, minimum `confidence`, and `search`.
 - `GET /api/rules/{sid}` — newest revision plus its latest classification.
+- `GET /api/families` — paginated server-side Detection Family aggregation and filters.
+- `GET /api/families/{slug}` — family provenance and paginated underlying rules.
+- `GET /api/families/stats` — assignment and abstention coverage.
+- `POST /api/catalog/assistant/ask` — local-only Gemini intent planning plus grounded results.
 - `POST /api/rules/import` — one or more multipart `.rules` files.
 - `POST /api/rules/{sid}/classify` — single rule; `force=true` bypasses the successful-result cache.
 - `POST /api/classify/all` — bounded batch of rules without successful classifications.
@@ -299,3 +363,33 @@ When either value is absent the report emits `COST_NOT_CALCULATED` while still r
 ```
 
 Tests cover normalized comparison, null hallucination, unexpected nulls, field metrics, confidence buckets, stability scoring, reviewed-only filtering, cache behavior, error taxonomy, token cost handling, and missing-key behavior.
+
+### Resume-safe Qwen V2.2 catalog batches
+
+From the project root in PowerShell:
+
+```powershell
+.\run-qwen-1000.ps1 -Status  # Read-only progress; no model calls
+.\run-qwen-1000.ps1          # At most 1000 remaining target Qwen rules
+```
+
+Repeat the same command after an interruption or tomorrow. Committed successes for
+the exact provider/model/version are skipped using the database, not a JSON offset.
+Do not run alongside an older Qwen bulk worker or Qwen Model Lab inference.
+See [Qwen batch operations](docs/qwen-catalog-batch.md) for completion semantics,
+transactions, Ctrl+C handling, failure retries, concurrency scope and tests.
+
+### Reserved Kaggle/Colab Qwen batches
+
+From `backend`, reserve and export work before uploading the generated private ZIP:
+
+```powershell
+.\.venv\Scripts\python.exe -m app.cloud_batch export --limit 2000 --worker kaggle
+.\.venv\Scripts\python.exe -m app.cloud_batch status
+.\.venv\Scripts\python.exe -m app.cloud_batch import ..\results.jsonl
+.\.venv\Scripts\python.exe -m app.cloud_batch release kaggle-20260904-001
+```
+
+The local Qwen runner automatically skips active cloud reservations. Cloud workers
+receive no database or secret configuration. See
+[Cloud Qwen batches](docs/cloud-qwen-batches.md) for the full safe workflow.

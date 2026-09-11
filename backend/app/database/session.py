@@ -20,9 +20,22 @@ SessionLocal = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False
 
 def ensure_schema_extensions() -> None:
     """Minimal additive migration for existing V1 SQLite databases."""
+    from app.database.models import Base
+    # New standalone tables are safe additive migrations on both SQLite and
+    # PostgreSQL; existing deployments do not need a destructive migration.
+    Base.metadata.create_all(
+        engine,
+        tables=[
+            Base.metadata.tables["cloud_batches"],
+            Base.metadata.tables["cloud_batch_reservations"],
+            Base.metadata.tables["local_classification_claims"],
+            Base.metadata.tables["product_ruleset_import_batches"],
+            Base.metadata.tables["product_ruleset_import_items"],
+            Base.metadata.tables["forced_mitre_mappings"],
+        ],
+    )
     if not settings.database_url.startswith("sqlite"): return
     if "classification_runs" not in inspect(engine).get_table_names():
-        from app.database.models import Base
         Base.metadata.create_all(engine, tables=[Base.metadata.tables["classification_runs"]])
     if "classifications" not in inspect(engine).get_table_names(): return
     columns={c["name"] for c in inspect(engine).get_columns("classifications")}
@@ -34,6 +47,18 @@ def ensure_schema_extensions() -> None:
             if name not in columns: conn.execute(text(f"ALTER TABLE classifications ADD COLUMN {name} {sql_type}"))
         for name, sql_type in {"run_id":"VARCHAR(128)","classification_run_id":"INTEGER","model_display_name":"VARCHAR(160)","inference_mode":"VARCHAR(16)","model_config_json":"JSON","inference_duration_ms":"FLOAT"}.items():
             if name not in columns: conn.execute(text(f"ALTER TABLE classifications ADD COLUMN {name} {sql_type}"))
+    if "cloud_batches" in inspect(engine).get_table_names():
+        cloud_columns = {c["name"] for c in inspect(engine).get_columns("cloud_batches")}
+        if "target_model_digest" not in cloud_columns:
+            with engine.begin() as conn:
+                conn.execute(text("ALTER TABLE cloud_batches ADD COLUMN target_model_digest VARCHAR(128)"))
+    if "local_classification_claims" in inspect(engine).get_table_names():
+        claim_columns = {c["name"] for c in inspect(engine).get_columns("local_classification_claims")}
+        with engine.begin() as conn:
+            if "owner_pid" not in claim_columns:
+                conn.execute(text("ALTER TABLE local_classification_claims ADD COLUMN owner_pid INTEGER"))
+            if "owner_host" not in claim_columns:
+                conn.execute(text("ALTER TABLE local_classification_claims ADD COLUMN owner_host VARCHAR(255)"))
 
 
 def get_db() -> Generator[Session, None, None]:
