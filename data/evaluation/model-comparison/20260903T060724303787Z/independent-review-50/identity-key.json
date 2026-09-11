@@ -1,0 +1,1452 @@
+[
+  {
+    "index": 1,
+    "sid": 2064637,
+    "rev": 1,
+    "A": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1343,
+      "run_id": "gemini-v2.1-c94abebccc44",
+      "wall_seconds": 2.478,
+      "usage": {
+        "input_tokens": 1256,
+        "output_tokens": 245,
+        "total_tokens": 1501
+      }
+    },
+    "B": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1347,
+      "run_id": "ollama-v2.1-0cfa4fe0d4a5",
+      "wall_seconds": 6.671,
+      "usage": {
+        "input_tokens": 1201,
+        "output_tokens": 248,
+        "total_tokens": 1449
+      }
+    }
+  },
+  {
+    "index": 2,
+    "sid": 2012060,
+    "rev": 2,
+    "A": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1311,
+      "run_id": "gemini-v2.1-8e2072a91989",
+      "wall_seconds": 1.495,
+      "usage": {
+        "input_tokens": 897,
+        "output_tokens": 242,
+        "total_tokens": 1139
+      }
+    },
+    "B": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1320,
+      "run_id": "ollama-v2.1-97dfb220b93a",
+      "wall_seconds": 6.236,
+      "usage": {
+        "input_tokens": 862,
+        "output_tokens": 219,
+        "total_tokens": 1081
+      }
+    }
+  },
+  {
+    "index": 3,
+    "sid": 2003194,
+    "rev": 7,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1509,
+      "run_id": "ollama-v2.1-2838156337a2",
+      "wall_seconds": 5.621,
+      "usage": {
+        "input_tokens": 749,
+        "output_tokens": 179,
+        "total_tokens": 928
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1490,
+      "run_id": "gemini-v2.1-a8e4a99f4070",
+      "wall_seconds": 1.401,
+      "usage": {
+        "input_tokens": 769,
+        "output_tokens": 198,
+        "total_tokens": 967
+      }
+    }
+  },
+  {
+    "index": 4,
+    "sid": 2101388,
+    "rev": 14,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1282,
+      "run_id": "ollama-v2.1-c6593973d7d7",
+      "wall_seconds": 6.71,
+      "usage": {
+        "input_tokens": 817,
+        "output_tokens": 238,
+        "total_tokens": 1055
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1276,
+      "run_id": "gemini-v2.1-de94cdef0fa0",
+      "wall_seconds": 1.861,
+      "usage": {
+        "input_tokens": 839,
+        "output_tokens": 236,
+        "total_tokens": 1075
+      }
+    }
+  },
+  {
+    "index": 5,
+    "sid": 2025067,
+    "rev": 3,
+    "A": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1508,
+      "run_id": "gemini-v2.1-ec4e4fafc917",
+      "wall_seconds": 1.226,
+      "usage": {
+        "input_tokens": 783,
+        "output_tokens": 218,
+        "total_tokens": 1001
+      }
+    },
+    "B": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1526,
+      "run_id": "ollama-v2.1-ee37a98a911b",
+      "wall_seconds": 6.164,
+      "usage": {
+        "input_tokens": 760,
+        "output_tokens": 223,
+        "total_tokens": 983
+      }
+    }
+  },
+  {
+    "index": 6,
+    "sid": 2023019,
+    "rev": 4,
+    "A": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1303,
+      "run_id": "gemini-v2.1-0c9b6ab7a2a7",
+      "wall_seconds": 1.281,
+      "usage": {
+        "input_tokens": 850,
+        "output_tokens": 195,
+        "total_tokens": 1045
+      }
+    },
+    "B": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1315,
+      "run_id": "ollama-v2.1-6ffa83dd5753",
+      "wall_seconds": 6.321,
+      "usage": {
+        "input_tokens": 825,
+        "output_tokens": 220,
+        "total_tokens": 1045
+      }
+    }
+  },
+  {
+    "index": 7,
+    "sid": 2020702,
+    "rev": 5,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1532,
+      "run_id": "ollama-v2.1-953dbc5dcbe7",
+      "wall_seconds": 5.192,
+      "usage": {
+        "input_tokens": 1116,
+        "output_tokens": 182,
+        "total_tokens": 1298
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1519,
+      "run_id": "gemini-v2.1-6747fdaa37db",
+      "wall_seconds": 1.212,
+      "usage": {
+        "input_tokens": 1161,
+        "output_tokens": 216,
+        "total_tokens": 1377
+      }
+    }
+  },
+  {
+    "index": 8,
+    "sid": 2013682,
+    "rev": 5,
+    "A": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1226,
+      "run_id": "gemini-v2.1-3805afd72691",
+      "wall_seconds": 4.018,
+      "usage": {
+        "input_tokens": 1338,
+        "output_tokens": 242,
+        "total_tokens": 1580
+      }
+    },
+    "B": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1228,
+      "run_id": "ollama-v2.1-23f3e55932d7",
+      "wall_seconds": 6.609,
+      "usage": {
+        "input_tokens": 1275,
+        "output_tokens": 240,
+        "total_tokens": 1515
+      }
+    }
+  },
+  {
+    "index": 9,
+    "sid": 2101280,
+    "rev": 10,
+    "A": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1204,
+      "run_id": "gemini-v2.1-e33c5b91d699",
+      "wall_seconds": 1.82,
+      "usage": {
+        "input_tokens": 1118,
+        "output_tokens": 196,
+        "total_tokens": 1314
+      }
+    },
+    "B": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1205,
+      "run_id": "ollama-v2.1-1389031109e0",
+      "wall_seconds": 5.754,
+      "usage": {
+        "input_tokens": 1079,
+        "output_tokens": 211,
+        "total_tokens": 1290
+      }
+    }
+  },
+  {
+    "index": 10,
+    "sid": 2011286,
+    "rev": 7,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1132,
+      "run_id": "ollama-v2.1-674fd3c62ddb",
+      "wall_seconds": 15.699,
+      "usage": {
+        "input_tokens": 805,
+        "output_tokens": 225,
+        "total_tokens": 1030
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1133,
+      "run_id": "gemini-v2.1-53816df5a9ee",
+      "wall_seconds": 4.017,
+      "usage": {
+        "input_tokens": 836,
+        "output_tokens": 233,
+        "total_tokens": 1069
+      }
+    }
+  },
+  {
+    "index": 11,
+    "sid": 2068435,
+    "rev": 1,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1425,
+      "run_id": "ollama-v2.1-5448e3cdcb4d",
+      "wall_seconds": 7.211,
+      "usage": {
+        "input_tokens": 1033,
+        "output_tokens": 248,
+        "total_tokens": 1281
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1417,
+      "run_id": "gemini-v2.1-d9a76e6b448c",
+      "wall_seconds": 1.349,
+      "usage": {
+        "input_tokens": 1083,
+        "output_tokens": 226,
+        "total_tokens": 1309
+      }
+    }
+  },
+  {
+    "index": 12,
+    "sid": 2527005,
+    "rev": 1715,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1525,
+      "run_id": "ollama-v2.1-7cc24dc74beb",
+      "wall_seconds": 5.711,
+      "usage": {
+        "input_tokens": 818,
+        "output_tokens": 204,
+        "total_tokens": 1022
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1506,
+      "run_id": "gemini-v2.1-7c4d9639436f",
+      "wall_seconds": 1.093,
+      "usage": {
+        "input_tokens": 843,
+        "output_tokens": 176,
+        "total_tokens": 1019
+      }
+    }
+  },
+  {
+    "index": 13,
+    "sid": 2403415,
+    "rev": 111389,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1339,
+      "run_id": "ollama-v2.1-f7cad15f0e80",
+      "wall_seconds": 3.754,
+      "usage": {
+        "input_tokens": 858,
+        "output_tokens": 135,
+        "total_tokens": 993
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1334,
+      "run_id": "gemini-v2.1-494e3f6124a6",
+      "wall_seconds": 3.012,
+      "usage": {
+        "input_tokens": 887,
+        "output_tokens": 180,
+        "total_tokens": 1067
+      }
+    }
+  },
+  {
+    "index": 14,
+    "sid": 2050707,
+    "rev": 2,
+    "A": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1079,
+      "run_id": "gemini-v2.1-37b427498578",
+      "wall_seconds": 2.686,
+      "usage": {
+        "input_tokens": 1463,
+        "output_tokens": 196,
+        "total_tokens": 1659
+      }
+    },
+    "B": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1078,
+      "run_id": "ollama-v2.1-74783e93334d",
+      "wall_seconds": 6.278,
+      "usage": {
+        "input_tokens": 1415,
+        "output_tokens": 221,
+        "total_tokens": 1636
+      }
+    }
+  },
+  {
+    "index": 15,
+    "sid": 2009985,
+    "rev": 2,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1203,
+      "run_id": "ollama-v2.1-199d26327066",
+      "wall_seconds": 6.613,
+      "usage": {
+        "input_tokens": 896,
+        "output_tokens": 233,
+        "total_tokens": 1129
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1202,
+      "run_id": "gemini-v2.1-aa470ad1ab58",
+      "wall_seconds": 2.655,
+      "usage": {
+        "input_tokens": 936,
+        "output_tokens": 205,
+        "total_tokens": 1141
+      }
+    }
+  },
+  {
+    "index": 16,
+    "sid": 2060513,
+    "rev": 2,
+    "A": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1049,
+      "run_id": "gemini-v2.1-afa17038a057",
+      "wall_seconds": 4.334,
+      "usage": {
+        "input_tokens": 1362,
+        "output_tokens": 269,
+        "total_tokens": 1631
+      }
+    },
+    "B": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1048,
+      "run_id": "ollama-v2.1-134c1e84a1c4",
+      "wall_seconds": 5.917,
+      "usage": {
+        "input_tokens": 1304,
+        "output_tokens": 190,
+        "total_tokens": 1494
+      }
+    }
+  },
+  {
+    "index": 17,
+    "sid": 2038015,
+    "rev": 2,
+    "A": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1356,
+      "run_id": "gemini-v2.1-85525dddbe81",
+      "wall_seconds": 1.532,
+      "usage": {
+        "input_tokens": 912,
+        "output_tokens": 241,
+        "total_tokens": 1153
+      }
+    },
+    "B": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1361,
+      "run_id": "ollama-v2.1-377a8b61281f",
+      "wall_seconds": 7.09,
+      "usage": {
+        "input_tokens": 880,
+        "output_tokens": 260,
+        "total_tokens": 1140
+      }
+    }
+  },
+  {
+    "index": 18,
+    "sid": 2005279,
+    "rev": 9,
+    "A": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1223,
+      "run_id": "gemini-v2.1-ec8637ff1bf4",
+      "wall_seconds": 3.401,
+      "usage": {
+        "input_tokens": 1047,
+        "output_tokens": 266,
+        "total_tokens": 1313
+      }
+    },
+    "B": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1225,
+      "run_id": "ollama-v2.1-0cdc6091f405",
+      "wall_seconds": 6.897,
+      "usage": {
+        "input_tokens": 996,
+        "output_tokens": 246,
+        "total_tokens": 1242
+      }
+    }
+  },
+  {
+    "index": 19,
+    "sid": 2003657,
+    "rev": 21,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1408,
+      "run_id": "ollama-v2.1-6372af62dbbc",
+      "wall_seconds": 4.979,
+      "usage": {
+        "input_tokens": 1172,
+        "output_tokens": 175,
+        "total_tokens": 1347
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1402,
+      "run_id": "gemini-v2.1-63fed5980489",
+      "wall_seconds": 1.521,
+      "usage": {
+        "input_tokens": 1222,
+        "output_tokens": 213,
+        "total_tokens": 1435
+      }
+    }
+  },
+  {
+    "index": 20,
+    "sid": 2010494,
+    "rev": 5,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1150,
+      "run_id": "ollama-v2.1-88619302d835",
+      "wall_seconds": 5.725,
+      "usage": {
+        "input_tokens": 904,
+        "output_tokens": 223,
+        "total_tokens": 1127
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1151,
+      "run_id": "gemini-v2.1-e06a84982286",
+      "wall_seconds": 6.858,
+      "usage": {
+        "input_tokens": 931,
+        "output_tokens": 220,
+        "total_tokens": 1151
+      }
+    }
+  },
+  {
+    "index": 21,
+    "sid": 2019089,
+    "rev": 6,
+    "A": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1155,
+      "run_id": "gemini-v2.1-18a36d34d58b",
+      "wall_seconds": 4.895,
+      "usage": {
+        "input_tokens": 844,
+        "output_tokens": 219,
+        "total_tokens": 1063
+      }
+    },
+    "B": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1154,
+      "run_id": "ollama-v2.1-e421622cf6b7",
+      "wall_seconds": 9.232,
+      "usage": {
+        "input_tokens": 809,
+        "output_tokens": 238,
+        "total_tokens": 1047
+      }
+    }
+  },
+  {
+    "index": 22,
+    "sid": 2021371,
+    "rev": 7,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1070,
+      "run_id": "ollama-v2.1-cc4fc1e3f8a2",
+      "wall_seconds": 5.92,
+      "usage": {
+        "input_tokens": 948,
+        "output_tokens": 232,
+        "total_tokens": 1180
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1071,
+      "run_id": "gemini-v2.1-7caa79836f24",
+      "wall_seconds": 4.009,
+      "usage": {
+        "input_tokens": 986,
+        "output_tokens": 211,
+        "total_tokens": 1197
+      }
+    }
+  },
+  {
+    "index": 23,
+    "sid": 2047740,
+    "rev": 1,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1275,
+      "run_id": "ollama-v2.1-8ee46cbd20b4",
+      "wall_seconds": 7.389,
+      "usage": {
+        "input_tokens": 983,
+        "output_tokens": 254,
+        "total_tokens": 1237
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1271,
+      "run_id": "gemini-v2.1-cd593b1c7d89",
+      "wall_seconds": 1.6,
+      "usage": {
+        "input_tokens": 1011,
+        "output_tokens": 265,
+        "total_tokens": 1276
+      }
+    }
+  },
+  {
+    "index": 24,
+    "sid": 2060760,
+    "rev": 1,
+    "A": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1281,
+      "run_id": "gemini-v2.1-0b15a881475f",
+      "wall_seconds": 1.344,
+      "usage": {
+        "input_tokens": 1331,
+        "output_tokens": 255,
+        "total_tokens": 1586
+      }
+    },
+    "B": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1289,
+      "run_id": "ollama-v2.1-a2e32e874f21",
+      "wall_seconds": 6.813,
+      "usage": {
+        "input_tokens": 1274,
+        "output_tokens": 248,
+        "total_tokens": 1522
+      }
+    }
+  },
+  {
+    "index": 25,
+    "sid": 2527010,
+    "rev": 1715,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1430,
+      "run_id": "ollama-v2.1-dd69844cdca2",
+      "wall_seconds": 5.343,
+      "usage": {
+        "input_tokens": 819,
+        "output_tokens": 188,
+        "total_tokens": 1007
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1420,
+      "run_id": "gemini-v2.1-74ae99fde921",
+      "wall_seconds": 1.186,
+      "usage": {
+        "input_tokens": 844,
+        "output_tokens": 199,
+        "total_tokens": 1043
+      }
+    }
+  },
+  {
+    "index": 26,
+    "sid": 2056218,
+    "rev": 1,
+    "A": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1210,
+      "run_id": "gemini-v2.1-a798d77fa9ff",
+      "wall_seconds": 1.203,
+      "usage": {
+        "input_tokens": 1338,
+        "output_tokens": 240,
+        "total_tokens": 1578
+      }
+    },
+    "B": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1211,
+      "run_id": "ollama-v2.1-375db0b099fd",
+      "wall_seconds": 7.299,
+      "usage": {
+        "input_tokens": 1288,
+        "output_tokens": 271,
+        "total_tokens": 1559
+      }
+    }
+  },
+  {
+    "index": 27,
+    "sid": 2017873,
+    "rev": 3,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1436,
+      "run_id": "ollama-v2.1-5143340c14e4",
+      "wall_seconds": 7.723,
+      "usage": {
+        "input_tokens": 923,
+        "output_tokens": 281,
+        "total_tokens": 1204
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1426,
+      "run_id": "gemini-v2.1-6117fd016c55",
+      "wall_seconds": 1.469,
+      "usage": {
+        "input_tokens": 960,
+        "output_tokens": 270,
+        "total_tokens": 1230
+      }
+    }
+  },
+  {
+    "index": 28,
+    "sid": 2100606,
+    "rev": 7,
+    "A": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1368,
+      "run_id": "gemini-v2.1-e8cee5714b90",
+      "wall_seconds": 1.221,
+      "usage": {
+        "input_tokens": 772,
+        "output_tokens": 200,
+        "total_tokens": 972
+      }
+    },
+    "B": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1372,
+      "run_id": "ollama-v2.1-c6b1c07e7811",
+      "wall_seconds": 5.28,
+      "usage": {
+        "input_tokens": 750,
+        "output_tokens": 182,
+        "total_tokens": 932
+      }
+    }
+  },
+  {
+    "index": 29,
+    "sid": 2066004,
+    "rev": 1,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1141,
+      "run_id": "ollama-v2.1-4b089d649439",
+      "wall_seconds": 9.038,
+      "usage": {
+        "input_tokens": 1161,
+        "output_tokens": 339,
+        "total_tokens": 1500
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1140,
+      "run_id": "gemini-v2.1-361e806c15b3",
+      "wall_seconds": 1.628,
+      "usage": {
+        "input_tokens": 1206,
+        "output_tokens": 301,
+        "total_tokens": 1507
+      }
+    }
+  },
+  {
+    "index": 30,
+    "sid": 2100366,
+    "rev": 8,
+    "A": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1446,
+      "run_id": "gemini-v2.1-8801277db409",
+      "wall_seconds": 1.188,
+      "usage": {
+        "input_tokens": 801,
+        "output_tokens": 190,
+        "total_tokens": 991
+      }
+    },
+    "B": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1460,
+      "run_id": "ollama-v2.1-cecb1e85e05e",
+      "wall_seconds": 6.134,
+      "usage": {
+        "input_tokens": 778,
+        "output_tokens": 220,
+        "total_tokens": 998
+      }
+    }
+  },
+  {
+    "index": 31,
+    "sid": 2500010,
+    "rev": 7731,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1244,
+      "run_id": "ollama-v2.1-76e9600e0798",
+      "wall_seconds": 5.41,
+      "usage": {
+        "input_tokens": 1098,
+        "output_tokens": 194,
+        "total_tokens": 1292
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1245,
+      "run_id": "gemini-v2.1-1499f3546527",
+      "wall_seconds": 1.218,
+      "usage": {
+        "input_tokens": 1141,
+        "output_tokens": 189,
+        "total_tokens": 1330
+      }
+    }
+  },
+  {
+    "index": 32,
+    "sid": 2037772,
+    "rev": 2,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1344,
+      "run_id": "ollama-v2.1-f93129772898",
+      "wall_seconds": 6.008,
+      "usage": {
+        "input_tokens": 1171,
+        "output_tokens": 211,
+        "total_tokens": 1382
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1340,
+      "run_id": "gemini-v2.1-000b07eec299",
+      "wall_seconds": 1.349,
+      "usage": {
+        "input_tokens": 1223,
+        "output_tokens": 211,
+        "total_tokens": 1434
+      }
+    }
+  },
+  {
+    "index": 33,
+    "sid": 2019842,
+    "rev": 7,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1044,
+      "run_id": "ollama-v2.1-270b74812690",
+      "wall_seconds": 8.505,
+      "usage": {
+        "input_tokens": 996,
+        "output_tokens": 314,
+        "total_tokens": 1310
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1045,
+      "run_id": "gemini-v2.1-c911ebed0502",
+      "wall_seconds": 1.375,
+      "usage": {
+        "input_tokens": 1027,
+        "output_tokens": 253,
+        "total_tokens": 1280
+      }
+    }
+  },
+  {
+    "index": 34,
+    "sid": 2040009,
+    "rev": 3,
+    "A": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1249,
+      "run_id": "gemini-v2.1-59b13d5bfeb8",
+      "wall_seconds": 5.314,
+      "usage": {
+        "input_tokens": 1259,
+        "output_tokens": 239,
+        "total_tokens": 1498
+      }
+    },
+    "B": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1248,
+      "run_id": "ollama-v2.1-dbda077a35bd",
+      "wall_seconds": 6.871,
+      "usage": {
+        "input_tokens": 1204,
+        "output_tokens": 227,
+        "total_tokens": 1431
+      }
+    }
+  },
+  {
+    "index": 35,
+    "sid": 2060508,
+    "rev": 2,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1137,
+      "run_id": "ollama-v2.1-2c3fc0914f27",
+      "wall_seconds": 6.746,
+      "usage": {
+        "input_tokens": 1314,
+        "output_tokens": 251,
+        "total_tokens": 1565
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1136,
+      "run_id": "gemini-v2.1-d3801f9009cf",
+      "wall_seconds": 1.32,
+      "usage": {
+        "input_tokens": 1374,
+        "output_tokens": 249,
+        "total_tokens": 1623
+      }
+    }
+  },
+  {
+    "index": 36,
+    "sid": 2025094,
+    "rev": 7,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1329,
+      "run_id": "ollama-v2.1-d7c3a5283d35",
+      "wall_seconds": 4.976,
+      "usage": {
+        "input_tokens": 1143,
+        "output_tokens": 176,
+        "total_tokens": 1319
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1324,
+      "run_id": "gemini-v2.1-36d2fae50bc6",
+      "wall_seconds": 1.547,
+      "usage": {
+        "input_tokens": 1193,
+        "output_tokens": 213,
+        "total_tokens": 1406
+      }
+    }
+  },
+  {
+    "index": 37,
+    "sid": 2102809,
+    "rev": 5,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1310,
+      "run_id": "ollama-v2.1-0a19e967d763",
+      "wall_seconds": 5.838,
+      "usage": {
+        "input_tokens": 1162,
+        "output_tokens": 215,
+        "total_tokens": 1377
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1299,
+      "run_id": "gemini-v2.1-9c49d3183a32",
+      "wall_seconds": 2.121,
+      "usage": {
+        "input_tokens": 1197,
+        "output_tokens": 220,
+        "total_tokens": 1417
+      }
+    }
+  },
+  {
+    "index": 38,
+    "sid": 2001581,
+    "rev": 15,
+    "A": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1472,
+      "run_id": "gemini-v2.1-fc0c7667e026",
+      "wall_seconds": 1.292,
+      "usage": {
+        "input_tokens": 750,
+        "output_tokens": 182,
+        "total_tokens": 932
+      }
+    },
+    "B": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1489,
+      "run_id": "ollama-v2.1-7dc9b751878d",
+      "wall_seconds": 5.778,
+      "usage": {
+        "input_tokens": 731,
+        "output_tokens": 204,
+        "total_tokens": 935
+      }
+    }
+  },
+  {
+    "index": 39,
+    "sid": 2101640,
+    "rev": 12,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1432,
+      "run_id": "ollama-v2.1-6ba20cc6fd59",
+      "wall_seconds": 5.552,
+      "usage": {
+        "input_tokens": 953,
+        "output_tokens": 206,
+        "total_tokens": 1159
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1422,
+      "run_id": "gemini-v2.1-3fe747ad1f69",
+      "wall_seconds": 1.237,
+      "usage": {
+        "input_tokens": 987,
+        "output_tokens": 198,
+        "total_tokens": 1185
+      }
+    }
+  },
+  {
+    "index": 40,
+    "sid": 2102785,
+    "rev": 5,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1399,
+      "run_id": "ollama-v2.1-398313671f85",
+      "wall_seconds": 10.167,
+      "usage": {
+        "input_tokens": 1074,
+        "output_tokens": 370,
+        "total_tokens": 1444
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1395,
+      "run_id": "gemini-v2.1-7135c2a7ac8f",
+      "wall_seconds": 1.844,
+      "usage": {
+        "input_tokens": 1109,
+        "output_tokens": 381,
+        "total_tokens": 1490
+      }
+    }
+  },
+  {
+    "index": 41,
+    "sid": 2014649,
+    "rev": 7,
+    "A": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1227,
+      "run_id": "gemini-v2.1-e72fa136b28b",
+      "wall_seconds": 1.285,
+      "usage": {
+        "input_tokens": 835,
+        "output_tokens": 220,
+        "total_tokens": 1055
+      }
+    },
+    "B": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1230,
+      "run_id": "ollama-v2.1-eb55b7117167",
+      "wall_seconds": 8.47,
+      "usage": {
+        "input_tokens": 813,
+        "output_tokens": 201,
+        "total_tokens": 1014
+      }
+    }
+  },
+  {
+    "index": 42,
+    "sid": 2100289,
+    "rev": 12,
+    "A": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1283,
+      "run_id": "gemini-v2.1-f0469023c8b0",
+      "wall_seconds": 1.474,
+      "usage": {
+        "input_tokens": 844,
+        "output_tokens": 229,
+        "total_tokens": 1073
+      }
+    },
+    "B": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1291,
+      "run_id": "ollama-v2.1-d06e5074ddf0",
+      "wall_seconds": 7.021,
+      "usage": {
+        "input_tokens": 821,
+        "output_tokens": 250,
+        "total_tokens": 1071
+      }
+    }
+  },
+  {
+    "index": 43,
+    "sid": 2404304,
+    "rev": 8031,
+    "A": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1327,
+      "run_id": "gemini-v2.1-03a2fb04965e",
+      "wall_seconds": 1.729,
+      "usage": {
+        "input_tokens": 812,
+        "output_tokens": 216,
+        "total_tokens": 1028
+      }
+    },
+    "B": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1333,
+      "run_id": "ollama-v2.1-059fae4db014",
+      "wall_seconds": 6.063,
+      "usage": {
+        "input_tokens": 789,
+        "output_tokens": 209,
+        "total_tokens": 998
+      }
+    }
+  },
+  {
+    "index": 44,
+    "sid": 2029780,
+    "rev": 3,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1176,
+      "run_id": "ollama-v2.1-527813894e5f",
+      "wall_seconds": 5.643,
+      "usage": {
+        "input_tokens": 749,
+        "output_tokens": 200,
+        "total_tokens": 949
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1177,
+      "run_id": "gemini-v2.1-1ba78c09632e",
+      "wall_seconds": 1.485,
+      "usage": {
+        "input_tokens": 768,
+        "output_tokens": 201,
+        "total_tokens": 969
+      }
+    }
+  },
+  {
+    "index": 45,
+    "sid": 2103244,
+    "rev": 5,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1374,
+      "run_id": "ollama-v2.1-b254dca4a7b8",
+      "wall_seconds": 7.632,
+      "usage": {
+        "input_tokens": 1195,
+        "output_tokens": 290,
+        "total_tokens": 1485
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1371,
+      "run_id": "gemini-v2.1-1ef05343fbc0",
+      "wall_seconds": 4.642,
+      "usage": {
+        "input_tokens": 1236,
+        "output_tokens": 206,
+        "total_tokens": 1442
+      }
+    }
+  },
+  {
+    "index": 46,
+    "sid": 2014402,
+    "rev": 3,
+    "A": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1411,
+      "run_id": "gemini-v2.1-efdbe4d1d98b",
+      "wall_seconds": 1.416,
+      "usage": {
+        "input_tokens": 869,
+        "output_tokens": 203,
+        "total_tokens": 1072
+      }
+    },
+    "B": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1418,
+      "run_id": "ollama-v2.1-b36bf0e8cfbd",
+      "wall_seconds": 6.185,
+      "usage": {
+        "input_tokens": 840,
+        "output_tokens": 202,
+        "total_tokens": 1042
+      }
+    }
+  },
+  {
+    "index": 47,
+    "sid": 2403426,
+    "rev": 111389,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1240,
+      "run_id": "ollama-v2.1-7cbb2d10218d",
+      "wall_seconds": 4.126,
+      "usage": {
+        "input_tokens": 858,
+        "output_tokens": 143,
+        "total_tokens": 1001
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1241,
+      "run_id": "gemini-v2.1-f1b6e32fa420",
+      "wall_seconds": 1.2,
+      "usage": {
+        "input_tokens": 887,
+        "output_tokens": 186,
+        "total_tokens": 1073
+      }
+    }
+  },
+  {
+    "index": 48,
+    "sid": 2101732,
+    "rev": 10,
+    "A": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1174,
+      "run_id": "ollama-v2.1-ace30d207598",
+      "wall_seconds": 4.567,
+      "usage": {
+        "input_tokens": 1084,
+        "output_tokens": 168,
+        "total_tokens": 1252
+      }
+    },
+    "B": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1175,
+      "run_id": "gemini-v2.1-3e33cd602b9e",
+      "wall_seconds": 1.179,
+      "usage": {
+        "input_tokens": 1124,
+        "output_tokens": 187,
+        "total_tokens": 1311
+      }
+    }
+  },
+  {
+    "index": 49,
+    "sid": 2029645,
+    "rev": 2,
+    "A": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1292,
+      "run_id": "gemini-v2.1-7b291b6c0ea5",
+      "wall_seconds": 1.28,
+      "usage": {
+        "input_tokens": 1152,
+        "output_tokens": 198,
+        "total_tokens": 1350
+      }
+    },
+    "B": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1302,
+      "run_id": "ollama-v2.1-e81cb38d1ba3",
+      "wall_seconds": 6.17,
+      "usage": {
+        "input_tokens": 1110,
+        "output_tokens": 228,
+        "total_tokens": 1338
+      }
+    }
+  },
+  {
+    "index": 50,
+    "sid": 2520127,
+    "rev": 6363,
+    "A": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "classification_id": 1400,
+      "run_id": "gemini-v2.1-5353814b159c",
+      "wall_seconds": 1.253,
+      "usage": {
+        "input_tokens": 1181,
+        "output_tokens": 182,
+        "total_tokens": 1363
+      }
+    },
+    "B": {
+      "provider": "ollama",
+      "model": "qwen3:8b",
+      "classification_id": 1406,
+      "run_id": "ollama-v2.1-bd154eaa03d3",
+      "wall_seconds": 5.264,
+      "usage": {
+        "input_tokens": 1141,
+        "output_tokens": 184,
+        "total_tokens": 1325
+      }
+    }
+  }
+]

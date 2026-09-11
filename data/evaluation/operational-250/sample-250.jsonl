@@ -1,0 +1,250 @@
+{"sid": 2010935, "rev": 3, "source_file": "emerging-scan.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2021837, "rev": 7, "source_file": "emerging-malware.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2056356, "rev": 2, "source_file": "emerging-exploit.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2059511, "rev": 1, "source_file": "emerging-info.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2045262, "rev": 3, "source_file": "emerging-dyn_dns.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2019842, "rev": 7, "source_file": "emerging-web_client.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2046466, "rev": 2, "source_file": "emerging-mobile_malware.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2060513, "rev": 2, "source_file": "emerging-remote_access.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2048071, "rev": 2, "source_file": "emerging-retired.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2046259, "rev": 5, "source_file": "emerging-retired.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2028779, "rev": 2, "source_file": "emerging-ja3.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2102510, "rev": 10, "source_file": "emerging-netbios.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2522039, "rev": 6363, "source_file": "tor.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2009698, "rev": 1, "source_file": "emerging-voip.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2403330, "rev": 111389, "source_file": "ciarmy.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2002383, "rev": 13, "source_file": "emerging-scan.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2062681, "rev": 1, "source_file": "emerging-malware.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2023995, "rev": 4, "source_file": "emerging-exploit.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2021371, "rev": 7, "source_file": "emerging-info.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2045845, "rev": 3, "source_file": "emerging-dyn_dns.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2023535, "rev": 4, "source_file": "emerging-web_server.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2030024, "rev": 3, "source_file": "emerging-mobile_malware.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2050707, "rev": 2, "source_file": "emerging-remote_access.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2032178, "rev": 5, "source_file": "emerging-phishing.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2064098, "rev": 1, "source_file": "emerging-web_specific_apps.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2049581, "rev": 1, "source_file": "emerging-phishing.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2103245, "rev": 5, "source_file": "emerging-netbios.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2522034, "rev": 6363, "source_file": "tor.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2101923, "rev": 7, "source_file": "emerging-rpc.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2400049, "rev": 4816, "source_file": "drop.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2008228, "rev": 13, "source_file": "emerging-scan.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2068124, "rev": 1, "source_file": "emerging-malware.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2044010, "rev": 2, "source_file": "emerging-exploit.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2039495, "rev": 2, "source_file": "emerging-info.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2069316, "rev": 1, "source_file": "emerging-exploit_kit.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2025062, "rev": 5, "source_file": "emerging-web_client.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2016711, "rev": 8, "source_file": "emerging-mobile_malware.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2027413, "rev": 4, "source_file": "emerging-remote_access.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2031797, "rev": 5, "source_file": "emerging-phishing.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2007299, "rev": 9, "source_file": "emerging-web_specific_apps.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2071589, "rev": 1, "source_file": "emerging-exploit_kit.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2103271, "rev": 5, "source_file": "emerging-netbios.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2520089, "rev": 6363, "source_file": "tor.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2100580, "rev": 10, "source_file": "emerging-rpc.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2025461, "rev": 4, "source_file": "emerging-scan.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2045426, "rev": 2, "source_file": "emerging-malware.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2000564, "rev": 10, "source_file": "emerging-exploit.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2052166, "rev": 1, "source_file": "emerging-info.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2041326, "rev": 3, "source_file": "emerging-dyn_dns.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2011286, "rev": 7, "source_file": "emerging-web_server.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2048086, "rev": 1, "source_file": "emerging-mobile_malware.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2060508, "rev": 2, "source_file": "emerging-remote_access.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2025524, "rev": 2, "source_file": "emerging-phishing.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2066004, "rev": 1, "source_file": "emerging-web_specific_apps.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2064683, "rev": 1, "source_file": "emerging-exploit_kit.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2522714, "rev": 6363, "source_file": "tor.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2015857, "rev": 5, "source_file": "emerging-tftp.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2500000, "rev": 7731, "source_file": "compromised.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2010494, "rev": 5, "source_file": "emerging-scan.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2066414, "rev": 1, "source_file": "emerging-malware.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2019089, "rev": 6, "source_file": "emerging-exploit.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2053543, "rev": 1, "source_file": "emerging-info.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2059953, "rev": 1, "source_file": "emerging-exploit_kit.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2026337, "rev": 4, "source_file": "emerging-web_server.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2035500, "rev": 2, "source_file": "emerging-mobile_malware.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2031901, "rev": 7, "source_file": "emerging-phishing.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2007184, "rev": 11, "source_file": "emerging-web_specific_apps.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2046734, "rev": 2, "source_file": "emerging-retired.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2103162, "rev": 5, "source_file": "emerging-netbios.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2002953, "rev": 5, "source_file": "emerging-p2p.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2101732, "rev": 10, "source_file": "emerging-rpc.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2029780, "rev": 3, "source_file": "emerging-hunting.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2024364, "rev": 5, "source_file": "emerging-scan.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2066757, "rev": 1, "source_file": "emerging-malware.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2067417, "rev": 3, "source_file": "emerging-exploit.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2012900, "rev": 7, "source_file": "emerging-info.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2043750, "rev": 3, "source_file": "emerging-dyn_dns.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2016841, "rev": 5, "source_file": "emerging-web_server.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2034598, "rev": 2, "source_file": "emerging-mobile_malware.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2063279, "rev": 1, "source_file": "emerging-hunting.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2037271, "rev": 1, "source_file": "emerging-phishing.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2047979, "rev": 1, "source_file": "emerging-phishing.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2066325, "rev": 1, "source_file": "emerging-exploit_kit.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2103120, "rev": 4, "source_file": "emerging-netbios.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2009985, "rev": 2, "source_file": "emerging-ftp.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2101280, "rev": 10, "source_file": "emerging-rpc.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2400004, "rev": 4816, "source_file": "drop.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2009159, "rev": 11, "source_file": "emerging-scan.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2056218, "rev": 1, "source_file": "emerging-malware.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2033307, "rev": 1, "source_file": "emerging-exploit.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2047872, "rev": 1, "source_file": "emerging-info.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2060849, "rev": 2, "source_file": "emerging-exploit_kit.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2013940, "rev": 6, "source_file": "emerging-web_server.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2033221, "rev": 3, "source_file": "emerging-adware_pup.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2060632, "rev": 1, "source_file": "emerging-remote_access.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2005279, "rev": 9, "source_file": "emerging-web_specific_apps.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2013682, "rev": 5, "source_file": "emerging-web_specific_apps.rules", "cohort": "AUDITED_BENCHMARK"}
+{"sid": 2014649, "rev": 7, "source_file": "data\\rules\\et-open\\emerging-activex.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "ACTIVEX"}
+{"sid": 2011678, "rev": 10, "source_file": "data\\rules\\et-open\\emerging-adware_pup.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "ADWARE_PUP"}
+{"sid": 2026942, "rev": 4, "source_file": "data\\rules\\et-open\\emerging-attack_response.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "ATTACK_RESPONSE"}
+{"sid": 2404300, "rev": 8031, "source_file": "data\\rules\\et-open\\botcc.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "BOTCC"}
+{"sid": 2527019, "rev": 1715, "source_file": "data\\rules\\et-open\\threatview_CS_c2.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "C2"}
+{"sid": 2101989, "rev": 7, "source_file": "data\\rules\\et-open\\emerging-chat.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "CHAT"}
+{"sid": 2403426, "rev": 111389, "source_file": "data\\rules\\et-open\\ciarmy.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "CIARMY"}
+{"sid": 2025535, "rev": 3, "source_file": "data\\rules\\et-open\\emerging-coinminer.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "COINMINER"}
+{"sid": 2500010, "rev": 7731, "source_file": "data\\rules\\et-open\\compromised.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "COMPROMISED"}
+{"sid": 2031266, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-current_events.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "CURRENT_EVENTS"}
+{"sid": 2040009, "rev": 3, "source_file": "data\\rules\\et-open\\emerging-dyn_dns.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "DNS"}
+{"sid": 2017918, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-dos.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "DOS"}
+{"sid": 2400008, "rev": 4816, "source_file": "data\\rules\\et-open\\drop.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "DROP"}
+{"sid": 2402000, "rev": 7848, "source_file": "data\\rules\\et-open\\dshield.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "DSHIELD"}
+{"sid": 2035429, "rev": 3, "source_file": "data\\rules\\et-open\\emerging-exploit.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "EXPLOIT"}
+{"sid": 2047636, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-file_sharing.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "FILE_SHARING"}
+{"sid": 2103077, "rev": 3, "source_file": "data\\rules\\et-open\\emerging-ftp.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "FTP"}
+{"sid": 2021701, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-games.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "GAMES"}
+{"sid": 2038086, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-hunting.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "HUNTING"}
+{"sid": 2100374, "rev": 8, "source_file": "data\\rules\\et-open\\emerging-icmp.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "ICMP"}
+{"sid": 2101904, "rev": 8, "source_file": "data\\rules\\et-open\\emerging-imap.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "IMAP"}
+{"sid": 2063364, "rev": 1, "source_file": "data\\rules\\et-open\\emerging-inappropriate.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "INAPPROPRIATE"}
+{"sid": 2047740, "rev": 1, "source_file": "data\\rules\\et-open\\emerging-info.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "INFO"}
+{"sid": 2028387, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-ja3.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "JA3"}
+{"sid": 2026738, "rev": 7, "source_file": "data\\rules\\et-open\\emerging-malware.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "MALWARE"}
+{"sid": 2101388, "rev": 14, "source_file": "data\\rules\\et-open\\emerging-misc.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "MISC"}
+{"sid": 2103183, "rev": 4, "source_file": "data\\rules\\et-open\\emerging-netbios.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "NETBIOS"}
+{"sid": 2009972, "rev": 4, "source_file": "data\\rules\\et-open\\emerging-p2p.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "P2P"}
+{"sid": 2060760, "rev": 1, "source_file": "data\\rules\\et-open\\emerging-phishing.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "PHISHING"}
+{"sid": 2100289, "rev": 12, "source_file": "data\\rules\\et-open\\emerging-pop3.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "POP3"}
+{"sid": 2060615, "rev": 1, "source_file": "data\\rules\\et-open\\emerging-remote_access.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "REMOTE"}
+{"sid": 2049972, "rev": 3, "source_file": "data\\rules\\et-open\\emerging-retired.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "RETIRED"}
+{"sid": 2101279, "rev": 15, "source_file": "data\\rules\\et-open\\emerging-rpc.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "RPC"}
+{"sid": 2048631, "rev": 1, "source_file": "data\\rules\\et-open\\emerging-scada.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "SCADA"}
+{"sid": 2029645, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-scan.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "SCAN"}
+{"sid": 2012255, "rev": 5, "source_file": "data\\rules\\et-open\\emerging-shellcode.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "SHELLCODE"}
+{"sid": 2100672, "rev": 11, "source_file": "data\\rules\\et-open\\emerging-smtp.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "SMTP"}
+{"sid": 2101414, "rev": 13, "source_file": "data\\rules\\et-open\\emerging-snmp.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "SNMP"}
+{"sid": 2102809, "rev": 5, "source_file": "data\\rules\\et-open\\emerging-sql.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "SQL"}
+{"sid": 2037077, "rev": 4, "source_file": "data\\rules\\et-open\\emerging-ta_abused_services.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "TA_ABUSED_SERVICES"}
+{"sid": 2023019, "rev": 4, "source_file": "data\\rules\\et-open\\emerging-telnet.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "TELNET"}
+{"sid": 2522571, "rev": 6363, "source_file": "data\\rules\\et-open\\tor.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "TOR"}
+{"sid": 2007833, "rev": 10, "source_file": "data\\rules\\et-open\\emerging-user_agents.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "USER_AGENTS"}
+{"sid": 2003192, "rev": 4, "source_file": "data\\rules\\et-open\\emerging-voip.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "VOIP"}
+{"sid": 2012060, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-web_client.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "WEB_CLIENT"}
+{"sid": 2016670, "rev": 4, "source_file": "data\\rules\\et-open\\emerging-web_server.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "WEB_SERVER"}
+{"sid": 2014257, "rev": 4, "source_file": "data\\rules\\et-open\\emerging-web_specific_apps.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "WEB_SPECIFIC_APPS"}
+{"sid": 2018155, "rev": 6, "source_file": "data\\rules\\et-open\\emerging-worm.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "WORM"}
+{"sid": 2012148, "rev": 7, "source_file": "data\\rules\\et-open\\emerging-activex.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "ACTIVEX"}
+{"sid": 2025094, "rev": 7, "source_file": "data\\rules\\et-open\\emerging-adware_pup.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "ADWARE_PUP"}
+{"sid": 2037615, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-attack_response.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "ATTACK_RESPONSE"}
+{"sid": 2404304, "rev": 8031, "source_file": "data\\rules\\et-open\\botcc.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "BOTCC"}
+{"sid": 2527012, "rev": 1715, "source_file": "data\\rules\\et-open\\threatview_CS_c2.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "C2"}
+{"sid": 2101639, "rev": 13, "source_file": "data\\rules\\et-open\\emerging-chat.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "CHAT"}
+{"sid": 2403415, "rev": 111389, "source_file": "data\\rules\\et-open\\ciarmy.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "CIARMY"}
+{"sid": 2016067, "rev": 7, "source_file": "data\\rules\\et-open\\emerging-coinminer.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "COINMINER"}
+{"sid": 2500008, "rev": 7731, "source_file": "data\\rules\\et-open\\compromised.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "COMPROMISED"}
+{"sid": 2037772, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-current_events.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "CURRENT_EVENTS"}
+{"sid": 2064637, "rev": 1, "source_file": "data\\rules\\et-open\\emerging-dyn_dns.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "DNS"}
+{"sid": 2019020, "rev": 3, "source_file": "data\\rules\\et-open\\emerging-dos.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "DOS"}
+{"sid": 2400067, "rev": 4816, "source_file": "data\\rules\\et-open\\drop.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "DROP"}
+{"sid": 2058163, "rev": 1, "source_file": "data\\rules\\et-open\\emerging-exploit_kit.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "EXPLOIT"}
+{"sid": 2046673, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-file_sharing.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "FILE_SHARING"}
+{"sid": 2101441, "rev": 5, "source_file": "data\\rules\\et-open\\emerging-tftp.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "FTP"}
+{"sid": 2002154, "rev": 5, "source_file": "data\\rules\\et-open\\emerging-games.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "GAMES"}
+{"sid": 2038015, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-hunting.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "HUNTING"}
+{"sid": 2100376, "rev": 8, "source_file": "data\\rules\\et-open\\emerging-icmp.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "ICMP"}
+{"sid": 2103068, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-imap.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "IMAP"}
+{"sid": 2043898, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-info.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "INFO"}
+{"sid": 2028381, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-ja3.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "JA3"}
+{"sid": 2063298, "rev": 1, "source_file": "data\\rules\\et-open\\emerging-malware.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "MALWARE"}
+{"sid": 2100606, "rev": 7, "source_file": "data\\rules\\et-open\\emerging-misc.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "MISC"}
+{"sid": 2103244, "rev": 5, "source_file": "data\\rules\\et-open\\emerging-netbios.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "NETBIOS"}
+{"sid": 2006371, "rev": 12, "source_file": "data\\rules\\et-open\\emerging-p2p.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "P2P"}
+{"sid": 2069576, "rev": 1, "source_file": "data\\rules\\et-open\\emerging-phishing.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "PHISHING"}
+{"sid": 2101937, "rev": 9, "source_file": "data\\rules\\et-open\\emerging-pop3.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "POP3"}
+{"sid": 2050021, "rev": 5, "source_file": "data\\rules\\et-open\\emerging-remote_access.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "REMOTE"}
+{"sid": 2038808, "rev": 3, "source_file": "data\\rules\\et-open\\emerging-retired.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "RETIRED"}
+{"sid": 2102035, "rev": 7, "source_file": "data\\rules\\et-open\\emerging-rpc.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "RPC"}
+{"sid": 2026003, "rev": 1, "source_file": "data\\rules\\et-open\\emerging-scada.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "SCADA"}
+{"sid": 2008537, "rev": 11, "source_file": "data\\rules\\et-open\\emerging-scan.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "SCAN"}
+{"sid": 2013268, "rev": 5, "source_file": "data\\rules\\et-open\\emerging-shellcode.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "SHELLCODE"}
+{"sid": 2018144, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-smtp.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "SMTP"}
+{"sid": 2015959, "rev": 3, "source_file": "data\\rules\\et-open\\emerging-snmp.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "SNMP"}
+{"sid": 2102785, "rev": 5, "source_file": "data\\rules\\et-open\\emerging-sql.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "SQL"}
+{"sid": 2065179, "rev": 1, "source_file": "data\\rules\\et-open\\emerging-ta_abused_services.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "TA_ABUSED_SERVICES"}
+{"sid": 2023901, "rev": 3, "source_file": "data\\rules\\et-open\\emerging-telnet.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "TELNET"}
+{"sid": 2520127, "rev": 6363, "source_file": "data\\rules\\et-open\\tor.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "TOR"}
+{"sid": 2003657, "rev": 21, "source_file": "data\\rules\\et-open\\emerging-user_agents.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "USER_AGENTS"}
+{"sid": 2100163, "rev": 4, "source_file": "data\\rules\\et-open\\emerging-voip.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "VOIP"}
+{"sid": 2017123, "rev": 5, "source_file": "data\\rules\\et-open\\emerging-web_client.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "WEB_CLIENT"}
+{"sid": 2017441, "rev": 4, "source_file": "data\\rules\\et-open\\emerging-web_server.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "WEB_SERVER"}
+{"sid": 2007454, "rev": 8, "source_file": "data\\rules\\et-open\\emerging-web_specific_apps.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "WEB_SPECIFIC_APPS"}
+{"sid": 2014402, "rev": 3, "source_file": "data\\rules\\et-open\\emerging-worm.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "WORM"}
+{"sid": 2013163, "rev": 4, "source_file": "data\\rules\\et-open\\emerging-activex.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "ACTIVEX"}
+{"sid": 2014353, "rev": 8, "source_file": "data\\rules\\et-open\\emerging-adware_pup.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "ADWARE_PUP"}
+{"sid": 2068435, "rev": 1, "source_file": "data\\rules\\et-open\\emerging-attack_response.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "ATTACK_RESPONSE"}
+{"sid": 2404302, "rev": 8031, "source_file": "data\\rules\\et-open\\botcc.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "BOTCC"}
+{"sid": 2527010, "rev": 1715, "source_file": "data\\rules\\et-open\\threatview_CS_c2.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "C2"}
+{"sid": 2101640, "rev": 12, "source_file": "data\\rules\\et-open\\emerging-chat.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "CHAT"}
+{"sid": 2403372, "rev": 111389, "source_file": "data\\rules\\et-open\\ciarmy.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "CIARMY"}
+{"sid": 2017873, "rev": 3, "source_file": "data\\rules\\et-open\\emerging-coinminer.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "COINMINER"}
+{"sid": 2500032, "rev": 7731, "source_file": "data\\rules\\et-open\\compromised.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "COMPROMISED"}
+{"sid": 2031277, "rev": 5, "source_file": "data\\rules\\et-open\\emerging-current_events.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "CURRENT_EVENTS"}
+{"sid": 2040538, "rev": 3, "source_file": "data\\rules\\et-open\\emerging-dyn_dns.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "DNS"}
+{"sid": 2021170, "rev": 1, "source_file": "data\\rules\\et-open\\emerging-dos.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "DOS"}
+{"sid": 2400011, "rev": 4816, "source_file": "data\\rules\\et-open\\drop.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "DROP"}
+{"sid": 2060226, "rev": 1, "source_file": "data\\rules\\et-open\\emerging-exploit_kit.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "EXPLOIT"}
+{"sid": 2038802, "rev": 3, "source_file": "data\\rules\\et-open\\emerging-file_sharing.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "FILE_SHARING"}
+{"sid": 2008117, "rev": 3, "source_file": "data\\rules\\et-open\\emerging-tftp.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "FTP"}
+{"sid": 2034841, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-games.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "GAMES"}
+{"sid": 2038389, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-hunting.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "HUNTING"}
+{"sid": 2100366, "rev": 8, "source_file": "data\\rules\\et-open\\emerging-icmp.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "ICMP"}
+{"sid": 2103007, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-imap.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "IMAP"}
+{"sid": 2053602, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-info.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "INFO"}
+{"sid": 2028372, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-ja3.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "JA3"}
+{"sid": 2067084, "rev": 1, "source_file": "data\\rules\\et-open\\emerging-malware.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "MALWARE"}
+{"sid": 2102549, "rev": 3, "source_file": "data\\rules\\et-open\\emerging-misc.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "MISC"}
+{"sid": 2103276, "rev": 4, "source_file": "data\\rules\\et-open\\emerging-netbios.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "NETBIOS"}
+{"sid": 2007801, "rev": 5, "source_file": "data\\rules\\et-open\\emerging-p2p.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "P2P"}
+{"sid": 2027523, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-phishing.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "PHISHING"}
+{"sid": 2102409, "rev": 3, "source_file": "data\\rules\\et-open\\emerging-pop3.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "POP3"}
+{"sid": 2035895, "rev": 8, "source_file": "data\\rules\\et-open\\emerging-remote_access.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "REMOTE"}
+{"sid": 2049816, "rev": 4, "source_file": "data\\rules\\et-open\\emerging-retired.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "RETIRED"}
+{"sid": 2027237, "rev": 3, "source_file": "data\\rules\\et-open\\emerging-rpc.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "RPC"}
+{"sid": 2012096, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-scada.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "SCADA"}
+{"sid": 2001581, "rev": 15, "source_file": "data\\rules\\et-open\\emerging-scan.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "SCAN"}
+{"sid": 2100640, "rev": 7, "source_file": "data\\rules\\et-open\\emerging-shellcode.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "SHELLCODE"}
+{"sid": 2023255, "rev": 3, "source_file": "data\\rules\\et-open\\emerging-smtp.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "SMTP"}
+{"sid": 2101413, "rev": 12, "source_file": "data\\rules\\et-open\\emerging-snmp.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "SNMP"}
+{"sid": 2102752, "rev": 5, "source_file": "data\\rules\\et-open\\emerging-sql.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "SQL"}
+{"sid": 2062768, "rev": 1, "source_file": "data\\rules\\et-open\\emerging-ta_abused_services.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "TA_ABUSED_SERVICES"}
+{"sid": 2100719, "rev": 10, "source_file": "data\\rules\\et-open\\emerging-telnet.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "TELNET"}
+{"sid": 2522055, "rev": 6363, "source_file": "data\\rules\\et-open\\tor.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "TOR"}
+{"sid": 2030880, "rev": 1, "source_file": "data\\rules\\et-open\\emerging-user_agents.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "USER_AGENTS"}
+{"sid": 2003194, "rev": 7, "source_file": "data\\rules\\et-open\\emerging-voip.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "VOIP"}
+{"sid": 2011246, "rev": 5, "source_file": "data\\rules\\et-open\\emerging-web_client.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "WEB_CLIENT"}
+{"sid": 2023143, "rev": 3, "source_file": "data\\rules\\et-open\\emerging-web_server.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "WEB_SERVER"}
+{"sid": 2059881, "rev": 1, "source_file": "data\\rules\\et-open\\emerging-web_specific_apps.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "WEB_SPECIFIC_APPS"}
+{"sid": 2102004, "rev": 8, "source_file": "data\\rules\\et-open\\emerging-worm.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "WORM"}
+{"sid": 2014744, "rev": 5, "source_file": "data\\rules\\et-open\\emerging-activex.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "ACTIVEX"}
+{"sid": 2007909, "rev": 12, "source_file": "data\\rules\\et-open\\emerging-adware_pup.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "ADWARE_PUP"}
+{"sid": 2037499, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-attack_response.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "ATTACK_RESPONSE"}
+{"sid": 2404301, "rev": 8031, "source_file": "data\\rules\\et-open\\botcc.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "BOTCC"}
+{"sid": 2527005, "rev": 1715, "source_file": "data\\rules\\et-open\\threatview_CS_c2.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "C2"}
+{"sid": 2025067, "rev": 3, "source_file": "data\\rules\\et-open\\emerging-chat.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "CHAT"}
+{"sid": 2403353, "rev": 111389, "source_file": "data\\rules\\et-open\\ciarmy.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "CIARMY"}
+{"sid": 2040353, "rev": 4, "source_file": "data\\rules\\et-open\\emerging-coinminer.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "COINMINER"}
+{"sid": 2500030, "rev": 7731, "source_file": "data\\rules\\et-open\\compromised.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "COMPROMISED"}
+{"sid": 2031305, "rev": 2, "source_file": "data\\rules\\et-open\\emerging-current_events.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "CURRENT_EVENTS"}
+{"sid": 2061756, "rev": 1, "source_file": "data\\rules\\et-open\\emerging-dyn_dns.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "DNS"}
+{"sid": 2020702, "rev": 5, "source_file": "data\\rules\\et-open\\emerging-dos.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "DOS"}
+{"sid": 2400024, "rev": 4816, "source_file": "data\\rules\\et-open\\drop.rules", "cohort": "FRESH_OPERATIONAL", "stratum": "DROP"}

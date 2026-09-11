@@ -1,0 +1,10 @@
+{
+  "data_status": "REAL_DATA_AVAILABLE",
+  "source_directory": "C:\\Users\\Savgaman\\Desktop\\suricata-rule-agent\\data\\rules\\et-open",
+  "total_rules": 52155,
+  "parsed_successfully": 52155,
+  "failed_parsing": 0,
+  "parser_success_rate": 1.0,
+  "rule_files": 54,
+  "failures": []
+}

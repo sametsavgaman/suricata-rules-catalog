@@ -1,0 +1,22 @@
+{
+  "sample_sha256": "c7fadde78e84014abc822675ed61e63b3d480374c342741c1be9a6f83fc377b3",
+  "golden_sha256": "64b6cd419a6992de71f873c10f315e488b55a3670d7dbdde080b4c25defe8f78",
+  "limit": 250,
+  "prompt_sha256": "07d4c7c07af54ca1ecb1bc3b91b81e2f6d3d9dd8029b2841c874b23953fd3a01",
+  "providers": {
+    "ollama": {
+      "model": "qwen3:8b",
+      "configuration": {
+        "think": false,
+        "temperature": 0,
+        "seed": 42,
+        "num_ctx": 8192,
+        "num_predict": 1536
+      }
+    },
+    "gemini": {
+      "model": "gemini-3.5-flash-lite",
+      "configuration": {}
+    }
+  }
+}

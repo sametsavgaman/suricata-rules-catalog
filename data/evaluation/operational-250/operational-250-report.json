@@ -1,0 +1,311 @@
+{
+  "sample_id": "operational-250-seed42-v1",
+  "run_configuration": {
+    "provider": "gemini",
+    "model": "gemini-flash-lite-latest",
+    "classifier_version": "v2.1",
+    "seed": 42,
+    "total": 250,
+    "duration_seconds": 485.11869699999806,
+    "cache_hits": 0
+  },
+  "cohorts": {
+    "audited": 97,
+    "fresh": 153
+  },
+  "audited_metrics": {
+    "golden_samples": 97,
+    "evaluated": 97,
+    "failed": 0,
+    "field_metrics": {
+      "detected_behavior": {
+        "count": 97,
+        "exact_accuracy": 0.10309278350515463,
+        "normalized_accuracy": 0.10309278350515463
+      },
+      "detected_entity": {
+        "count": 97,
+        "exact_accuracy": 0.8969072164948454,
+        "normalized_accuracy": 0.8969072164948454
+      },
+      "entity_type": {
+        "count": 97,
+        "exact_accuracy": 0.8969072164948454,
+        "normalized_accuracy": 0.8969072164948454
+      },
+      "category": {
+        "count": 97,
+        "exact_accuracy": 0.845360824742268,
+        "normalized_accuracy": 0.845360824742268
+      },
+      "subcategory": {
+        "count": 97,
+        "exact_accuracy": 0.7422680412371134,
+        "normalized_accuracy": 0.7422680412371134
+      },
+      "mitre_tactic": {
+        "count": 97,
+        "exact_accuracy": 0.7835051546391752,
+        "normalized_accuracy": 0.7835051546391752
+      },
+      "mitre_technique": {
+        "count": 97,
+        "exact_accuracy": 0.7835051546391752,
+        "normalized_accuracy": 0.7835051546391752
+      },
+      "mitre_technique_id": {
+        "count": 97,
+        "exact_accuracy": 0.7835051546391752,
+        "normalized_accuracy": 0.7835051546391752
+      },
+      "cyber_kill_chain_phase": {
+        "count": 97,
+        "exact_accuracy": 0.8350515463917526,
+        "normalized_accuracy": 0.8350515463917526
+      }
+    },
+    "null_metrics": {
+      "detected_behavior": {
+        "expected_null_count": 0,
+        "expected_null_actual_null_rate": 0.0,
+        "null_hallucination_rate": 0.0,
+        "expected_non_null_count": 97,
+        "unexpected_null_rate": 0.0
+      },
+      "detected_entity": {
+        "expected_null_count": 63,
+        "expected_null_actual_null_rate": 1.0,
+        "null_hallucination_rate": 0.0,
+        "expected_non_null_count": 34,
+        "unexpected_null_rate": 0.29411764705882354
+      },
+      "entity_type": {
+        "expected_null_count": 63,
+        "expected_null_actual_null_rate": 1.0,
+        "null_hallucination_rate": 0.0,
+        "expected_non_null_count": 34,
+        "unexpected_null_rate": 0.29411764705882354
+      },
+      "category": {
+        "expected_null_count": 0,
+        "expected_null_actual_null_rate": 0.0,
+        "null_hallucination_rate": 0.0,
+        "expected_non_null_count": 97,
+        "unexpected_null_rate": 0.0
+      },
+      "subcategory": {
+        "expected_null_count": 5,
+        "expected_null_actual_null_rate": 0.6,
+        "null_hallucination_rate": 0.4,
+        "expected_non_null_count": 92,
+        "unexpected_null_rate": 0.021739130434782608
+      },
+      "mitre_tactic": {
+        "expected_null_count": 50,
+        "expected_null_actual_null_rate": 1.0,
+        "null_hallucination_rate": 0.0,
+        "expected_non_null_count": 47,
+        "unexpected_null_rate": 0.44680851063829785
+      },
+      "mitre_technique": {
+        "expected_null_count": 50,
+        "expected_null_actual_null_rate": 1.0,
+        "null_hallucination_rate": 0.0,
+        "expected_non_null_count": 47,
+        "unexpected_null_rate": 0.44680851063829785
+      },
+      "mitre_technique_id": {
+        "expected_null_count": 50,
+        "expected_null_actual_null_rate": 1.0,
+        "null_hallucination_rate": 0.0,
+        "expected_non_null_count": 47,
+        "unexpected_null_rate": 0.44680851063829785
+      },
+      "cyber_kill_chain_phase": {
+        "expected_null_count": 48,
+        "expected_null_actual_null_rate": 0.7708333333333334,
+        "null_hallucination_rate": 0.22916666666666666,
+        "expected_non_null_count": 49,
+        "unexpected_null_rate": 0.04081632653061224
+      }
+    },
+    "confidence_calibration": {
+      "0.90-1.00": {
+        "count": 44,
+        "actual_accuracy": 0.7727272727272727
+      },
+      "0.80-0.89": {
+        "count": 51,
+        "actual_accuracy": 0.7145969498910675
+      },
+      "0.70-0.79": {
+        "count": 1,
+        "actual_accuracy": 0.7777777777777778
+      },
+      "<0.50": {
+        "count": 1,
+        "actual_accuracy": 0.6666666666666666
+      }
+    },
+    "error_counts": {
+      "OTHER": 87,
+      "UNEXPECTED_NULL": 32,
+      "MITRE_TACTIC_ERROR": 21,
+      "MITRE_TECHNIQUE_ERROR": 21,
+      "CATEGORY_ERROR": 15,
+      "SUBCATEGORY_ERROR": 25,
+      "ENTITY_ERROR": 10,
+      "VALIDATION_FAILURE": 6,
+      "KILL_CHAIN_ERROR": 16,
+      "NULL_HALLUCINATION": 13
+    },
+    "lowest_performing_categories": [
+      {
+        "category": "Discovery",
+        "count": 4,
+        "accuracy": 0.5
+      },
+      {
+        "category": "Credential Access",
+        "count": 3,
+        "accuracy": 0.6666666666666666
+      },
+      {
+        "category": "Network Abuse",
+        "count": 19,
+        "accuracy": 0.6842105263157895
+      },
+      {
+        "category": "Suspicious DNS",
+        "count": 4,
+        "accuracy": 0.75
+      },
+      {
+        "category": "Command and Control",
+        "count": 11,
+        "accuracy": 0.8181818181818182
+      },
+      {
+        "category": "Remote Access",
+        "count": 6,
+        "accuracy": 0.8333333333333334
+      },
+      {
+        "category": "Other",
+        "count": 7,
+        "accuracy": 0.8571428571428571
+      },
+      {
+        "category": "Web Attack",
+        "count": 13,
+        "accuracy": 0.9230769230769231
+      },
+      {
+        "category": "Malware",
+        "count": 11,
+        "accuracy": 1.0
+      },
+      {
+        "category": "Exploitation",
+        "count": 7,
+        "accuracy": 1.0
+      },
+      {
+        "category": "Policy Violation",
+        "count": 6,
+        "accuracy": 1.0
+      },
+      {
+        "category": "Reconnaissance",
+        "count": 5,
+        "accuracy": 1.0
+      },
+      {
+        "category": "Denial of Service",
+        "count": 1,
+        "accuracy": 1.0
+      }
+    ],
+    "average_confidence": 0.8602061855670103,
+    "behavior_semantic_normalized_accuracy": 0.23711340206185566,
+    "v2_null_metrics": {
+      "entity": {
+        "precision": 0.863013698630137,
+        "recall": 1.0
+      },
+      "mitre": {
+        "precision": 0.704225352112676,
+        "recall": 1.0
+      },
+      "kill_chain": {
+        "precision": 0.9487179487179487,
+        "recall": 0.7708333333333334
+      }
+    },
+    "tool_usage": {
+      "rates": {
+        "entity_candidates": 1.0,
+        "search_mitre": 1.0,
+        "search_similar_rules": 0.8556701030927835,
+        "lookup_cve": 0.14432989690721648
+      },
+      "average_tool_calls_per_rule": 3.0,
+      "semantic_verifier_rate": 1.0,
+      "average_llm_calls_per_rule": 1.0
+    }
+  },
+  "fresh_summary": {
+    "total": 153,
+    "succeeded": 153,
+    "failed": 0,
+    "entity_assigned": 12,
+    "mitre_assigned": 10,
+    "kill_chain_assigned": 76,
+    "validator": {
+      "PASS": 126,
+      "REVIEW": 27
+    },
+    "average_confidence": 0.7045751633986927,
+    "category_distribution": {
+      "Exploitation": 19,
+      "Policy Violation": 13,
+      "Command and Control": 13,
+      "Network Abuse": 15,
+      "Malware": 21,
+      "Credential Access": 5,
+      "Suspicious DNS": 6,
+      "Denial of Service": 7,
+      "<null>": 23,
+      "Other": 11,
+      "Remote Access": 3,
+      "Discovery": 2,
+      "Reconnaissance": 6,
+      "Web Attack": 6,
+      "Defense Evasion": 2,
+      "Impact": 1
+    }
+  },
+  "confidence_distribution": {
+    "<0.50": 121,
+    "0.90-1.00": 35,
+    "0.80-0.89": 89,
+    "0.70-0.79": 4,
+    "0.50-0.69": 1
+  },
+  "tool_usage": {
+    "rates": {
+      "entity_candidates": 1.0,
+      "search_mitre": 1.0,
+      "search_similar_rules": 0.8556701030927835,
+      "lookup_cve": 0.14432989690721648
+    },
+    "average_tool_calls_per_rule": 3.0,
+    "semantic_verifier_rate": 1.0,
+    "average_llm_calls_per_rule": 1.0
+  },
+  "token_usage": {
+    "status": "NOT_PERSISTED_IN_CLASSIFICATION_SCHEMA",
+    "note": "Provider usage metadata is not stored in the current Classification table."
+  },
+  "important_notice": "The 153 fresh operational rules do not have independently verified ground-truth labels. Accuracy metrics apply only to the 97 audited benchmark records."
+}

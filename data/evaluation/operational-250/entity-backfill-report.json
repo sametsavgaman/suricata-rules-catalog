@@ -1,0 +1,207 @@
+{
+  "inspection_batch": "operational-250",
+  "mode": "DRY_RUN",
+  "created_at": "2026-09-02T10:58:22.826367+00:00",
+  "eligible": [],
+  "existing_backfills": [
+    {
+      "sid": 2019842,
+      "rev": 7,
+      "entity": "Internet Explorer",
+      "entity_type": "Product"
+    },
+    {
+      "sid": 2522039,
+      "rev": 6363,
+      "entity": "Tor",
+      "entity_type": "Software"
+    },
+    {
+      "sid": 2023535,
+      "rev": 4,
+      "entity": "Apache HTTP server",
+      "entity_type": "Product"
+    },
+    {
+      "sid": 2030024,
+      "rev": 3,
+      "entity": "NSO Group",
+      "entity_type": "Other"
+    },
+    {
+      "sid": 2064098,
+      "rev": 1,
+      "entity": "Tenda",
+      "entity_type": "Product"
+    },
+    {
+      "sid": 2522034,
+      "rev": 6363,
+      "entity": "Tor",
+      "entity_type": "Software"
+    },
+    {
+      "sid": 2069316,
+      "rev": 1,
+      "entity": "ClickFix",
+      "entity_type": "Attack Tool"
+    },
+    {
+      "sid": 2520089,
+      "rev": 6363,
+      "entity": "Tor",
+      "entity_type": "Software"
+    },
+    {
+      "sid": 2066004,
+      "rev": 1,
+      "entity": "AvTech",
+      "entity_type": "Product"
+    },
+    {
+      "sid": 2522714,
+      "rev": 6363,
+      "entity": "Tor",
+      "entity_type": "Software"
+    },
+    {
+      "sid": 2002953,
+      "rev": 5,
+      "entity": "Tor",
+      "entity_type": "Software"
+    },
+    {
+      "sid": 2005279,
+      "rev": 9,
+      "entity": "Easebay Resources Login Manager",
+      "entity_type": "Product"
+    },
+    {
+      "sid": 2013682,
+      "rev": 5,
+      "entity": "Simplis CMS",
+      "entity_type": "Product"
+    },
+    {
+      "sid": 2009972,
+      "rev": 4,
+      "entity": "eMule",
+      "entity_type": "Software"
+    },
+    {
+      "sid": 2060615,
+      "rev": 1,
+      "entity": "Zoho Assist",
+      "entity_type": "Remote Access Tool"
+    },
+    {
+      "sid": 2048631,
+      "rev": 1,
+      "entity": "Allen Bradley Rockwell Automation Series",
+      "entity_type": "Product"
+    },
+    {
+      "sid": 2522571,
+      "rev": 6363,
+      "entity": "Tor",
+      "entity_type": "Software"
+    },
+    {
+      "sid": 2012148,
+      "rev": 7,
+      "entity": "dBpowerAMP Audio Player",
+      "entity_type": "Product"
+    },
+    {
+      "sid": 2527012,
+      "rev": 1715,
+      "entity": "Cobalt Strike",
+      "entity_type": "Attack Tool"
+    },
+    {
+      "sid": 2002154,
+      "rev": 5,
+      "entity": "Guild Wars",
+      "entity_type": "Software"
+    },
+    {
+      "sid": 2006371,
+      "rev": 12,
+      "entity": "BearShare",
+      "entity_type": "Software"
+    },
+    {
+      "sid": 2008537,
+      "rev": 11,
+      "entity": "Hmap",
+      "entity_type": "Attack Tool"
+    },
+    {
+      "sid": 2520127,
+      "rev": 6363,
+      "entity": "Tor",
+      "entity_type": "Software"
+    },
+    {
+      "sid": 2003657,
+      "rev": 21,
+      "entity": "Internet Explorer",
+      "entity_type": "Product"
+    },
+    {
+      "sid": 2013163,
+      "rev": 4,
+      "entity": "LEADTOOLS Imaging",
+      "entity_type": "Product"
+    },
+    {
+      "sid": 2014353,
+      "rev": 8,
+      "entity": "MediaGet",
+      "entity_type": "Software"
+    },
+    {
+      "sid": 2527010,
+      "rev": 1715,
+      "entity": "Cobalt Strike",
+      "entity_type": "Attack Tool"
+    },
+    {
+      "sid": 2012096,
+      "rev": 2,
+      "entity": "RealWin SCADA Server",
+      "entity_type": "Product"
+    },
+    {
+      "sid": 2522055,
+      "rev": 6363,
+      "entity": "Tor",
+      "entity_type": "Software"
+    },
+    {
+      "sid": 2059881,
+      "rev": 1,
+      "entity": "FXC",
+      "entity_type": "Product"
+    },
+    {
+      "sid": 2527005,
+      "rev": 1715,
+      "entity": "Cobalt Strike",
+      "entity_type": "Attack Tool"
+    }
+  ],
+  "ambiguous": [
+    {
+      "sid": 2007833,
+      "rev": 10,
+      "candidates": [
+        "Internet Explorer",
+        "Eldorado.BHO"
+      ]
+    }
+  ],
+  "eligible_count": 0,
+  "existing_backfill_count": 31,
+  "ambiguous_count": 1
+}

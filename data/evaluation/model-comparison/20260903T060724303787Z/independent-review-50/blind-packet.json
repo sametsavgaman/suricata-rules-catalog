@@ -1,0 +1,2960 @@
+[
+  {
+    "index": 1,
+    "sid": 2064637,
+    "rev": 1,
+    "raw_rule": "alert http $HOME_NET any -> $EXTERNAL_NET any (msg:\"ET DYN_DNS DYNAMIC_DNS HTTP Request to a *.gsxpress .com .my domain\"; flow:established,to_server; http.host; content:\".gsxpress.com.my\"; endswith; fast_pattern; reference:url,freedns.afraid.org/domain/registry/page-6.html; classtype:bad-unknown; sid:2064637; rev:1; metadata:attack_target Client_and_Server, created_at 2025_09_14, deployment Perimeter, confidence High, signature_severity Informational, updated_at 2025_09_14, mitre_tactic_id TA0011, mitre_tactic_name Command_And_Control, mitre_technique_id T1568, mitre_technique_name Dynamic_Resolution;)",
+    "source_file": "data\\rules\\et-open\\emerging-dyn_dns.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "HTTP Request to a dynamic DNS domain",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Command and Control",
+        "subcategory": "HTTP C2 Communication",
+        "mitre_tactic": "Command And Control",
+        "mitre_technique": "Dynamic Resolution",
+        "mitre_technique_id": "T1568",
+        "cyber_kill_chain_phase": "Command and Control",
+        "confidence": 0.9
+      },
+      "evidence": [
+        "msg: ET DYN_DNS DYNAMIC_DNS HTTP Request to a *.gsxpress .com .my domain",
+        "content: .gsxpress.com.my",
+        "metadata: mitre_technique_id T1568",
+        "metadata: mitre_tactic_id TA0011",
+        "mitre_candidate:T1568:0.90"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "HTTP request to a dynamic DNS domain",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Suspicious DNS",
+        "subcategory": "Unusual DNS Query",
+        "mitre_tactic": "Command And Control",
+        "mitre_technique": "Dynamic Resolution",
+        "mitre_technique_id": "T1568",
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.9
+      },
+      "evidence": [
+        "content: .gsxpress.com.my",
+        "metadata: mitre_tactic_id TA0011, mitre_technique_id T1568",
+        "mitre_candidates: T1568 (Dynamic Resolution)",
+        "mitre_candidate:T1568:0.90"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    }
+  },
+  {
+    "index": 2,
+    "sid": 2012060,
+    "rev": 2,
+    "raw_rule": "alert tcp $EXTERNAL_NET $HTTP_PORTS -> $HOME_NET any (msg:\"ET WEB_CLIENT Hex Obfuscation of document.write %u UTF-8 Encoding\"; flow:established,to_client; content:\"%u64%u6f%u63%u75%u6d%u65%u6e%u74%u2e%u77%u72%u69%u74%u65\"; nocase; reference:url,cansecwest.com/slides07/csw07-nazario.pdf; reference:url,www.sophos.com/security/technical-papers/malware_with_your_mocha.html; classtype:bad-unknown; sid:2012060; rev:2; metadata:affected_product Web_Browsers, affected_product Web_Browser_Plugins, attack_target Client_Endpoint, created_at 2010_12_15, deployment Perimeter, signature_severity Major, tag Web_Client_Attacks, updated_at 2019_07_26;)",
+    "source_file": "data\\rules\\et-open\\emerging-web_client.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Hex obfuscation of document.write using UTF-8 encoding targeting web clients",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Web Attack",
+        "subcategory": null,
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Exploitation",
+        "confidence": 0.85
+      },
+      "evidence": [
+        "msg: ET WEB_CLIENT Hex Obfuscation of document.write %u UTF-8 Encoding",
+        "content: %u64%u6f%u63%u75%u6d%u65%u6e%u74%u2e%u77%u72%u69%u74%u65"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Web Attack",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Web Attack",
+        "subcategory": "Web Shell",
+        "mitre_tactic": "Web Attack",
+        "mitre_technique": "Web Shell",
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.8
+      },
+      "evidence": [
+        "content: \"%u64%u6f%u63%u75%u6d%u65%u6e%u74%u2e%u77%u72%u69%u74%u65\" (hex obfuscation of document.write)",
+        "category_hint: \"Web Attack\""
+      ],
+      "validator": {
+        "status": "REVIEW",
+        "issues": [
+          "MITRE tactic, technique and ID must be set together",
+          "MITRE no-mapping provenance has final fields"
+        ]
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 3,
+    "sid": 2003194,
+    "rev": 7,
+    "raw_rule": "alert tcp $HOME_NET 5060 -> $EXTERNAL_NET any (msg:\"ET VOIP Multiple Unauthorized SIP Responses TCP\"; flow:established,to_client; content:\"SIP/2.0 401 Unauthorized\"; depth:24; threshold: type both, track by_src, count 5, seconds 360; classtype:attempted-dos; sid:2003194; rev:7; metadata:created_at 2010_07_30, confidence Medium, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_06;)",
+    "source_file": "data\\rules\\et-open\\emerging-voip.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Suspicious TCP Activity",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Network Abuse",
+        "subcategory": "Suspicious TCP Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.5
+      },
+      "evidence": [
+        "protocol: tcp",
+        "classtype: attempted-dos",
+        "content: SIP/2.0 401 Unauthorized",
+        "flow: established, to_client"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Multiple Unauthorized SIP Responses",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Denial of Service",
+        "subcategory": null,
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: \"ET VOIP Multiple Unauthorized SIP Responses TCP\"",
+        "classtype: attempted-dos",
+        "content: \"SIP/2.0 401 Unauthorized\""
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 4,
+    "sid": 2101388,
+    "rev": 14,
+    "raw_rule": "alert udp $EXTERNAL_NET any -> $HOME_NET 1900 (msg:\"GPL MISC UPnP Location overflow\"; content:\"Location|3A|\"; nocase; isdataat:128,relative; pcre:\"/^Location\\x3a[^\\n]{128}/smi\"; reference:bugtraq,3723; reference:cve,2001-0876; classtype:misc-attack; sid:2101388; rev:14; metadata:created_at 2010_09_23, cve CVE_2001_0876, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2019_07_26;)",
+    "source_file": "data\\rules\\et-open\\emerging-misc.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Buffer Overflow",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Exploitation",
+        "subcategory": "Exploit Attempt",
+        "mitre_tactic": "Exploitation",
+        "mitre_technique": "Exploit Attempt",
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.8
+      },
+      "evidence": [
+        "content: \"Location|3A|\"",
+        "pcre: /^Location\\x3a[^\\n]{128}/smi",
+        "metadata: cve CVE_2001_0876",
+        "references: cve,2001-0876"
+      ],
+      "validator": {
+        "status": "REVIEW",
+        "issues": [
+          "MITRE tactic, technique and ID must be set together",
+          "MITRE no-mapping provenance has final fields"
+        ]
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Buffer Overflow",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Exploitation",
+        "subcategory": "Exploit Attempt",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Exploitation",
+        "confidence": 0.85
+      },
+      "evidence": [
+        "msg: GPL MISC UPnP Location overflow",
+        "classtype: misc-attack",
+        "content: Location|3A|",
+        "pcre: /^Location\\x3a[^\\n]{128}/smi",
+        "reference: cve,2001-0876"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 5,
+    "sid": 2025067,
+    "rev": 3,
+    "raw_rule": "alert tcp any any -> any !6666:7000 (msg:\"ET CHAT IRC USER Off-port Likely bot with 0 0 colon checkin\"; flow:established,to_server; flowbits:set,is_proto_irc; content:\"USER|20|\"; nocase; content:\" 0 0 |3a|\"; within:40; content:\"|0a|\"; within:40; classtype:misc-activity; sid:2025067; rev:3; metadata:created_at 2013_07_13, confidence Medium, signature_severity Informational, updated_at 2024_03_14;)",
+    "source_file": "data\\rules\\et-open\\emerging-chat.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "IRC bot checkin pattern",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Command and Control",
+        "subcategory": "C2 Communication",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Command and Control",
+        "confidence": 0.7
+      },
+      "evidence": [
+        "msg: ET CHAT IRC USER Off-port Likely bot with 0 0 colon checkin",
+        "flowbits: set,is_proto_irc",
+        "content: USER|20|",
+        "content:  0 0 |3a|"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Informational Activity",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Other",
+        "subcategory": "Informational Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.5
+      },
+      "evidence": [
+        "classtype: misc-activity",
+        "msg: ET CHAT IRC USER Off-port Likely bot with 0 0 colon checkin",
+        "flow: established, to_server",
+        "flowbits: set,is_proto_irc",
+        "content: USER|20|, 0 0 |3a|, |0a|"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 6,
+    "sid": 2023019,
+    "rev": 4,
+    "raw_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET [23,2323,3323,4323] (msg:\"ET TELNET busybox MIRAI hackers - Possible Brute Force Attack\"; flow:established,to_server; flowbits:isset,ET.telnet.busybox; content:\"MIRAI\"; threshold:type limit, count 1, track by_src, seconds 30; reference:url,lists.emergingthreats.net/pipermail/emerging-sigs/2016-August/027524.html; classtype:attempted-admin; sid:2023019; rev:4; metadata:attack_target Server, created_at 2016_08_08, deployment Datacenter, performance_impact Low, confidence Medium, signature_severity Major, updated_at 2024_03_14;)",
+    "source_file": "data\\rules\\et-open\\emerging-telnet.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Brute Force Attack",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Credential Access",
+        "subcategory": "Brute Force",
+        "mitre_tactic": "Credential Access",
+        "mitre_technique": "Brute Force",
+        "mitre_technique_id": "T1110",
+        "cyber_kill_chain_phase": "Exploitation",
+        "confidence": 0.85
+      },
+      "evidence": [
+        "msg: ET TELNET busybox MIRAI hackers - Possible Brute Force Attack",
+        "content: MIRAI",
+        "mitre_candidate:T1110:0.55"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "INFERRED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Brute Force",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Credential Access",
+        "subcategory": "Brute Force",
+        "mitre_tactic": "Credential Access",
+        "mitre_technique": "Brute Force",
+        "mitre_technique_id": "T1110",
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.55
+      },
+      "evidence": [
+        "content: MIRAI",
+        "classtype: attempted-admin",
+        "flowbits: isset,ET.telnet.busybox",
+        "flow: to_server",
+        "metadata: confidence Medium",
+        "mitre_candidate:T1110:0.55"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "INFERRED_MAPPING"
+    }
+  },
+  {
+    "index": 7,
+    "sid": 2020702,
+    "rev": 5,
+    "raw_rule": "alert http $EXTERNAL_NET any -> $HTTP_SERVERS any (msg:\"ET DOS Bittorrent User-Agent inbound - possible DDOS\"; flow:established,to_server; threshold: type both, count 1, seconds 60, track by_src; http.user_agent; content:\"Bittorrent\"; startswith; reference:url,torrentfreak.com/zombie-pirate-bay-tracker-fuels-chinese-ddos-attacks-150124/; classtype:attempted-dos; sid:2020702; rev:5; metadata:created_at 2015_03_18, confidence High, signature_severity Major, updated_at 2024_04_13;)",
+    "source_file": "data\\rules\\et-open\\emerging-dos.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Suspicious HTTP Activity",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Network Abuse",
+        "subcategory": "Suspicious HTTP Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: ET DOS Bittorrent User-Agent inbound - possible DDOS",
+        "classtype: attempted-dos",
+        "content: Bittorrent",
+        "protocol: http",
+        "flow: to_server"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Bittorrent User-Agent inbound - possible DDOS",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Denial of Service",
+        "subcategory": null,
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Actions on Objectives",
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: ET DOS Bittorrent User-Agent inbound - possible DDOS",
+        "classtype: attempted-dos",
+        "content: Bittorrent",
+        "app_layer: http.user_agent"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 8,
+    "sid": 2013682,
+    "rev": 5,
+    "raw_rule": "alert http $EXTERNAL_NET any -> $HTTP_SERVERS any (msg:\"ET WEB_SPECIFIC_APPS Simplis CMS download_file Parameter Local File Inclusion Attempt\"; flow:established,to_server; http.method; content:\"GET\"; http.uri; content:\"/index.php?\"; nocase; content:\"action=do_download\"; fast_pattern; nocase; content:\"download_file=\"; nocase; http.uri.raw; url_decode; content:\"|2e 2e 2f|\"; reference:url,packetstormsecurity.org/files/view/99797/simpliscms-disclose.txt; classtype:web-application-attack; sid:2013682; rev:5; metadata:affected_product Web_Server_Applications, attack_target Server, created_at 2011_09_19, deployment Perimeter, deployment Internal, deployment Datacenter, confidence High, signature_severity Major, tag Local_File_Inclusion, tag Exploit, tag LFI, tag RFI, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_04_09, mitre_tactic_id TA0001, mitre_tactic_name Initial_Access, mitre_technique_id T1190, mitre_technique_name Exploit_Public_Facing_Application; target:dest_ip;)",
+    "source_file": "emerging-web_specific_apps.rules",
+    "cohort": "AUDITED_BENCHMARK",
+    "A": {
+      "final": {
+        "detected_behavior": "Local File Inclusion Attempt",
+        "detected_entity": "Simplis CMS",
+        "entity_type": "Product",
+        "category": "Web Attack",
+        "subcategory": "Path Traversal",
+        "mitre_tactic": "Initial Access",
+        "mitre_technique": "Exploit Public-Facing Application",
+        "mitre_technique_id": "T1190",
+        "cyber_kill_chain_phase": "Exploitation",
+        "confidence": 0.95
+      },
+      "evidence": [
+        "msg: ET WEB_SPECIFIC_APPS Simplis CMS download_file Parameter Local File Inclusion Attempt",
+        "classtype: web-application-attack",
+        "content: action=do_download",
+        "content: download_file=",
+        "content: |2e 2e 2f|",
+        "entity_candidate:Simplis CMS:EXPLICIT_RULE_NAME",
+        "mitre_candidate:T1190:0.99"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Web attack attempt: Local File Inclusion",
+        "detected_entity": "Simplis CMS",
+        "entity_type": "Product",
+        "category": "Web Attack",
+        "subcategory": null,
+        "mitre_tactic": "Initial Access",
+        "mitre_technique": "Exploit Public-Facing Application",
+        "mitre_technique_id": "T1190",
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.99
+      },
+      "evidence": [
+        "msg: ET WEB_SPECIFIC_APPS Simplis CMS download_file Parameter Local File Inclusion Attempt",
+        "content: |2e 2e 2f|",
+        "entity_candidates: Simplis CMS (Product, explicit rule name)",
+        "entity_candidate:Simplis CMS:EXPLICIT_RULE_NAME",
+        "mitre_candidate:T1190:0.99"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    }
+  },
+  {
+    "index": 9,
+    "sid": 2101280,
+    "rev": 10,
+    "raw_rule": "alert udp $EXTERNAL_NET any -> $HOME_NET 111 (msg:\"GPL RPC portmap listing UDP 111\"; content:\"|00 01 86 A0|\"; depth:4; offset:12; content:\"|00 00 00 04|\"; within:4; distance:4; content:\"|00 00 00 00|\"; depth:4; offset:4; reference:arachnids,428; classtype:rpc-portmap-decode; sid:2101280; rev:10; metadata:created_at 2010_09_23, signature_severity Informational, updated_at 2019_07_26;)",
+    "source_file": "emerging-rpc.rules",
+    "cohort": "AUDITED_BENCHMARK",
+    "A": {
+      "final": {
+        "detected_behavior": "RPC portmap listing",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Discovery",
+        "subcategory": null,
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: GPL RPC portmap listing UDP 111",
+        "classtype: rpc-portmap-decode",
+        "content: |00 01 86 A0|"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "RPC portmap enumeration",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Other",
+        "subcategory": "Informational Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.5
+      },
+      "evidence": [
+        "msg: GPL RPC portmap listing UDP 111",
+        "classtype: rpc-portmap-decode",
+        "protocol: udp",
+        "content: |00 01 86 A0|, |00 00 00 04|, |00 00 00 00|"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 10,
+    "sid": 2011286,
+    "rev": 7,
+    "raw_rule": "alert http1 $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET WEB_SERVER Bot Search RFI Scan (Casper-Like MaMa Cyber/ebes)\"; flow:established,to_server; http.header; content:\"|0d 0a|User-Agent|3a 20|MaMa|20|\"; nocase; reference:url,eromang.zataz.com/2010/07/13/byroenet-casper-bot-search-e107-rce-scanner/; classtype:web-application-attack; sid:2011286; rev:7; metadata:created_at 2010_07_30, signature_severity Unknown, updated_at 2024_05_06;)",
+    "source_file": "emerging-web_server.rules",
+    "cohort": "AUDITED_BENCHMARK",
+    "A": {
+      "final": {
+        "detected_behavior": "Web Attack",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Web Attack",
+        "subcategory": "Web Shell",
+        "mitre_tactic": "Web Attack",
+        "mitre_technique": "Web Shell",
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.8
+      },
+      "evidence": [
+        "content: |0d 0a|User-Agent|3a 20|MaMa|20|",
+        "classtype: web-application-attack",
+        "category_hint: Web Attack",
+        "controlled_subcategories: Web Attack -> Web Shell"
+      ],
+      "validator": {
+        "status": "REVIEW",
+        "issues": [
+          "MITRE tactic, technique and ID must be set together",
+          "MITRE no-mapping provenance has final fields"
+        ]
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Web vulnerability or bot scanning activity",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Web Attack",
+        "subcategory": null,
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: ET WEB_SERVER Bot Search RFI Scan (Casper-Like MaMa Cyber/ebes)",
+        "classtype: web-application-attack",
+        "content: |0d 0a|User-Agent|3a 20|MaMa|20|"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 11,
+    "sid": 2068435,
+    "rev": 1,
+    "raw_rule": "alert http $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET ATTACK_RESPONSE InstallFix MacOS Payload Inbound\"; flow:established,to_client; http.response_body; content:\"|23 21 2f|bin|2f|zsh\"; depth:15; content:\"|3c 3c 27|PAYLOAD|5f|END|27|\"; fast_pattern; reference:url,pushsecurity.com/blog/installfix; reference:url,x.com/anyrun_app/status/2036799880392265928; classtype:trojan-activity; sid:2068435; rev:1; metadata:affected_product Mac_OSX, attack_target Client_Endpoint, tls_state TLSDecrypt, created_at 2026_03_25, deployment Perimeter, deployment SSLDecrypt, malware_family installfix, confidence Medium, signature_severity Major, updated_at 2026_03_25, mitre_tactic_id TA0011, mitre_tactic_name Command_And_Control, mitre_technique_id T1105, mitre_technique_name Ingress_Tool_Transfer; target:dest_ip;)",
+    "source_file": "data\\rules\\et-open\\emerging-attack_response.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Ingress Tool Transfer",
+        "detected_entity": "installfix",
+        "entity_type": "Malware",
+        "category": "Malware",
+        "subcategory": "Malware Network Activity",
+        "mitre_tactic": "Command And Control",
+        "mitre_technique": "Ingress Tool Transfer",
+        "mitre_technique_id": "T1105",
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.9
+      },
+      "evidence": [
+        "metadata.malware_family: installfix",
+        "mitre_tactic_id: TA0011",
+        "mitre_technique_id: T1105",
+        "content: |23 21 2f|bin|2f|zsh",
+        "content: |3c 3c 27|PAYLOAD|5f|END|27|",
+        "entity_candidate:Mac OSX:SPECIFIC_AFFECTED_PRODUCT",
+        "entity_candidate:installfix:EXPLICIT_MALWARE_NAME",
+        "mitre_candidate:T1105:0.90"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "InstallFix MacOS Payload Inbound",
+        "detected_entity": "installfix",
+        "entity_type": "Malware",
+        "category": "Command and Control",
+        "subcategory": "HTTP C2 Communication",
+        "mitre_tactic": "Command And Control",
+        "mitre_technique": "Ingress Tool Transfer",
+        "mitre_technique_id": "T1105",
+        "cyber_kill_chain_phase": "Command and Control",
+        "confidence": 0.9
+      },
+      "evidence": [
+        "msg: ET ATTACK_RESPONSE InstallFix MacOS Payload Inbound",
+        "metadata: malware_family installfix",
+        "content: |23 21 2f|bin|2f|zsh",
+        "entity_candidate:Mac OSX:SPECIFIC_AFFECTED_PRODUCT",
+        "entity_candidate:installfix:EXPLICIT_MALWARE_NAME",
+        "mitre_candidate:T1105:0.90"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    }
+  },
+  {
+    "index": 12,
+    "sid": 2527005,
+    "rev": 1715,
+    "raw_rule": "alert ip [89.23.108.208,119.82.97.10,119.82.97.10,45.142.36.64,107.148.1.188,1.15.248.225,101.201.54.74,101.43.32.212,106.54.209.36,111.229.187.212,111.230.12.238,111.92.243.236,113.31.105.33,113.31.106.106,114.55.133.151,117.72.8.192,118.31.116.9,119.28.83.149,119.91.208.190,121.43.55.149,123.58.198.236,124.223.41.181,124.71.106.234,134.122.130.181,134.122.130.186,139.155.148.131,139.159.203.44,139.9.62.19,165.227.108.186,185.196.10.121,185.196.8.18,194.165.16.55,20.56.70.245,43.136.38.59,47.100.87.177,47.105.69.34,47.108.180.121,47.109.69.135,47.92.127.53,62.204.41.11,62.234.27.204,64.7.198.58,77.242.250.36,8.134.11.7,8.210.9.201,8.212.49.116,80.66.75.9,91.238.181.235,162.33.177.167,45.92.158.20] any -> $HOME_NET any (msg:\"ET Threatview.io High Confidence Cobalt Strike C2 IP group 6\"; reference:url,threatview.io/Downloads/High-Confidence-CobaltStrike-C2%20-Feeds.txt; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2527005; rev:1715; metadata:affected_product Any, attack_target Any, deployment Perimeter, tag Threatview_CS, signature_severity Major, created_at 2021_12_09, updated_at 2026_08_31;)",
+    "source_file": "data\\rules\\et-open\\threatview_CS_c2.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Command and Control",
+        "detected_entity": "Cobalt Strike",
+        "entity_type": "Attack Tool",
+        "category": "Command and Control",
+        "subcategory": "C2 Communication",
+        "mitre_tactic": "Command and Control",
+        "mitre_technique": "C2 Communication",
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.9
+      },
+      "evidence": [
+        "msg: ET Threatview.io High Confidence Cobalt Strike C2 IP group 6",
+        "entity_hint: Cobalt Strike",
+        "entity_candidates: Cobalt Strike (Attack Tool)",
+        "entity_candidate:Cobalt Strike:EXPLICIT_RULE_NAME"
+      ],
+      "validator": {
+        "status": "REVIEW",
+        "issues": [
+          "MITRE tactic, technique and ID must be set together",
+          "MITRE no-mapping provenance has final fields"
+        ]
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Cobalt Strike C2 communication",
+        "detected_entity": "Cobalt Strike",
+        "entity_type": "Attack Tool",
+        "category": "Command and Control",
+        "subcategory": "C2 Communication",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Command and Control",
+        "confidence": 0.9
+      },
+      "evidence": [
+        "msg: ET Threatview.io High Confidence Cobalt Strike C2 IP group 6",
+        "entity_candidate:Cobalt Strike:EXPLICIT_RULE_NAME"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 13,
+    "sid": 2403415,
+    "rev": 111389,
+    "raw_rule": "alert ip [81.86.20.177,82.120.227.43,82.124.21.160,82.124.72.172,82.125.235.123,82.125.79.37,82.142.156.17,82.155.80.47,82.156.162.176,82.165.216.132,82.167.197.116,82.167.222.19,82.167.42.165,82.200.135.250,82.205.99.1,82.209.249.231,82.215.116.142,82.215.118.245,82.224.248.104,82.225.6.166,82.27.201.21,82.36.241.183,82.65.192.79,82.66.103.197,82.67.205.95,82.68.39.86,82.86.65.174,82.96.146.180,83.110.94.182,83.112.223.96,83.136.88.226,83.159.70.191,83.195.197.1,83.198.199.131,83.200.225.79,83.237.72.102,83.239.53.250,83.250.181.240,83.254.128.228,83.39.58.68,83.46.109.35,83.46.89.229,83.71.70.198,83.85.124.144,83.86.91.203,83.99.224.59,84.106.173.204,84.18.231.87,84.197.124.193,84.220.17.128] any -> $HOME_NET any (msg:\"ET CINS Active Threat Intelligence Poor Reputation IP group 116\"; reference:url,www.cinsscore.com; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2403415; rev:111389; metadata:affected_product Any, attack_target Any, deployment Perimeter, tag CINS, signature_severity Major, created_at 2013_10_08, updated_at 2026_08_31;)",
+    "source_file": "data\\rules\\et-open\\ciarmy.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Traffic from known malicious infrastructure",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Network Abuse",
+        "subcategory": "Suspicious IP Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.875
+      },
+      "evidence": [
+        "similar_rules"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Traffic from known malicious infrastructure",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Network Abuse",
+        "subcategory": "Suspicious IP Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.85
+      },
+      "evidence": [
+        "msg: ET CINS Active Threat Intelligence Poor Reputation IP group 116",
+        "tag CINS"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 14,
+    "sid": 2050707,
+    "rev": 2,
+    "raw_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET REMOTE_ACCESS AnyDesk Revoked Code Signing Certificate Observed\"; flow:established,to_client; content:\"|30 82|\"; content:\"|0D BF 15 2D EA F0 B9 81 A8 A9 38 D5 3F 76 9D B8|\"; distance:9; within:16; fast_pattern; content:\"|1e 17 0d|211213000000Z|17 0d|250108235959Z0\"; distance:123; within:32; content:\"philandro Software GmbH\"; distance:75; within:23; reference:url,anydesk.com/en/public-statement; classtype:misc-activity; sid:2050707; rev:2; metadata:affected_product Windows_XP_Vista_7_8_10_Server_32_64_Bit, affected_product Windows_11, attack_target Client_Endpoint, created_at 2024_02_05, deployment Perimeter, deployment SSLDecrypt, former_category INFO, performance_impact Low, confidence High, signature_severity Informational, updated_at 2024_06_10; target:dest_ip;)",
+    "source_file": "emerging-remote_access.rules",
+    "cohort": "AUDITED_BENCHMARK",
+    "A": {
+      "final": {
+        "detected_behavior": "Observation of a revoked AnyDesk code signing certificate",
+        "detected_entity": "AnyDesk",
+        "entity_type": "Remote Access Tool",
+        "category": "Remote Access",
+        "subcategory": "Remote Access Software",
+        "mitre_tactic": "Command And Control",
+        "mitre_technique": "Remote Access Tools",
+        "mitre_technique_id": "T1219",
+        "cyber_kill_chain_phase": "Command and Control",
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: ET REMOTE_ACCESS AnyDesk Revoked Code Signing Certificate Observed",
+        "content: philandro Software GmbH",
+        "entity_candidate:AnyDesk:EXPLICIT_RULE_NAME",
+        "entity_candidate:Windows 11:SPECIFIC_AFFECTED_PRODUCT",
+        "mitre_candidate:T1219:0.55"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "INFERRED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Observation of a revoked AnyDesk code-signing certificate",
+        "detected_entity": "AnyDesk",
+        "entity_type": "Remote Access Tool",
+        "category": "Remote Access",
+        "subcategory": "Remote Access Software",
+        "mitre_tactic": "Command And Control",
+        "mitre_technique": "Remote Access Tools",
+        "mitre_technique_id": "T1219",
+        "cyber_kill_chain_phase": "Command and Control",
+        "confidence": 0.9
+      },
+      "evidence": [
+        "msg: ET REMOTE_ACCESS AnyDesk Revoked Code Signing Certificate Observed",
+        "content: philandro Software GmbH",
+        "entity_hint: AnyDesk",
+        "mitre_candidates: T1219",
+        "entity_candidate:AnyDesk:EXPLICIT_RULE_NAME",
+        "entity_candidate:Windows 11:SPECIFIC_AFFECTED_PRODUCT",
+        "mitre_candidate:T1219:0.55"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "INFERRED_MAPPING"
+    }
+  },
+  {
+    "index": 15,
+    "sid": 2009985,
+    "rev": 2,
+    "raw_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 21 (msg:\"ET FTP Possible FTP Daemon Username UNION SELECT SQL Injection Attempt\"; flow:established,to_server; content:\"USER\"; depth:4; content:\"UNION\"; within:200; nocase; content:\"SELECT\"; distance:0; nocase; pcre:\"/UNION.+SELECT/i\"; reference:url,en.wikipedia.org/wiki/SQL_injection; classtype:attempted-user; sid:2009985; rev:2; metadata:affected_product Web_Server_Applications, attack_target Web_Server, created_at 2010_07_30, deployment Datacenter, confidence Medium, signature_severity Major, tag SQL_Injection, updated_at 2019_07_26, mitre_tactic_id TA0001, mitre_tactic_name Initial_Access, mitre_technique_id T1190, mitre_technique_name Exploit_Public_Facing_Application;)",
+    "source_file": "emerging-ftp.rules",
+    "cohort": "AUDITED_BENCHMARK",
+    "A": {
+      "final": {
+        "detected_behavior": "SQL Injection",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Web Attack",
+        "subcategory": "SQL Injection",
+        "mitre_tactic": "Initial Access",
+        "mitre_technique": "Exploit Public-Facing Application",
+        "mitre_technique_id": "T1190",
+        "cyber_kill_chain_phase": "Exploitation",
+        "confidence": 0.7
+      },
+      "evidence": [
+        "content: USER, UNION, SELECT",
+        "pcre: /UNION.+SELECT/i",
+        "metadata: tag SQL_Injection",
+        "mitre_tactic_id: TA0001",
+        "mitre_technique_id: T1190",
+        "mitre_candidate:T1190:0.99"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "SQL Injection Attempt",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Web Attack",
+        "subcategory": "SQL Injection",
+        "mitre_tactic": "Initial Access",
+        "mitre_technique": "Exploit Public-Facing Application",
+        "mitre_technique_id": "T1190",
+        "cyber_kill_chain_phase": "Exploitation",
+        "confidence": 0.95
+      },
+      "evidence": [
+        "msg: ET FTP Possible FTP Daemon Username UNION SELECT SQL Injection Attempt",
+        "content: USER, UNION, SELECT",
+        "pcre: /UNION.+SELECT/i",
+        "mitre_candidate:T1190:0.99"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    }
+  },
+  {
+    "index": 16,
+    "sid": 2060513,
+    "rev": 2,
+    "raw_rule": "alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:\"ET REMOTE_ACCESS Observed Anydesk Domain (boot .net .anydesk .com) in TLS SNI\"; flow:established,to_server; tls.sni; bsize:20; content:\"boot.net.anydesk.com\"; fast_pattern; classtype:misc-activity; sid:2060513; rev:2; metadata:affected_product Any, attack_target Client_and_Server, created_at 2025_03_03, deployment Perimeter, former_category INFO, performance_impact Low, confidence High, signature_severity Informational, tag AnyDesk, updated_at 2025_03_05, mitre_tactic_id TA0011, mitre_tactic_name Command_And_Control, mitre_technique_id T1219, mitre_technique_name Remote_Access_Software;)",
+    "source_file": "emerging-remote_access.rules",
+    "cohort": "AUDITED_BENCHMARK",
+    "A": {
+      "final": {
+        "detected_behavior": "AnyDesk remote access software communication observed in TLS SNI",
+        "detected_entity": "AnyDesk",
+        "entity_type": "Remote Access Tool",
+        "category": "Remote Access",
+        "subcategory": "Remote Access Software",
+        "mitre_tactic": "Command And Control",
+        "mitre_technique": "Remote Access Tools",
+        "mitre_technique_id": "T1219",
+        "cyber_kill_chain_phase": "Command and Control",
+        "confidence": 1.0
+      },
+      "evidence": [
+        "msg: ET REMOTE_ACCESS Observed Anydesk Domain (boot .net .anydesk .com) in TLS SNI",
+        "content: boot.net.anydesk.com",
+        "metadata: mitre_technique_id T1219",
+        "entity_hint: AnyDesk",
+        "entity_candidate:AnyDesk:EXPLICIT_RULE_NAME",
+        "mitre_candidate:T1219:0.99"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Observed Anydesk Domain in TLS SNI",
+        "detected_entity": "AnyDesk",
+        "entity_type": "Remote Access Tool",
+        "category": "Remote Access",
+        "subcategory": "Remote Access Software",
+        "mitre_tactic": "Command And Control",
+        "mitre_technique": "Remote Access Tools",
+        "mitre_technique_id": "T1219",
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.99
+      },
+      "evidence": [
+        "msg",
+        "content",
+        "entity_hint",
+        "mitre_candidates",
+        "entity_candidate:AnyDesk:EXPLICIT_RULE_NAME",
+        "mitre_candidate:T1219:0.99"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    }
+  },
+  {
+    "index": 17,
+    "sid": 2038015,
+    "rev": 2,
+    "raw_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg:\"ET HUNTING HTTP GET Request XOR Key 33\"; flow:established,to_server; content:\"|74 76 67 13 1c|\"; startswith; fast_pattern; content:\"|13 7b 67 67 63 1c|\"; distance:0; classtype:misc-activity; sid:2038015; rev:2; metadata:attack_target Client_and_Server, created_at 2022_08_09, deployment Perimeter, performance_impact Low, confidence Medium, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2022_08_10, mitre_tactic_id TA0005, mitre_tactic_name Defense_Evasion, mitre_technique_id T1027, mitre_technique_name Obfuscated_Files_or_Information;)",
+    "source_file": "data\\rules\\et-open\\emerging-hunting.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "XOR obfuscation in HTTP traffic",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Other",
+        "subcategory": "Informational Activity",
+        "mitre_tactic": "Stealth",
+        "mitre_technique": "Obfuscated Files or Information",
+        "mitre_technique_id": "T1027",
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: ET HUNTING HTTP GET Request XOR Key 33",
+        "metadata: mitre_technique_id T1027",
+        "content: |74 76 67 13 1c|",
+        "mitre_candidate:T1027:0.90"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Obfuscated Files or Information",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Other",
+        "subcategory": "Informational Activity",
+        "mitre_tactic": "Stealth",
+        "mitre_technique": "Obfuscated Files or Information",
+        "mitre_technique_id": "T1027",
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.5
+      },
+      "evidence": [
+        "msg: ET HUNTING HTTP GET Request XOR Key 33",
+        "classtype: misc-activity",
+        "metadata: mitre_tactic_id TA0005, mitre_technique_id T1027",
+        "content: |74 76 67 13 1c|, |13 7b 67 67 63 1c|",
+        "mitre_candidate:T1027:0.90"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    }
+  },
+  {
+    "index": 18,
+    "sid": 2005279,
+    "rev": 9,
+    "raw_rule": "alert http $EXTERNAL_NET any -> $HTTP_SERVERS any (msg:\"ET WEB_SPECIFIC_APPS Easebay Resources Login Manager SQL Injection Attempt -- memberlist.php init_row UPDATE\"; flow:established,to_server; http.uri; content:\"/admin/memberlist.php?\"; nocase; content:\"init_row=\"; nocase; content:\"UPDATE\"; nocase; content:\"SET\"; nocase; distance:0; reference:cve,CVE-2007-0401; reference:url,www.securityfocus.com/archive/1/archive/1/457505/100/0/threaded; classtype:web-application-attack; sid:2005279; rev:9; metadata:affected_product Web_Server_Applications, attack_target Web_Server, created_at 2010_07_30, deployment Datacenter, confidence Medium, signature_severity Major, tag SQL_Injection, updated_at 2020_09_11, mitre_tactic_id TA0001, mitre_tactic_name Initial_Access, mitre_technique_id T1190, mitre_technique_name Exploit_Public_Facing_Application;)",
+    "source_file": "emerging-web_specific_apps.rules",
+    "cohort": "AUDITED_BENCHMARK",
+    "A": {
+      "final": {
+        "detected_behavior": "SQL Injection Attempt",
+        "detected_entity": "Easebay Resources Login Manager",
+        "entity_type": "Product",
+        "category": "Web Attack",
+        "subcategory": "SQL Injection",
+        "mitre_tactic": "Initial Access",
+        "mitre_technique": "Exploit Public-Facing Application",
+        "mitre_technique_id": "T1190",
+        "cyber_kill_chain_phase": "Exploitation",
+        "confidence": 0.95
+      },
+      "evidence": [
+        "ET WEB_SPECIFIC_APPS Easebay Resources Login Manager SQL Injection Attempt -- memberlist.php init_row UPDATE",
+        "classtype: web-application-attack",
+        "content: /admin/memberlist.php?",
+        "content: init_row=",
+        "content: UPDATE",
+        "content: SET",
+        "tag SQL_Injection",
+        "entity_candidate:Easebay Resources Login Manager:EXPLICIT_RULE_NAME",
+        "mitre_candidate:T1190:0.99"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Web Attack",
+        "detected_entity": "Easebay Resources Login Manager",
+        "entity_type": "Product",
+        "category": "Web Attack",
+        "subcategory": "SQL Injection",
+        "mitre_tactic": "Initial Access",
+        "mitre_technique": "Exploit Public-Facing Application",
+        "mitre_technique_id": "T1190",
+        "cyber_kill_chain_phase": "Exploitation",
+        "confidence": 0.9
+      },
+      "evidence": [
+        "msg: ET WEB_SPECIFIC_APPS Easebay Resources Login Manager SQL Injection Attempt -- memberlist.php init_row UPDATE",
+        "content: /admin/memberlist.php?, init_row=, UPDATE, SET",
+        "metadata: tag SQL_Injection",
+        "mitre_technique_name: Exploit Public-Facing Application",
+        "mitre_tactic_name: Initial Access",
+        "entity_candidate:Easebay Resources Login Manager:EXPLICIT_RULE_NAME",
+        "mitre_candidate:T1190:0.99"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    }
+  },
+  {
+    "index": 19,
+    "sid": 2003657,
+    "rev": 21,
+    "raw_rule": "alert http $HOME_NET any -> $EXTERNAL_NET any (msg:\"ET USER_AGENTS Suspicious User-Agent (MSIE)\"; flow:established,to_server; threshold: type limit, count 2, track by_src, seconds 300; http.user_agent; content:\"MSIE\"; startswith; http.host; content:!\"www.msftncsi.com\"; classtype:trojan-activity; sid:2003657; rev:21; metadata:affected_product Any, attack_target Client_Endpoint, created_at 2010_07_30, deployment Perimeter, confidence High, signature_severity Major, tag User_Agent, updated_at 2024_04_13;)",
+    "source_file": "data\\rules\\et-open\\emerging-user_agents.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Suspicious User-Agent Activity",
+        "detected_entity": "Internet Explorer",
+        "entity_type": "Product",
+        "category": "Web Attack",
+        "subcategory": null,
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.9
+      },
+      "evidence": [
+        "msg: ET USER_AGENTS Suspicious User-Agent (MSIE)",
+        "content: MSIE",
+        "entity_candidates: Internet Explorer (EXPLICIT_RULE_NAME)",
+        "entity_candidate:Internet Explorer:EXPLICIT_RULE_NAME"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Suspicious User-Agent usage matching MSIE",
+        "detected_entity": "Internet Explorer",
+        "entity_type": "Product",
+        "category": "Other",
+        "subcategory": "Informational Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: ET USER_AGENTS Suspicious User-Agent (MSIE)",
+        "content: MSIng MSIE",
+        "app_layer: http.user_agent",
+        "entity_candidate:Internet Explorer:EXPLICIT_RULE_NAME"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 20,
+    "sid": 2010494,
+    "rev": 5,
+    "raw_rule": "alert tcp $HOME_NET 3306 -> $EXTERNAL_NET any (msg:\"ET SCAN Multiple MySQL Login Failures Possible Brute Force Attempt\"; flow:established,to_client; dsize:<251; byte_test:1,<,0xfb,0,little; content:\"|ff 15 04 23 32 38 30 30 30|\"; offset:4; threshold: type threshold, track by_src, count 5, seconds 120; classtype:attempted-recon; sid:2010494; rev:5; metadata:created_at 2010_07_30, confidence Medium, signature_severity Informational, updated_at 2024_03_06;)",
+    "source_file": "emerging-scan.rules",
+    "cohort": "AUDITED_BENCHMARK",
+    "A": {
+      "final": {
+        "detected_behavior": "Multiple MySQL Login Failures Possible Brute Force Attempt",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Credential Access",
+        "subcategory": "Brute Force",
+        "mitre_tactic": "Credential Access",
+        "mitre_technique": "Brute Force",
+        "mitre_technique_id": "T1110",
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.55
+      },
+      "evidence": [
+        "content: |ff 15 04 23 32 38 30 30 30|",
+        "classtype: attempted-recon",
+        "category_hint: Reconnaissance",
+        "mitre_candidates: [T1110]",
+        "mitre_candidate:T1110:0.55"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "INFERRED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Multiple MySQL login failures indicating possible brute force attempt",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Reconnaissance",
+        "subcategory": null,
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Reconnaissance",
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: ET SCAN Multiple MySQL Login Failures Possible Brute Force Attempt",
+        "classtype: attempted-recon",
+        "mitre_candidate:T1110:0.55"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 21,
+    "sid": 2019089,
+    "rev": 6,
+    "raw_rule": "alert tcp any 873 -> any any (msg:\"ET EXPLOIT F5 BIG-IP rsync cmi authorized_keys successful exfiltration\"; flow:established,to_client; flowbits:isset,ET.F5.key; content:\"ssh-rsa\"; fast_pattern; reference:url,www.security-assessment.com/files/documents/advisory/F5_Unauthenticated_rsync_access_to_Remote_Root_Code_Execution.pdf; classtype:attempted-admin; sid:2019089; rev:6; metadata:created_at 2014_08_29, signature_severity Critical, updated_at 2024_03_14;)",
+    "source_file": "emerging-exploit.rules",
+    "cohort": "AUDITED_BENCHMARK",
+    "A": {
+      "final": {
+        "detected_behavior": "Exploitation of F5 BIG-IP",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Exploitation",
+        "subcategory": "Exploit Attempt",
+        "mitre_tactic": "Initial Access",
+        "mitre_technique": "Exploit Public-Facing Application",
+        "mitre_technique_id": "T1190",
+        "cyber_kill_chain_phase": "Exploitation",
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: ET EXPLOIT F5 BIG-IP rsync cmi authorized_keys successful exfiltration",
+        "classtype: attempted-admin",
+        "content: ssh-rsa",
+        "mitre_candidate:T1190:0.55"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "INFERRED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Exploit Attempt",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Exploitation",
+        "subcategory": "Exploit Attempt",
+        "mitre_tactic": "Initial Access",
+        "mitre_technique": "Exploit Public-Facing Application",
+        "mitre_technique_id": "T1190",
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.55
+      },
+      "evidence": [
+        "msg: ET EXPLOIT F5 BIG-IP rsync cmi authorized_keys successful exfiltration",
+        "classtype: attempted-admin",
+        "content: ssh-rsa",
+        "flowbits: isset,ET.F5.key",
+        "category_hint: Exploitation",
+        "mitre_candidates: [T1190]",
+        "mitre_candidate:T1190:0.55"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "INFERRED_MAPPING"
+    }
+  },
+  {
+    "index": 22,
+    "sid": 2021371,
+    "rev": 7,
+    "raw_rule": "alert http $HOME_NET any -> $EXTERNAL_NET any (msg:\"ET INFO Possible External IP Lookup www.whatsmyip.us\"; flow:established,to_server; http.host; bsize:16; content:\"www.whatsmyip.us\"; fast_pattern; classtype:external-ip-check; sid:2021371; rev:7; metadata:attack_target Client_Endpoint, created_at 2015_06_30, deployment Perimeter, performance_impact Low, confidence High, signature_severity Informational, updated_at 2024_11_26, mitre_tactic_id TA0007, mitre_tactic_name Discovery, mitre_technique_id T1614, mitre_technique_name System_Location_Discovery;)",
+    "source_file": "emerging-info.rules",
+    "cohort": "AUDITED_BENCHMARK",
+    "A": {
+      "final": {
+        "detected_behavior": "Informational network activity",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Other",
+        "subcategory": "Informational Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.9
+      },
+      "evidence": [
+        "msg: ET INFO Possible External IP Lookup www.whatsmyip.us",
+        "classtype: external-ip-check",
+        "content: www.whatsmyip.us",
+        "mitre_tactic_id: TA0007",
+        "mitre_tactic_name: Discovery",
+        "mitre_technique_id: T1614",
+        "mitre_technique_name: System Location Discovery",
+        "mitre_candidate:T1614:0.90"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "External IP lookup",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Other",
+        "subcategory": "Informational Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: ET INFO Possible External IP Lookup www.whatsmyip.us",
+        "classtype: external-ip-check",
+        "content: www.whatsmyip.us",
+        "mitre_candidate:T1614:0.90"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 23,
+    "sid": 2047740,
+    "rev": 1,
+    "raw_rule": "alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:\"ET INFO Webhook/HTTP Request Inspection Service Domain (intercept .rest in TLS SNI)\"; flow:established,to_server; tls.sni; content:\".to.intercept.rest\"; endswith; fast_pattern; reference:url,intercept.rest; classtype:misc-activity; sid:2047740; rev:1; metadata:created_at 2023_08_25, deployment Perimeter, performance_impact Low, confidence High, signature_severity Informational, updated_at 2023_08_25, reviewed_at 2023_08_26, mitre_tactic_id TA0010, mitre_tactic_name Exfiltration, mitre_technique_id T1567, mitre_technique_name Exfiltration_Over_Web_Service;)",
+    "source_file": "data\\rules\\et-open\\emerging-info.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Informational network activity",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Other",
+        "subcategory": "Informational Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.9
+      },
+      "evidence": [
+        "msg: ET INFO Webhook/HTTP Request Inspection Service Domain (intercept .rest in TLS SNI)",
+        "classtype: misc-activity",
+        "metadata: mitre_tactic_id TA0010, mitre_tactic_name Exfiltration, mitre_technique_id T1567, mitre_technique_name Exfiltration_Over_Web_Service",
+        "content: .to.intercept.rest",
+        "app_layer: tls.sni",
+        "mitre_candidate:T1567:0.90"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Webhook or HTTP inspection service domain usage",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Other",
+        "subcategory": "Informational Activity",
+        "mitre_tactic": "Exfiltration",
+        "mitre_technique": "Exfiltration Over Web Service",
+        "mitre_technique_id": "T1567",
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.85
+      },
+      "evidence": [
+        "msg: ET INFO Webhook/HTTP Request Inspection Service Domain (intercept .rest in TLS SNI)",
+        "classtype: misc-activity",
+        "content: .to.intercept.rest",
+        "metadata: mitre_tactic_name Exfiltration",
+        "metadata: mitre_technique_name Exfiltration_Over_Web_Service",
+        "mitre_candidate:T1567:0.90"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    }
+  },
+  {
+    "index": 24,
+    "sid": 2060760,
+    "rev": 1,
+    "raw_rule": "alert dns $HOME_NET any -> any any (msg:\"ET PHISHING TA453 Domain in DNS Lookup\"; dns.query; dotprefix; content:\".join-room.site\"; nocase; endswith; reference:url,x.com/NarimanGharib/status/1898343272772174032; classtype:credential-theft; sid:2060760; rev:1; metadata:affected_product Windows_XP_Vista_7_8_10_Server_32_64_Bit, attack_target Client_Endpoint, created_at 2025_03_10, deployment Perimeter, performance_impact Low, confidence High, signature_severity Major, tag TA453, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2025_03_10, mitre_tactic_id TA0001, mitre_tactic_name Initial_Access, mitre_technique_id T1566, mitre_technique_name Phishing;)",
+    "source_file": "data\\rules\\et-open\\emerging-phishing.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Phishing domain lookup",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Credential Access",
+        "subcategory": "Credential Activity",
+        "mitre_tactic": "Initial Access",
+        "mitre_technique": "Phishing",
+        "mitre_technique_id": "T1566",
+        "cyber_kill_chain_phase": "Delivery",
+        "confidence": 0.85
+      },
+      "evidence": [
+        "msg: ET PHISHING TA453 Domain in DNS Lookup",
+        "classtype: credential-theft",
+        "content: .join-room.site",
+        "metadata: mitre_tactic_id TA0001",
+        "metadata: mitre_technique_id T1566",
+        "mitre_candidate:T1566:0.90"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Phishing Infrastructure",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Suspicious DNS",
+        "subcategory": "Unusual DNS Query",
+        "mitre_tactic": "Initial Access",
+        "mitre_technique": "Phishing",
+        "mitre_technique_id": "T1566",
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.9
+      },
+      "evidence": [
+        "msg: ET PHISHING TA453 Domain in DNS Lookup",
+        "classtype: credential-theft",
+        "content: .join-room.site",
+        "mitre_tactic_id: TA0001",
+        "mitre_technique_id: T1566",
+        "mitre_technique_name: Phishing",
+        "mitre_candidates: T1566",
+        "mitre_candidate:T1566:0.90"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    }
+  },
+  {
+    "index": 25,
+    "sid": 2527010,
+    "rev": 1715,
+    "raw_rule": "alert ip [89.185.84.22,139.60.161.236,89.185.84.28,185.143.223.75,193.233.203.214,185.143.223.76,5.44.42.42,5.44.42.44,5.44.42.48,13.58.89.86,81.19.140.23,45.147.230.252,185.143.223.69,79.133.56.243,5.181.86.248,142.44.211.35,84.32.128.99,84.32.128.5,185.143.223.71,190.123.44.221,43.154.27.211,179.60.146.53,84.32.128.89,13.40.120.240,77.73.133.80,5.44.42.17,194.165.16.83,139.60.161.164,5.44.42.14,5.44.42.45,5.44.42.49,160.20.147.57,179.43.162.24,64.44.135.106,23.29.115.190,64.44.102.127,149.255.35.160,68.233.238.123,104.156.59.221,23.227.198.227,23.227.198.239,3.138.96.16,179.60.146.16,23.81.246.200,23.19.227.177,64.44.98.231,23.81.246.209,45.153.242.82,23.83.133.97,77.73.134.10] any -> $HOME_NET any (msg:\"ET Threatview.io High Confidence Cobalt Strike C2 IP group 11\"; reference:url,threatview.io/Downloads/High-Confidence-CobaltStrike-C2%20-Feeds.txt; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2527010; rev:1715; metadata:affected_product Any, attack_target Any, deployment Perimeter, tag Threatview_CS, signature_severity Major, created_at 2021_12_09, updated_at 2026_08_31;)",
+    "source_file": "data\\rules\\et-open\\threatview_CS_c2.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Command and Control",
+        "detected_entity": "Cobalt Strike",
+        "entity_type": "Attack Tool",
+        "category": "Command and Control",
+        "subcategory": "C2 Communication",
+        "mitre_tactic": "Command and Control",
+        "mitre_technique": "C2 Communication",
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.9
+      },
+      "evidence": [
+        "msg: ET Threatview.io High Confidence Cobalt Strike C2 IP group 11",
+        "entity_hint: Cobalt Strike",
+        "entity_candidates: Cobalt Strike (Attack Tool)",
+        "entity_candidate:Cobalt Strike:EXPLICIT_RULE_NAME"
+      ],
+      "validator": {
+        "status": "REVIEW",
+        "issues": [
+          "MITRE tactic, technique and ID must be set together",
+          "MITRE no-mapping provenance has final fields"
+        ]
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Command and Control communication associated with Cobalt Strike",
+        "detected_entity": "Cobalt Strike",
+        "entity_type": "Attack Tool",
+        "category": "Command and Control",
+        "subcategory": "C2 Communication",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Command and Control",
+        "confidence": 0.9
+      },
+      "evidence": [
+        "msg: ET Threatview.io High Confidence Cobalt Strike C2 IP group 11",
+        "metadata: tag Threatview_CS",
+        "entity_candidate:Cobalt Strike:EXPLICIT_RULE_NAME"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 26,
+    "sid": 2056218,
+    "rev": 1,
+    "raw_rule": "alert dns $HOME_NET any -> any any (msg:\"ET MALWARE Observed DNS Query to SloppyLemming/UNK_SloppyDisc Domain (sensors .opensecurity-legacy .com)\"; dns.query; dotprefix; content:\".sensors.opensecurity-legacy.com\"; nocase; endswith; reference:url,www.cloudflare.com/threat-intelligence/research/report/unraveling-sloppylemmings-operations-across-south-asia/; classtype:trojan-activity; sid:2056218; rev:1; metadata:attack_target Client_Endpoint, created_at 2024_09_27, deployment Perimeter, malware_family SloppyLemming, malware_family UNK_SloppyDisc, confidence High, signature_severity Major, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_09_27;)",
+    "source_file": "emerging-malware.rules",
+    "cohort": "AUDITED_BENCHMARK",
+    "A": {
+      "final": {
+        "detected_behavior": "Observed DNS query to malware-associated domain",
+        "detected_entity": "SloppyLemming",
+        "entity_type": "Malware",
+        "category": "Malware",
+        "subcategory": "Malware Network Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.9
+      },
+      "evidence": [
+        "msg: ET MALWARE Observed DNS Query to SloppyLemming/UNK_SloppyDisc Domain (sensors .opensecurity-legacy .com)",
+        "classtype: trojan-activity",
+        "metadata: malware_family SloppyLemming",
+        "content: .sensors.opensecurity-legacy.com",
+        "entity_candidate:SloppyLemming:EXPLICIT_RULE_NAME",
+        "entity_candidate:UNK SloppyDisc:EXPLICIT_MALWARE_NAME"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "DNS query to SloppyLemming/UNK_SloppyDisc domain",
+        "detected_entity": "SloppyLemming",
+        "entity_type": "Malware",
+        "category": "Malware",
+        "subcategory": "Malware Network Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.9
+      },
+      "evidence": [
+        "msg: ET MALWARE Observed DNS Query to SloppyLemming/UNK_SloppyDisc Domain (sensors .opensecurity-legacy .com)",
+        "metadata.malware_family: SloppyLemming",
+        "metadata.malware_family: UNK_SloppyDisc",
+        "content: .sensors.opensecurity-legacy.com",
+        "entity_candidate:SloppyLemming:EXPLICIT_RULE_NAME",
+        "entity_candidate:UNK SloppyDisc:EXPLICIT_MALWARE_NAME"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 27,
+    "sid": 2017873,
+    "rev": 3,
+    "raw_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET COINMINER W32/BitCoinMiner.MultiThreat Stratum Protocol Mining.Notify Work Server Response\"; flow:established,to_client; content:\"|22|params|22 3A| [|22|\"; depth:120; content:\"|22|method|22 3A| |22|mining.notify|22|\"; distance:0; reference:url,research.zscaler.com/2013/12/bitcoin-mining-operation-seen-across.html; reference:url,www.btcguild.com/new_protocol.php; reference:url,mining.bitcoin.cz/stratum-mining; classtype:coin-mining; sid:2017873; rev:3; metadata:attack_target Client_Endpoint, created_at 2013_12_17, deployment Perimeter, confidence High, signature_severity Major, tag Coinminer, updated_at 2019_07_26, mitre_tactic_id TA0040, mitre_tactic_name Impact, mitre_technique_id T1496, mitre_technique_name Resource_Hijacking;)",
+    "source_file": "data\\rules\\et-open\\emerging-coinminer.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Resource Hijacking",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Malware",
+        "subcategory": "Malware Network Activity",
+        "mitre_tactic": "Impact",
+        "mitre_technique": "Resource Hijacking",
+        "mitre_technique_id": "T1496",
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.9
+      },
+      "evidence": [
+        "msg: ET COINMINER W32/BitCoinMiner.MultiThreat Stratum Protocol Mining.Notify Work Server Response",
+        "classtype: coin-mining",
+        "metadata: mitre_tactic_id TA0040, mitre_tactic_name Impact, mitre_technique_id T1496, mitre_technique_name Resource_Hijacking",
+        "content: |22|params|22 3A| [|22|, |22|method|22 3A| |22|mining.notify|22|",
+        "mitre_candidate:T1496:0.90"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Cryptocurrency mining server response using Stratum protocol",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Impact",
+        "subcategory": null,
+        "mitre_tactic": "Impact",
+        "mitre_technique": "Resource Hijacking",
+        "mitre_technique_id": "T1496",
+        "cyber_kill_chain_phase": "Actions on Objectives",
+        "confidence": 0.95
+      },
+      "evidence": [
+        "msg: ET COINMINER W32/BitCoinMiner.MultiThreat Stratum Protocol Mining.Notify Work Server Response",
+        "classtype: coin-mining",
+        "metadata: mitre_technique_id T1496",
+        "content: |22|method|22 3A| |22|mining.notify|22|",
+        "mitre_candidate:T1496:0.90"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    }
+  },
+  {
+    "index": 28,
+    "sid": 2100606,
+    "rev": 7,
+    "raw_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 513 (msg:\"GPL MISC rlogin root\"; flow:established,to_server; content:\"root|00|root|00|\"; reference:arachnids,389; classtype:attempted-admin; sid:2100606; rev:7; metadata:created_at 2010_09_23, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_08;)",
+    "source_file": "data\\rules\\et-open\\emerging-misc.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Attempted administrative access via rlogin",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Other",
+        "subcategory": "Informational Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.5
+      },
+      "evidence": [
+        "msg: GPL MISC rlogin root",
+        "classtype: attempted-admin",
+        "content: root|00|root|00|"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Informational Activity",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Other",
+        "subcategory": "Informational Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.5
+      },
+      "evidence": [
+        "msg: \"GPL MISC rlogin root\"",
+        "classtype: attempted-admin",
+        "content: \"root|00|root|00|\""
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 29,
+    "sid": 2066004,
+    "rev": 1,
+    "raw_rule": "alert http any any -> $HOME_NET any (msg:\"ET WEB_SPECIFIC_APPS AvTech PwdGrp.cgi user Parameter Cross Site Scripting Attempt (CVE-2025-57202)\"; flow:established,to_server; http.method; content:\"POST\"; http.uri; bsize:30; content:\"/cgi-bin/supervisor/PwdGrp.cgi\"; fast_pattern; http.request_body; content:\"action|3d|add\"; content:\"user|3d|\"; pcre:\"/^.*(?:on(?:(?:error)|(?:s(?:elec|ubmi)|rese)t|d(?:blclick|ragdrop)|(?:mouse|key)[a-z]|c(?:hange|lick)|(?:un)?load|focus|blur)|s(?:cript|tyle))(?:=|%3[dD])?/Ri\"; reference:url,xchg-rax-rax.github.io/2025/10/13/avtech_vulnerabilites.html; reference:cve,2025-57202; classtype:web-application-attack; sid:2066004; rev:1; metadata:affected_product AvTech, attack_target Networking_Equipment, tls_state plaintext, created_at 2025_12_03, cve CVE_2025_57202, deployment Perimeter, deployment Internal, performance_impact Low, confidence High, signature_severity Major, tag Exploit, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2025_12_03, mitre_tactic_id TA0001, mitre_tactic_name Initial_Access, mitre_technique_id T1190, mitre_technique_name Exploit_Public_Facing_Application; target:dest_ip;)",
+    "source_file": "emerging-web_specific_apps.rules",
+    "cohort": "AUDITED_BENCHMARK",
+    "A": {
+      "final": {
+        "detected_behavior": "Web Attack",
+        "detected_entity": "AvTech",
+        "entity_type": "Product",
+        "category": "Web Attack",
+        "subcategory": "Cross-Site Scripting",
+        "mitre_tactic": "Initial Access",
+        "mitre_technique": "Exploit Public-Facing Application",
+        "mitre_technique_id": "T1190",
+        "cyber_kill_chain_phase": "Exploitation",
+        "confidence": 0.99
+      },
+      "evidence": [
+        "msg: ET WEB_SPECIFIC_APPS AvTech PwdGrp.cgi user Parameter Cross Site Scripting Attempt (CVE-2025-57202)",
+        "metadata.affected_product: AvTech",
+        "metadata.cve: CVE_2025_57202",
+        "content: user|3d|",
+        "pcre: /.*(?:on(?:error|s(?:elec|ubmi)|rese)t|d(?:blclick|ragdrop)|(?:mouse|key)[a-z]|c(?:hange|lick)|(?:un)?load|focus|blur)/Ri",
+        "app_layer.http.uri: /cgi-bin/supervisor/PwdGrp.cgi",
+        "classtype: web-application-attack",
+        "entity_candidate:AvTech:SPECIFIC_AFFECTED_PRODUCT",
+        "mitre_candidate:T1190:0.99"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Cross Site Scripting Attempt",
+        "detected_entity": "AvTech",
+        "entity_type": "Product",
+        "category": "Web Attack",
+        "subcategory": "Cross-Site Scripting",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Exploitation",
+        "confidence": 0.9
+      },
+      "evidence": [
+        "msg: ET WEB_SPECIFIC_APPS AvTech PwdGrp.cgi user Parameter Cross Site Scripting Attempt (CVE-2025-57202)",
+        "classtype: web-application-attack",
+        "pcre: /^.*(?:on(?:(?:error)|(?:s(?:elec|ubmi)|rese)t|d(?:blclick|ragdrop)|(?:mouse|key)[a-z]|c(?:hange|lick)|(?:un)?load|focus|blur)|s(?:cript|tyle))(?:=|%3[dD])?/Ri",
+        "entity_candidate:AvTech:SPECIFIC_AFFECTED_PRODUCT",
+        "mitre_candidate:T1190:0.99"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 30,
+    "sid": 2100366,
+    "rev": 8,
+    "raw_rule": "alert icmp $EXTERNAL_NET any -> $HOME_NET any (msg:\"GPL ICMP PING *NIX\"; itype:8; content:\"|10 11 12 13 14 15 16 17 18 19 1A 1B 1C 1D 1E 1F|\"; depth:32; classtype:misc-activity; sid:2100366; rev:8; metadata:created_at 2010_09_23, confidence Medium, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2019_07_26;)",
+    "source_file": "data\\rules\\et-open\\emerging-icmp.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "ICMP ping activity",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Other",
+        "subcategory": "Informational Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: \"GPL ICMP PING *NIX\"",
+        "protocol: icmp",
+        "classtype: misc-activity"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Informational Activity",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Other",
+        "subcategory": "Informational Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.5
+      },
+      "evidence": [
+        "msg: \"GPL ICMP PING *NIX\"",
+        "classtype: misc-activity",
+        "content: [|10 11 12 13 14 15 16 17 18 19 1A 1B 1C 1D 1E 1F|]"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 31,
+    "sid": 2500010,
+    "rev": 7731,
+    "raw_rule": "alert ip [171.231.176.42,171.231.177.118,171.231.178.70,171.231.179.20,171.231.183.213,171.231.183.72,171.231.184.215,171.231.185.92,171.231.187.199,171.231.187.245,171.231.188.78,171.231.189.174,171.231.190.24,171.231.190.30,171.231.191.67,171.231.194.150,171.231.196.244,171.231.196.247,171.243.149.121,171.243.150.213,171.243.150.32,177.74.153.10,177.84.130.211,178.104.90.251,178.128.163.14,178.128.80.167,178.175.167.40,181.129.250.18,18.145.109.98,18.145.143.60] any -> $HOME_NET any (msg:\"ET COMPROMISED Known Compromised or Hostile Host Traffic group 6\"; reference:url,danger.rulez.sk/projects/bruteforceblocker/blist.php; threshold: type limit, track by_src, seconds 60, count 1; classtype:misc-attack; sid:2500010; rev:7731; metadata:affected_product Any, attack_target Any, deployment Perimeter, tag COMPROMISED, signature_severity Major, created_at 2011_04_28, updated_at 2026_08_31;)",
+    "source_file": "data\\rules\\et-open\\compromised.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Traffic from known malicious infrastructure",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Network Abuse",
+        "subcategory": "Suspicious IP Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.9
+      },
+      "evidence": [
+        "message: ET COMPROMISED Known Compromised or Hostile Host Traffic group 6",
+        "metadata: tag COMPROMISED",
+        "similar_rules: sid 2500000"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Traffic from known malicious infrastructure",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Network Abuse",
+        "subcategory": "Suspicious IP Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: ET COMPROMISED Known Compromised or Hostile Host Traffic group 6",
+        "classtype: misc-attack"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 32,
+    "sid": 2037772,
+    "rev": 2,
+    "raw_rule": "alert dns $HOME_NET any -> any any (msg:\"ET CURRENT_EVENTS Sliver Related Domain in DNS Lookup (saleforces-it .com)\"; dns.query; bsize:17; content:\"saleforces-it.com\"; nocase; reference:url,twitter.com/ESETresearch/status/1547943014860894210; classtype:trojan-activity; sid:2037772; rev:2; metadata:attack_target Client_Endpoint, created_at 2022_07_15, deployment Perimeter, confidence High, signature_severity Major, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_26;)",
+    "source_file": "data\\rules\\et-open\\emerging-current_events.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "DNS query to suspicious domain",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Suspicious DNS",
+        "subcategory": "Unusual DNS Query",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.8
+      },
+      "evidence": [
+        "content: saleforces-it.com",
+        "classtype: trojan-activity",
+        "category_hint: Suspicious DNS",
+        "controlled_subcategories: Suspicious DNS -> Unusual DNS Query"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "DNS lookup for Sliver-related domain",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Command and Control",
+        "subcategory": "DNS C2 Communication",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Command and Control",
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: ET CURRENT_EVENTS Sliver Related Domain in DNS Lookup (saleforces-it .com)",
+        "classtype: trojan-activity",
+        "content: saleforces-it.com"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 33,
+    "sid": 2019842,
+    "rev": 7,
+    "raw_rule": "alert http $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET WEB_CLIENT Possible Internet Explorer VBscript CVE-2014-6332 multiple redim preserve\"; flow:established,to_client; http.content_type; content:!\"text/xml\"; content:!\"application/xml\"; file.data; content:\"preserve\"; nocase; content:\"redim|20|\"; nocase; fast_pattern; pcre:\"/^\\s*?Preserve\\s*?(?P<var1>[a-z]\\w{0,254}+)\\s*?\\x28\\s*?[^\\x29]+?\\x29.*?redim\\s*?Preserve\\s*?(?P=var1)/Rsi\"; reference:cve,2014-6332; classtype:attempted-user; sid:2019842; rev:7; metadata:affected_product Web_Browsers, affected_product Web_Browser_Plugins, attack_target Client_Endpoint, created_at 2014_12_03, cve CVE_2014_6332, deployment Perimeter, confidence Medium, signature_severity Major, tag Web_Client_Attacks, tag CISA_KEV, updated_at 2024_03_21;)",
+    "source_file": "emerging-web_client.rules",
+    "cohort": "AUDITED_BENCHMARK",
+    "A": {
+      "final": {
+        "detected_behavior": "Web Attack",
+        "detected_entity": "Internet Explorer",
+        "entity_type": "Product",
+        "category": "Web Attack",
+        "subcategory": null,
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Exploitation",
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: 'ET WEB_CLIENT Possible Internet Explorer VBscript CVE-2014-6332 multiple redim preserve'",
+        "content: 'preserve', 'redim|20|'",
+        "pcre: '/^\\s*?Preserve\\s*?(?P<var1>[a-z]\\w{0,254}+)\\s*?\\x28\\s*?[^\\x29]+?\\x29.*?redim\\s*?Preserve\\s*?(?P=var1)/Rsi'",
+        "metadata: 'cve CVE_2014_6332'",
+        "entity_candidate:Internet Explorer:EXPLICIT_RULE_NAME"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Exploitation of CVE-2014-6332 in Internet Explorer via VBScript redim preserve",
+        "detected_entity": "Internet Explorer",
+        "entity_type": "Product",
+        "category": "Web Attack",
+        "subcategory": null,
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Exploitation",
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: ET WEB_CLIENT Possible Internet Explorer VBscript CVE-2014-6332 multiple redim preserve",
+        "cve: CVE-2014-6332",
+        "content: preserve",
+        "content: redim|20|",
+        "entity_candidate:Internet Explorer:EXPLICIT_RULE_NAME"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 34,
+    "sid": 2040009,
+    "rev": 3,
+    "raw_rule": "alert http $HOME_NET any -> $EXTERNAL_NET any (msg:\"ET DYN_DNS DYNAMIC_DNS HTTP Request to a *.nard .ca Domain\"; flow:established,to_server; http.host; content:\".nard.ca\"; endswith; reference:url,freedns.afraid.org/domain/registry/; classtype:bad-unknown; sid:2040009; rev:3; metadata:attack_target Client_and_Server, created_at 2022_11_28, deployment Perimeter, former_category INFO, performance_impact Low, confidence High, signature_severity Informational, updated_at 2024_06_11, mitre_tactic_id TA0011, mitre_tactic_name Command_And_Control, mitre_technique_id T1568, mitre_technique_name Dynamic_Resolution;)",
+    "source_file": "data\\rules\\et-open\\emerging-dyn_dns.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "HTTP request to a dynamic DNS domain",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Command and Control",
+        "subcategory": "HTTP C2 Communication",
+        "mitre_tactic": "Command And Control",
+        "mitre_technique": "Dynamic Resolution",
+        "mitre_technique_id": "T1568",
+        "cyber_kill_chain_phase": "Command and Control",
+        "confidence": 0.85
+      },
+      "evidence": [
+        "msg: ET DYN_DNS DYNAMIC_DNS HTTP Request to a *.nard .ca Domain",
+        "content: .nard.ca",
+        "app_layer: http.host",
+        "metadata: mitre_technique_id T1568",
+        "mitre_candidate:T1568:0.90"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "HTTP request to a dynamic DNS domain",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Suspicious DNS",
+        "subcategory": "Unusual DNS Query",
+        "mitre_tactic": "Command And Control",
+        "mitre_technique": "Dynamic Resolution",
+        "mitre_technique_id": "T1568",
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.9
+      },
+      "evidence": [
+        "content: .nard.ca",
+        "mitre_candidates: T1568",
+        "controlled_subcategories: Suspicious DNS > Unusual DNS Query",
+        "similar_rules: category and subcategory",
+        "mitre_candidate:T1568:0.90"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    }
+  },
+  {
+    "index": 35,
+    "sid": 2060508,
+    "rev": 2,
+    "raw_rule": "alert tls $HOME_NET any -> $EXTERNAL_NET any (msg:\"ET REMOTE_ACCESS Observed Anydesk Relay Domain (net .anydesk .com) in TLS SNI\"; flow:established,to_server; tls.sni; dotprefix; content:\".net.anydesk.com\"; endswith; fast_pattern; reference:url,support.anydesk.com/knowledge/firewall; classtype:misc-activity; sid:2060508; rev:2; metadata:affected_product Any, attack_target Client_and_Server, created_at 2025_03_03, deployment Perimeter, former_category INFO, performance_impact Low, confidence High, signature_severity Informational, tag AnyDesk, updated_at 2025_03_05, mitre_tactic_id TA0011, mitre_tactic_name Command_And_Control, mitre_technique_id T1219, mitre_technique_name Remote_Access_Software;)",
+    "source_file": "emerging-remote_access.rules",
+    "cohort": "AUDITED_BENCHMARK",
+    "A": {
+      "final": {
+        "detected_behavior": "Observed Anydesk Relay Domain in TLS SNI",
+        "detected_entity": "AnyDesk",
+        "entity_type": "Remote Access Tool",
+        "category": "Remote Access",
+        "subcategory": "Remote Access Software",
+        "mitre_tactic": "Command And Control",
+        "mitre_technique": "Remote Access Tools",
+        "mitre_technique_id": "T1219",
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.99
+      },
+      "evidence": [
+        "msg: ET REMOTE_ACCESS Observed Anydesk Relay Domain (net .anydesk .com) in TLS SNI",
+        "content: .net.anydesk.com",
+        "entity_hint: AnyDesk",
+        "entity_candidates: AnyDesk (Remote Access Tool)",
+        "mitre_candidates: T1219 (Remote Access Tools)",
+        "entity_candidate:AnyDesk:EXPLICIT_RULE_NAME",
+        "mitre_candidate:T1219:0.99"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "AnyDesk relay domain observed in TLS SNI",
+        "detected_entity": "AnyDesk",
+        "entity_type": "Remote Access Tool",
+        "category": "Remote Access",
+        "subcategory": "Remote Access Software",
+        "mitre_tactic": "Command And Control",
+        "mitre_technique": "Remote Access Tools",
+        "mitre_technique_id": "T1219",
+        "cyber_kill_chain_phase": "Command and Control",
+        "confidence": 0.95
+      },
+      "evidence": [
+        "msg: ET REMOTE_ACCESS Observed Anydesk Relay Domain (net .anydesk .com) in TLS SNI",
+        "content: .net.anydesk.com",
+        "metadata: mitre_tactic_id TA0011",
+        "metadata: mitre_technique_id T1219",
+        "entity_candidate:AnyDesk:EXPLICIT_RULE_NAME",
+        "mitre_candidate:T1219:0.99"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "EXACT_SOURCE_MAPPING"
+    }
+  },
+  {
+    "index": 36,
+    "sid": 2025094,
+    "rev": 7,
+    "raw_rule": "alert http $HOME_NET any -> $EXTERNAL_NET any (msg:\"ET ADWARE_PUP Win32/Adware.Adposhel.A Checkin 5\"; flow:established,to_server; http.method; content:\"POST\"; http.uri; content:\"/q/\"; startswith; fast_pattern; http.request_body; content:\"q=\"; startswith; pcre:\"/^[a-zA-Z0-9_-]+$/R\"; http.connection; content:\"close\"; nocase; endswith; http.content_type; content:\"application/x-www-form-urlencoded\"; startswith; endswith; http.header_names; to_lowercase; content:!\"|0d 0a|accept\"; content:!\"|0d 0a|referer|0d 0a|\"; reference:md5,f0e02ba660cfcb122b89bc780a6555ac; classtype:pup-activity; sid:2025094; rev:7; metadata:affected_product Windows_XP_Vista_7_8_10_Server_32_64_Bit, attack_target Client_Endpoint, created_at 2017_12_01, deployment Internet, malware_family Adposhel, performance_impact Moderate, confidence High, signature_severity Minor, tag Adware, updated_at 2024_05_01;)",
+    "source_file": "data\\rules\\et-open\\emerging-adware_pup.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Adware check-in activity",
+        "detected_entity": "Adposhel",
+        "entity_type": "Malware",
+        "category": "Malware",
+        "subcategory": "Malware Network Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.9
+      },
+      "evidence": [
+        "metadata.malware_family",
+        "content.POST",
+        "content.q=",
+        "content.close",
+        "content.application/x-www-form-urlencoded",
+        "entity_candidate:Adposhel:EXPLICIT_MALWARE_NAME"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Adposhel malware checkin",
+        "detected_entity": "Adposhel",
+        "entity_type": "Malware",
+        "category": "Malware",
+        "subcategory": "Malware Network Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Command and Control",
+        "confidence": 0.9
+      },
+      "evidence": [
+        "msg: ET ADWARE_PUP Win32/Adware.Adposhel.A Checkin 5",
+        "metadata: malware_family Adposhel",
+        "classtype: pup-activity",
+        "entity_candidate:Adposhel:EXPLICIT_MALWARE_NAME"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 37,
+    "sid": 2102809,
+    "rev": 5,
+    "raw_rule": "alert tcp $EXTERNAL_NET any -> $SQL_SERVERS $ORACLE_PORTS (msg:\"GPL SQL dbms_repcat.unregister_mview_repgroup buffer overflow attempt\"; flow:established,to_server; content:\"dbms_repcat.unregister_mview_repgroup\"; nocase; fast_pattern; pcre:\"/((\\w+)[\\r\\n\\s]*\\x3a=[\\r\\n\\s]*(\\x27[^\\x27]{1075,}\\x27|\\x22[^\\x22]{1075,}\\x22)[\\r\\n\\s]*\\x3b.*(gname|gowner)[\\r\\n\\s]*=>[\\r\\n\\s]*\\2|(gname|gowner)\\s*=>\\s*(\\x27[^\\x27]{1075,}|\\x22[^\\x22]{1075,})|\\(\\s*(\\x27[^\\x27]{1075,}|\\x22[^\\x22]{1075,})|\\(\\s*((\\x27[^\\x27]*\\x27|\\x22[^\\x22]+\\x22)\\s*,\\s*){2}(\\x27[^\\x27]{1075,}|\\x22[^\\x22]{1075,}))/si\"; reference:url,www.appsecinc.com/resources/alerts/oracle/2004-0001/25.html; classtype:attempted-user; sid:2102809; rev:5; metadata:created_at 2010_09_23, confidence High, signature_severity Major, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_08;)",
+    "source_file": "data\\rules\\et-open\\emerging-sql.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Buffer Overflow Attempt",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Exploitation",
+        "subcategory": "Exploit Attempt",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Exploitation",
+        "confidence": 0.9
+      },
+      "evidence": [
+        "content: dbms_repcat.unregister_mview_repgroup",
+        "classtype: attempted-user",
+        "pcre: /.../si",
+        "metadata: confidence High"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "SQL buffer overflow attempt targeting dbms_repcat.unregister_mview_repgroup",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Exploitation",
+        "subcategory": "Exploit Attempt",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Exploitation",
+        "confidence": 0.9
+      },
+      "evidence": [
+        "msg: GPL SQL dbms_repcat.unregister_mview_repgroup buffer overflow attempt",
+        "content: dbms_repcat.unregister_mview_repgroup",
+        "classtype: attempted-user"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 38,
+    "sid": 2001581,
+    "rev": 15,
+    "raw_rule": "alert tcp $HOME_NET any -> any 135 (msg:\"ET SCAN Behavioral Unusual Port 135 traffic Potential Scan or Infection\"; flow:to_server; flags: S,12; threshold: type both, track by_src, count 70 , seconds 60; classtype:misc-activity; sid:2001581; rev:15; metadata:created_at 2010_07_30, confidence Medium, signature_severity Informational, updated_at 2019_07_26;)",
+    "source_file": "data\\rules\\et-open\\emerging-scan.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Unusual port 135 traffic indicating potential port scan or infection",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Reconnaissance",
+        "subcategory": "Service Scan",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Reconnaissance",
+        "confidence": 0.7
+      },
+      "evidence": [
+        "msg: ET SCAN Behavioral Unusual Port 135 traffic Potential Scan or Infection"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Unusual Port 135 traffic",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Network Abuse",
+        "subcategory": "Suspicious TCP Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.5
+      },
+      "evidence": [
+        "msg: ET SCAN Behavioral Unusual Port 135 traffic Potential Scan or Infection",
+        "category_hint: Reconnaissance",
+        "controlled_subcategories: Network Abuse -> Suspicious TCP Activity"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 39,
+    "sid": 2101640,
+    "rev": 12,
+    "raw_rule": "alert tcp $HOME_NET any -> $EXTERNAL_NET 6666:7000 (msg:\"GPL CHAT IRC DCC chat request\"; flow:established,to_server; flowbits:set,is_proto_irc; content:\"PRIVMSG \"; depth:8; nocase; content:\" |3A|.DCC CHAT chat\"; nocase; classtype:policy-violation; sid:2101640; rev:12; metadata:created_at 2010_09_23, signature_severity Informational, updated_at 2024_03_14;)",
+    "source_file": "data\\rules\\et-open\\emerging-chat.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "GPL CHAT IRC DCC chat request",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Policy Violation",
+        "subcategory": "Prohibited Application or Protocol",
+        "mitre_tactic": "Defense Evasion",
+        "mitre_technique": "Prohibited Application or Protocol",
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: GPL CHAT IRC DCC chat request",
+        "classtype: policy-violation",
+        "flow: established, to_server",
+        "content: PRIVMSG , |3A|.DCC CHAT chat"
+      ],
+      "validator": {
+        "status": "REVIEW",
+        "issues": [
+          "MITRE tactic, technique and ID must be set together",
+          "MITRE no-mapping provenance has final fields"
+        ]
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "IRC DCC chat request",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Policy Violation",
+        "subcategory": "Prohibited Application or Protocol",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.85
+      },
+      "evidence": [
+        "msg: GPL CHAT IRC DCC chat request",
+        "classtype: policy-violation",
+        "content: PRIVMSG ",
+        "content:  |3A|.DCC CHAT chat"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 40,
+    "sid": 2102785,
+    "rev": 5,
+    "raw_rule": "alert tcp $EXTERNAL_NET any -> $SQL_SERVERS $ORACLE_PORTS (msg:\"GPL SQL dbms_repcat.execute_ddl buffer overflow attempt\"; flow:established,to_server; content:\"dbms_repcat.execute_ddl\"; nocase; fast_pattern; pcre:\"/((\\w+)[\\r\\n\\s]*\\x3a=[\\r\\n\\s]*(\\x27[^\\x27]{1075,}\\x27|\\x22[^\\x22]{1075,}\\x22)[\\r\\n\\s]*\\x3b.*gname[\\r\\n\\s]*=>[\\r\\n\\s]*\\2|gname\\s*=>\\s*(\\x27[^\\x27]{1075,}|\\x22[^\\x22]{1075,})|\\(\\s*(\\x27[^\\x27]{1075,}|\\x22[^\\x22]{1075,}))/si\"; reference:url,www.appsecinc.com/resources/alerts/oracle/2004-0001/25.html; classtype:attempted-user; sid:2102785; rev:5; metadata:created_at 2010_09_23, confidence High, signature_severity Major, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_08;)",
+    "source_file": "data\\rules\\et-open\\emerging-sql.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Buffer Overflow Attempt",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Exploitation",
+        "subcategory": "Exploit Attempt",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Exploitation",
+        "confidence": 0.9
+      },
+      "evidence": [
+        "content: dbms_repcat.execute_ddl",
+        "classtype: attempted-user",
+        "pcre: /((\\w+)[\\r\\n\\s]*\\x3a=[\\r\\n\\s]*(\\x27[^\\x27]{1075,}\\x27|\\x22[^\\x22]{1075,}\\x22)[\\r\\n\\s]*\\x3b.*gname[\\r\\n\\s]*=>[\\r\\n\\s]*\\2|gname\\s*=>\\s*(\\x27[^\\x27]{1075,}|\\x22[^\\x22]{1075,})|\\(\\s*(\\x27[^\\x27]{1075,}|\\x22[^\\x22]{1075,})/si"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "buffer overflow attempt targeting Oracle DBMS_REPCAT",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Exploitation",
+        "subcategory": "Exploit Attempt",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Exploitation",
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: GPL SQL dbms_repcat.execute_ddl buffer overflow attempt",
+        "content: dbms_repcat.execute_ddl",
+        "pcre: /((\\w+)[\\r\\n\\s]*\\x3a=[\\r\\n\\s]*(\\x27[^\\x27]{1075,}\\x27|\\x22[^\\x22]{1075,}\\x22)[\\r\\n\\s]*\\x3b.*gname[\\r\\n\\s]*=>[\\r\\n\\s]*\\2|gname\\s*=>\\s*(\\x27[^\\x27]{1075,}|\\x22[^\\x22]{1075,})|\\(\\s*(\\x27[^\\x27]{1075,}|\\x22[^\\x22]{1075,}))/si"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 41,
+    "sid": 2014649,
+    "rev": 7,
+    "raw_rule": "alert http $EXTERNAL_NET any -> $HOME_NET any (msg:\"ET ACTIVEX Tracker Software pdfSaver ActiveX StoreInRegistry Method Access Potential Buffer Overflow 2\"; flow:established,to_client; file.data; content:\"ActiveXObject\"; nocase; content:\"pdfxctrlLib.PdfPrinterPreferences\"; nocase; distance:0; content:\"StoreInRegistry\"; nocase; distance:0; reference:url,exploit-db.com/exploits/18427/; classtype:attempted-user; sid:2014649; rev:7; metadata:affected_product Windows_XP_Vista_7_8_10_Server_32_64_Bit, attack_target Client_Endpoint, created_at 2012_04_28, deployment Perimeter, confidence High, signature_severity Major, tag ActiveX, updated_at 2024_03_13;)",
+    "source_file": "data\\rules\\et-open\\emerging-activex.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Buffer Overflow attempt via ActiveX StoreInRegistry method",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Exploitation",
+        "subcategory": "Exploit Attempt",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Exploitation",
+        "confidence": 0.85
+      },
+      "evidence": [
+        "msg: ET ACTIVEX Tracker Software pdfSaver ActiveX StoreInRegistry Method Access Potential Buffer Overflow 2",
+        "content: ActiveXObject",
+        "content: pdfxctrlLib.PdfPrinterPreferences",
+        "content: StoreInRegistry"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Exploit Attempt",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Exploitation",
+        "subcategory": "Exploit Attempt",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Exploitation",
+        "confidence": 0.9
+      },
+      "evidence": [
+        "content: ActiveXObject",
+        "content: pdfxctrlLib.PdfPrinterPreferences",
+        "content: StoreInRegistry",
+        "classtype: attempted-user",
+        "metadata: confidence High"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 42,
+    "sid": 2100289,
+    "rev": 12,
+    "raw_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 110 (msg:\"GPL POP3 x86 SCO overflow\"; flow:established,to_server; content:\"V|0E|1|C0 B0 3B 8D|~|12 89 F9 89 F9|\"; reference:bugtraq,156; reference:cve,1999-0006; classtype:attempted-admin; sid:2100289; rev:12; metadata:created_at 2010_09_23, cve CVE_1999_0006, signature_severity Major, updated_at 2024_03_08;)",
+    "source_file": "data\\rules\\et-open\\emerging-pop3.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Buffer overflow attack against POP3 service",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Exploitation",
+        "subcategory": "Exploit Attempt",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Exploitation",
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: GPL POP3 x86 SCO overflow",
+        "classtype: attempted-admin",
+        "content: V|0E|1|C0 B0 3B 8D|~|12 89 F9 89 F9|"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Exploit Attempt",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Exploitation",
+        "subcategory": "Exploit Attempt",
+        "mitre_tactic": "Exploitation",
+        "mitre_technique": "Exploit Attempt",
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: \"GPL POP3 x86 SCO overflow\"",
+        "classtype: attempted-admin",
+        "content: \"V|0E|1|C0 B0 3B 8D|~|12 89 F9 89 F9|\"",
+        "metadata: cve CVE_1999_0006",
+        "references: cve,1999-0006"
+      ],
+      "validator": {
+        "status": "REVIEW",
+        "issues": [
+          "MITRE tactic, technique and ID must be set together",
+          "MITRE no-mapping provenance has final fields"
+        ]
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 43,
+    "sid": 2404304,
+    "rev": 8031,
+    "raw_rule": "alert ip $HOME_NET any -> [50.16.16.211] any (msg:\"ET CNC Feodo Tracker Reported CnC Server group 5\"; reference:url,feodotracker.abuse.ch; threshold: type limit, track by_src, seconds 3600, count 1; flowbits:set,ET.Evil; flowbits:set,ET.BotccIP; classtype:trojan-activity; sid:2404304; rev:8031; metadata:affected_product Windows_XP_Vista_7_8_10_Server_32_64_Bit, attack_target Client_Endpoint, deployment Perimeter, tag Banking_Trojan, signature_severity Major, created_at 2014_11_04, updated_at 2026_08_31;)",
+    "source_file": "data\\rules\\et-open\\botcc.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Command and control server communication associated with Feodo Tracker",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Command and Control",
+        "subcategory": "C2 Communication",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Command and Control",
+        "confidence": 0.85
+      },
+      "evidence": [
+        "msg: ET CNC Feodo Tracker Reported CnC Server group 5",
+        "classtype: trojan-activity",
+        "metadata: tag Banking_Trojan"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Command and Control",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Command and Control",
+        "subcategory": "C2 Communication",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.5
+      },
+      "evidence": [
+        "category_hint: Command and Control",
+        "classtype: trojan-activity",
+        "metadata: tag Banking_Trojan",
+        "references: url,feodotracker.abuse.ch"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 44,
+    "sid": 2029780,
+    "rev": 3,
+    "raw_rule": "alert smtp $HOME_NET any -> $EXTERNAL_NET any (msg:\"ET HUNTING Possible Covid19 Themed Email Spam Outbound M5\"; flow:established,to_server; content:\"covid-19\"; nocase; fast_pattern; threshold:type threshold, count 5, seconds 120, track by_src; classtype:bad-unknown; sid:2029780; rev:3; metadata:created_at 2020_03_31, confidence Medium, signature_severity Minor, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_07;)",
+    "source_file": "emerging-hunting.rules",
+    "cohort": "AUDITED_BENCHMARK",
+    "A": {
+      "final": {
+        "detected_behavior": "Suspicious SMTP Activity",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Network Abuse",
+        "subcategory": "Suspicious SMTP Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.5
+      },
+      "evidence": [
+        "msg: ET HUNTING Possible Covid19 Themed Email Spam Outbound M5",
+        "protocol: smtp",
+        "classtype: bad-unknown",
+        "content: [\"covid-19\"]"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Suspicious SMTP traffic related to potential Covid-19 themed email spam",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Network Abuse",
+        "subcategory": "Suspicious SMTP Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Delivery",
+        "confidence": 0.7
+      },
+      "evidence": [
+        "msg: ET HUNTING Possible Covid19 Themed Email Spam Outbound M5",
+        "protocol: smtp",
+        "content: covid-19"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 45,
+    "sid": 2103244,
+    "rev": 5,
+    "raw_rule": "alert tcp $EXTERNAL_NET any -> $HOME_NET 139 (msg:\"GPL NETBIOS SMB irot andx bind attempt\"; flow:established,to_server; flowbits:set,smb.tree.bind.irot; flowbits:noalert; content:\"|00|\"; depth:1; content:\"|FF|SMB\"; within:4; distance:3; pcre:\"/^(\\x75|\\x2d|\\x2f|\\x73|\\xa2|\\x2e|\\x24|\\x74)/sR\"; byte_test:1,!&,128,6,relative; content:\"%\"; depth:1; offset:39; byte_jump:2,0,little,relative; content:\"&|00|\"; within:2; distance:29; content:\"|5C|PIPE|5C 00|\"; distance:4; nocase; byte_jump:2,-17,relative,from_beginning,little; isdataat:4,relative; content:\"|05|\"; byte_test:1,!&,16,3,relative; content:\"|0B|\"; within:1; distance:1; content:\"`|9E E7 B9|R=|CE 11 AA A1 00 00|i|01 29|?\"; within:16; distance:29; classtype:protocol-command-decode; sid:2103244; rev:5; metadata:created_at 2010_09_23, confidence Medium, signature_severity Informational, updated_at 2024_03_14;)",
+    "source_file": "data\\rules\\et-open\\emerging-netbios.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Suspicious network activity",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Network Abuse",
+        "subcategory": "Suspicious TCP Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.5
+      },
+      "evidence": [
+        "flow: established, to_server",
+        "classtype: protocol-command-decode",
+        "content: |00|, |FF|SMB, %, &|00|, |5C|PIPE|5C 00|, |05|, |0B|, `|9E E7 B9|R=|CE 11 AA A1 00 00|i|01 29|?",
+        "pcre: /^(\\x75|\\x2d|\\x2f|\\x73|\\xa2|\\x2e|\\x24|\\x74)/sR"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "NETBIOS SMB bind attempt",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Network Abuse",
+        "subcategory": "Suspicious TCP Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: GPL NETBIOS SMB irot andx bind attempt",
+        "classtype: protocol-command-decode",
+        "flow: established, to_server"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 46,
+    "sid": 2014402,
+    "rev": 3,
+    "raw_rule": "alert http $HOME_NET any -> $EXTERNAL_NET any (msg:\"ET WORM W32/Rimecud wg.txt Checkin\"; flow:established,to_server; http.uri; content:\"/wg.txt\"; reference:md5,a89f7289d5cce821a194542e90026082; reference:md5,fd56ce176889d4fbe588760a1da6462b; reference:url,www.microsoft.com/security/portal/Threat/Encyclopedia/Entry.aspx?Name=Worm%3AWin32%2FRimecud; classtype:trojan-activity; sid:2014402; rev:3; metadata:created_at 2012_03_20, signature_severity Major, updated_at 2020_04_21;)",
+    "source_file": "data\\rules\\et-open\\emerging-worm.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Malware checkin activity",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Malware",
+        "subcategory": "Malware Network Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Command and Control",
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: ET WORM W32/Rimecud wg.txt Checkin",
+        "content: /wg.txt",
+        "classtype: trojan-activity"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Malware Network Activity",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Malware",
+        "subcategory": "Malware Network Activity",
+        "mitre_tactic": "Malware",
+        "mitre_technique": "Malware Network Activity",
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: ET WORM W32/Rimecud wg.txt Checkin",
+        "classtype: trojan-activity",
+        "content: /wg.txt",
+        "protocol: http",
+        "flow: established, to_server"
+      ],
+      "validator": {
+        "status": "REVIEW",
+        "issues": [
+          "MITRE tactic, technique and ID must be set together",
+          "MITRE no-mapping provenance has final fields"
+        ]
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 47,
+    "sid": 2403426,
+    "rev": 111389,
+    "raw_rule": "alert ip [91.230.168.216,91.230.168.217,91.230.168.218,91.230.168.219,91.230.168.221,91.230.168.222,91.230.168.232,91.230.168.233,91.230.168.234,91.230.168.235,91.230.168.236,91.230.168.237,91.230.168.238,91.230.168.239,91.230.168.24,91.230.168.248,91.230.168.249,91.230.168.25,91.230.168.250,91.230.168.251,91.230.168.252,91.230.168.253,91.230.168.254,91.230.168.255,91.230.168.26,91.230.168.27,91.230.168.28,91.230.168.3,91.230.168.30,91.230.168.31,91.230.168.32,91.230.168.33,91.230.168.34,91.230.168.38,91.230.168.39,91.230.168.4,91.230.168.5,91.230.168.65,91.230.168.66,91.230.168.69,91.230.168.72,91.230.168.74,91.230.168.75,91.230.168.76,91.230.168.78,91.230.168.8,91.230.168.82,91.230.168.83,91.230.168.84,91.230.168.85] any -> $HOME_NET any (msg:\"ET CINS Active Threat Intelligence Poor Reputation IP group 127\"; reference:url,www.cinsscore.com; threshold: type limit, track by_src, seconds 3600, count 1; classtype:misc-attack; sid:2403426; rev:111389; metadata:affected_product Any, attack_target Any, deployment Perimeter, tag CINS, signature_severity Major, created_at 2013_10_08, updated_at 2026_08_31;)",
+    "source_file": "data\\rules\\et-open\\ciarmy.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Traffic from known malicious infrastructure",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Network Abuse",
+        "subcategory": "Suspicious IP Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.875
+      },
+      "evidence": [
+        "similar_rules"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Traffic involving a poor reputation IP address",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Network Abuse",
+        "subcategory": "Suspicious IP Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: ET CINS Active Threat Intelligence Poor Reputation IP group 127",
+        "metadata: tag CINS"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 48,
+    "sid": 2101732,
+    "rev": 10,
+    "raw_rule": "alert udp $EXTERNAL_NET any -> $HOME_NET 111 (msg:\"GPL RPC portmap rwalld request UDP\"; content:\"|00 01 86 A0|\"; depth:4; offset:12; content:\"|00 00 00 03|\"; within:4; distance:4; byte_jump:4,4,relative,align; byte_jump:4,4,relative,align; content:\"|00 01 86 A8|\"; within:4; content:\"|00 00 00 00|\"; depth:4; offset:4; classtype:rpc-portmap-decode; sid:2101732; rev:10; metadata:created_at 2010_09_23, signature_severity Informational, updated_at 2019_07_26;)",
+    "source_file": "emerging-rpc.rules",
+    "cohort": "AUDITED_BENCHMARK",
+    "A": {
+      "final": {
+        "detected_behavior": "RPC portmap decode",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Other",
+        "subcategory": "Informational Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: \"GPL RPC portmap rwalld request UDP\"",
+        "classtype: rpc-portmap-decode",
+        "protocol: udp"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "RPC portmap rwalld request",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Discovery",
+        "subcategory": null,
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: GPL RPC portmap rwalld request UDP",
+        "classtype: rpc-portmap-decode"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 49,
+    "sid": 2029645,
+    "rev": 2,
+    "raw_rule": "alert http $EXTERNAL_NET any -> any any (msg:\"ET SCAN Polaris Botnet User-Agent (Inbound)\"; flow:established,to_server; http.user_agent; bsize:7; content:\"polaris\"; fast_pattern; classtype:attempted-admin; sid:2029645; rev:2; metadata:affected_product Linux, attack_target IoT, created_at 2020_03_18, deployment Perimeter, confidence High, signature_severity Minor, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_08;)",
+    "source_file": "data\\rules\\et-open\\emerging-scan.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Botnet User-Agent scanning activity",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Reconnaissance",
+        "subcategory": "Web Scan",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Reconnaissance",
+        "confidence": 0.8
+      },
+      "evidence": [
+        "msg: ET SCAN Polaris Botnet User-Agent (Inbound)",
+        "content: polaris",
+        "app_layer: http.user_agent"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Web scanning activity",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Reconnaissance",
+        "subcategory": "Web Scan",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Reconnaissance",
+        "confidence": 0.5
+      },
+      "evidence": [
+        "msg: ET SCAN Polaris Botnet User-Agent (Inbound)",
+        "classtype: attempted-admin",
+        "content: polaris",
+        "category_hint: Reconnaissance",
+        "controlled_subcategories: Reconnaissance -> Web Scan"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  },
+  {
+    "index": 50,
+    "sid": 2520127,
+    "rev": 6363,
+    "raw_rule": "alert tcp [5.79.66.19,5.83.143.18,61.220.100.193,62.133.45.2,62.182.80.112,62.182.84.146,62.72.47.105,62.84.176.89,64.188.93.178,64.190.76.10] any -> $HOME_NET any (msg:\"ET TOR Known Tor Exit Node Traffic group 128\"; reference:url,check.torproject.org/torbulkexitlist; threshold: type limit, track by_src, seconds 60, count 1; classtype:misc-attack; flowbits:set,ET.TorIP; sid:2520127; rev:6363; metadata:affected_product Any, attack_target Any, deployment Perimeter, tag TOR, signature_severity Informational, created_at 2008_12_01, updated_at 2026_08_31;)",
+    "source_file": "data\\rules\\et-open\\tor.rules",
+    "cohort": "FRESH_OPERATIONAL",
+    "A": {
+      "final": {
+        "detected_behavior": "Tor anonymity network traffic",
+        "detected_entity": "Tor",
+        "entity_type": "Software",
+        "category": "Policy Violation",
+        "subcategory": "Prohibited Application or Protocol",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.9
+      },
+      "evidence": [
+        "msg: ET TOR Known Tor Exit Node Traffic group 128",
+        "metadata: tag TOR",
+        "entity_candidate:Tor:EXPLICIT_RULE_NAME"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    },
+    "B": {
+      "final": {
+        "detected_behavior": "Tor anonymity network usage",
+        "detected_entity": "Tor",
+        "entity_type": "Software",
+        "category": "Policy Violation",
+        "subcategory": "Prohibited Application or Protocol",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null,
+        "confidence": 0.95
+      },
+      "evidence": [
+        "msg: ET TOR Known Tor Exit Node Traffic group 128",
+        "entity_hint: null",
+        "category_hint: null",
+        "entity_candidates: Tor (Software)",
+        "entity_candidate:Tor:EXPLICIT_RULE_NAME"
+      ],
+      "validator": {
+        "status": "PASS",
+        "issues": []
+      },
+      "mitre_mapping_method": "NO_SUPPORTED_MAPPING"
+    }
+  }
+]

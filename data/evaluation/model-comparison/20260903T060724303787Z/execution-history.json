@@ -1,0 +1,19 @@
+{
+  "local_runtime": {
+    "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "vram_mib": 8188,
+    "model": "qwen3:8b",
+    "model_digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+    "quantization": "Q4_K_M",
+    "file_bytes": 5225388164,
+    "observed_placement": "100% GPU",
+    "num_ctx": 8192,
+    "think": false
+  },
+  "note": "Runner scheduling changed during this baseline; model, prompt, context size and classification policies were not tuned. Individual wall_seconds exclude explicit pacing sleeps. Two resume operations retained already recorded attempts.",
+  "stages": [
+    {"pairs": "1-18", "scheduling": "paired sequential", "gemini_additional_pace_seconds": 4},
+    {"pairs": "19-50", "scheduling": "paired sequential", "gemini_additional_pace_seconds": 0},
+    {"pairs": "51-250", "scheduling": "independent provider workers", "gemini_additional_pace_seconds": 4, "local_concurrent_requests": 1}
+  ]
+}

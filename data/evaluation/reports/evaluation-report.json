@@ -1,0 +1,905 @@
+{
+  "status": "COMPLETED",
+  "provider": "gemini",
+  "model": "gemini-flash-lite-latest",
+  "parser": {
+    "data_status": "REAL_DATA_AVAILABLE",
+    "source_directory": "C:\\Users\\Savgaman\\Desktop\\suricata-rule-agent\\data\\rules\\et-open",
+    "total_rules": 52155,
+    "parsed_successfully": 52155,
+    "failed_parsing": 0,
+    "parser_success_rate": 1.0,
+    "rule_files": 54,
+    "failures": []
+  },
+  "metrics": {
+    "golden_samples": 100,
+    "evaluated": 100,
+    "failed": 0,
+    "field_metrics": {
+      "detected_behavior": {
+        "count": 100,
+        "exact_accuracy": 0.0,
+        "normalized_accuracy": 0.0
+      },
+      "detected_entity": {
+        "count": 100,
+        "exact_accuracy": 0.31,
+        "normalized_accuracy": 0.33
+      },
+      "entity_type": {
+        "count": 100,
+        "exact_accuracy": 0.29,
+        "normalized_accuracy": 0.29
+      },
+      "category": {
+        "count": 100,
+        "exact_accuracy": 0.48,
+        "normalized_accuracy": 0.48
+      },
+      "subcategory": {
+        "count": 100,
+        "exact_accuracy": 0.04,
+        "normalized_accuracy": 0.04
+      },
+      "mitre_tactic": {
+        "count": 100,
+        "exact_accuracy": 0.58,
+        "normalized_accuracy": 0.58
+      },
+      "mitre_technique": {
+        "count": 100,
+        "exact_accuracy": 0.53,
+        "normalized_accuracy": 0.53
+      },
+      "mitre_technique_id": {
+        "count": 100,
+        "exact_accuracy": 0.54,
+        "normalized_accuracy": 0.54
+      },
+      "cyber_kill_chain_phase": {
+        "count": 100,
+        "exact_accuracy": 0.55,
+        "normalized_accuracy": 0.55
+      }
+    },
+    "null_metrics": {
+      "detected_behavior": {
+        "expected_null_count": 0,
+        "expected_null_actual_null_rate": 0.0,
+        "null_hallucination_rate": 0.0,
+        "expected_non_null_count": 100,
+        "unexpected_null_rate": 0.0
+      },
+      "detected_entity": {
+        "expected_null_count": 70,
+        "expected_null_actual_null_rate": 0.1,
+        "null_hallucination_rate": 0.9,
+        "expected_non_null_count": 30,
+        "unexpected_null_rate": 0.0
+      },
+      "entity_type": {
+        "expected_null_count": 70,
+        "expected_null_actual_null_rate": 0.1,
+        "null_hallucination_rate": 0.9,
+        "expected_non_null_count": 30,
+        "unexpected_null_rate": 0.0
+      },
+      "category": {
+        "expected_null_count": 0,
+        "expected_null_actual_null_rate": 0.0,
+        "null_hallucination_rate": 0.0,
+        "expected_non_null_count": 100,
+        "unexpected_null_rate": 0.0
+      },
+      "subcategory": {
+        "expected_null_count": 5,
+        "expected_null_actual_null_rate": 0.0,
+        "null_hallucination_rate": 1.0,
+        "expected_non_null_count": 95,
+        "unexpected_null_rate": 0.0
+      },
+      "mitre_tactic": {
+        "expected_null_count": 50,
+        "expected_null_actual_null_rate": 0.44,
+        "null_hallucination_rate": 0.56,
+        "expected_non_null_count": 50,
+        "unexpected_null_rate": 0.2
+      },
+      "mitre_technique": {
+        "expected_null_count": 50,
+        "expected_null_actual_null_rate": 0.44,
+        "null_hallucination_rate": 0.56,
+        "expected_non_null_count": 50,
+        "unexpected_null_rate": 0.2
+      },
+      "mitre_technique_id": {
+        "expected_null_count": 50,
+        "expected_null_actual_null_rate": 0.44,
+        "null_hallucination_rate": 0.56,
+        "expected_non_null_count": 50,
+        "unexpected_null_rate": 0.2
+      },
+      "cyber_kill_chain_phase": {
+        "expected_null_count": 51,
+        "expected_null_actual_null_rate": 0.19607843137254902,
+        "null_hallucination_rate": 0.803921568627451,
+        "expected_non_null_count": 49,
+        "unexpected_null_rate": 0.0
+      }
+    },
+    "confidence_calibration": {
+      "0.90-1.00": {
+        "count": 60,
+        "actual_accuracy": 0.4277777777777778
+      },
+      "0.80-0.89": {
+        "count": 38,
+        "actual_accuracy": 0.2807017543859649
+      },
+      "0.70-0.79": {
+        "count": 1,
+        "actual_accuracy": 0.1111111111111111
+      },
+      "0.50-0.69": {
+        "count": 1,
+        "actual_accuracy": 0.4444444444444444
+      }
+    },
+    "error_counts": {
+      "OTHER": 100,
+      "NULL_HALLUCINATION": 83,
+      "ENTITY_ERROR": 75,
+      "SUBCATEGORY_ERROR": 96,
+      "CATEGORY_ERROR": 52,
+      "MITRE_TACTIC_ERROR": 42,
+      "MITRE_TECHNIQUE_ERROR": 47,
+      "KILL_CHAIN_ERROR": 45,
+      "UNEXPECTED_NULL": 10,
+      "VALIDATION_FAILURE": 7
+    },
+    "lowest_performing_categories": [
+      {
+        "category": "Network Abuse",
+        "count": 25,
+        "accuracy": 0.0
+      },
+      {
+        "category": "Credential Access",
+        "count": 1,
+        "accuracy": 0.0
+      },
+      {
+        "category": "Malware",
+        "count": 11,
+        "accuracy": 0.09090909090909091
+      },
+      {
+        "category": "Other",
+        "count": 7,
+        "accuracy": 0.14285714285714285
+      },
+      {
+        "category": "Policy Violation",
+        "count": 6,
+        "accuracy": 0.3333333333333333
+      },
+      {
+        "category": "Remote Access",
+        "count": 7,
+        "accuracy": 0.5714285714285714
+      },
+      {
+        "category": "Exploitation",
+        "count": 8,
+        "accuracy": 0.75
+      },
+      {
+        "category": "Reconnaissance",
+        "count": 7,
+        "accuracy": 0.8571428571428571
+      },
+      {
+        "category": "Command and Control",
+        "count": 10,
+        "accuracy": 1.0
+      },
+      {
+        "category": "Web Attack",
+        "count": 9,
+        "accuracy": 1.0
+      },
+      {
+        "category": "Suspicious DNS",
+        "count": 4,
+        "accuracy": 1.0
+      },
+      {
+        "category": "Discovery",
+        "count": 4,
+        "accuracy": 1.0
+      },
+      {
+        "category": "Denial of Service",
+        "count": 1,
+        "accuracy": 1.0
+      }
+    ],
+    "average_confidence": 0.8809999999999999
+  },
+  "cost_analysis": {
+    "average_input_tokens_per_rule": 106.95,
+    "average_output_tokens_per_rule": 31.25,
+    "average_total_tokens_per_rule": 138.2,
+    "total_input_tokens": 10695,
+    "total_output_tokens": 3125,
+    "total_tokens": 13820,
+    "cost_status": "COST_NOT_CALCULATED",
+    "estimated_total_cost": null,
+    "estimated_cost_per_rule": null
+  },
+  "stability": {
+    "status": "NOT_RUN"
+  },
+  "golden_provenance": {
+    "CLAUDE_INDEPENDENT_REVIEW": 100
+  },
+  "sample_errors": [
+    {
+      "sid": 2010935,
+      "rev": 3,
+      "msg": "ET SCAN Suspicious inbound to MSSQL port 1433",
+      "source_file": "emerging-scan.rules",
+      "expected": {
+        "detected_behavior": "Network service scanning",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Reconnaissance",
+        "subcategory": "Service Scan",
+        "mitre_tactic": "Discovery",
+        "mitre_technique": "Network Service Scanning",
+        "mitre_technique_id": "T1046",
+        "cyber_kill_chain_phase": "Reconnaissance"
+      },
+      "actual": {
+        "detected_behavior": "Suspicious inbound connection attempt to MSSQL port",
+        "detected_entity": "MSSQL",
+        "entity_type": "Product",
+        "category": "Reconnaissance",
+        "subcategory": "Port Scan",
+        "mitre_tactic": "Discovery",
+        "mitre_technique": "Network Service Scanning",
+        "mitre_technique_id": "T1046",
+        "cyber_kill_chain_phase": "Reconnaissance"
+      },
+      "matches": {
+        "detected_behavior": false,
+        "detected_entity": false,
+        "entity_type": false,
+        "category": true,
+        "subcategory": false,
+        "mitre_tactic": true,
+        "mitre_technique": true,
+        "mitre_technique_id": true,
+        "cyber_kill_chain_phase": true
+      },
+      "normalized_matches": {
+        "detected_behavior": false,
+        "detected_entity": false,
+        "entity_type": false,
+        "category": true,
+        "subcategory": false,
+        "mitre_tactic": true,
+        "mitre_technique": true,
+        "mitre_technique_id": true,
+        "cyber_kill_chain_phase": true
+      },
+      "errors": [
+        "OTHER",
+        "NULL_HALLUCINATION",
+        "ENTITY_ERROR",
+        "SUBCATEGORY_ERROR"
+      ],
+      "confidence": 0.8,
+      "status": "AUTO_CLASSIFIED",
+      "cache_hit": true,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      }
+    },
+    {
+      "sid": 2021837,
+      "rev": 7,
+      "msg": "ET MALWARE r0 CnC Architecture POST 4",
+      "source_file": "emerging-malware.rules",
+      "expected": {
+        "detected_behavior": "HTTP command-and-control communication",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Command and Control",
+        "subcategory": "HTTP C2 Communication",
+        "mitre_tactic": "Command and Control",
+        "mitre_technique": "Web Protocols",
+        "mitre_technique_id": "T1071.001",
+        "cyber_kill_chain_phase": "Command and Control"
+      },
+      "actual": {
+        "detected_behavior": "Command and Control communication using HTTP POST requests",
+        "detected_entity": "r0 bot",
+        "entity_type": "Malware",
+        "category": "Command and Control",
+        "subcategory": "HTTP C2",
+        "mitre_tactic": "Command and Control",
+        "mitre_technique": "Web Protocols",
+        "mitre_technique_id": "T1071.001",
+        "cyber_kill_chain_phase": "Command and Control"
+      },
+      "matches": {
+        "detected_behavior": false,
+        "detected_entity": false,
+        "entity_type": false,
+        "category": true,
+        "subcategory": false,
+        "mitre_tactic": true,
+        "mitre_technique": true,
+        "mitre_technique_id": true,
+        "cyber_kill_chain_phase": true
+      },
+      "normalized_matches": {
+        "detected_behavior": false,
+        "detected_entity": false,
+        "entity_type": false,
+        "category": true,
+        "subcategory": false,
+        "mitre_tactic": true,
+        "mitre_technique": true,
+        "mitre_technique_id": true,
+        "cyber_kill_chain_phase": true
+      },
+      "errors": [
+        "OTHER",
+        "NULL_HALLUCINATION",
+        "ENTITY_ERROR",
+        "SUBCATEGORY_ERROR"
+      ],
+      "confidence": 0.9,
+      "status": "AUTO_CLASSIFIED",
+      "cache_hit": true,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      }
+    },
+    {
+      "sid": 2056356,
+      "rev": 2,
+      "msg": "ET EXPLOIT Zimbra postjournal RCE Attempt Inbound (CVE-2024-45519)",
+      "source_file": "emerging-exploit.rules",
+      "expected": {
+        "detected_behavior": "Exploit attempt against a network-accessible service",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Exploitation",
+        "subcategory": "Exploit Attempt",
+        "mitre_tactic": "Initial Access",
+        "mitre_technique": "Exploit Public-Facing Application",
+        "mitre_technique_id": "T1190",
+        "cyber_kill_chain_phase": "Exploitation"
+      },
+      "actual": {
+        "detected_behavior": "Remote Code Execution attempt against Zimbra postjournal via CVE-2024-45519",
+        "detected_entity": "Zimbra postjournal",
+        "entity_type": "Product",
+        "category": "Exploitation",
+        "subcategory": "Remote Code Execution",
+        "mitre_tactic": "Initial Access",
+        "mitre_technique": "Exploit Public-Facing Application",
+        "mitre_technique_id": "T1190",
+        "cyber_kill_chain_phase": "Exploitation"
+      },
+      "matches": {
+        "detected_behavior": false,
+        "detected_entity": false,
+        "entity_type": false,
+        "category": true,
+        "subcategory": false,
+        "mitre_tactic": true,
+        "mitre_technique": true,
+        "mitre_technique_id": true,
+        "cyber_kill_chain_phase": true
+      },
+      "normalized_matches": {
+        "detected_behavior": false,
+        "detected_entity": false,
+        "entity_type": false,
+        "category": true,
+        "subcategory": false,
+        "mitre_tactic": true,
+        "mitre_technique": true,
+        "mitre_technique_id": true,
+        "cyber_kill_chain_phase": true
+      },
+      "errors": [
+        "OTHER",
+        "NULL_HALLUCINATION",
+        "ENTITY_ERROR",
+        "SUBCATEGORY_ERROR"
+      ],
+      "confidence": 1.0,
+      "status": "AUTO_CLASSIFIED",
+      "cache_hit": true,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      }
+    },
+    {
+      "sid": 2059511,
+      "rev": 1,
+      "msg": "ET INFO Observed Smart Chain Domain in DNS Lookup (gnfd-testnet-sp1 .nodereal .io)",
+      "source_file": "emerging-info.rules",
+      "expected": {
+        "detected_behavior": "Informational network activity",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Other",
+        "subcategory": "Informational Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null
+      },
+      "actual": {
+        "detected_behavior": "DNS query for Smart Chain Domain",
+        "detected_entity": "gnfd-testnet-sp1.nodereal.io",
+        "entity_type": "Other",
+        "category": "Suspicious DNS",
+        "subcategory": "DNS Lookup",
+        "mitre_tactic": "Command and Control",
+        "mitre_technique": "DNS",
+        "mitre_technique_id": "T1071.004",
+        "cyber_kill_chain_phase": "Command and Control"
+      },
+      "matches": {
+        "detected_behavior": false,
+        "detected_entity": false,
+        "entity_type": false,
+        "category": false,
+        "subcategory": false,
+        "mitre_tactic": false,
+        "mitre_technique": false,
+        "mitre_technique_id": false,
+        "cyber_kill_chain_phase": false
+      },
+      "normalized_matches": {
+        "detected_behavior": false,
+        "detected_entity": false,
+        "entity_type": false,
+        "category": false,
+        "subcategory": false,
+        "mitre_tactic": false,
+        "mitre_technique": false,
+        "mitre_technique_id": false,
+        "cyber_kill_chain_phase": false
+      },
+      "errors": [
+        "OTHER",
+        "NULL_HALLUCINATION",
+        "ENTITY_ERROR",
+        "CATEGORY_ERROR",
+        "SUBCATEGORY_ERROR",
+        "MITRE_TACTIC_ERROR",
+        "MITRE_TECHNIQUE_ERROR",
+        "KILL_CHAIN_ERROR"
+      ],
+      "confidence": 0.8,
+      "status": "AUTO_CLASSIFIED",
+      "cache_hit": true,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      }
+    },
+    {
+      "sid": 2045262,
+      "rev": 3,
+      "msg": "ET DYN_DNS DYNAMIC_DNS HTTP Request to a *.codingtheworld .com Domain",
+      "source_file": "emerging-dyn_dns.rules",
+      "expected": {
+        "detected_behavior": "DNS query to dynamic DNS domain",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Suspicious DNS",
+        "subcategory": "Unusual DNS Query",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null
+      },
+      "actual": {
+        "detected_behavior": "HTTP request to a dynamic DNS domain",
+        "detected_entity": "codingtheworld.com",
+        "entity_type": "Other",
+        "category": "Suspicious DNS",
+        "subcategory": "Dynamic DNS",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Command and Control"
+      },
+      "matches": {
+        "detected_behavior": false,
+        "detected_entity": false,
+        "entity_type": false,
+        "category": true,
+        "subcategory": false,
+        "mitre_tactic": true,
+        "mitre_technique": true,
+        "mitre_technique_id": true,
+        "cyber_kill_chain_phase": false
+      },
+      "normalized_matches": {
+        "detected_behavior": false,
+        "detected_entity": false,
+        "entity_type": false,
+        "category": true,
+        "subcategory": false,
+        "mitre_tactic": true,
+        "mitre_technique": true,
+        "mitre_technique_id": true,
+        "cyber_kill_chain_phase": false
+      },
+      "errors": [
+        "OTHER",
+        "NULL_HALLUCINATION",
+        "ENTITY_ERROR",
+        "SUBCATEGORY_ERROR",
+        "KILL_CHAIN_ERROR"
+      ],
+      "confidence": 0.8,
+      "status": "AUTO_CLASSIFIED",
+      "cache_hit": true,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      }
+    },
+    {
+      "sid": 2019842,
+      "rev": 7,
+      "msg": "ET WEB_CLIENT Possible Internet Explorer VBscript CVE-2014-6332 multiple redim preserve",
+      "source_file": "emerging-web_client.rules",
+      "expected": {
+        "detected_behavior": "Suspicious network activity",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Network Abuse",
+        "subcategory": "Suspicious HTTP Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null
+      },
+      "actual": {
+        "detected_behavior": "Exploitation of CVE-2014-6332 in Internet Explorer via VBScript ReDim Preserve",
+        "detected_entity": "Internet Explorer",
+        "entity_type": "Product",
+        "category": "Web Attack",
+        "subcategory": "Browser Exploit",
+        "mitre_tactic": "Initial Access",
+        "mitre_technique": "Drive-by Compromise",
+        "mitre_technique_id": "T1189",
+        "cyber_kill_chain_phase": "Exploitation"
+      },
+      "matches": {
+        "detected_behavior": false,
+        "detected_entity": false,
+        "entity_type": false,
+        "category": false,
+        "subcategory": false,
+        "mitre_tactic": false,
+        "mitre_technique": false,
+        "mitre_technique_id": false,
+        "cyber_kill_chain_phase": false
+      },
+      "normalized_matches": {
+        "detected_behavior": false,
+        "detected_entity": false,
+        "entity_type": false,
+        "category": false,
+        "subcategory": false,
+        "mitre_tactic": false,
+        "mitre_technique": false,
+        "mitre_technique_id": false,
+        "cyber_kill_chain_phase": false
+      },
+      "errors": [
+        "OTHER",
+        "NULL_HALLUCINATION",
+        "ENTITY_ERROR",
+        "CATEGORY_ERROR",
+        "SUBCATEGORY_ERROR",
+        "MITRE_TACTIC_ERROR",
+        "MITRE_TECHNIQUE_ERROR",
+        "KILL_CHAIN_ERROR"
+      ],
+      "confidence": 0.95,
+      "status": "AUTO_CLASSIFIED",
+      "cache_hit": true,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      }
+    },
+    {
+      "sid": 2046466,
+      "rev": 2,
+      "msg": "ET MOBILE_MALWARE Android Spy PREDATOR CnC Domain in DNS Lookup",
+      "source_file": "emerging-mobile_malware.rules",
+      "expected": {
+        "detected_behavior": "Predator command-and-control communication",
+        "detected_entity": "Predator",
+        "entity_type": "Malware",
+        "category": "Command and Control",
+        "subcategory": "DNS C2 Communication",
+        "mitre_tactic": "Command and Control",
+        "mitre_technique": "DNS",
+        "mitre_technique_id": "T1071.004",
+        "cyber_kill_chain_phase": "Command and Control"
+      },
+      "actual": {
+        "detected_behavior": "DNS lookup for Predator spyware command and control domain",
+        "detected_entity": "PREDATOR",
+        "entity_type": "Malware",
+        "category": "Command and Control",
+        "subcategory": "DNS",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Command and Control"
+      },
+      "matches": {
+        "detected_behavior": false,
+        "detected_entity": false,
+        "entity_type": true,
+        "category": true,
+        "subcategory": false,
+        "mitre_tactic": false,
+        "mitre_technique": false,
+        "mitre_technique_id": false,
+        "cyber_kill_chain_phase": true
+      },
+      "normalized_matches": {
+        "detected_behavior": false,
+        "detected_entity": true,
+        "entity_type": true,
+        "category": true,
+        "subcategory": false,
+        "mitre_tactic": false,
+        "mitre_technique": false,
+        "mitre_technique_id": false,
+        "cyber_kill_chain_phase": true
+      },
+      "errors": [
+        "OTHER",
+        "ENTITY_ERROR",
+        "SUBCATEGORY_ERROR",
+        "UNEXPECTED_NULL",
+        "MITRE_TACTIC_ERROR",
+        "MITRE_TECHNIQUE_ERROR"
+      ],
+      "confidence": 0.9,
+      "status": "AUTO_CLASSIFIED",
+      "cache_hit": true,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      }
+    },
+    {
+      "sid": 2060513,
+      "rev": 2,
+      "msg": "ET REMOTE_ACCESS Observed Anydesk Domain (boot .net .anydesk .com) in TLS SNI",
+      "source_file": "emerging-remote_access.rules",
+      "expected": {
+        "detected_behavior": "AnyDesk remote access software communication",
+        "detected_entity": "AnyDesk",
+        "entity_type": "Remote Access Tool",
+        "category": "Remote Access",
+        "subcategory": "Remote Administration Tool",
+        "mitre_tactic": "Command and Control",
+        "mitre_technique": "Remote Access Software",
+        "mitre_technique_id": "T1219",
+        "cyber_kill_chain_phase": "Command and Control"
+      },
+      "actual": {
+        "detected_behavior": "Observed AnyDesk domain connection attempt via TLS SNI",
+        "detected_entity": "AnyDesk",
+        "entity_type": "Remote Access Tool",
+        "category": "Remote Access",
+        "subcategory": "Remote Access Software",
+        "mitre_tactic": "Command and Control",
+        "mitre_technique": "Remote Access Software",
+        "mitre_technique_id": "T1219",
+        "cyber_kill_chain_phase": "Command and Control"
+      },
+      "matches": {
+        "detected_behavior": false,
+        "detected_entity": true,
+        "entity_type": true,
+        "category": true,
+        "subcategory": false,
+        "mitre_tactic": true,
+        "mitre_technique": true,
+        "mitre_technique_id": true,
+        "cyber_kill_chain_phase": true
+      },
+      "normalized_matches": {
+        "detected_behavior": false,
+        "detected_entity": true,
+        "entity_type": true,
+        "category": true,
+        "subcategory": false,
+        "mitre_tactic": true,
+        "mitre_technique": true,
+        "mitre_technique_id": true,
+        "cyber_kill_chain_phase": true
+      },
+      "errors": [
+        "OTHER",
+        "SUBCATEGORY_ERROR"
+      ],
+      "confidence": 1.0,
+      "status": "AUTO_CLASSIFIED",
+      "cache_hit": true,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      }
+    },
+    {
+      "sid": 2048071,
+      "rev": 2,
+      "msg": "ET RETIRED [TW] Observed Microsoft Credential Phish V3 Domain (bc1qc230lt32ey73qlaj9rkujm0ujtv090 .com in TLS SNI)",
+      "source_file": "emerging-retired.rules",
+      "expected": {
+        "detected_behavior": "Credential phishing attempt",
+        "detected_entity": null,
+        "entity_type": null,
+        "category": "Network Abuse",
+        "subcategory": "Phishing Infrastructure",
+        "mitre_tactic": "Initial Access",
+        "mitre_technique": "Spearphishing Attachment",
+        "mitre_technique_id": "T1566.001",
+        "cyber_kill_chain_phase": "Delivery"
+      },
+      "actual": {
+        "detected_behavior": "Phishing domain access via TLS SNI",
+        "detected_entity": "Microsoft Credential Phish V3 Domain",
+        "entity_type": "Other",
+        "category": "Web Attack",
+        "subcategory": "Phishing",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": "Delivery"
+      },
+      "matches": {
+        "detected_behavior": false,
+        "detected_entity": false,
+        "entity_type": false,
+        "category": false,
+        "subcategory": false,
+        "mitre_tactic": false,
+        "mitre_technique": false,
+        "mitre_technique_id": false,
+        "cyber_kill_chain_phase": true
+      },
+      "normalized_matches": {
+        "detected_behavior": false,
+        "detected_entity": false,
+        "entity_type": false,
+        "category": false,
+        "subcategory": false,
+        "mitre_tactic": false,
+        "mitre_technique": false,
+        "mitre_technique_id": false,
+        "cyber_kill_chain_phase": true
+      },
+      "errors": [
+        "OTHER",
+        "NULL_HALLUCINATION",
+        "ENTITY_ERROR",
+        "CATEGORY_ERROR",
+        "SUBCATEGORY_ERROR",
+        "UNEXPECTED_NULL",
+        "MITRE_TACTIC_ERROR",
+        "MITRE_TECHNIQUE_ERROR"
+      ],
+      "confidence": 0.8,
+      "status": "AUTO_CLASSIFIED",
+      "cache_hit": true,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      }
+    },
+    {
+      "sid": 2046259,
+      "rev": 5,
+      "msg": "ET RETIRED Kimsuky ReconShark Related APT Activity",
+      "source_file": "emerging-retired.rules",
+      "expected": {
+        "detected_behavior": "Suspicious network activity",
+        "detected_entity": "ReconShark",
+        "entity_type": "Malware",
+        "category": "Network Abuse",
+        "subcategory": "Suspicious HTTP Activity",
+        "mitre_tactic": null,
+        "mitre_technique": null,
+        "mitre_technique_id": null,
+        "cyber_kill_chain_phase": null
+      },
+      "actual": {
+        "detected_behavior": "ReconShark APT activity communication over HTTP POST to /r.php",
+        "detected_entity": "ReconShark",
+        "entity_type": "Malware",
+        "category": "Command and Control",
+        "subcategory": "Web Communications",
+        "mitre_tactic": "Command and Control",
+        "mitre_technique": "Web Protocols",
+        "mitre_technique_id": "T1071.001",
+        "cyber_kill_chain_phase": "Command and Control"
+      },
+      "matches": {
+        "detected_behavior": false,
+        "detected_entity": true,
+        "entity_type": true,
+        "category": false,
+        "subcategory": false,
+        "mitre_tactic": false,
+        "mitre_technique": false,
+        "mitre_technique_id": false,
+        "cyber_kill_chain_phase": false
+      },
+      "normalized_matches": {
+        "detected_behavior": false,
+        "detected_entity": true,
+        "entity_type": true,
+        "category": false,
+        "subcategory": false,
+        "mitre_tactic": false,
+        "mitre_technique": false,
+        "mitre_technique_id": false,
+        "cyber_kill_chain_phase": false
+      },
+      "errors": [
+        "OTHER",
+        "CATEGORY_ERROR",
+        "SUBCATEGORY_ERROR",
+        "NULL_HALLUCINATION",
+        "MITRE_TACTIC_ERROR",
+        "MITRE_TECHNIQUE_ERROR",
+        "KILL_CHAIN_ERROR"
+      ],
+      "confidence": 0.9,
+      "status": "AUTO_CLASSIFIED",
+      "cache_hit": true,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      }
+    }
+  ]
+}

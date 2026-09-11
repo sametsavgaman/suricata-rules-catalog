@@ -1,0 +1,172 @@
+# Emerging Threats 
+#
+# This distribution may contain rules under two different licenses. 
+#
+#  Rules with sids 1 through 3464, and 100000000 through 100000908 are under the GPLv2.
+#  A copy of that license is available at http://www.gnu.org/licenses/gpl-2.0.html
+#
+#  Rules with sids 2000000 through 2799999 are from Emerging Threats and are covered under the BSD License 
+#  as follows:
+#
+#*************************************************************
+#  Copyright (c) 2003-2026, Emerging Threats
+#  All rights reserved.
+#  
+#  Redistribution and use in source and binary forms, with or without modification, are permitted provided that the 
+#  following conditions are met:
+#  
+#  * Redistributions of source code must retain the above copyright notice, this list of conditions and the following 
+#    disclaimer.
+#  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the 
+#    following disclaimer in the documentation and/or other materials provided with the distribution.
+#  * Neither the name of the nor the names of its contributors may be used to endorse or promote products derived 
+#    from this software without specific prior written permission.
+#  
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS AS IS AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+#  INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+#  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
+#  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE 
+#  USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+#
+#*************************************************************
+#
+#
+#
+#
+
+# This Ruleset is EmergingThreats Open optimized for suricata-7.0.3-enhanced.
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 5222 (msg:"ET CHAT Google Talk (Jabber) Client Login"; flow:established,to_server; content:"gmail.com"; nocase; content:"jabber"; nocase; distance:9; within:6; reference:url,talk.google.com; reference:url,www.xmpp.org; classtype:policy-violation; sid:2002327; rev:4; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2019_07_26;)
+
+#alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg:"ET CHAT MSN status change"; flow:established,to_server; content:"CHG "; depth:55; classtype:policy-violation; sid:2002192; rev:4; metadata:created_at 2010_07_30, deprecation_reason Relevance, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2019_07_26;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 5222 (msg:"ET CHAT Google IM traffic Jabber client sign-on"; flow:to_server; content:"gmail.com"; nocase; content:"jabber.org"; nocase; content:"version="; reference:url,www.google.com/talk; classtype:policy-violation; sid:2002334; rev:5; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2019_07_26;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 1863 (msg:"GPL CHAT MSN outbound file transfer request"; flow:established; content:"MSG "; depth:4; content:"Content-Type|3A| application/x-msnmsgrp2p"; nocase; content:"INVITE"; distance:0; nocase; classtype:policy-violation; sid:2101986; rev:7; metadata:created_at 2010_09_23, signature_severity Informational, updated_at 2019_07_26;)
+
+alert tcp $EXTERNAL_NET 1863 -> $HOME_NET any (msg:"GPL CHAT MSN outbound file transfer accept"; flow:established; content:"MSG "; depth:4; content:"Content-Type|3A| application/x-msnmsgrp2p"; distance:0; nocase; content:"MSNSLP/1.0 200 OK"; distance:0; nocase; classtype:policy-violation; sid:2101988; rev:6; metadata:created_at 2010_09_23, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2019_07_26;)
+
+alert tcp $EXTERNAL_NET 1863 -> $HOME_NET any (msg:"GPL CHAT MSN outbound file transfer rejected"; flow:established; content:"MSG "; depth:4; content:"Content-Type|3A| application/x-msnmsgrp2p"; distance:0; nocase; content:"MSNSLP/1.0 603 Decline"; distance:0; nocase; classtype:policy-violation; sid:2101989; rev:7; metadata:created_at 2010_09_23, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2019_07_26;)
+
+alert tcp $EXTERNAL_NET 5050 -> $HOME_NET any (msg:"GPL CHAT Yahoo Messenger File Transfer Receive Request"; flow:established; content:"YMSG"; depth:4; content:"|00|M"; depth:2; offset:10; classtype:policy-violation; sid:2102456; rev:5; metadata:created_at 2010_09_23, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2019_07_26;)
+
+#alert udp $HOME_NET 1024:65535 -> $EXTERNAL_NET 33033 (msg:"ET CHAT Skype Bootstrap Node (udp)"; threshold: type both, count 5, track by_src, seconds 120; reference:url,www1.cs.columbia.edu/~library/TR-repository/reports/reports-2004/cucs-039-04.pdf; classtype:policy-violation; sid:2003022; rev:5; metadata:created_at 2010_07_30, signature_severity Informational, updated_at 2019_07_26;)
+
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"ET CHAT Facebook Chat (buddy list)"; flow:established,to_server; http.method; content:"POST"; http.uri; content:"/ajax/chat/buddy_list.php"; http.header; content:"facebook.com"; classtype:policy-violation; sid:2010785; rev:7; metadata:created_at 2010_07_30, signature_severity Informational, updated_at 2020_04_22;)
+
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"ET CHAT Gadu-Gadu IM Login Server Request"; flow:established,to_server; http.uri; content:"/appsvc/appmsg"; nocase; content:".asp"; nocase; content:"fmnumber="; content:"&version="; content:"&fmt="; http.host; content:"appmsg.gadu-gadu."; reference:url,piotr.trzcionkowski.pl/default.asp?load=/programy/pppgg_protokol.html; classtype:policy-violation; sid:2008295; rev:8; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2020_08_20;)
+
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"ET CHAT Gadu-Gadu Chat Client Checkin via HTTP"; flow:established,to_server; http.uri; content:"/appsvc/appmsg"; nocase; content:"fmnumber="; nocase; content:"&version="; nocase; content:"&fmt="; nocase; content:"&lastmsg="; nocase; classtype:trojan-activity; sid:2007866; rev:10; metadata:created_at 2010_07_30, signature_severity Major, updated_at 2020_08_20;)
+
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"ET CHAT Facebook Chat (send message)"; flow:established,to_server; http.method; content:"POST"; http.uri; content:"/ajax/chat/send.php"; http.header; content:"facebook.com"; classtype:policy-violation; sid:2010784; rev:6; metadata:created_at 2010_07_30, signature_severity Informational, updated_at 2020_09_11;)
+
+#alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"ET CHAT Facebook Chat (settings)"; flow:established,to_server; http.method; content:"POST"; http.uri; content:"/ajax/chat/settings.php"; http.header; content:"facebook.com|0d 0a|"; classtype:policy-violation; sid:2010786; rev:7; metadata:created_at 2010_07_30, signature_severity Informational, updated_at 2020_11_19;)
+
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"ET CHAT Skype User-Agent detected"; flow:established,to_server; http.user_agent; content:"Skype"; classtype:policy-violation; sid:2002157; rev:13; metadata:created_at 2010_07_30, confidence High, signature_severity Informational, updated_at 2024_03_06;)
+
+#alert tcp $HOME_NET any -> $EXTERNAL_NET 1863 (msg:"ET CHAT Possible MSN Messenger File Transfer"; flow:established,to_server; content:"x-msnmsgrp2p"; nocase; content:"appid|3a|"; nocase; pcre:"/appid\x3a\s+2/i"; reference:url,www.hypothetic.org/docs/msn/client/file_transfer.php; classtype:policy-violation; sid:2008289; rev:6; metadata:created_at 2010_07_30, confidence Medium, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_06;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 5222 (msg:"ET CHAT Facebook Chat using XMPP"; flow:established,to_server; content:"chat.facebook.com"; nocase; content:"jabber|3A|client"; nocase; distance:9; within:13; threshold: type limit, track by_src, count 1, seconds 60; reference:url,www.facebook.com/sitetour/chat.php; classtype:policy-violation; sid:2010819; rev:5; metadata:created_at 2010_07_30, signature_severity Informational, updated_at 2024_03_06;)
+
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"ET CHAT Skype VOIP Checking Version (Startup)"; flow:established,to_server; http.uri; content:"/ui/"; nocase; content:"/getlatestversion?ver="; nocase; reference:url,www1.cs.columbia.edu/~library/TR-repository/reports/reports-2004/cucs-039-04.pdf; classtype:policy-violation; sid:2001595; rev:13; metadata:created_at 2010_07_30, signature_severity Informational, updated_at 2024_03_07;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 5190 (msg:"ET CHAT ICQ Status Invisible"; flow:established,to_server; content:"|2A02|"; depth: 2; content:"|001900130005|"; offset: 4; depth: 6; classtype:policy-violation; sid:2001801; rev:6; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_07;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 5190 (msg:"ET CHAT ICQ Status Change (1)"; flow:established,to_server; content:"|2A02|"; depth: 2; content:"|000E00010011|"; offset: 4; depth: 6; classtype:policy-violation; sid:2001802; rev:7; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_07;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 5190 (msg:"ET CHAT ICQ Status Change (2)"; flow:established,to_server; content:"|2A02|"; depth: 2; content:"|00120001001E|"; offset: 4; depth: 6; classtype:policy-violation; sid:2001803; rev:7; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_07;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 5190 (msg:"ET CHAT ICQ Login"; flow:established,to_server; content:"|2A01|"; depth: 2; content:"|00010001|"; offset: 8; depth: 4; classtype:policy-violation; sid:2001804; rev:6; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_07;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 5222 (msg:"GPL CHAT Jabber/Google Talk Outgoing Traffic"; flow:established,to_server; content:"<stream"; nocase; reference:url,www.google.com/talk/; classtype:not-suspicious; sid:2100230; rev:4; metadata:created_at 2010_09_23, signature_severity Informational, updated_at 2024_03_08;)
+
+#alert tcp $HOME_NET any -> $EXTERNAL_NET 5222 (msg:"GPL CHAT Jabber/Google Talk Outgoing Auth"; flow:established,to_server; content:"<auth"; nocase; reference:url,www.google.com/talk/; classtype:policy-violation; sid:2100231; rev:4; metadata:created_at 2010_09_23, signature_severity Informational, updated_at 2024_03_08;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 5222 (msg:"GPL CHAT Google Talk Logon"; flow:established,to_server; content:"<stream|3a|stream to=\"gmail.com\""; nocase; reference:url,www.google.com/talk/; classtype:policy-violation; sid:2100232; rev:5; metadata:created_at 2010_09_23, signature_severity Informational, updated_at 2024_03_08;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 5222 (msg:"GPL CHAT Jabber/Google Talk Outoing Message"; flow:established,to_server; content:"<message"; nocase; reference:url,www.google.com/talk/; classtype:policy-violation; sid:2100233; rev:4; metadata:created_at 2010_09_23, signature_severity Informational, updated_at 2024_03_08;)
+
+#alert tcp $HOME_NET any -> $EXTERNAL_NET 5222 (msg:"GPL CHAT Jabber/Google Talk Log Out"; flow:established,to_server; content:"</stream"; nocase; reference:url,www.google.com/talk/; classtype:policy-violation; sid:2100234; rev:4; metadata:created_at 2010_09_23, signature_severity Informational, updated_at 2024_03_08;)
+
+alert tcp $EXTERNAL_NET 5222 -> $HOME_NET any (msg:"GPL CHAT Jabber/Google Talk Logon Success"; flow:established,to_client; content:"<success"; nocase; reference:url,www.google.com/talk/; classtype:policy-violation; sid:2100235; rev:4; metadata:created_at 2010_09_23, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_08;)
+
+alert tcp $EXTERNAL_NET 5222 -> $HOME_NET any (msg:"GPL CHAT Jabber/Google Talk Incoming Message"; flow:established,to_client; content:"<message"; nocase; reference:url,www.google.com/talk/; classtype:policy-violation; sid:2100236; rev:4; metadata:created_at 2010_09_23, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_08;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 1863 (msg:"GPL CHAT MSN user search"; flow:established,to_server; content:"CAL "; depth:4; nocase; classtype:policy-violation; sid:2101990; rev:3; metadata:created_at 2010_09_23, signature_severity Informational, updated_at 2024_03_08;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 1863 (msg:"GPL CHAT MSN login attempt"; flow:established,to_server; content:"USR "; depth:4; nocase; content:" TWN "; distance:1; nocase; threshold:type limit, track by_src, count 1, seconds 60; classtype:policy-violation; sid:2101991; rev:4; metadata:created_at 2010_09_23, signature_severity Informational, updated_at 2024_03_08;)
+
+#alert tcp $HOME_NET any -> $EXTERNAL_NET 5222 (msg:"ET CHAT Known SSL traffic on port 5222 (Jabber) being excluded from SSL Alerts"; flow:established,to_server; flowbits:set,BS.SSL.Known.Port; flowbits:noalert; classtype:not-suspicious; sid:2003031; rev:6; metadata:created_at 2010_07_30, signature_severity Informational, updated_at 2024_03_14;)
+
+#alert tcp $HOME_NET any -> $EXTERNAL_NET 5223 (msg:"ET CHAT Known SSL traffic on port 5223 (Jabber) being excluded from SSL Alerts"; flow:established,to_server; flowbits:set,BS.SSL.Known.Port; flowbits:noalert; classtype:not-suspicious; sid:2003032; rev:6; metadata:created_at 2010_07_30, signature_severity Informational, updated_at 2024_03_14;)
+
+alert tcp any any -> any 6666:7000 (msg:"ET CHAT IRC PRIVMSG command"; flow:established,to_server; flowbits:set,is_proto_irc; content:"PRIVMSG|20|"; classtype:misc-activity; sid:2002026; rev:22; metadata:created_at 2010_07_30, signature_severity Informational, updated_at 2024_03_14;)
+
+alert tcp any any -> any 6666:7000 (msg:"ET CHAT IRC USER command"; flow:established,to_server; flowbits:set,is_proto_irc; content:"USER|20|"; nocase; content:"|203a|"; within:40; content:"|0a|"; within:40; classtype:misc-activity; sid:2002023; rev:18; metadata:created_at 2010_07_30, signature_severity Informational, updated_at 2024_03_14;)
+
+alert tcp any any -> any 6666:7000 (msg:"ET CHAT IRC NICK command"; flow:established,to_server; flowbits:set,is_proto_irc; content:"NICK|20|"; nocase; content:"|0a|"; within:40; classtype:misc-activity; sid:2002024; rev:21; metadata:created_at 2010_07_30, signature_severity Informational, updated_at 2024_03_14;)
+
+alert tcp any any -> any 6666:7000 (msg:"ET CHAT IRC JOIN command"; flow:established,to_server; flowbits:set,is_proto_irc; content:"JOIN|2023|"; nocase; content:"|0a|"; within:40; classtype:misc-activity; sid:2002025; rev:21; metadata:created_at 2010_07_30, signature_severity Informational, updated_at 2024_03_14;)
+
+alert tcp any 6666:7000 -> any any (msg:"ET CHAT IRC PING command"; flow:established,to_client; flowbits:set,is_proto_irc; content:"PING|20|"; classtype:misc-activity; sid:2002027; rev:18; metadata:created_at 2010_07_30, signature_severity Informational, updated_at 2024_03_14;)
+
+alert tcp any any -> any 6666:7000 (msg:"ET CHAT IRC PONG response"; flow:established,to_server; flowbits:set,is_proto_irc; content:"PONG|20|"; depth:5; classtype:misc-activity; sid:2002028; rev:22; metadata:created_at 2010_07_30, signature_severity Informational, updated_at 2024_03_14;)
+
+alert tcp $EXTERNAL_NET 8074 -> $HOME_NET any (msg:"ET CHAT GaduGadu Chat Server Welcome Packet"; flow:established,to_client; flowbits:set,ET.gadu.welcome; dsize:12; content:"|01 00 00 00|"; depth:4; reference:url,piotr.trzcionkowski.pl/default.asp?load=/programy/pppgg_protokol.html; classtype:policy-violation; sid:2008297; rev:7; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_14;)
+
+alert tcp any any -> any 6666:7000 (msg:"ET CHAT IRC USER Likely bot with 0 0 colon checkin"; flow:established,to_server; flowbits:set,is_proto_irc; content:"USER|20|"; nocase; content:" 0 0 |3a|"; within:40; content:"|0a|"; within:40; classtype:misc-activity; sid:2025066; rev:3; metadata:created_at 2013_07_13, confidence Medium, signature_severity Informational, updated_at 2024_03_14;)
+
+alert tcp any any -> any !6666:7000 (msg:"ET CHAT IRC USER Off-port Likely bot with 0 0 colon checkin"; flow:established,to_server; flowbits:set,is_proto_irc; content:"USER|20|"; nocase; content:" 0 0 |3a|"; within:40; content:"|0a|"; within:40; classtype:misc-activity; sid:2025067; rev:3; metadata:created_at 2013_07_13, confidence Medium, signature_severity Informational, updated_at 2024_03_14;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 6666:7000 (msg:"GPL CHAT IRC DCC file transfer request"; flow:established,to_server; flowbits:set,is_proto_irc; content:"PRIVMSG "; depth:8; nocase; content:" |3A|.DCC SEND"; nocase; classtype:policy-violation; sid:2101639; rev:13; metadata:created_at 2010_09_23, signature_severity Informational, updated_at 2024_03_14;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 6666:7000 (msg:"GPL CHAT IRC DCC chat request"; flow:established,to_server; flowbits:set,is_proto_irc; content:"PRIVMSG "; depth:8; nocase; content:" |3A|.DCC CHAT chat"; nocase; classtype:policy-violation; sid:2101640; rev:12; metadata:created_at 2010_09_23, signature_severity Informational, updated_at 2024_03_14;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 6666:7000 (msg:"GPL CHAT IRC Channel join"; flow:established,to_server; flowbits:set,is_proto_irc; content:"JOIN|20 3a 20 23|"; fast_pattern; nocase; classtype:policy-violation; sid:2101729; rev:14; metadata:created_at 2010_09_23, signature_severity Informational, updated_at 2024_03_14;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 8074 (msg:"ET CHAT GaduGadu Chat Client Login Packet"; flow:established,to_server; flowbits:isset,ET.gadu.welcome; flowbits:set,ET.gadu.loginsent; dsize:<50; content:"|15 00 00 00|"; depth:4; reference:url,piotr.trzcionkowski.pl/default.asp?load=/programy/pppgg_protokol.html; classtype:policy-violation; sid:2008298; rev:5; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_14;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 8074 (msg:"ET CHAT GaduGadu Chat Server Available Status Packet"; flow:established,to_server; flowbits:isset,ET.gadu.loggedin; content:"|02 00 00 00|"; depth:4; reference:url,piotr.trzcionkowski.pl/default.asp?load=/programy/pppgg_protokol.html; classtype:policy-violation; sid:2008301; rev:5; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_14;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 8074 (msg:"ET CHAT GaduGadu Chat Send Message"; flow:established,to_server; flowbits:isset,ET.gadu.loggedin; content:"|0b 00 00 00|"; depth:4; reference:url,piotr.trzcionkowski.pl/default.asp?load=/programy/pppgg_protokol.html; classtype:policy-violation; sid:2008302; rev:5; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_14;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 8074 (msg:"ET CHAT GaduGadu Chat Keepalive PING"; flow:established,to_server; flowbits:isset,ET.gadu.loggedin; content:"|08 00 00 00|"; depth:4; reference:url,piotr.trzcionkowski.pl/default.asp?load=/programy/pppgg_protokol.html; classtype:policy-violation; sid:2008304; rev:5; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_15;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 8074 (msg:"ET CHAT GaduGadu Chat File Send Request"; flow:established,to_server; flowbits:isset,ET.gadu.loggedin; content:"|01 00 00 00|"; depth:4; reference:url,piotr.trzcionkowski.pl/default.asp?load=/programy/pppgg_protokol.html; classtype:policy-violation; sid:2008306; rev:5; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_15;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 8074 (msg:"ET CHAT GaduGadu Chat File Send Details"; flow:established,to_server; flowbits:isset,ET.gadu.loggedin; content:"|03 00 00 00|"; depth:4; reference:url,piotr.trzcionkowski.pl/default.asp?load=/programy/pppgg_protokol.html; classtype:policy-violation; sid:2008307; rev:5; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_15;)
+
+alert tcp $EXTERNAL_NET 8074 -> $HOME_NET any (msg:"ET CHAT GaduGadu Chat Server Login OK Packet"; flow:established,to_client; flowbits:isset,ET.gadu.loginsent; flowbits:set,ET.gadu.loggedin; content:"|03 00 00 00|"; depth:4; byte_jump:4,0,relative,little,post_offset -1; isdataat:!2,relative; reference:url,piotr.trzcionkowski.pl/default.asp?load=/programy/pppgg_protokol.html; classtype:policy-violation; sid:2008299; rev:7; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_15;)
+
+alert tcp $EXTERNAL_NET 8074 -> $HOME_NET any (msg:"ET CHAT GaduGadu Chat Server Login Failed Packet"; flow:established,to_client; flowbits:isset,ET.gadu.loginsent; dsize:8; content:"|09 00 00 00 00 00 00 00|"; reference:url,piotr.trzcionkowski.pl/default.asp?load=/programy/pppgg_protokol.html; classtype:policy-violation; sid:2008300; rev:6; metadata:created_at 2010_07_30, confidence Medium, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_15;)
+
+alert tcp $EXTERNAL_NET 8074 -> $HOME_NET any (msg:"ET CHAT GaduGadu Chat Receive Message"; flow:established,to_client; flowbits:isset,ET.gadu.loggedin; content:"|0a 00 00 00|"; depth:4; reference:url,piotr.trzcionkowski.pl/default.asp?load=/programy/pppgg_protokol.html; classtype:policy-violation; sid:2008303; rev:6; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_15;)
+
+alert tcp $EXTERNAL_NET 8074 -> $HOME_NET any (msg:"ET CHAT GaduGadu Chat Keepalive PONG"; flow:established,to_client; flowbits:isset,ET.gadu.loggedin; content:"|07 00 00 00|"; depth:4; reference:url,piotr.trzcionkowski.pl/default.asp?load=/programy/pppgg_protokol.html; classtype:policy-violation; sid:2008305; rev:6; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_15;)
+
+alert tcp $EXTERNAL_NET 8074 -> $HOME_NET any (msg:"ET CHAT GaduGadu Chat File Send Accept"; flow:established,to_client; flowbits:isset,ET.gadu.loggedin; content:"|06 00 00 00|"; depth:4; reference:url,piotr.trzcionkowski.pl/default.asp?load=/programy/pppgg_protokol.html; classtype:policy-violation; sid:2008308; rev:6; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_15;)
+
+alert tcp $EXTERNAL_NET 8074 -> $HOME_NET any (msg:"ET CHAT GaduGadu Chat File Send Begin"; flow:established,to_client; flowbits:isset,ET.gadu.loggedin; content:"|03 00 00 00|"; depth:4; reference:url,piotr.trzcionkowski.pl/default.asp?load=/programy/pppgg_protokol.html; classtype:policy-violation; sid:2008309; rev:6; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_15;)
+
+alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"ET CHAT IRC authorization message"; flow:established; content:"NOTICE AUTH"; content:"Looking up your hostname..."; nocase; classtype:misc-activity; sid:2000355; rev:6; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_17;)
+
+#alert tcp $HOME_NET any <> $EXTERNAL_NET any (msg:"ET CHAT MSN file transfer request"; flow:established; content:"MSG "; depth: 4; content:"Content-Type|3A|"; nocase; distance: 0; content:"text/x-msmsgsinvite"; nocase; distance: 0; content:"Application-Name|3A|"; content:"File Transfer"; nocase; distance: 0; classtype:policy-violation; sid:2001241; rev:6; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_17;)
+
+#alert tcp $HOME_NET any <> $EXTERNAL_NET any (msg:"ET CHAT MSN file transfer accept"; flow:established; content:"MSG "; depth: 4; content:"Content-Type|3A|"; nocase; content:"text/x-msmsgsinvite"; distance: 0; content:"Invitation-Command|3A|"; content:"ACCEPT"; distance: 1; classtype:policy-violation; sid:2001242; rev:6; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_17;)
+
+#alert tcp $HOME_NET any <> $EXTERNAL_NET any (msg:"ET CHAT MSN file transfer reject"; flow:established; content:"MSG "; depth: 4; content:"Content-Type|3A|"; nocase; content:"text/x-msmsgsinvite"; distance: 0; content:"Invitation-Command|3A|"; content:"CANCEL"; distance: 0; content:"Cancel-Code|3A|"; nocase; content:"REJECT"; nocase; distance: 0; classtype:policy-violation; sid:2001243; rev:6; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_17;)
+
+#alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"ET CHAT MSN IM Poll via HTTP"; flow:established,to_server; http.uri; content:"/gateway/gateway.dll?Action=poll&SessionID="; nocase; threshold: type limit, track by_src, count 10, seconds 3600; classtype:policy-violation; sid:2001682; rev:11; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_17;)
+
+alert tcp $HOME_NET any <> $EXTERNAL_NET any (msg:"ET CHAT ICQ Message"; flow:established; content:"|2A02|"; depth: 2; content:"|000400060000|"; offset: 6; depth: 6; classtype:policy-violation; sid:2001805; rev:6; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_03_17;)
+
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"GPL CHAT Google Talk Version Check"; flow:established,to_server; http.uri; content:"/googletalk/google-talk-versioncheck.txt?"; nocase; classtype:policy-violation; sid:2100876; rev:6; metadata:created_at 2010_09_23, signature_severity Informational, updated_at 2024_03_17;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET 5222 (msg:"GPL CHAT Google Talk Startup"; flow:established,to_server; content:"google.com"; nocase; content:"jabber|3A|client"; nocase; threshold: type limit, track by_src, count 1, seconds 300; classtype:policy-violation; sid:2100877; rev:4; metadata:created_at 2010_09_23, signature_severity Informational, updated_at 2024_03_17;)
+
+alert http $HOME_NET any <> $EXTERNAL_NET any (msg:"ET CHAT General MSN Chat Activity"; flow:established,to_server; http.request_header; header_lowercase; content:"content-type|3a|"; content:"application/x-msn-messenger"; fast_pattern; reference:url,www.hypothetic.org/docs/msn/general/http_examples.php; classtype:policy-violation; sid:2009375; rev:10; metadata:created_at 2010_07_30, signature_severity Informational, tag Description_Generated_By_Proofpoint_Nexus, updated_at 2024_04_22;)
+
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"GPL CHAT ICQ access"; flow:established,to_server; http.header; header_lowercase; content:"user-agent|3a 20|ICQ"; classtype:policy-violation; sid:2100541; rev:16; metadata:created_at 2010_09_23, signature_severity Informational, updated_at 2024_05_21;)
+

@@ -1,0 +1,13 @@
+export type StoredRulePack = { id:string; name:string; sids:number[]; createdAt:string; updatedAt:string };
+const STORAGE_KEY="suricata-rule-packs-v2", LEGACY_KEY="suricata-rule-pack-sids", ACTIVE_KEY="suricata-active-rule-pack";
+function newId(){return `pack-${Date.now()}-${Math.random().toString(36).slice(2,8)}`}
+function clean(p:StoredRulePack):StoredRulePack{return {...p,sids:[...new Set(p.sids.filter(Number.isSafeInteger))]}}
+export function loadRulePacks():StoredRulePack[]{try{const value=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");if(Array.isArray(value)&&value.length)return value.map(clean);const legacy=JSON.parse(localStorage.getItem(LEGACY_KEY)||"[]");if(Array.isArray(legacy)&&legacy.length){const now=new Date().toISOString(),pack={id:newId(),name:"Default Rule Pack",sids:[...new Set(legacy.filter(Number.isSafeInteger))],createdAt:now,updatedAt:now};localStorage.setItem(STORAGE_KEY,JSON.stringify([pack]));return [pack]}}catch{/* Treat invalid browser storage as empty. */}return []}
+export function saveRulePacks(packs:StoredRulePack[]){localStorage.setItem(STORAGE_KEY,JSON.stringify(packs.map(clean)));window.dispatchEvent(new Event("rule-pack-change"))}
+export function createRulePack(name:string,sids:number[]=[]):StoredRulePack{const now=new Date().toISOString(),pack={id:newId(),name:name.trim()||"Untitled Rule Pack",sids:[...new Set(sids)],createdAt:now,updatedAt:now};saveRulePacks([...loadRulePacks(),pack]);setActiveRulePack(pack.id);return pack}
+export function updateRulePack(packId:string,changes:Partial<Pick<StoredRulePack,"name"|"sids">>){const packs=loadRulePacks().map(p=>p.id===packId?clean({...p,...changes,updatedAt:new Date().toISOString()}):p);saveRulePacks(packs);return packs.find(p=>p.id===packId)}
+export function addRuleToPack(packId:string,sid:number){const pack=loadRulePacks().find(p=>p.id===packId);if(pack)updateRulePack(packId,{sids:[...pack.sids,sid]})}
+export function removeRuleFromPack(packId:string,sid:number){const pack=loadRulePacks().find(p=>p.id===packId);if(pack)updateRulePack(packId,{sids:pack.sids.filter(x=>x!==sid)})}
+export function deleteRulePack(packId:string){const remaining=loadRulePacks().filter(p=>p.id!==packId);saveRulePacks(remaining);if(getActiveRulePackId()===packId)localStorage.setItem(ACTIVE_KEY,remaining[0]?.id||"");window.dispatchEvent(new Event("rule-pack-change"))}
+export function getActiveRulePackId(){return localStorage.getItem(ACTIVE_KEY)||loadRulePacks()[0]?.id||""}
+export function setActiveRulePack(packId:string){localStorage.setItem(ACTIVE_KEY,packId);window.dispatchEvent(new Event("rule-pack-change"))}
