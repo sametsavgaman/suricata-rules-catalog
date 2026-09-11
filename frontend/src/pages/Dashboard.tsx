@@ -13,7 +13,6 @@ import { AddToRulePack } from "../components/AddToRulePack";
 import {
   exportCatalogCsv,
   getCatalogStats,
-  getClassificationFilters,
   getRules,
   getStats,
   importRules,
@@ -49,7 +48,6 @@ export function Dashboard() {
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState({
     category: urlParams.get("category") || "",
-    subcategory: urlParams.get("subcategory") || "",
     mitre_technique_id: urlParams.get("mitre_technique_id") || "",
     mitre_tactic: urlParams.get("mitre_tactic") || "",
     entity_type: "",
@@ -58,11 +56,6 @@ export function Dashboard() {
     entity_status: "",
     mitre_status: "",
     mitre_mapping_method: "",
-    inspection_batch: urlParams.get("inspection_batch") || "",
-    model_name: "",
-    provider: "",
-    classifier_version: "",
-    inference_mode: "",
     product_status: urlParams.get("product_status") || "",
     sort: "recent",
   });
@@ -74,27 +67,10 @@ export function Dashboard() {
   const [busy, setBusy] = useState(false);
   const [productBusySid, setProductBusySid] = useState<number | null>(null);
   const searchRef = useRef<HTMLInputElement>(null);
-  const [modelFilters, setModelFilters] = useState<{
-    models: string[];
-    providers: string[];
-    classifier_versions: string[];
-    inference_modes: string[];
-  }>({
-    models: [],
-    providers: [],
-    classifier_versions: [],
-    inference_modes: [],
-  });
   const selectedFamilies = useMemo(
     () => urlParams.getAll("family"),
     [urlParams],
   );
-  useEffect(() => {
-    void getClassificationFilters()
-      .then(setModelFilters)
-      .catch(() => undefined);
-  }, []);
-
   const params = useMemo(() => {
     const value = new URLSearchParams({
       limit: String(pageSize),
@@ -483,13 +459,6 @@ export function Dashboard() {
               setFilters({ ...filters, mitre_tactic: e.target.value })
             }
           />
-          <input
-            placeholder="Subcategory"
-            value={filters.subcategory}
-            onChange={(e) =>
-              setFilters({ ...filters, subcategory: e.target.value })
-            }
-          />
           <select
             value={filters.entity_type}
             onChange={(e) =>
@@ -550,59 +519,6 @@ export function Dashboard() {
             <option value="">MITRE: any</option>
             <option value="has">Has MITRE</option>
             <option value="none">Null MITRE</option>
-          </select>
-          <select
-            value={filters.inspection_batch}
-            onChange={(e) =>
-              setFilters({ ...filters, inspection_batch: e.target.value })
-            }
-          >
-            <option value="">Inspection batch: any</option>
-            <option value="operational-250">Operational 250</option>
-          </select>
-          <select
-            value={filters.model_name}
-            onChange={(e) =>
-              setFilters({ ...filters, model_name: e.target.value })
-            }
-          >
-            <option value="">Model: any</option>
-            {modelFilters.models.map((x) => (
-              <option key={x}>{x}</option>
-            ))}
-          </select>
-          <select
-            value={filters.provider}
-            onChange={(e) =>
-              setFilters({ ...filters, provider: e.target.value })
-            }
-          >
-            <option value="">Provider: any</option>
-            {modelFilters.providers.map((x) => (
-              <option key={x}>{x}</option>
-            ))}
-          </select>
-          <select
-            value={filters.classifier_version}
-            onChange={(e) =>
-              setFilters({ ...filters, classifier_version: e.target.value })
-            }
-          >
-            <option value="">Classifier: any</option>
-            {modelFilters.classifier_versions.map((x) => (
-              <option key={x}>{x}</option>
-            ))}
-          </select>
-          <select
-            value={filters.inference_mode}
-            onChange={(e) =>
-              setFilters({ ...filters, inference_mode: e.target.value })
-            }
-          >
-            <option value="">Inference: any</option>
-            {modelFilters.inference_modes.map((x) => (
-              <option key={x}>{x}</option>
-            ))}
           </select>
           <select
             value={filters.mitre_mapping_method}
