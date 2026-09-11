@@ -3,7 +3,10 @@ from __future__ import annotations
 
 import re
 import unicodedata
+from copy import deepcopy
 from dataclasses import dataclass
+from threading import Lock
+from time import monotonic
 from typing import Annotated
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints
@@ -17,6 +20,9 @@ from app.database.models import (
 )
 
 FAMILY_ALGORITHM_VERSION = "family-v1"
+_READ_MODEL_CACHE_TTL = 60.0
+_READ_MODEL_CACHE: dict[tuple[object, object], tuple[float, object]] = {}
+_READ_MODEL_CACHE_LOCK = Lock()
 Text = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=120)]
 
 # Aliases are a normalization vocabulary, not query-specific behavior.
@@ -161,6 +167,7 @@ def assign_if_unassigned(db: Session, rule: Rule, classification: Classification
         evaluation.evidence = {"assignment_id": existing.id, "retained_family_slug": existing.family.slug}
         evaluation.algorithm_version = FAMILY_ALGORITHM_VERSION
         db.flush()
+        clear_family_cache()
         return existing
     if evaluation and evaluation.status == FamilyEvaluationStatus.UNASSIGNED and (
             classification is None or evaluation.source_classification_id == classification.id):
@@ -179,6 +186,7 @@ def assign_if_unassigned(db: Session, rule: Rule, classification: Classification
             evaluation.evidence = {"reason": "No supported deterministic family evidence."}
             evaluation.algorithm_version = FAMILY_ALGORITHM_VERSION
         db.flush()
+        clear_family_cache()
         return None
     family = db.scalar(select(DetectionFamily).where(DetectionFamily.slug == proposal.slug))
     if not family:
@@ -200,6 +208,7 @@ def assign_if_unassigned(db: Session, rule: Rule, classification: Classification
     evaluation.evidence = {"family_slug": proposal.slug, "provenance": proposal.provenance.value}
     evaluation.algorithm_version = FAMILY_ALGORITHM_VERSION
     db.flush()
+    clear_family_cache()
     return assignment
 
 
@@ -235,6 +244,7 @@ def backfill_families(db: Session, *, limit: int | None = None) -> dict:
             examined += 1
             assigned += int(assign_if_unassigned(db, rule, classification) is not None)
         db.commit()
+    clear_family_cache()
     return {"examined": examined, "assigned": assigned, "unassigned": examined - assigned}
 
 
@@ -286,13 +296,23 @@ def family_filter_query(filters: FamilyFilters):
 
 
 def family_summaries(db: Session, request: FamilySearch) -> tuple[list[dict], int]:
+    cache_key = ("summaries", _bind_key(db), request.model_dump_json())
+    now = monotonic()
+    with _READ_MODEL_CACHE_LOCK:
+        cached = _READ_MODEL_CACHE.get(cache_key)
+        if cached and now - cached[0] < _READ_MODEL_CACHE_TTL:
+            items, total = cached[1]
+            return deepcopy(items), total
+
     filtered = family_filter_query(request.filters).subquery()
     total = db.scalar(select(func.count(func.distinct(filtered.c.family_id)))) or 0
     ids = list(db.scalars(select(filtered.c.family_id).group_by(filtered.c.family_id)
                           .order_by(func.count(func.distinct(filtered.c.rule_id)).desc(), filtered.c.family_id)
                           .offset(request.offset).limit(request.limit)))
     if not ids:
-        return [], total
+        result = ([], total)
+        _cache_read_model(cache_key, result)
+        return result
     rows = db.execute(
         select(DetectionFamily.id, DetectionFamily.slug, DetectionFamily.name, DetectionFamily.family_type,
                func.count(func.distinct(RuleFamilyAssignment.rule_id)).label("rule_count"),
@@ -322,7 +342,55 @@ def family_summaries(db: Session, request: FamilySearch) -> tuple[list[dict], in
         item["family_type"] = str(getattr(item["family_type"], "value", item["family_type"]))
         item["product_status"] = {status.value: products.get((item["id"], status.value), 0) for status in ProductStatus}
         indexed[item["id"]] = item
-    return [indexed[i] for i in ids], total
+    result = ([indexed[i] for i in ids], total)
+    _cache_read_model(cache_key, result)
+    return deepcopy(result[0]), result[1]
+
+
+def family_stats(db: Session) -> dict:
+    """Return the small family header aggregate from a short-lived read cache."""
+    cache_key = ("stats", _bind_key(db))
+    now = monotonic()
+    with _READ_MODEL_CACHE_LOCK:
+        cached = _READ_MODEL_CACHE.get(cache_key)
+        if cached and now - cached[0] < _READ_MODEL_CACHE_TTL:
+            return dict(cached[1])
+
+    families = db.scalar(select(func.count()).select_from(DetectionFamily)) or 0
+    assigned = db.scalar(select(func.count()).select_from(RuleFamilyAssignment)) or 0
+    rules = db.scalar(select(func.count()).select_from(Rule)) or 0
+    evaluated = db.scalar(select(func.count()).select_from(RuleFamilyEvaluation)) or 0
+    unassigned = db.scalar(select(func.count()).select_from(RuleFamilyEvaluation).where(
+        RuleFamilyEvaluation.status == FamilyEvaluationStatus.UNASSIGNED)) or 0
+    result = {"families": families, "assigned_rules": assigned, "evaluated_rules": evaluated,
+              "unassigned_rules": unassigned, "pending_evaluation_rules": max(0, rules - evaluated),
+              "assignment_coverage": round(assigned / rules, 4) if rules else 0}
+    _cache_read_model(cache_key, result)
+    return dict(result)
+
+
+def _bind_key(db: Session) -> object:
+    """Keep cache entries isolated between application databases (including tests)."""
+    return db.get_bind()
+
+
+def _cache_read_model(key: tuple[object, object], value: object) -> None:
+    with _READ_MODEL_CACHE_LOCK:
+        _READ_MODEL_CACHE[key] = (monotonic(), deepcopy(value))
+
+
+def clear_family_cache() -> None:
+    with _READ_MODEL_CACHE_LOCK:
+        _READ_MODEL_CACHE.clear()
+
+
+def warm_family_cache() -> None:
+    """Build the first family read models in a background worker after startup."""
+    from app.database.session import SessionLocal
+
+    with SessionLocal() as db:
+        family_stats(db)
+        family_summaries(db, FamilySearch())
 
 
 def family_rules(db: Session, family_id: int, offset=0, limit=50):

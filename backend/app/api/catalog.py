@@ -1,4 +1,7 @@
 """Read-only catalog aggregates and product candidate views."""
+from copy import deepcopy
+from threading import Lock
+from time import monotonic
 import csv
 import io
 from fastapi import APIRouter, Depends, Query
@@ -9,9 +12,12 @@ from sqlalchemy.orm import Session
 from app.api.schemas import rule_to_read
 from app.database.models import Classification, ClassificationStatus, ProductStatus, Rule, RuleProductDecision
 from app.database.repository import RuleRepository
-from app.database.session import get_db
+from app.database.session import SessionLocal, get_db
 
 router = APIRouter(prefix="/catalog", tags=["catalog"])
+_FACETS_CACHE_TTL = 60.0
+_FACETS_CACHE: dict[object, tuple[float, dict]] = {}
+_FACETS_CACHE_LOCK = Lock()
 
 def _latest(db: Session):
     ids = select(func.max(Classification.id).label("id")).where(Classification.classification_status != ClassificationStatus.FAILED).group_by(Classification.rule_id).subquery()
@@ -32,14 +38,35 @@ def catalog_stats(db: Session = Depends(get_db)):
 
 @router.get("/facets")
 def catalog_facets(db: Session = Depends(get_db)):
+    bind = db.get_bind()
+    now = monotonic()
+    with _FACETS_CACHE_LOCK:
+        cached = _FACETS_CACHE.get(bind)
+        if cached and now - cached[0] < _FACETS_CACHE_TTL:
+            return deepcopy(cached[1])
+
     latest_ids = select(func.max(Classification.id).label("id")).where(Classification.classification_status != ClassificationStatus.FAILED).group_by(Classification.rule_id).subquery()
     latest = select(Classification).join(latest_ids, Classification.id == latest_ids.c.id).subquery()
     def counts(column, source):
         return [{"value": v, "count": n} for v,n in db.execute(select(column, func.count()).select_from(source).where(column.is_not(None)).group_by(column).order_by(func.count().desc())).all()]
-    return {"categories": counts(latest.c.category, latest), "subcategories": counts(latest.c.subcategory, latest),
-            "entities": counts(latest.c.detected_entity, latest), "mitre_tactics": counts(latest.c.mitre_tactic, latest),
-            "mitre_techniques": counts(latest.c.mitre_technique_id, latest), "protocols": counts(Rule.protocol, Rule),
-            "product_statuses": [{"value": s.value, "count": n} for s,n in db.execute(select(RuleProductDecision.status, func.count()).group_by(RuleProductDecision.status)).all()]}
+    result = {"categories": counts(latest.c.category, latest), "subcategories": counts(latest.c.subcategory, latest),
+              "entities": counts(latest.c.detected_entity, latest), "mitre_tactics": counts(latest.c.mitre_tactic, latest),
+              "mitre_techniques": counts(latest.c.mitre_technique_id, latest), "protocols": counts(Rule.protocol, Rule),
+              "product_statuses": [{"value": s.value, "count": n} for s,n in db.execute(select(RuleProductDecision.status, func.count()).group_by(RuleProductDecision.status)).all()]}
+    with _FACETS_CACHE_LOCK:
+        _FACETS_CACHE[bind] = (monotonic(), deepcopy(result))
+    return result
+
+
+def clear_catalog_facets_cache() -> None:
+    with _FACETS_CACHE_LOCK:
+        _FACETS_CACHE.clear()
+
+
+def warm_catalog_facets() -> None:
+    """Build the expensive latest-classification facet aggregate off the request path."""
+    with SessionLocal() as db:
+        catalog_facets(db)
 
 @router.get("/candidates")
 def candidates(status: ProductStatus | None = None, offset: int = Query(0, ge=0), limit: int = Query(50, ge=1, le=500), db: Session = Depends(get_db)):
