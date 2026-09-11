@@ -183,6 +183,12 @@ The Vite development server proxies `/api` to port 8000. Without `OPENAI_API_KEY
 
 Use the dashboard's **Import .rules** button or call the multipart endpoint. Disabled/commented rules are ignored; multiline rules are joined only after balanced option parentheses are found.
 
+Uploads accept only UTF-8 `.rules` plain text. The backend enforces a maximum of
+10 files, 25 MB per file, 50 MB combined, 100,000 rules per file, and 64 KB per
+rule. It rejects unsafe filenames, unsupported MIME types, binary/control data,
+archives, renamed unrelated files, and rule sets with no active Suricata rules.
+These checks are server-side; the browser file filter is only a convenience.
+
 ```bash
 curl -X POST http://localhost:8000/api/rules/import \
   -F "files=@data/rules/emerging.rules"
