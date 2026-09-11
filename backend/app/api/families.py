@@ -9,7 +9,7 @@ from app.database.models import (
     RuleFamilyEvaluation,
 )
 from app.database.session import get_db
-from app.services.detection_families import FamilyFilters, FamilySearch, family_rules, family_summaries
+from app.services.detection_families import FamilyFilters, FamilySearch, family_rules, family_summaries, family_stats as get_family_stats
 from app.services.mitre_intelligence import family_mitre_profile
 
 router = APIRouter(prefix="/families", tags=["detection families"])
@@ -43,15 +43,7 @@ def list_families(
 
 @router.get("/stats")
 def family_stats(db: Session = Depends(get_db)):
-    families = db.scalar(select(func.count()).select_from(DetectionFamily)) or 0
-    assigned = db.scalar(select(func.count()).select_from(RuleFamilyAssignment)) or 0
-    rules = db.scalar(select(func.count()).select_from(Rule)) or 0
-    evaluated = db.scalar(select(func.count()).select_from(RuleFamilyEvaluation)) or 0
-    unassigned = db.scalar(select(func.count()).select_from(RuleFamilyEvaluation).where(
-        RuleFamilyEvaluation.status == FamilyEvaluationStatus.UNASSIGNED)) or 0
-    return {"families": families, "assigned_rules": assigned, "evaluated_rules": evaluated,
-            "unassigned_rules": unassigned, "pending_evaluation_rules": max(0, rules - evaluated),
-            "assignment_coverage": round(assigned / rules, 4) if rules else 0}
+    return get_family_stats(db)
 
 
 @router.get("/{slug}")

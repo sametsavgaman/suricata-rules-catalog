@@ -352,6 +352,13 @@ class ClassificationService:
             self.db.add(RuleProductDecision(rule_id=rule.id, status=ProductStatus.NOT_EVALUATED))
         self.db.commit()
         self.db.refresh(record)
+        # Latest-classification aggregates are cached for the catalogue UI;
+        # a new provider result must be visible immediately after this commit.
+        try:
+            from app.api.catalog import clear_catalog_facets_cache
+            clear_catalog_facets_cache()
+        except Exception:
+            pass
         # Family enrichment is a separate deterministic catalogue projection.
         # Classification has already been durably committed; enrichment failure
         # must never turn a valid provider result into a failed classification.
