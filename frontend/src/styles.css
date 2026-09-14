@@ -215,3 +215,31 @@
   .rules-page .family-pack-action{margin-top:8px}
   .rules-page .family-pack-action .pack-picker-menu{max-width:calc(100vw - 72px)}
 }
+
+/* Laptop layout: turn each explorer row into a compact two-column card so
+   every field and action remains inside the viewport. The desktop table is
+   kept for wide screens where all nine columns have comfortable space. */
+@media(max-width:1400px){
+  .rules-page .panel{overflow:visible}
+  .rules-page .table-wrap{overflow:visible}
+  .rules-page table{display:block;width:100%;min-width:0;table-layout:auto}
+  .rules-page thead{display:none}
+  .rules-page tbody{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:12px}
+  .rules-page tbody tr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border:1px solid var(--line);border-radius:9px;background:linear-gradient(145deg,rgba(18,31,35,.98),rgba(11,19,23,.98));overflow:visible;transform:none}
+  .rules-page tbody tr:hover{transform:none}
+  .rules-page tbody td{display:block;width:auto!important;min-width:0!important;padding:11px 12px;border-top:1px solid var(--line-soft);font-size:12px;overflow-wrap:anywhere;word-break:break-word}
+  .rules-page tbody td:first-child,.rules-page tbody td:nth-child(2){grid-column:1/-1;border-top:0}
+  .rules-page tbody td::before{content:attr(data-label);display:block;margin-bottom:5px;color:var(--muted);font:600 9px "IBM Plex Mono";letter-spacing:.08em;text-transform:uppercase}
+  .rules-page tbody td>*{max-width:100%;overflow-wrap:anywhere}
+  .rules-page .message,.rules-page .family-chips-inline{min-width:0;max-width:none}
+  .rules-page .family-chips-inline{display:flex;gap:4px;flex-wrap:wrap}
+  .rules-page .family-chips-inline span{font-size:9px;padding:3px 5px}
+  .rules-page .family-pack-action{margin-top:8px}
+  .rules-page .family-pack-action .pack-picker-menu{position:static;width:min(270px,100%);max-width:100%;margin-top:8px}
+  .rules-page .pack-picker-trigger{max-width:100%;overflow:hidden;text-overflow:ellipsis}
+  .rules-page .existing-rule-toggle{white-space:normal;text-align:left}
+}
+@media(max-width:760px){
+  .rules-page tbody{grid-template-columns:1fr}
+  .rules-page tbody tr{grid-template-columns:1fr}
+}
